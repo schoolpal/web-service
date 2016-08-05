@@ -1,0 +1,23 @@
+section table {
+	margin-top: 15px;
+}
+
+th {
+	background-color: #555;
+	color: #fff;
+}
+th, td:first-child {
+	text-align: center;
+}
+
+tr.father {
+	font-weight: bold;
+	background-color: #bfbfbf;
+}
+
+td span.glyphicon {
+	cursor: pointer;
+}
+td span.glyphicon:hover {
+	color: #f00;
+}

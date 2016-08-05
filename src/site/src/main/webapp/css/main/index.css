@@ -1,0 +1,24 @@
+body {
+	padding-top: 50px;
+}
+
+.navbar-left li:nth-child(2) {
+	padding-top: 8px;
+	margin-left: 10px;
+	font-size: 22px;
+}
+
+.row > div:first-child {
+	position: fixed;
+}
+.row > div:nth-child(3) {
+	border-left: solid 1px #ccc;
+}
+
+.row .nav-pills {
+	margin-top: 15px;
+}
+.row .nav-pills > li > a {
+	font-weight: bold;
+	font-size: 16px;
+}
