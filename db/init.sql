@@ -2,8 +2,10 @@
 /*
 CREATE DATABASE schoolpal DEFAULT CHARACTER SET UTF8;
 
-GRANT ALL ON schoolpal.* TO schoolpal@'%' IDENTIFIED BY 'schoolpal';
+#GRANT ALL ON schoolpal.* TO schoolpal@'%' IDENTIFIED BY 'schoolpal';
+CREATE USER schoolpal@'%' IDENTIFIED BY 'schoolpal';
 */
+#USE schoolpal;
 /*==============================================================*/
 
 /*==============================================================*/
