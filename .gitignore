@@ -1,0 +1,12 @@
+src/site/.classpath
+src/site/.gitignore
+src/site/.project
+src/site/.settings/.jsdtscope
+src/site/.settings/org.eclipse.core.resources.prefs
+src/site/.settings/org.eclipse.jdt.core.prefs
+src/site/.settings/org.eclipse.m2e.core.prefs
+src/site/.settings/org.eclipse.wst.common.component
+src/site/.settings/org.eclipse.wst.common.project.facet.core.xml
+src/site/.settings/org.eclipse.wst.jsdt.ui.superType.container
+src/site/.settings/org.eclipse.wst.jsdt.ui.superType.name
+src/site/.settings/org.eclipse.wst.validation.prefs
