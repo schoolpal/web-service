@@ -30,13 +30,13 @@ public class MainController {
 	public ModelAndView index() {
 		User user = userServ.getCachedUser();
 		MainPage page = new MainPage();
-		page.setOrgCnFullName(user.getOrg().getCnFullName());
-		page.setWelcomeName(user.getUsername());
+		page.setOrgName(user.getOrg().getName());
+		page.setWelcomeName(user.getLoginName());
 		page.setOrgCode(user.getOrg().getCode());
 		page.setMenus(userServ.buildMenus(user.getWidgets()));
 
-		logServ.log(user.getUsername(), Log.TRACE, "MainController.index()", "", 
-				String.format("Username: %s; Page: %s", user.getUsername(), gson.toJson(page)));
+		logServ.log(user.getLoginName(), Log.TRACE, "MainController.index()", "", 
+				String.format("Username: %s; Page: %s", user.getLoginName(), gson.toJson(page)));
 		return new ModelAndView("main/index", "page", page);
 	}
 	
@@ -45,7 +45,7 @@ public class MainController {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser && null != currentUser.getPrincipal()) {
 			Session session = currentUser.getSession();
-			logServ.log(userServ.getCachedUser().getUsername(), Log.TRACE, "MainController.logout()", "", 
+			logServ.log(userServ.getCachedUser().getLoginName(), Log.TRACE, "MainController.logout()", "", 
 					"SESSION_KEY_CURRENT_USER: " + gson.toJson(session.getAttribute(Const.SESSION_KEY_CURRENT_USER)));
 			currentUser.logout();
 		} else {

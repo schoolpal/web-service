@@ -35,7 +35,7 @@
         <ul>
             <li>
                 <label for="name">组织名称 : </label>
-                <input id="name" type="text" value="${form.cnFullName}" />
+                <input id="name" type="text" value="${form.name}" />
             </li>
             <li>
                 <label for="code">组织代码 : </label>
@@ -43,12 +43,12 @@
             </li>
             <li>
                 <label for="parent">父级组织 : </label>
-                <input id="parent" type="text" data-id="${form.parentId}" value="${form.parentCnFullName}" disabled />
+                <input id="parent" type="text" data-id="${form.parentId}" value="${form.parentName}" disabled />
                 <span class="glyphicon glyphicon-list-alt"></span>
             </li>
             <li id="area">
-                <label for="province">所在地区 : </label>
-                <select id="province"></select>
+                <label for="state">所在地区 : </label>
+                <select id="state"></select>
                 <select id="city"></select>
                 <select id="county"></select>
             </li>
@@ -91,7 +91,7 @@
     
     <script type="text/javascript">
         var orgId = '${form.id}';
-        var provinceVal = '${form.province}';
+        var stateVal = '${form.state}';
         var cityVal = '${form.city}';
         var countyVal = '${form.county}';
     </script>

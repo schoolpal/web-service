@@ -1,9 +1,9 @@
 function addOrg() {
 	$.post('new.do', {
-		cnFullName: $('#name').val(),
+		Name: $('#name').val(),
 		orgCode: $('#code').val(),
 		parentId: $('#parent').attr('data-id'),
-		province: $('#province option:selected').text(),
+		state: $('#state option:selected').text(),
 		city: $('#city option:selected').text(),
 		county: $('#county option:selected').text(),
 		address: $('#address').val(),

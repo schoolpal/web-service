@@ -3,10 +3,10 @@ package com.schoolpal.web.model.page.config;
 public class UserForm {
 	
 	private String orgId;
-	private String username;
-	private String passwd;
-	private String nameCN;
-	private String nameEN;
+	private String loginName;
+	private String loginPass;
+	private String realName;
+	private String nickName;
 	private String phone;
 	private String email;
 	private String im;
@@ -19,29 +19,23 @@ public class UserForm {
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
 	}
-	public String getUsername() {
-		return username;
+	public String getLoginName() {
+		return loginName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
-	public String getPasswd() {
-		return passwd;
+	public String getLoginPass() {
+		return loginPass;
 	}
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setLoginPass(String passwd) {
+		this.loginPass = passwd;
 	}
-	public String getNameCN() {
-		return nameCN;
+	public String getNickName() {
+		return nickName;
 	}
-	public void setNameCN(String nameCN) {
-		this.nameCN = nameCN;
-	}
-	public String getNameEN() {
-		return nameEN;
-	}
-	public void setNameEN(String nameEN) {
-		this.nameEN = nameEN;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	public String getPhone() {
 		return phone;
@@ -72,6 +66,12 @@ public class UserForm {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 }

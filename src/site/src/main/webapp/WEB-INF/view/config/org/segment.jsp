@@ -14,7 +14,7 @@
             <c:if test='${org.father}'>
 				<span id="${org.id}" class="glyphicon glyphicon-minus-sign"></span>&nbsp;
             </c:if>
-            <span data-org="${org.id}">${org.cnFullName}</span>
+            <span data-org="${org.id}">${org.name}</span>
         </td>
 		<td>${org.area}</td>
 		<td>${org.address}</td>

@@ -6,7 +6,7 @@ public class OrgRow {
 	private String id;
 	private String rootId;
 	private String parentId;
-	private String cnFullName;
+	private String name;
 	private String area;
 	private String address;
 	private String owner;
@@ -20,11 +20,11 @@ public class OrgRow {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getCnFullName() {
-		return cnFullName;
+	public String getName() {
+		return name;
 	}
-	public void setCnFullName(String cnFullName) {
-		this.cnFullName = cnFullName;
+	public void setName(String Name) {
+		this.name = Name;
 	}
 	public String getArea() {
 		return area;

@@ -4,9 +4,9 @@ public class UserPage {
 	
 	private String id;
 	private String state;
-	private String username;
-	private String nameCN;
-	private String nameEN;
+	private String loginName;
+	private String realName;
+	private String nickName;
 	private String mobile;
 	private String email;
 	private String im;
@@ -18,24 +18,6 @@ public class UserPage {
 	}
 	public void setState(String state) {
 		this.state = state;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getNameCN() {
-		return nameCN;
-	}
-	public void setNameCN(String nameCN) {
-		this.nameCN = nameCN;
-	}
-	public String getNameEN() {
-		return nameEN;
-	}
-	public void setNameEN(String nameEN) {
-		this.nameEN = nameEN;
 	}
 	public String getMobile() {
 		return mobile;
@@ -72,6 +54,24 @@ public class UserPage {
 	}
 	public void setAvailable(Boolean available) {
 		this.available = available;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getLoginName() {
+		return loginName;
+	}
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+	public String getRealName() {
+		return realName;
+	}
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 }

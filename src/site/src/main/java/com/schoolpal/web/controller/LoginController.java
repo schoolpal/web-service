@@ -50,13 +50,13 @@ public class LoginController {
 	public String login(LoginForm login) {
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession(true);
-		logServ.log(login.getUsername(), Log.TRACE, "LoginController.login(LoginForm)", "", 
+		logServ.log(login.getLoginName(), Log.TRACE, "LoginController.login(LoginForm)", "", 
 				String.format("LoginForm: %s; Salt: %s", gson.toJson(login), (String)session.getAttribute(Const.SESSION_KEY_LOGIN_SALT)));
 		
 		String error = "";
-		if (userServ.login(login.getUsername(), login.getMixedPWD())) {
+		if (userServ.login(login.getLoginName(), login.getMixedPWD())) {
 			try {
-				userServ.cacheUser(login.getUsername());
+				userServ.cacheUser(login.getLoginName());
 			} catch (Exception ex) {
 				//
 				// Clear user session while getting exception.
@@ -64,13 +64,13 @@ public class LoginController {
 				currentUser.logout();
 				
 				error = "系统异常，请联系管理员！";
-				logServ.log(login.getUsername(), Log.ERROR, "LoginController.login(LoginForm)", ex.getMessage(), "LoginForm: " + gson.toJson(login));
+				logServ.log(login.getLoginName(), Log.ERROR, "LoginController.login(LoginForm)", ex.getMessage(), "LoginForm: " + gson.toJson(login));
 			}
 		} else {
 			error = "登录失败，请确认用户名密码正确！";
 		}
 
-		logServ.log(login.getUsername(), Log.DEBUG, "LoginController.login(LoginForm)", "", "Error: " + error);
+		logServ.log(login.getLoginName(), Log.DEBUG, "LoginController.login(LoginForm)", "", "Error: " + error);
 		return error;
 	}
 	

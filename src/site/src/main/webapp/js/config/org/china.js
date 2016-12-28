@@ -1,10 +1,10 @@
 $(function() {
 	$(china).each(function(i, o) {
-		$('<option value="' + i + '">' + o.province + '</option>').appendTo('#province');
+		$('<option value="' + i + '">' + o.state + '</option>').appendTo('#state');
 	});
 });
 
-$('#province').change(function() {
+$('#state').change(function() {
 	var ind = $(this).find('option:selected').val();
 	$('#city').empty();
 	$('#county').empty();
@@ -16,7 +16,7 @@ $('#province').change(function() {
 });
 
 $('#city').change(function() {
-	var pInd = $('#province').find('option:selected').val();
+	var pInd = $('#state').find('option:selected').val();
 	var ind = $(this).find('option:selected').val();
 	$('#county').empty();
 	if (ind != 0) {
@@ -30,7 +30,7 @@ $('section li:nth-child(3) span').click(function() {
 	$.get('newSegment.html', function(page) {
 		$('#orgList .orgsection').html(page);
 		$('#orgList .orgsection a').click(function(e) {
-			$('#parent').val($(this).text());
+			$('#parent').val($(this).attr('data-name'));
 			$('#parent').attr('data-id', $(this).attr('id'));
 			$('#orgList').modal('hide');
 			e.preventDefault();
@@ -111,10 +111,10 @@ function validArea() {
 var china = 
 [
  	{
- 		province: '省/直辖市...',
+ 		state: '省/直辖市...',
  	},
     {
-    	province: '直辖市',
+    	state: '直辖市',
     	cities:
     	[
     	    {
@@ -141,7 +141,7 @@ var china =
     	]
     },
     {
-    	province: '江西省',
+    	state: '江西省',
     	cities:
     	[
 			{

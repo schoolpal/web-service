@@ -35,7 +35,7 @@
         <ul>
             <li>
                 <label for="name">组织名称 : </label>
-                <input id="name" type="text" value="${form.cnFullName}" />
+                <input id="name" type="text" value="${form.Name}" />
             </li>
             <li>
                 <label for="code">组织代码 : </label>
@@ -47,8 +47,8 @@
                 <span class="glyphicon glyphicon-list-alt"></span>
             </li>
             <li id="area">
-                <label for="province">所在地区 : </label>
-                <select id="province"></select>
+                <label for="state">所在地区 : </label>
+                <select id="state"></select>
                 <select id="city"></select>
                 <select id="county"></select>
             </li>

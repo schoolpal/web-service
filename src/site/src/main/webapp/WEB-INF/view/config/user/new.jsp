@@ -41,20 +41,20 @@
 		                <input id="orgId" type="hidden" value="${page.orgId}" />
 		            </li>
 		            <li>
-		                <label for="username">* 用户名 : </label>
-		                <input id="username" type="text" />
+		                <label for="loginName">* 用户名 : </label>
+		                <input id="loginName" type="text" />
 		            </li>
 		            <li>
-		                <label for="passwd">* 登陆密码 : </label>
-		                <input id="passwd" type="text" />
+		                <label for="loginPass">* 登陆密码 : </label>
+		                <input id="loginPass" type="text" />
 		            </li>
 		            <li>
-		                <label for="nameCN">* 姓名 : </label>
-		                <input id="nameCN" type="text" />
+		                <label for="realName">* 姓名 : </label>
+		                <input id="realName" type="text" />
 		            </li>
 		            <li>
-		                <label for="nameEN">英文名 : </label>
-		                <input id="nameEN" type="text" />
+		                <label for="nickName">昵称: </label>
+		                <input id="nickName" type="text" />
 		            </li>
 		            <li>
 		                <label for="phone">电话号码 : </label>

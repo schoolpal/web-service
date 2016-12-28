@@ -3,22 +3,22 @@ package com.schoolpal.web.model.page.config;
 public class OrgForm {
 	
 	private String id;
-	private String cnFullName;
+	private String name;
 	private String orgCode;
 	private String parentId;
-	private String parentCnFullName;
-	private String province;
+	private String parentName;
+	private String state;
 	private String city;
 	private String county;
 	private String address;
 	private String owner;
 	private String phone;
 	
-	public String getCnFullName() {
-		return cnFullName;
+	public String getName() {
+		return name;
 	}
-	public void setCnFullName(String cnFullName) {
-		this.cnFullName = cnFullName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getOrgCode() {
 		return orgCode;
@@ -26,11 +26,11 @@ public class OrgForm {
 	public void setOrgCode(String orgCode) {
 		this.orgCode = orgCode;
 	}
-	public String getProvince() {
-		return province;
+	public String getState() {
+		return state;
 	}
-	public void setProvince(String province) {
-		this.province = province;
+	public void setState(String state) {
+		this.state = state;
 	}
 	public String getCity() {
 		return city;
@@ -68,11 +68,11 @@ public class OrgForm {
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
-	public String getParentCnFullName() {
-		return parentCnFullName;
+	public String getParentName() {
+		return parentName;
 	}
-	public void setParentCnFullName(String parentCnFullName) {
-		this.parentCnFullName = parentCnFullName;
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 	public String getId() {
 		return id;

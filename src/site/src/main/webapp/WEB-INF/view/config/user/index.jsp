@@ -41,7 +41,7 @@
 						<c:if test='${org.father}'>
 							<span class="glyphicon glyphicon-minus-sign"></span>
                         </c:if>
-                        <span id="${org.id}" class="name">${org.cnFullName}</span>
+                        <span id="${org.id}" class="name">${org.name}</span>
                     </div>
                 </c:forEach>
             </div>

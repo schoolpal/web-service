@@ -13,18 +13,23 @@ $('#roles input:checkbox').click(function() {
 $('button[data-type=CommandButton]').click(function() {
 	var isEdit = $(this).attr('id') == 'edit';
 	
-	if ($('#username').val() == '') {
+	if ($('#loginName').val() == '') {
 		$('#info .modal-body').html('请填写用户名！');
 		$('#info').modal();
 		return;
 	}
-	if ($('#passwd').val() == '' && !isEdit) {
+	if ($('#loginPass').val() == '' && !isEdit) {
 		$('#info .modal-body').html('请填写登陆密码！');
 		$('#info').modal();
 		return;
 	}
-	if ($('#nameCN').val() == '') {
+	if ($('#realName').val() == '') {
 		$('#info .modal-body').html('请填写姓名！');
+		$('#info').modal();
+		return;
+	}
+	if ($('#phone').val() == '') {
+		$('#info .modal-body').html('请填写电话！');
 		$('#info').modal();
 		return;
 	}
@@ -45,17 +50,17 @@ function submitUser(isEdit) {
 	roleIds = roleIds.substr(0, roleIds.length - 1);
 	
 	var passwd = '';
-	if (!isEdit || $('#passwd').val() != '') {
-		passwd = MD5(MD5($('#passwd').val()));
+	if (!isEdit || $('#loginPass').val() != '') {
+		passwd = MD5(MD5($('#loginPass').val()));
 	}
 	
 	$.post(isEdit ? 'edit.do' : 'new.do', {
 		userId	 : $('#userId').val(),
 		orgId 	 : $('#orgId').val(),
-		username : $('#username').val(),
-		passwd 	 : passwd,
-		nameCN 	 : $('#nameCN').val(),
-		nameEN 	 : $('#nameEN').val(),
+		loginName : $('#loginName').val(),
+		loginPass 	 : passwd,
+		realName 	 : $('#realName').val(),
+		nickName 	 : $('#nickName').val(),
 		phone 	 : $('#phone').val(),
 		email 	 : $('#email').val(),
 		im 		 : $('#im').val(),

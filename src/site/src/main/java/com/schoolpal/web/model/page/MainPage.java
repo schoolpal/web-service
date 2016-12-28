@@ -5,7 +5,7 @@ import java.util.List;
 public class MainPage {
 	
 	private String orgCode;
-	private String orgCnFullName;
+	private String orgName;
 	private String welcomeName;
 	private List<Menu> menus;
 	
@@ -27,11 +27,11 @@ public class MainPage {
 	public void setOrgCode(String orgCode) {
 		this.orgCode = orgCode;
 	}
-	public String getOrgCnFullName() {
-		return orgCnFullName;
+	public String getOrgName() {
+		return orgName;
 	}
-	public void setOrgCnFullName(String orgCnFullName) {
-		this.orgCnFullName = orgCnFullName;
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 
 }

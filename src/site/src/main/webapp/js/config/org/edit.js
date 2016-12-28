@@ -1,6 +1,6 @@
 $(function() {
-	$('#province option').each(function(i, o) {
-		if ($(o).text() == provinceVal) {
+	$('#state option').each(function(i, o) {
+		if ($(o).text() == stateVal) {
 			$(o).attr('selected', true);
 			$(o).parent().change();
 			return false;
@@ -24,10 +24,10 @@ $(function() {
 function modOrg() {
 	$.post('mod.do', {
 		id: orgId,
-		cnFullName: $('#name').val(),
+		Name: $('#name').val(),
 		orgCode: $('#code').val(),
 		parentId: $('#parent').attr('data-id'),
-		province: $('#province option:selected').text(),
+		state: $('#state option:selected').text(),
 		city: $('#city option:selected').text(),
 		county: $('#county option:selected').text(),
 		address: $('#address').val(),

@@ -8,7 +8,7 @@
             <th>状态</th>
             <th>用户名</th>
             <th>姓名</th>
-            <th>英文名</th>
+            <th>昵称</th>
             <th>电话号码</th>
             <th>电子邮件</th>
             <th>IM(QQ)</th>
@@ -20,9 +20,9 @@
 	        <tr <c:if test='${!user.available}'>class="disable"</c:if>>
 	            <td><input type="radio" id="${user.id}" name="userinput" /></td>
 	            <td>${user.state}</td>
-	            <td>${user.username}</td>
-	            <td>${user.nameCN}</td>
-	            <td>${user.nameEN}</td>
+	            <td>${user.loginName}</td>
+	            <td>${user.realName}</td>
+	            <td>${user.nickName}</td>
 	            <td>${user.mobile}</td>
 	            <td>${user.email}</td>
 	            <td>${user.im}</td>

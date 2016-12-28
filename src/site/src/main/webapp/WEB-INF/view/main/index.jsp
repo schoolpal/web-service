@@ -14,10 +14,10 @@
 		<div class="container-fluid">
 			<ul class="nav navbar-nav navbar-left">
 				<li>
-				    <img alt="${page.orgCnFullName}" src="<c:url value='/img/logo/${page.orgCode}.png'/>" width="48" height="48" />
+				    <img alt="${page.orgName}" src="<c:url value='/img/logo/${page.orgCode}.png'/>" width="48" height="48" />
 				</li>
 				<li>
-				    <strong>${page.orgCnFullName}</strong>
+				    <strong>${page.orgName}</strong>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

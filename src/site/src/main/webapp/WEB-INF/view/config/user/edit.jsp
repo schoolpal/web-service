@@ -42,22 +42,22 @@
                         <input id="userId" type="hidden" value="${page.userId}" />
 		            </li>
 		            <li>
-		                <label for="username">* 用户名 : </label>
-		                <input id="username" type="text" value="${page.form.username}" />
+		                <label for="loginName">* 用户名 : </label>
+		                <input id="loginName" type="text" value="${page.form.loginName}" />
 		            </li>
 		            <li>
-		                <label for="passwd">* 登陆密码 : </label>
-		                <input id="passwd" type="text" placeholder="******" />
+		                <label for="loginPass">* 登陆密码 : </label>
+		                <input id="loginPass" type="text" placeholder="******" />
 		            </li>
 		            <li>
-		                <label for="nameCN">* 姓名 : </label>
-		                <input id="nameCN" type="text" value="${page.form.nameCN}" />
+		                <label for="realName">* 姓名 : </label>
+		                <input id="realName" type="text" value="${page.form.realName}" />
 		            </li>
 		            <li>
-		                <label for="nameEN">英文名 : </label>
-		                <input id="nameEN" type="text" value="${page.form.nameEN}" />
+		                <label for="nickName">* 昵称 : </label>
+		                <input id="nickName" type="text" value="${page.form.nickName}" />
 		            </li>
-		            <li>
+					<li>
 		                <label for="phone">电话号码 : </label>
 		                <input id="phone" type="text" value="${page.form.phone}" />
 		            </li>

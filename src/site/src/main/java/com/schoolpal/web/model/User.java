@@ -6,7 +6,7 @@ import java.util.List;
 public class User {
 	
 	private String id;
-	private String username;
+	private String loginName;
 	private Org org;
 	private List<Role> roles;
 	
@@ -26,11 +26,11 @@ public class User {
 		return widgets;
 	}
 	
-	public String getUsername() {
-		return username;
+	public String getLoginName() {
+		return loginName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 	public List<Role> getRoles() {
 		return roles;

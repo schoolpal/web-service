@@ -24,33 +24,33 @@ public class UserDB {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public String getUserLoginPWD(String username) {
-		String sql = " select c_password from t_user where c_available = 1 and c_username = ? ";
-		return jdbcTemplate.queryForObject(sql, new Object[] { username }, String.class);
+	public String getUserLoginPWD(String loginName) {
+		String sql = " select c_loginpass from t_user where c_available = 1 and c_loginname = ? ";
+		return jdbcTemplate.queryForObject(sql, new Object[] { loginName }, String.class);
 	}
 	
-	public void updateLastVisit(String username, String ip) {
+	public void updateLastVisit(String loginName, String ip) {
 		jdbcTemplate.update(" update t_user set c_last_visit_time = now(), c_last_visit_ip = ? ", new Object[] { ip });
 	}
 	
-	public User getUser(String username) {
+	public User getUser(String loginName) {
 		final User user = new User();
-		String sql = " select user.c_id, org.c_name_cn, org.c_id orgId, org.c_code, org_parent.c_code parent_code, org_root.c_code root_code "
+		String sql = " select user.c_id, org.c_name, org.c_id orgId, org.c_code, org_parent.c_code parent_code, org_root.c_code root_code "
 				   + " from t_user user left join t_org org on org.c_id = user.c_org_id "
 				   + " left join t_org org_parent on org_parent.c_id = org.c_parent_id "
 				   + " left join t_org org_root on org_root.c_id = org.c_root_id "
-				   + " where user.c_available = 1 and org.c_available = 1 and user.c_username = ? ";
-		jdbcTemplate.query(sql, new Object[] { username }, new RowCallbackHandler() {
+				   + " where user.c_available = 1 and org.c_available = 1 and user.c_loginname = ? ";
+		jdbcTemplate.query(sql, new Object[] { loginName }, new RowCallbackHandler() {
 			@Override
 			public void processRow(ResultSet rets) throws SQLException {
 				Org org = new Org();
-				org.setCnFullName(rets.getString("c_name_cn"));
+				org.setName(rets.getString("c_name"));
 				org.setCode(rets.getString("c_code"));
 				org.setParentCode(rets.getString("parent_code"));
 				org.setRootCode(rets.getString("root_code"));
 				org.setId(rets.getString("orgId"));
 				
-				user.setUsername(username);
+				user.setLoginName(loginName);
 				user.setId(rets.getString("c_id"));
 				user.setOrg(org);
 			}

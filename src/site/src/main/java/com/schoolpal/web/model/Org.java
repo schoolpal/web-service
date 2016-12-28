@@ -3,7 +3,7 @@ package com.schoolpal.web.model;
 public class Org {
 	
 	private String id;
-	private String cnFullName;
+	private String Name;
 	private String code;
 	private String parentCode;
 	private String rootCode;
@@ -26,11 +26,11 @@ public class Org {
 	public void setRootCode(String rootCode) {
 		this.rootCode = rootCode;
 	}
-	public String getCnFullName() {
-		return cnFullName;
+	public String getName() {
+		return Name;
 	}
-	public void setCnFullName(String cnFullName) {
-		this.cnFullName = cnFullName;
+	public void setName(String Name) {
+		this.Name = Name;
 	}
 	public String getId() {
 		return id;

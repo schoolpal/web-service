@@ -9,6 +9,6 @@
         <c:if test='${org.father}'>
             <span id="${org.id}" class="glyphicon glyphicon-minus-sign"></span>&nbsp;
         </c:if>
-        <a href="#" id="${org.id}">${org.cnFullName} (${org.code})</a>
+        <a href="#" id="${org.id}" data-name="${org.name}">${org.name} (${org.code})</a>
     </div>
 </c:forEach>

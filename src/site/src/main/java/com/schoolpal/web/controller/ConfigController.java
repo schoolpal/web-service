@@ -47,14 +47,14 @@ public class ConfigController {
 		page.setButtons(buttons);
 		page.setOrgRows(configServ.getAvailableOrgRows(user.getOrg().getCode()));
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.org(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.org(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
 		return new ModelAndView("config/org/index", "page", page);
 	}
 	
 	@RequestMapping("org/segment.html")
 	public ModelAndView orgSegment() {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgSegment()", "");
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgSegment()", "");
 		return new ModelAndView("config/org/segment", "orgRows", configServ.getAvailableOrgRows(user.getOrg().getCode()));
 	}
 	
@@ -74,30 +74,30 @@ public class ConfigController {
 					}
 				}
 				
-				if (msg.equals("") && !configServ.disableOrg(id, user.getUsername())) {
+				if (msg.equals("") && !configServ.disableOrg(id, user.getLoginName())) {
 					msg = "删除组织机构失败，系统未给出明确的错误信息！";
 				}
 			} catch (Exception ex) {
 				msg = "数据库操作失败！";
-				logServ.log(user.getUsername(), Log.ERROR, "ConfigController.orgRemove(String)", ex.getMessage(), "Id: " + id);
+				logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.orgRemove(String)", ex.getMessage(), "Id: " + id);
 			}
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgRemove(String)", "Id: " + id);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgRemove(String)", "Id: " + id);
 		return msg;
 	}
 	
 	@RequestMapping("org/new.html")
 	public String orgNew() {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgNew()", "");
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgNew()", "");
 		return "config/org/new";
 	}
 	
 	@RequestMapping("org/newSegment.html")
 	public ModelAndView orgNewSegment() {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgNewSegment()", "");
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgNewSegment()", "");
 		return new ModelAndView("config/org/newSegment", "orgRows", configServ.getAvailableOrgRows(user.getOrg().getCode()));
 	}
 	
@@ -122,16 +122,16 @@ public class ConfigController {
 					}
 				}
 				
-				if (msg.equals("") && !configServ.addOrg(form, user.getUsername())) {
+				if (msg.equals("") && !configServ.addOrg(form, user.getLoginName())) {
 					msg = "新增组织机构失败，系统未给出明确的错误信息！";
 				}
 			} catch (Exception ex) {
 				msg = "数据库操作失败！";
-				logServ.log(user.getUsername(), Log.ERROR, "ConfigController.orgNew(ConfigOrgNewForm)", ex.getMessage(), String.format("Form: %s", gson.toJson(form)));
+				logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.orgNew(ConfigOrgNewForm)", ex.getMessage(), String.format("Form: %s", gson.toJson(form)));
 			}
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgNew(ConfigOrgNewForm)", msg, String.format("Form: %s", gson.toJson(form)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgNew(ConfigOrgNewForm)", msg, String.format("Form: %s", gson.toJson(form)));
 		return msg;
 	}
 	
@@ -149,7 +149,7 @@ public class ConfigController {
 			}
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgEdit(String)", "", "Id: " + id);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgEdit(String)", "", "Id: " + id);
 		return new ModelAndView("config/org/edit", "form", form);
 	}
 	
@@ -174,16 +174,16 @@ public class ConfigController {
 					}
 				}
 				
-				if (msg.equals("") && !configServ.updateOrg(form, user.getUsername())) {
+				if (msg.equals("") && !configServ.updateOrg(form, user.getLoginName())) {
 					msg = "修改组织机构失败，系统未给出明确的错误信息！";
 				}
 			} catch (Exception ex) {
 				msg = "数据库操作失败！";
-				logServ.log(user.getUsername(), Log.ERROR, "ConfigController.orgMod(ConfigOrgNewForm)", ex.getMessage(), String.format("Form: %s", gson.toJson(form)));
+				logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.orgMod(ConfigOrgNewForm)", ex.getMessage(), String.format("Form: %s", gson.toJson(form)));
 			}
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.orgMod(ConfigOrgNewForm)", msg, String.format("Form: %s", gson.toJson(form)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.orgMod(ConfigOrgNewForm)", msg, String.format("Form: %s", gson.toJson(form)));
 		return msg;
 	}
 	
@@ -195,7 +195,7 @@ public class ConfigController {
 		page.setButtons(buttons);
 		page.setOrgRows(configServ.getAvailableOrgRows(user.getOrg().getCode()));
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.role(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.role(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
 		return new ModelAndView("config/role/index", "page", page);
 	}
 	
@@ -207,12 +207,12 @@ public class ConfigController {
 		RolePage page = new RolePage();
 		String strHierarchy = "";
 		for (OrgRow row : hierarchy) {
-			strHierarchy = row.getCnFullName() + "/" + strHierarchy;
+			strHierarchy = row.getName() + "/" + strHierarchy;
 		}
 		page.setOrgHierarchy(strHierarchy.substring(0, strHierarchy.length() - 1));
 		page.setId(orgId);
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.roleNew(String)", "", 
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.roleNew(String)", "", 
 				String.format("OrgId: %s, OrgHierarchy: %s", page.getId(), page.getOrgHierarchy()));
 		return new ModelAndView("config/role/new", "page", page);
 	}
@@ -234,16 +234,16 @@ public class ConfigController {
 			}
 		} catch(Exception ex) {
 			msg = "数据库操作失败！";
-			logServ.log(user.getUsername(), Log.ERROR, "ConfigController.roleNew(RoleForm)", ex.getMessage(), String.format("RoleForm: %s", gson.toJson(form)));
+			logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.roleNew(RoleForm)", ex.getMessage(), String.format("RoleForm: %s", gson.toJson(form)));
 		}
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.roleNew(RoleForm)", "", String.format("RoleForm: %s", gson.toJson(form)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.roleNew(RoleForm)", "", String.format("RoleForm: %s", gson.toJson(form)));
 		return msg;
 	}
 	
 	@RequestMapping("role/segment.html")
 	public ModelAndView roleSegment(String orgId) {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.roleSegment(String)", "", String.format("OrgId: %s", orgId));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.roleSegment(String)", "", String.format("OrgId: %s", orgId));
 		return new ModelAndView("config/role/segment", "roleRows", configServ.roleRows(orgId));
 	}
 	
@@ -255,11 +255,11 @@ public class ConfigController {
 		List<OrgRow> hierarchy = configServ.getOrgHierarchy(orgId);
 		String strHierarchy = "";
 		for (OrgRow row : hierarchy) {
-			strHierarchy = row.getCnFullName() + "/" + strHierarchy;
+			strHierarchy = row.getName() + "/" + strHierarchy;
 		}
 		form.setOrgHierarchy(strHierarchy.substring(0, strHierarchy.length() - 1));
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.roleEdit(String)", "", 
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.roleEdit(String)", "", 
 				"OrgId: " + orgId + " RoleId: " + roleId + " RoleForm: " + gson.toJson(form));
 		return new ModelAndView("config/role/edit", "form", form);
 	}
@@ -281,9 +281,9 @@ public class ConfigController {
 			}
 		} catch(Exception ex) {
 			msg = "数据库操作失败！";
-			logServ.log(user.getUsername(), Log.ERROR, "ConfigController.roleMod(RoleForm)", ex.getMessage(), String.format("RoleForm: %s", gson.toJson(form)));
+			logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.roleMod(RoleForm)", ex.getMessage(), String.format("RoleForm: %s", gson.toJson(form)));
 		}
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.roleMod(RoleForm)", "", String.format("RoleForm: %s", gson.toJson(form)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.roleMod(RoleForm)", "", String.format("RoleForm: %s", gson.toJson(form)));
 		return msg;
 	}
 	
@@ -299,9 +299,9 @@ public class ConfigController {
 			}
 		} catch (Exception ex) {
 			msg = "数据库操作失败！";
-			logServ.log(user.getUsername(), Log.ERROR, "ConfigController.roleRemove(String)", "", "RoleId: " + roleId);
+			logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.roleRemove(String)", "", "RoleId: " + roleId);
 		}
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.roleRemove(String)", "", "RoleId: " + roleId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.roleRemove(String)", "", "RoleId: " + roleId);
 		return msg;
 	}
 	
@@ -313,14 +313,14 @@ public class ConfigController {
 		page.setButtons(buttons);
 		page.setOrgRows(configServ.getAvailableOrgRows(user.getOrg().getCode()));
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.auth(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.auth(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
 		return new ModelAndView("config/auth/index", "page", page);
 	}
 	
 	@RequestMapping("auth/roleSegment.html")
 	public ModelAndView authRoleSegment(String orgId) {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.authRoleSegment(String)", "", String.format("OrgId: %s", orgId));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.authRoleSegment(String)", "", String.format("OrgId: %s", orgId));
 		return new ModelAndView("config/auth/roleSegment", "roleRows", configServ.roleRows(orgId));
 	}
 	
@@ -329,7 +329,7 @@ public class ConfigController {
 		User user = userServ.getCachedUser();
 		List<FuncRow> funcRows = configServ.getFuncHierarchy(roleId);
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.authRoleSelection(String)", "", String.format("RoleId: %s", roleId));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.authRoleSelection(String)", "", String.format("RoleId: %s", roleId));
 		return new ModelAndView("config/auth/roleSelection", "funcRows", funcRows);
 	}
 	
@@ -345,7 +345,7 @@ public class ConfigController {
 			result = ex.getMessage();
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.authApply(String, String)", "", String.format("RoleId: %s, ExcludedIdString: %s", roleId, excludedIdString));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.authApply(String, String)", "", String.format("RoleId: %s, ExcludedIdString: %s", roleId, excludedIdString));
 		return result;
 	}
 	
@@ -361,7 +361,7 @@ public class ConfigController {
 			result = ex.getMessage();
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userEnable(String)", "", "UserId: " + userId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userEnable(String)", "", "UserId: " + userId);
 		return result;
 	}
 	
@@ -377,7 +377,7 @@ public class ConfigController {
 			result = ex.getMessage();
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userDisable(String)", "", "UserId: " + userId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userDisable(String)", "", "UserId: " + userId);
 		return result;
 	}
 	
@@ -397,7 +397,7 @@ public class ConfigController {
 			}
 		}
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userRemove(String)", "", "UserId: " + userId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userRemove(String)", "", "UserId: " + userId);
 		return result;
 	}
 	
@@ -409,14 +409,14 @@ public class ConfigController {
 		page.setButtons(buttons);
 		page.setOrgRows(configServ.getAvailableOrgRows(user.getOrg().getCode()));
 		
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.user(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.user(String)", "", String.format("Id: %s, Page: %s", id, gson.toJson(page)));
 		return new ModelAndView("config/user/index", "page", page);
 	}
 	
 	@RequestMapping("user/list.html")
 	public ModelAndView userList(String orgId) {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userList()", "", "OrgId: " + orgId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userList()", "", "OrgId: " + orgId);
 		
 		List<UserPage> users = configServ.getUsers(orgId);
 		return new ModelAndView("config/user/list", "users", users);
@@ -425,12 +425,12 @@ public class ConfigController {
 	@RequestMapping("user/new.html")
 	public ModelAndView userNew(String orgId) {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userNew(String)", "", "OrgId: " + orgId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userNew(String)", "", "OrgId: " + orgId);
 		
 		List<OrgRow> hierarchy = configServ.getOrgHierarchy(orgId);
 		String strHierarchy = "";
 		for (OrgRow row : hierarchy) {
-			strHierarchy = row.getCnFullName() + "/" + strHierarchy;
+			strHierarchy = row.getName() + "/" + strHierarchy;
 		}
 
 		Map<String, Object> page = new HashMap<String, Object>();
@@ -449,21 +449,21 @@ public class ConfigController {
 			configServ.addUser(user.getId(), form);
 		} catch(Exception ex) {
 			msg = "数据库操作失败！";
-			logServ.log(user.getUsername(), Log.ERROR, "ConfigController.userNew(UserForm)", ex.getMessage(), String.format("UserForm: %s", gson.toJson(form)));
+			logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.userNew(UserForm)", ex.getMessage(), String.format("UserForm: %s", gson.toJson(form)));
 		}
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userNew(UserForm)", "", String.format("UserForm: %s", gson.toJson(form)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userNew(UserForm)", "", String.format("UserForm: %s", gson.toJson(form)));
 		return msg;
 	}
 	
 	@RequestMapping("user/edit.html")
 	public ModelAndView userEdit(String orgId, String userId) {
 		User user = userServ.getCachedUser();
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userEdit(String, String)", "", "OrgId: " + orgId + " UserId: " + userId);
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userEdit(String, String)", "", "OrgId: " + orgId + " UserId: " + userId);
 		
 		List<OrgRow> hierarchy = configServ.getOrgHierarchy(orgId);
 		String strHierarchy = "";
 		for (OrgRow row : hierarchy) {
-			strHierarchy = row.getCnFullName() + "/" + strHierarchy;
+			strHierarchy = row.getName() + "/" + strHierarchy;
 		}
 
 		Map<String, Object> page = new HashMap<String, Object>();
@@ -484,9 +484,9 @@ public class ConfigController {
 			configServ.modUser(user.getId(), form);
 		} catch(Exception ex) {
 			msg = "数据库操作失败！";
-			logServ.log(user.getUsername(), Log.ERROR, "ConfigController.userEdit(UserForm)", ex.getMessage(), String.format("UserForm: %s", gson.toJson(form)));
+			logServ.log(user.getLoginName(), Log.ERROR, "ConfigController.userEdit(UserForm)", ex.getMessage(), String.format("UserForm: %s", gson.toJson(form)));
 		}
-		logServ.log(user.getUsername(), Log.TRACE, "ConfigController.userEdit(UserForm)", "", String.format("UserForm: %s", gson.toJson(form)));
+		logServ.log(user.getLoginName(), Log.TRACE, "ConfigController.userEdit(UserForm)", "", String.format("UserForm: %s", gson.toJson(form)));
 		return msg;
 	}
 	

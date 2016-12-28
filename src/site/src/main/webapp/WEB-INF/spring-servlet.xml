@@ -17,7 +17,7 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/view/" p:suffix=".jsp" />
 
-	<bean id="mysql" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	<bean id="mysql" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="${mysql.host}" />
 		<property name="username" value="${mysql.user}" />
@@ -26,7 +26,16 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="mysql" />
 	</bean>
-
+<!-- 	<bean id="mariadb" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mariadb.jdbc.Driver" />
+		<property name="url" value="${mariadb.host}" />
+		<property name="username" value="${mariadb.user}" />
+		<property name="password" value="${mariadb.password}" />
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="mariadb" />
+	</bean>
+ -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
