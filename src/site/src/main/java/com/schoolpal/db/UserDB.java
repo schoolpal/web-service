@@ -1,4 +1,4 @@
-package com.schoolpal.web.db;
+package com.schoolpal.db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.schoolpal.service.LogService;
 import com.schoolpal.web.model.Log;
-import com.schoolpal.web.service.LogService;
 
 @Controller
 @RequestMapping("/")

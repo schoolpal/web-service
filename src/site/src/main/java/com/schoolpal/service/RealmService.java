@@ -1,4 +1,4 @@
-package com.schoolpal.web.service;
+package com.schoolpal.service;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -16,47 +16,52 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.schoolpal.web.db.UserDB;
-import com.schoolpal.web.model.Const;
+import com.schoolpal.db.*;
+//import com.schoolpal.db.UserDB;
+import com.schoolpal.web.model.*;
 import com.schoolpal.web.util.MD5;
 
 public class RealmService extends AuthenticatingRealm {
-	
+
 	private final static String REALM_NAME = "SchoolPal_ShiroRealm";
-	
+
 	@Autowired
 	private UserDB userDB;
-	
+	// @Autowired
+	// private UserService userService;
+
 	public RealmService() {
 		setName(REALM_NAME);
 	}
-	
+
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
 			throws AuthenticationException {
-		
+
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession(true);
-		String salt = (String)session.getAttribute(Const.SESSION_KEY_LOGIN_SALT);
+		String salt = (String) session.getAttribute(Const.SESSION_KEY_LOGIN_SALT);
 		if (salt == null) {
 			return null;
 		}
-		
+
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		String username = token.getUsername();
 		String mixedPWD = "";
 		try {
 			mixedPWD = MD5.encode(userDB.getUserLoginPWD(username) + salt);
-		} catch(NoSuchAlgorithmException ex) {
+			// mixedPWD =
+			// MD5.encode(userService.GetUserLoginPassByName(username) + salt);
+		} catch (NoSuchAlgorithmException ex) {
 			ex.printStackTrace();
 		}
 		return new SimpleAuthenticationInfo(username, mixedPWD, getName());
 	}
-	
+
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.addRole("ROLE_USER");
 		info.addStringPermission("user:all");
 		return info;
 	}
-	
+
 }

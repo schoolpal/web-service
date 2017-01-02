@@ -1,6 +1,5 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans
@@ -9,37 +8,45 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="com.schoolpal.web.controller" />
-    <context:component-scan base-package="com.schoolpal.web.service" />
-    <context:component-scan base-package="com.schoolpal.web.db" />
-    
-    <context:property-placeholder location="classpath:config.properties" />
+	<context:component-scan base-package="com.schoolpal.service" />
+	<context:component-scan base-package="com.schoolpal.db" />
 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+	<context:property-placeholder location="classpath:config.properties" />
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/view/" p:suffix=".jsp" />
 
- 	<bean id="mysql" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="${mysql.host}" />
-		<property name="username" value="${mysql.user}" />
-		<property name="password" value="${mysql.password}" />
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.pass}" />
 	</bean>
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="mysql" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-<!-- 	<bean id="mariadb" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mariadb.jdbc.Driver" />
-		<property name="url" value="${mariadb.host}" />
-		<property name="username" value="${mariadb.user}" />
-		<property name="password" value="${mariadb.password}" />
+<!-- 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations"
+			value="classpath:com/schoolpal/db/mybatis/mapper/*.xml"></property>
 	</bean>
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="mariadb" />
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.school.db.mybatis.inf" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+		<property name="annotationClass" value="org.springframework.stereotype.Repository" />
 	</bean>
- -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean> -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
 			<list>
-				<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter">
 					<property name="supportedMediaTypes">
 						<list>
 							<value>text/html;charset=UTF-8</value>
@@ -51,58 +58,60 @@
 	</bean>
 
 	<bean id="accessHandler" class="com.schoolpal.web.handler.AccessHandler">
-	    <property name="ignorePatterns">
-	        <list>
-                <value>.*</value>
-	        </list>
-	    </property>
+		<property name="ignorePatterns">
+			<list>
+				<value>.*</value>
+			</list>
+		</property>
 	</bean>
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="interceptors">
 			<list>
 				<ref bean="accessHandler" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager" />
-        <property name="loginUrl" value="/index.html" />
-        <property name="unauthorizedUrl" value="/index.html" />
-        <property name="filterChainDefinitions">
-            <value>
-                /main/** = authc
-                /market/** = authc
-                /sales/** = authc
-                /service/** = authc
-                /finance/** = authc
-                /academy/** = authc
-                /education/** = authc
-                /config/** = authc
-            </value>
-        </property>
-    </bean>
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="realmService" />
-        <property name="sessionManager" ref="sessionManager" />
-        <property name="cacheManager" ref="cacheManager" />
-    </bean>
-    <bean id="realmService" class="com.schoolpal.web.service.RealmService" />
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="1800000"/>
-        <property name="sessionDAO" ref="redisSessionDAO" />
-    </bean>
-    <bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
-        <property name="redisManager" ref="redisManager" />
-    </bean>
-    <bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
-        <property name="redisManager" ref="redisManager" />
-    </bean>
-    <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
-        <property name="host" value="${redis.host}" />
-        <property name="port" value="${redis.port}" />
-        <property name="password" value="${redis.password}" />
-        <property name="expire" value="1800" />
-    </bean>
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/index.html" />
+		<property name="unauthorizedUrl" value="/index.html" />
+		<property name="filterChainDefinitions">
+			<value>
+				/main/** = authc
+				/market/** = authc
+				/sales/** = authc
+				/service/** = authc
+				/finance/** = authc
+				/academy/** = authc
+				/education/** = authc
+				/config/** = authc
+			</value>
+		</property>
+	</bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="realmService" />
+		<property name="sessionManager" ref="sessionManager" />
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+	<bean id="realmService" class="com.schoolpal.service.RealmService" />
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="globalSessionTimeout" value="1800000" />
+		<property name="sessionDAO" ref="redisSessionDAO" />
+	</bean>
+	<bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
+		<property name="redisManager" ref="redisManager" />
+	</bean>
+	<bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+		<property name="redisManager" ref="redisManager" />
+	</bean>
+	<bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+		<property name="host" value="${redis.host}" />
+		<property name="port" value="${redis.port}" />
+		<property name="password" value="${redis.password}" />
+		<property name="expire" value="1800" />
+	</bean>
 
 </beans>

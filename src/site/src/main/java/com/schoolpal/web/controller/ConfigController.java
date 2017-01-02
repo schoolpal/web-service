@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.schoolpal.service.ConfigService;
+import com.schoolpal.service.LogService;
+import com.schoolpal.service.UserService;
 import com.schoolpal.web.model.Log;
 import com.schoolpal.web.model.User;
 import com.schoolpal.web.model.page.Button;
@@ -23,9 +26,6 @@ import com.schoolpal.web.model.page.config.RolePage;
 import com.schoolpal.web.model.page.config.UserForm;
 import com.schoolpal.web.model.page.config.UserPage;
 import com.schoolpal.web.model.page.OrgRow;
-import com.schoolpal.web.service.ConfigService;
-import com.schoolpal.web.service.LogService;
-import com.schoolpal.web.service.UserService;
 
 @Controller
 @RequestMapping("/config/")

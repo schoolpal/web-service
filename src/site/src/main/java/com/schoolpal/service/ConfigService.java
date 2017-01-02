@@ -1,4 +1,4 @@
-package com.schoolpal.web.service;
+package com.schoolpal.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.web.db.ConfigDB;
 import com.schoolpal.web.model.page.config.OrgForm;
 import com.schoolpal.web.model.page.config.RoleForm;
 import com.schoolpal.web.model.page.config.UserForm;
 import com.schoolpal.web.model.page.config.UserPage;
+import com.schoolpal.db.ConfigDB;
 import com.schoolpal.web.model.page.FuncRow;
 import com.schoolpal.web.model.page.OrgRow;
 import com.schoolpal.web.model.page.RoleRow;

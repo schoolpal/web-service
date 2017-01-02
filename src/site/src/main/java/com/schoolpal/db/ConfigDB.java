@@ -1,4 +1,4 @@
-package com.schoolpal.web.db;
+package com.schoolpal.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

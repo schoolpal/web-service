@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.schoolpal.service.LogService;
+import com.schoolpal.service.UserService;
 import com.schoolpal.web.model.Const;
 import com.schoolpal.web.model.Log;
 import com.schoolpal.web.model.page.LoginForm;
-import com.schoolpal.web.service.LogService;
-import com.schoolpal.web.service.UserService;
 
 @Controller
 @RequestMapping("/login/")

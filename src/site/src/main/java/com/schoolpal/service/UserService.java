@@ -1,10 +1,11 @@
-package com.schoolpal.web.service;
+package com.schoolpal.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -15,15 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-import com.schoolpal.web.db.UserDB;
-import com.schoolpal.web.model.Const;
-import com.schoolpal.web.model.Log;
-import com.schoolpal.web.model.Role;
-import com.schoolpal.web.model.User;
-import com.schoolpal.web.model.Widget;
-import com.schoolpal.web.model.page.Button;
-import com.schoolpal.web.model.page.Menu;
-import com.schoolpal.web.model.page.MenuItem;
+import com.schoolpal.db.*;
+import com.schoolpal.db.mybatis.inf.*;
+import com.schoolpal.db.mybatis.model.*;
+import com.schoolpal.web.model.*;
+import com.schoolpal.web.model.page.*;
 
 @Service
 public class UserService  {
@@ -32,9 +29,16 @@ public class UserService  {
 	private HttpServletRequest request;
 	@Autowired
 	private UserDB userDB;
+//	@Autowired
+//	private TUserMapper userDAO; 
 	@Autowired
 	private LogService logServ;
 	private Gson gson = new Gson();
+	
+//	public String GetUserLoginPassByName(String id){
+//		TUser r = this.userDAO.selectByPrimaryKey(id);
+//		return r.getcLoginpass();
+//	}
 	
 	public boolean login(String username, String mixedPWD) {
 		if (username == null || username.isEmpty()) {
