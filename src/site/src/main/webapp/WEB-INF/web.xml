@@ -7,8 +7,13 @@
 	<display-name>SchoolPal WebSite</display-name>
 
 	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring-servlet.xml</param-value>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring.xml
+            classpath:spring-jdbctpl.xml
+            classpath:spring-shiro.xml
+            classpath:spring-mybatis.xml
+        </param-value>
 	</context-param>
 
     <filter>
@@ -47,6 +52,10 @@
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 

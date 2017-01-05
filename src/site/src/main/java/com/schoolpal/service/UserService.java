@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.schoolpal.db.*;
-import com.schoolpal.db.mybatis.inf.*;
-import com.schoolpal.db.mybatis.model.*;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.*;
 import com.schoolpal.web.model.*;
 import com.schoolpal.web.model.page.*;
 
@@ -29,16 +29,16 @@ public class UserService  {
 	private HttpServletRequest request;
 	@Autowired
 	private UserDB userDB;
-//	@Autowired
-//	private TUserMapper userDAO; 
+	@Autowired
+	private TUserMapper userDAO; 
 	@Autowired
 	private LogService logServ;
 	private Gson gson = new Gson();
 	
-//	public String GetUserLoginPassByName(String id){
-//		TUser r = this.userDAO.selectByPrimaryKey(id);
-//		return r.getcLoginpass();
-//	}
+	public String GetUserLoginPassByName(String name){
+		String password = this.userDAO.selectPasswordByLoginName(name);
+		return password;
+	}
 	
 	public boolean login(String username, String mixedPWD) {
 		if (username == null || username.isEmpty()) {
