@@ -49,7 +49,10 @@ public class UserService  {
 		UsernamePasswordToken token = new UsernamePasswordToken(username, mixedPWD, false);
 		try {
 			currentUser.login(token);
-			userDB.updateLastVisit(username, request.getRemoteAddr());
+			TUser user = new TUser();
+			user.setcLastVisitIp(request.getRemoteAddr());
+			this.userDAO.updateLastVisitByLoginName(user);
+//			userDB.updateLastVisit(username, request.getRemoteAddr());
 			logServ.log(username, Log.TRACE, "LoginService.login(String,String)", "", "Login-Success: " + username);
 		} catch(Exception ex) {
 			logServ.log(username, Log.WARNING, "LoginService.login(String,String)", ex.getMessage(), "Username: " + username + ", MixedPWD: " + mixedPWD);
