@@ -115,6 +115,19 @@
 		from t_user
 		where c_id = #{cId,jdbcType=CHAR}
 	</select>
+	<select id="selectByLoginName" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where c_loginname = #{cName,jdbcType=VARCHAR}
+	</select>
+	<select id="selectPasswordByLoginName" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select c_loginpass
+		from t_user
+		where c_loginname = #{cName,jdbcType=VARCHAR}
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from t_user
 		where c_id = #{cId,jdbcType=CHAR}
