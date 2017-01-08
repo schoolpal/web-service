@@ -19,7 +19,37 @@
 			property="cLastVisitTime" />
 		<result column="c_last_visit_ip" jdbcType="VARCHAR" property="cLastVisitIp" />
 	</resultMap>
-	<sql id="Example_Where_Clause">
+    <sql id="Base_Column_List">
+        c_id, c_loginname, c_loginpass, c_realname, c_nickname,
+        c_phone, c_email,
+        c_qq, c_available,
+        c_org_id, c_org_root_id, c_creator,
+        c_create_time, c_last_visit_time,
+        c_last_visit_ip
+    </sql>
+    <select id="selectByLoginName" parameterType="java.lang.String"
+        resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_user
+        where c_loginname = #{cName,jdbcType=VARCHAR}
+    </select>
+    <select id="selectPasswordByLoginName" parameterType="java.lang.String"
+        resultType="java.lang.String">
+        select c_loginpass
+        from t_user
+        where c_loginname = #{cName,jdbcType=VARCHAR}
+    </select>
+    <update id="updateLastVisitByLoginName" parameterType="com.schoolpal.db.model.TUser">
+        update
+        t_user
+        set c_last_visit_time = now(),
+        c_last_visit_ip =
+        #{cLastVisitIp,jdbcType=VARCHAR}
+        where c_loginname =
+        #{cLoginname,jdbcType=VARCHAR}
+    </update>
+<!-- 	<sql id="Example_Where_Clause">
 		<where>
 			<foreach collection="oredCriteria" item="criteria" separator="or">
 				<if test="criteria.valid">
@@ -83,16 +113,8 @@
 				</if>
 			</foreach>
 		</where>
-	</sql>
-	<sql id="Base_Column_List">
-		c_id, c_loginname, c_loginpass, c_realname, c_nickname,
-		c_phone, c_email,
-		c_qq, c_available,
-		c_org_id, c_org_root_id, c_creator,
-		c_create_time, c_last_visit_time,
-		c_last_visit_ip
-	</sql>
-	<select id="selectByExample" parameterType="com.schoolpal.db.model.TUserExample"
+	</sql> -->
+<!-- 	<select id="selectByExample" parameterType="com.schoolpal.db.model.TUserExample"
 		resultMap="BaseResultMap">
 		select
 		<if test="distinct">
@@ -114,21 +136,8 @@
 		<include refid="Base_Column_List" />
 		from t_user
 		where c_id = #{cId,jdbcType=CHAR}
-	</select>
-	<select id="selectByLoginName" parameterType="java.lang.String"
-		resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from t_user
-		where c_loginname = #{cName,jdbcType=VARCHAR}
-	</select>
-	<select id="selectPasswordByLoginName" parameterType="java.lang.String"
-		resultType="java.lang.String">
-		select c_loginpass
-		from t_user
-		where c_loginname = #{cName,jdbcType=VARCHAR}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	</select> -->
+<!-- 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		delete from t_user
 		where c_id = #{cId,jdbcType=CHAR}
 	</delete>
@@ -429,14 +438,5 @@
 		c_last_visit_ip =
 		#{cLastVisitIp,jdbcType=VARCHAR}
 		where c_id = #{cId,jdbcType=CHAR}
-	</update>
-	<update id="updateLastVisitByLoginName" parameterType="com.schoolpal.db.model.TUser">
-		update
-		t_user
-		set c_last_visit_time = now(),
-		c_last_visit_ip =
-		#{cLastVisitIp,jdbcType=VARCHAR}
-		where c_loginname =
-		#{cLoginname,jdbcType=VARCHAR}
-	</update>
+	</update> -->
 </mapper>
