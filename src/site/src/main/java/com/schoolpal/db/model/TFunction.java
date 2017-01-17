@@ -18,7 +18,9 @@ public class TFunction {
     private Integer cOrderNum;
 
     private String cIcon;
-
+    
+    private String WidgetType;
+    
     public String getcId() {
         return cId;
     }
@@ -90,4 +92,12 @@ public class TFunction {
     public void setcIcon(String cIcon) {
         this.cIcon = cIcon == null ? null : cIcon.trim();
     }
+
+	public String getWidgetType() {
+		return WidgetType;
+	}
+
+	public void setWidgetType(String widgetType) {
+		WidgetType = widgetType;
+	}
 }

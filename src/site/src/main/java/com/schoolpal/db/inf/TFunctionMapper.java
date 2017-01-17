@@ -6,7 +6,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface TFunctionMapper {
-    long countByExample(TFunctionExample example);
+	
+//    List<TFunction> selectAllByRoles(@Param("roleIds") List<String> roleIds);
+	
+/*    long countByExample(TFunctionExample example);
 
     int deleteByExample(TFunctionExample example);
 
@@ -26,5 +29,5 @@ public interface TFunctionMapper {
 
     int updateByPrimaryKeySelective(TFunction record);
 
-    int updateByPrimaryKey(TFunction record);
+    int updateByPrimaryKey(TFunction record);*/
 }

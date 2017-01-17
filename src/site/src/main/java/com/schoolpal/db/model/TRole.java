@@ -1,6 +1,7 @@
 package com.schoolpal.db.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class TRole {
     private String cId;
@@ -20,7 +21,13 @@ public class TRole {
     private String cCreator;
 
     private Date cCreateTime;
+    
+    private String RankName;
+    
+    private Integer RankOrder;
 
+	private List<TFunction> widgets;
+	
     public String getcId() {
         return cId;
     }
@@ -92,4 +99,28 @@ public class TRole {
     public void setcCreateTime(Date cCreateTime) {
         this.cCreateTime = cCreateTime;
     }
+
+	public String getRankName() {
+		return RankName;
+	}
+
+	public void setRankName(String rankName) {
+		RankName = rankName;
+	}
+
+	public Integer getRankOrder() {
+		return RankOrder;
+	}
+
+	public void setRankOrder(Integer rankOrder) {
+		RankOrder = rankOrder;
+	}
+
+	public List<TFunction> getWidgets() {
+		return widgets;
+	}
+
+	public void setWidgets(List<TFunction> widgets) {
+		this.widgets = widgets;
+	}
 }

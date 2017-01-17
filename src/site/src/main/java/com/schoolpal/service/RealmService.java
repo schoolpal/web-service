@@ -17,6 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.schoolpal.db.*;
+import com.schoolpal.db.inf.TUserMapper;
 import com.schoolpal.web.model.*;
 import com.schoolpal.web.util.MD5;
 
@@ -24,10 +25,8 @@ public class RealmService extends AuthenticatingRealm {
 
 	private final static String REALM_NAME = "SchoolPal_ShiroRealm";
 
-/*	@Autowired
-	private UserDB userDB;*/
 	@Autowired
-	private UserService userService;
+	private TUserMapper userDAO; 
 
 	public RealmService() {
 		setName(REALM_NAME);
@@ -47,8 +46,7 @@ public class RealmService extends AuthenticatingRealm {
 		String username = token.getUsername();
 		String mixedPWD = "";
 		try {
-//			mixedPWD = MD5.encode(userDB.getUserLoginPWD(username) + salt);
-			mixedPWD = MD5.encode(userService.GetUserLoginPassByName(username) + salt);
+			mixedPWD = MD5.encode(userDAO.selectPasswordByLoginName(username) + salt);
 		} catch (NoSuchAlgorithmException ex) {
 			ex.printStackTrace();
 		}

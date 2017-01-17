@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.schoolpal.db.model.TFunction;
+import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.UserService;
-import com.schoolpal.web.model.User;
-import com.schoolpal.web.model.Widget;
 
 public class AccessHandler extends HandlerInterceptorAdapter {
 	
@@ -29,7 +29,7 @@ public class AccessHandler extends HandlerInterceptorAdapter {
 		//
 		// TODO: There should be enhanced!
 		//
-		User user = userServ.getCachedUser();
+		TUser user = userServ.getCachedUser();
 		if (user != null) {
 			String accessUrl = request.getRequestURL().toString();
 			for (String strPattern : ignorePatterns) {
@@ -39,8 +39,8 @@ public class AccessHandler extends HandlerInterceptorAdapter {
 				}
 			}
 			
-			for (Widget widget : user.getWidgets()) {
-				if (accessUrl.endsWith(widget.getAction())) {
+			for (TFunction func : user.getWidgets()) {
+				if (accessUrl.endsWith(func.getcAction())) {
 					return true;
 				}
 			}

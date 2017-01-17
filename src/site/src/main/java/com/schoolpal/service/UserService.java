@@ -12,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,18 +28,15 @@ public class UserService  {
 	
 	@Autowired
 	private HttpServletRequest request;
+/*	@Autowired
+	private UserDB userDB;*/
 	@Autowired
-	private UserDB userDB;
+	private TUserMapper userDao; 
 	@Autowired
-	private TUserMapper userDAO; 
+	private TRoleMapper roleDao; 
 	@Autowired
 	private LogService logServ;
 	private Gson gson = new Gson();
-	
-	public String GetUserLoginPassByName(String name){
-		String password = this.userDAO.selectPasswordByLoginName(name);
-		return password;
-	}
 	
 	public boolean login(String username, String mixedPWD) {
 		if (username == null || username.isEmpty()) {
@@ -49,10 +47,9 @@ public class UserService  {
 		UsernamePasswordToken token = new UsernamePasswordToken(username, mixedPWD, false);
 		try {
 			currentUser.login(token);
-			TUser user = new TUser();
-			user.setcLastVisitIp(request.getRemoteAddr());
-			this.userDAO.updateLastVisitByLoginName(user);
-//			userDB.updateLastVisit(username, request.getRemoteAddr());
+			
+			this.userDao.updateLastVisitByLoginName(username, request.getRemoteAddr());
+			
 			logServ.log(username, Log.TRACE, "LoginService.login(String,String)", "", "Login-Success: " + username);
 		} catch(Exception ex) {
 			logServ.log(username, Log.WARNING, "LoginService.login(String,String)", ex.getMessage(), "Username: " + username + ", MixedPWD: " + mixedPWD);
@@ -62,15 +59,17 @@ public class UserService  {
 	}
 	
 	public void cacheUser(String username) {
-		User user = userDB.getUser(username);
 		
-		List<Role> roles = userDB.getRoles(user.getId());
-		user.setRoles(roles);
-		
-		Map<String, List<Widget>> map = userDB.getWidgets(user.getRoleIds());
-		for (Role role : user.getRoles()) {
-			role.setWidgets(map.get(role.getId()));
+		TUser user = userDao.selectOneByLoginName(username);
+		List<String> roleIds = roleDao.selectRoleIdsByUserId(user.getcId());
+		List<TRole> roles = new ArrayList<TRole>();
+		for(String id : roleIds){
+			TRole r = roleDao.selectOneById(id);
+			if (r != null){
+				roles.add(r);
+			}
 		}
+		user.setRoles(roles);
 		
 		String jsonUser = gson.toJson(user);
 		Subject currentUser = SecurityUtils.getSubject();
@@ -80,39 +79,39 @@ public class UserService  {
 		logServ.log(username, Log.TRACE, "LoginService.cacheUserData(String)", "", "SESSION_KEY_CURRENT_USER: " + jsonUser);
 	}
 	
-	public User getCachedUser() {
+	public TUser getCachedUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (currentUser == null || currentUser.getPrincipal() == null) {
 			return null;
 		}
 		
 		Session session = currentUser.getSession(true);
-		return gson.fromJson((String)session.getAttribute(Const.SESSION_KEY_CURRENT_USER), User.class);
+		return gson.fromJson((String)session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
 	}
 
-	public List<Menu> buildMenus(List<Widget> widgets) {
+	public List<Menu> buildMenus(List<TFunction> widgets) {
 		List<Menu> menus = new ArrayList<Menu>();
 		List<MenuItem> items = new ArrayList<MenuItem>();
 		
-		for (Widget widget : widgets) {
-			switch (widget.getType()) {
+		for (TFunction widget : widgets) {
+			switch (widget.getWidgetType()) {
 			case "Menu":
 				Menu menu = new Menu();
-				menu.setId(widget.getId());
-				menu.setText(widget.getText());
-				menu.setOrder(widget.getOrder());
-				menu.setIcon(widget.getIcon());
+				menu.setId(widget.getcId());
+				menu.setText(widget.getcNameLong());
+				menu.setOrder(widget.getcOrderNum());
+				menu.setIcon(widget.getcIcon());
 				menu.setItems(new ArrayList<MenuItem>());
 				menus.add(menu);
 				break;
 			case "MenuItem":
 				MenuItem item = new MenuItem();
-				item.setId(widget.getId());
-				item.setParentId(widget.getParentId());
-				item.setText(widget.getText());
-				item.setAction(widget.getAction());
-				item.setOrder(widget.getOrder());
-				item.setIcon(widget.getIcon());
+				item.setId(widget.getcId());
+				item.setParentId(widget.getcParentId());
+				item.setText(widget.getcNameLong());
+				item.setAction(widget.getcAction());
+				item.setOrder(widget.getcOrderNum());
+				item.setIcon(widget.getcIcon());
 				items.add(item);
 				break;
 			}
@@ -131,20 +130,20 @@ public class UserService  {
 		return menus;
 	}
 	
-	public List<Button> buildButtons(List<Widget> widgets, String parentId) {
+	public List<Button> buildButtons(List<TFunction> widgets, String parentId) {
 		List<Button> buttons = new ArrayList<Button>();
-		for (Widget widget : widgets) {
-			if (!widget.getParentId().equals(parentId) || !widget.getType().endsWith("Button")) {
+		for (TFunction widget : widgets) {
+			if (!widget.getcParentId().equals(parentId) || !widget.getWidgetType().endsWith("Button")) {
 				continue;
 			}
 			
 			Button button = new Button();
-			button.setId(widget.getId());
-			button.setType(widget.getType());
-			button.setText(widget.getText());
-			button.setAction(widget.getAction());
-			button.setIcon(widget.getIcon());
-			button.setOrder(widget.getOrder());
+			button.setId(widget.getcId());
+			button.setType(widget.getWidgetType());
+			button.setText(widget.getcNameLong());
+			button.setAction(widget.getcAction());
+			button.setIcon(widget.getcIcon());
+			button.setOrder(widget.getcOrderNum());
 			buttons.add(button);
 		}
 		Collections.sort(buttons);

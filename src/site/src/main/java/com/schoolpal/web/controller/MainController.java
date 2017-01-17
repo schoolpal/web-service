@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LogService;
 import com.schoolpal.service.UserService;
 import com.schoolpal.web.model.Const;
 import com.schoolpal.web.model.Log;
-import com.schoolpal.web.model.User;
 import com.schoolpal.web.model.page.MainPage;
 
 @Controller
@@ -28,15 +28,15 @@ public class MainController {
 
 	@RequestMapping("index.html")
 	public ModelAndView index() {
-		User user = userServ.getCachedUser();
+		TUser user = userServ.getCachedUser();
 		MainPage page = new MainPage();
-		page.setOrgName(user.getOrg().getName());
-		page.setWelcomeName(user.getLoginName());
-		page.setOrgCode(user.getOrg().getCode());
+		page.setOrgName(user.getOrg().getcName());
+		page.setWelcomeName(user.getcLoginname());
+		page.setOrgCode(user.getOrg().getcCode());
 		page.setMenus(userServ.buildMenus(user.getWidgets()));
 
-		logServ.log(user.getLoginName(), Log.TRACE, "MainController.index()", "", 
-				String.format("Username: %s; Page: %s", user.getLoginName(), gson.toJson(page)));
+		logServ.log(user.getcLoginname(), Log.TRACE, "MainController.index()", "", 
+				String.format("Username: %s; Page: %s", user.getcLoginname(), gson.toJson(page)));
 		return new ModelAndView("main/index", "page", page);
 	}
 	
@@ -45,7 +45,7 @@ public class MainController {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser && null != currentUser.getPrincipal()) {
 			Session session = currentUser.getSession();
-			logServ.log(userServ.getCachedUser().getLoginName(), Log.TRACE, "MainController.logout()", "", 
+			logServ.log(userServ.getCachedUser().getcLoginname(), Log.TRACE, "MainController.logout()", "", 
 					"SESSION_KEY_CURRENT_USER: " + gson.toJson(session.getAttribute(Const.SESSION_KEY_CURRENT_USER)));
 			currentUser.logout();
 		} else {

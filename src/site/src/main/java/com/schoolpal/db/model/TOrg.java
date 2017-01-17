@@ -38,6 +38,10 @@ public class TOrg {
     private Boolean cAvailable;
 
     private Integer cOrderNum;
+    
+    private TOrg parentOrg;
+    
+    private TOrg rootOrg;
 
     public String getcId() {
         return cId;
@@ -182,4 +186,20 @@ public class TOrg {
     public void setcOrderNum(Integer cOrderNum) {
         this.cOrderNum = cOrderNum;
     }
+
+	public TOrg getParentOrg() {
+		return parentOrg;
+	}
+
+	public void setParentOrg(TOrg parentOrg) {
+		this.parentOrg = parentOrg;
+	}
+
+	public TOrg getRootOrg() {
+		return rootOrg;
+	}
+
+	public void setRootOrg(TOrg rootOrg) {
+		this.rootOrg = rootOrg;
+	}
 }

@@ -16,12 +16,12 @@ public interface TUserMapper {
 //
 //    List<TUser> selectByExample(TUserExample example);
 //    TUser selectByPrimaryKey(String cId);
-    TUser selectByLoginName(String cName);
+    TUser selectOneByLoginName(String cName);
     String selectPasswordByLoginName(String cName);
 
 //    int updateByExampleSelective(@Param("record") TUser record, @Param("example") TUserExample example);
 //    int updateByExample(@Param("record") TUser record, @Param("example") TUserExample example);
 //    int updateByPrimaryKeySelective(TUser record);
 //    int updateByPrimaryKey(TUser record);
-    int updateLastVisitByLoginName(TUser record);
+    int updateLastVisitByLoginName(@Param("cName")String cName, @Param("cLastVisitIp")String cLastVisitIp);
 }

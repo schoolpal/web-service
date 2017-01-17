@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface TOrgMapper {
-    long countByExample(TOrgExample example);
+/*    long countByExample(TOrgExample example);
 
     int deleteByExample(TOrgExample example);
 
@@ -26,5 +26,5 @@ public interface TOrgMapper {
 
     int updateByPrimaryKeySelective(TOrg record);
 
-    int updateByPrimaryKey(TOrg record);
+    int updateByPrimaryKey(TOrg record);*/
 }

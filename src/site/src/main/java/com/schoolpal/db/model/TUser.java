@@ -1,6 +1,8 @@
 package com.schoolpal.db.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TUser {
     private String cId;
@@ -33,6 +35,26 @@ public class TUser {
 
     private String cLastVisitIp;
 
+	private TOrg org;
+
+	private List<TRole> roles;
+	
+	public List<String> getRoleIds() {
+		List<String> ids = new ArrayList<String>();
+		for (TRole role : roles) {
+			ids.add(role.getcId());
+		}
+		return ids;
+	}
+	
+	public List<TFunction> getWidgets() {
+		List<TFunction> widgets = new ArrayList<TFunction>();
+		for (TRole role : roles) {
+			widgets.addAll(role.getWidgets());
+		}
+		return widgets;
+	}
+	
     public String getcId() {
         return cId;
     }
@@ -152,4 +174,20 @@ public class TUser {
     public void setcLastVisitIp(String cLastVisitIp) {
         this.cLastVisitIp = cLastVisitIp == null ? null : cLastVisitIp.trim();
     }
+
+	public TOrg getOrg() {
+		return org;
+	}
+
+	public void setOrg(TOrg org) {
+		this.org = org;
+	}
+
+	public List<TRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<TRole> roles) {
+		this.roles = roles;
+	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TFunctionMapper">
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TFunction">
+  <resultMap id="FunctionResultMap" type="com.schoolpal.db.model.TFunction">
     <id column="c_id" jdbcType="CHAR" property="cId" />
     <result column="c_root_id" jdbcType="VARCHAR" property="cRootId" />
     <result column="c_parent_id" jdbcType="VARCHAR" property="cParentId" />
@@ -11,8 +11,10 @@
     <result column="c_widget_type_id" jdbcType="INTEGER" property="cWidgetTypeId" />
     <result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
     <result column="c_icon" jdbcType="VARCHAR" property="cIcon" />
+    <result column="role_id" jdbcType="VARCHAR" property="RoleId" />
+    <result column="widget_name" jdbcType="VARCHAR" property="WidgetType" />
   </resultMap>
-  <sql id="Example_Where_Clause">
+<!--   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
@@ -69,12 +71,12 @@
         </if>
       </foreach>
     </where>
-  </sql>
+  </sql> -->
   <sql id="Base_Column_List">
     c_id, c_root_id, c_parent_id, c_name_short, c_name_long, c_action, c_widget_type_id, 
     c_order_num, c_icon
   </sql>
-  <select id="selectByExample" parameterType="com.schoolpal.db.model.TFunctionExample" resultMap="BaseResultMap">
+<!--   <select id="selectByExample" parameterType="com.schoolpal.db.model.TFunctionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -273,5 +275,5 @@
       c_order_num = #{cOrderNum,jdbcType=INTEGER},
       c_icon = #{cIcon,jdbcType=VARCHAR}
     where c_id = #{cId,jdbcType=CHAR}
-  </update>
+  </update> -->
 </mapper>

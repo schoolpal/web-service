@@ -6,7 +6,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface TRoleMapper {
-    long countByExample(TRoleExample example);
+	
+    List<String> selectRoleIdsByUserId(String cId);
+    
+    TRole selectOneById(String c_id);
+    
+/*    long countByExample(TRoleExample example);
 
     int deleteByExample(TRoleExample example);
 
@@ -26,5 +31,5 @@ public interface TRoleMapper {
 
     int updateByPrimaryKeySelective(TRole record);
 
-    int updateByPrimaryKey(TRole record);
+    int updateByPrimaryKey(TRole record);*/
 }
