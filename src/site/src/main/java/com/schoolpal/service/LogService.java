@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.LogDB;
-import com.schoolpal.web.model.Log;
+import com.schoolpal.user.db.LogDB;
+import com.schoolpal.web.consts.Log;
 
 @Service
 public class LogService {

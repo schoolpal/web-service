@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.user.db.inf.TUserMapper">
+    <resultMap id="UserResultMap" type="com.schoolpal.user.db.model.TUser">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_loginname" jdbcType="VARCHAR" property="cLoginname" />
+        <result column="c_loginpass" jdbcType="VARCHAR" property="cLoginpass" />
+        <result column="c_realname" jdbcType="VARCHAR" property="cRealname" />
+        <result column="c_nickname" jdbcType="VARCHAR" property="cNickname" />
+        <result column="c_phone" jdbcType="VARCHAR" property="cPhone" />
+        <result column="c_email" jdbcType="VARCHAR" property="cEmail" />
+        <result column="c_qq" jdbcType="VARCHAR" property="cQq" />
+        <result column="c_available" jdbcType="BIT" property="cAvailable" />
+        <result column="c_org_id" jdbcType="CHAR" property="cOrgId" />
+        <result column="c_org_root_id" jdbcType="CHAR" property="cOrgRootId" />
+        <result column="c_creator" jdbcType="CHAR" property="cCreator" />
+        <result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+        <result column="c_last_visit_time" jdbcType="TIMESTAMP" property="cLastVisitTime" />
+        <result column="c_last_visit_ip" jdbcType="VARCHAR" property="cLastVisitIp" />
+    </resultMap>
+    <select id="selectOneByLoginName" parameterType="java.lang.String" resultMap="UserResultMap">
+        SELECT *
+        FROM t_user
+        WHERE c_available = 1 AND c_loginname = #{cName,jdbcType=VARCHAR}
+    </select>
+    <select id="selectPasswordByLoginName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT c_loginpass
+        FROM t_user
+        WHERE c_loginname = #{cName,jdbcType=VARCHAR}
+    </select>
+    <update id="updateLastVisitByLoginName">
+        UPDATE
+            t_user
+        SET c_last_visit_time = now(),
+            c_last_visit_ip = #{cLastVisitIp,jdbcType=VARCHAR}
+        WHERE c_loginname = #{cName,jdbcType=VARCHAR}
+    </update>
+    
+</mapper>

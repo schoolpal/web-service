@@ -12,8 +12,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.schoolpal.db.inf.*;
-import com.schoolpal.db.model.*;
+import com.schoolpal.user.db.inf.*;
+import com.schoolpal.user.db.model.*;
 
 public class TestTUserMapper {
 

@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.schoolpal.db.model.TFunction;
-import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.UserService;
+import com.schoolpal.user.db.model.*;
+import com.schoolpal.user.service.UserService;
 
 public class AccessHandler extends HandlerInterceptorAdapter {
 	

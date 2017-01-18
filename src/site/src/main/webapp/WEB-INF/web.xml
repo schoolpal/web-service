@@ -84,9 +84,9 @@
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
+<!-- 	<servlet>
 		<servlet-name>log4j</servlet-name>
 		<servlet-class>org.springframework.web.util.Log4jConfigServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
-	</servlet>
+	</servlet> -->
 </web-app>
