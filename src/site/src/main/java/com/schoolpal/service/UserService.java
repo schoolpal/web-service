@@ -3,21 +3,16 @@ package com.schoolpal.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-import com.schoolpal.db.*;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
 import com.schoolpal.web.model.*;

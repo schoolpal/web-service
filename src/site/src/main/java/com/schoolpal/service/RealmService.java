@@ -16,7 +16,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.schoolpal.db.*;
 import com.schoolpal.db.inf.TUserMapper;
 import com.schoolpal.web.model.*;
 import com.schoolpal.web.util.MD5;

@@ -1,8 +1,6 @@
 package com.schoolpal.db.inf;
 
 import com.schoolpal.db.model.TUser;
-import com.schoolpal.db.model.TUserExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface TUserMapper {

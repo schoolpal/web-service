@@ -1,9 +1,7 @@
 package com.schoolpal.db.inf;
 
 import com.schoolpal.db.model.TFunction;
-import com.schoolpal.db.model.TFunctionExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TFunctionMapper {
 	

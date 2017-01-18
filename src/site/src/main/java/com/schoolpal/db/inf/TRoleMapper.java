@@ -1,9 +1,7 @@
 package com.schoolpal.db.inf;
 
 import com.schoolpal.db.model.TRole;
-import com.schoolpal.db.model.TRoleExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TRoleMapper {
 	

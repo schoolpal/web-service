@@ -1,9 +1,6 @@
 package com.schoolpal.db.inf;
 
 import com.schoolpal.db.model.TOrg;
-import com.schoolpal.db.model.TOrgExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface TOrgMapper {
 	
