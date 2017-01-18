@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TOrgMapper">
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TOrg">
+    <resultMap id="OrgResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_code" jdbcType="VARCHAR" property="cCode" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+        <result column="c_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+        <result column="c_address" jdbcType="VARCHAR" property="cAddress" />
+        <result column="c_city" jdbcType="VARCHAR" property="cCity" />
+        <result column="c_state" jdbcType="VARCHAR" property="cState" />
+        <result column="c_county" jdbcType="VARCHAR" property="cCounty" />
+        <result column="c_owner" jdbcType="VARCHAR" property="cOwner" />
+        <result column="c_owner_phone" jdbcType="VARCHAR" property="cOwnerPhone" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+        <result column="c_root_id" jdbcType="CHAR" property="cRootId" />
+        <result column="c_creator" jdbcType="CHAR" property="cCreator" />
+        <result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+        <result column="c_modifier" jdbcType="VARCHAR" property="cModifier" />
+        <result column="c_modify_time" jdbcType="TIMESTAMP" property="cModifyTime" />
+        <result column="c_available" jdbcType="BIT" property="cAvailable" />
+        <result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
+        <association property="parentOrg" javaType="com.schoolpal.db.model.TOrg">
+            <id column="po_id" jdbcType="CHAR" property="cId" />
+            <result column="po_code" jdbcType="VARCHAR" property="cCode" />
+            <result column="po_name" jdbcType="VARCHAR" property="cName" />
+            <result column="po_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+        </association>
+        <association property="rootOrg" javaType="com.schoolpal.db.model.TOrg">
+            <id column="ro_id" jdbcType="CHAR" property="cId" />
+            <result column="ro_code" jdbcType="VARCHAR" property="cCode" />
+            <result column="ro_name" jdbcType="VARCHAR" property="cName" />
+            <result column="ro_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+        </association>
+    </resultMap>
+    <select id="selectOneById" parameterType="java.lang.String" resultMap="OrgResultMap">
+        SELECT o.*, 
+              po.c_id AS po_id, po.c_code AS po_code, po.c_name AS po_name, po.c_name_abbr AS po_name_abbr, 
+              ro.c_id AS ro_id, ro.c_code AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr AS ro_name_abbr
+        FROM  t_org AS o 
+        LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
+        LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
+        WHERE o.c_id = #{cId,jdbcType=VARCHAR}
+    </select>
+
+<!--   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TOrg">
     <id column="c_id" jdbcType="CHAR" property="cId" />
     <result column="c_code" jdbcType="VARCHAR" property="cCode" />
     <result column="c_name" jdbcType="VARCHAR" property="cName" />
@@ -415,5 +457,5 @@
       c_available = #{cAvailable,jdbcType=BIT},
       c_order_num = #{cOrderNum,jdbcType=INTEGER}
     where c_id = #{cId,jdbcType=CHAR}
-  </update>
+  </update> -->
 </mapper>

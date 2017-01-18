@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface TFunctionMapper {
 	
-//    List<TFunction> selectAllByRoles(@Param("roleIds") List<String> roleIds);
+    List<TFunction> selectFuncsByRoleId(String cId);
 	
 /*    long countByExample(TFunctionExample example);
 

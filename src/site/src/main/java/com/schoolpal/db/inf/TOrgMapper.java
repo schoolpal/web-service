@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface TOrgMapper {
+	
+    TOrg selectOneById(String cId);
+    
 /*    long countByExample(TOrgExample example);
 
     int deleteByExample(TOrgExample example);

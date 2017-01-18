@@ -21,7 +21,9 @@ import com.schoolpal.db.model.*;
 public class TestTUserMapper {
 
 	private static TUserMapper userDao = null;
+	private static TOrgMapper orgDao = null;
 	private static TRoleMapper roleDao = null;
+	private static TFunctionMapper funcDao = null;
 
 	private static String testUserLoginName = "sp-admin";
 	private static String testUserLoginPass = "14e1b600b1fd579f47433b88e8d85291";
@@ -32,8 +34,12 @@ public class TestTUserMapper {
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:spring4test.xml");
 		userDao = (TUserMapper) context.getBean("TUserMapper");
 		Assert.assertNotNull(userDao);
+		orgDao = (TOrgMapper) context.getBean("TOrgMapper");
+		Assert.assertNotNull(orgDao);
 		roleDao = (TRoleMapper) context.getBean("TRoleMapper");
 		Assert.assertNotNull(roleDao);
+		funcDao = (TFunctionMapper) context.getBean("TFunctionMapper");
+		Assert.assertNotNull(orgDao);
 	}
 
 	@AfterClass
@@ -57,7 +63,7 @@ public class TestTUserMapper {
 		Assert.assertEquals(testUserLoginPass, user.getcLoginpass());
 		Assert.assertEquals(testUserOrgId, user.getcOrgId());
 		
-		TOrg org = user.getOrg();
+		TOrg org = orgDao.selectOneById(user.getcOrgId());
 		Assert.assertNotNull(org);
 		Assert.assertEquals(testUserOrgId, org.getcId());
 		
@@ -69,17 +75,13 @@ public class TestTUserMapper {
 		Assert.assertNotNull(rootOrg);
 		Assert.assertEquals(testUserOrgId, rootOrg.getcId());
 		
-		String userId = user.getcId();
-		Assert.assertNotNull(userId);
-		List<String> roleIds = roleDao.selectRoleIdsByUserId(userId);
-		Assert.assertNotNull(roleIds);
-		Assert.assertTrue(roleIds.size() > 0);
-		List<TRole> roles = new ArrayList<TRole>();
-		for(String id : roleIds){
-			TRole r = roleDao.selectOneById(id);
-			if (r != null){
-				roles.add(r);
-			}
+		user.setOrg(org);
+		
+		Assert.assertNotNull(user.getcId());
+		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+		for(TRole role : roles){
+			List<TFunction> funcs = funcDao.selectFuncsByRoleId(role.getcId());
+			role.setWidgets(funcs);
 		}
 		Assert.assertTrue(roles.size() > 0);
 		

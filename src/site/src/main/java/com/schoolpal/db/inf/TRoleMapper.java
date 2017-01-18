@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 public interface TRoleMapper {
 	
-    List<String> selectRoleIdsByUserId(String cId);
+    List<TRole> selectRolesByUserId(String cId);
     
-    TRole selectOneById(String c_id);
+    TRole selectOneById(String cid);
     
 /*    long countByExample(TRoleExample example);
 

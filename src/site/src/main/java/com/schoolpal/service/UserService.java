@@ -33,7 +33,11 @@ public class UserService  {
 	@Autowired
 	private TUserMapper userDao; 
 	@Autowired
+	private TOrgMapper orgDao; 
+	@Autowired
 	private TRoleMapper roleDao; 
+	@Autowired
+	private TFunctionMapper funcDao; 
 	@Autowired
 	private LogService logServ;
 	private Gson gson = new Gson();
@@ -58,18 +62,26 @@ public class UserService  {
 		return true;
 	}
 	
-	public void cacheUser(String username) {
-		
+	private TUser queryUserByLoginName(String username){
 		TUser user = userDao.selectOneByLoginName(username);
-		List<String> roleIds = roleDao.selectRoleIdsByUserId(user.getcId());
-		List<TRole> roles = new ArrayList<TRole>();
-		for(String id : roleIds){
-			TRole r = roleDao.selectOneById(id);
-			if (r != null){
-				roles.add(r);
-			}
+		
+		//Get orgs
+		TOrg org = orgDao.selectOneById(user.getcOrgId());
+		user.setOrg(org);
+		
+		//Get roles
+		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+		for(TRole role : roles){
+			List<TFunction> funcs = funcDao.selectFuncsByRoleId(role.getcId());
+			role.setWidgets(funcs);
 		}
 		user.setRoles(roles);
+		
+		return user;
+	}
+	
+	public void cacheUser(String username) {
+		TUser user = this.queryUserByLoginName(username);
 		
 		String jsonUser = gson.toJson(user);
 		Subject currentUser = SecurityUtils.getSubject();
