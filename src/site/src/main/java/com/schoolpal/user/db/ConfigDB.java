@@ -369,15 +369,16 @@ public class ConfigDB {
 		return users;
 	}
 
-	public void userEnable(String userId) {
+	public void enableUser(String userId) {
 		jdbcTemplate.update(" update t_user set c_available = 1 where c_id = ? ", new Object[] { userId });
 	}
 
-	public void userDisable(String userId) {
+	public void disableUser(String userId) {
 		jdbcTemplate.update(" update t_user set c_available = 0 where c_id = ? ", new Object[] { userId });
 	}
 
-	public void userRemove(String userId) {
+	public void removeUser(String userId) {
+		jdbcTemplate.update(" delete from t_user_role where c_user_id = ? ", new Object[] { userId });
 		jdbcTemplate.update(" delete from t_user where c_id = ? ", new Object[] { userId });
 	}
 

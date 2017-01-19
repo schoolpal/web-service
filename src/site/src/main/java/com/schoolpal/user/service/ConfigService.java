@@ -208,15 +208,15 @@ public class ConfigService {
 	}
 
 	public void userEnable(String userId) {
-		configDB.userEnable(userId);
+		configDB.enableUser(userId);
 	}
 
-	public void userDisable(String userId) {
-		configDB.userDisable(userId);
+	public void disableUser(String userId) {
+		configDB.disableUser(userId);
 	}
 
-	public void userRemove(String userId) {
-		configDB.userRemove(userId);
+	public void removeUser(String userId) {
+		configDB.removeUser(userId);
 	}
 
 	public void addUser(String creatorId, UserForm form) {

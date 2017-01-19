@@ -372,7 +372,7 @@ public class ConfigController {
 		
 		String result = "";
 		try {
-			configServ.userDisable(userId);
+			configServ.disableUser(userId);
 		} catch(Exception ex) {
 			result = ex.getMessage();
 		}
@@ -391,7 +391,7 @@ public class ConfigController {
 			result = "不允许删除当前操作用户！";
 		} else {
 			try {
-				configServ.userRemove(userId);
+				configServ.removeUser(userId);
 			} catch(Exception ex) {
 				result = ex.getMessage();
 			}
