@@ -20,8 +20,8 @@ import com.schoolpal.web.consts.Const;
 import com.schoolpal.web.consts.Log;
 
 @Controller
-@RequestMapping("/ajax/login")
-public class AjaxLoginController {
+@RequestMapping("/ajax/user")
+public class AjaxUserController {
 	
 	@Autowired
 	private LogService logServ;
@@ -42,7 +42,7 @@ public class AjaxLoginController {
 		Session session = currentUser.getSession(true);
 		session.setAttribute(Const.SESSION_KEY_LOGIN_SALT, salt);
 		
-		logServ.log("", Log.TRACE, "AjaxLoginController.salt()", "", "Salt: " + salt);
+		logServ.log("", Log.TRACE, "AjaxUserController.salt()", "", "Salt: " + salt);
 		
 		AjaxResponse res = new AjaxResponse(200);
 		res.setData(salt);
@@ -55,7 +55,7 @@ public class AjaxLoginController {
 	public String login(LoginForm login) {
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession(true);
-		logServ.log(login.getLoginName(), Log.TRACE, "AjaxLoginController.login(LoginForm)", "", 
+		logServ.log(login.getLoginName(), Log.TRACE, "AjaxUserController.login()", "", 
 				String.format("LoginForm: %s; Salt: %s", gson.toJson(login), (String)session.getAttribute(Const.SESSION_KEY_LOGIN_SALT)));
 		
 		AjaxResponse res = new AjaxResponse(200);
@@ -70,16 +70,35 @@ public class AjaxLoginController {
 				
 				res.setCode(500); 
 				res.setDetail("系统异常，请联系管理员！");
-				logServ.log(login.getLoginName(), Log.ERROR, "LoginController.login(LoginForm)", ex.getMessage(), "LoginForm: " + gson.toJson(login));
+				logServ.log(login.getLoginName(), Log.ERROR, "AjaxUserController.login(LoginForm)", ex.getMessage(), "LoginForm: " + gson.toJson(login));
 			}
 		} else {
 			res.setCode(401); 
 			res.setDetail("登录失败，请确认用户名密码正确！");
 		}
 
-		logServ.log(login.getLoginName(), Log.DEBUG, "LoginController.login(LoginForm)", "", "Error: " + res.getDetail());
+		logServ.log(login.getLoginName(), Log.DEBUG, "AjaxUserController.login()", "", "Error: " + res.getDetail());
 
 		return gson.toJson(res);
 	}
 	
+	@RequestMapping(value="logout.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String logout() {
+		Subject currentUser = SecurityUtils.getSubject();
+		AjaxResponse res = new AjaxResponse(200);
+		if (null != currentUser && null != currentUser.getPrincipal()) {
+			Session session = currentUser.getSession();
+			logServ.log(userServ.getCachedUser().getcLoginname(), Log.TRACE, "AjaxUserController.logout()", "", 
+					"SESSION_KEY_CURRENT_USER: " + gson.toJson(session.getAttribute(Const.SESSION_KEY_CURRENT_USER)));
+			currentUser.logout();
+		} else {
+			res.setCode(500);
+			res.setDetail("Illegal access");
+			logServ.log("", Log.WARNING, "AjaxUserController.logout()", "Illegal access!");
+		}
+				
+		return gson.toJson(res);
+	}
+
 }

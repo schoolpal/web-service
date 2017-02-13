@@ -1,13 +1,8 @@
-package com.schoolpal.user.service;
-
-import java.io.IOException;
-import java.io.PrintWriter;
+package com.schoolpal.ajax;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.shiro.authc.*;
-import org.apache.shiro.subject.*;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
 public class AjaxAuthenticationFilter extends FormAuthenticationFilter {

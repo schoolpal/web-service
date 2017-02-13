@@ -19,12 +19,16 @@
  		<property name="filters">
 			<util:map>
                 <entry key="ajaxc">  
-                    <bean class="com.schoolpal.user.service.AjaxAuthenticationFilter"></bean>  
+                    <bean class="com.schoolpal.ajax.AjaxAuthenticationFilter"></bean>  
                 </entry>
 			</util:map>
 		</property>
  		<property name="filterChainDefinitions">
 			<value>
+                /ajax/user/salt.do = anon
+                /ajax/user/login.do = anon
+                /ajax/user/logout.do = anon
+				/ajax/** = ajaxc
 				/main/** = authc
 				/market/** = authc
 				/sales/** = authc
@@ -33,8 +37,6 @@
 				/academy/** = authc
 				/education/** = authc
 				/config/** = authc
-                /ajax/login/** = anon
-				/ajax/** = ajaxc
 			</value>
 		</property>
 	</bean>
