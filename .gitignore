@@ -3,3 +3,4 @@ src/site/.gitignore
 src/site/.project
 src/site/.settings/*
 *.bak
+.DS_Store

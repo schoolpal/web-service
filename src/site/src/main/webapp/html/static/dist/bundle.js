@@ -136,8 +136,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/.0.26.1@css-loader/index.js!./../../../node_modules/less-loader/index.js!./bundle.less", function() {
-				var newContent = require("!!./../../../node_modules/.0.26.1@css-loader/index.js!./../../../node_modules/less-loader/index.js!./bundle.less");
+			module.hot.accept("!!./../../../../../../../../../node_modules/.0.26.1@css-loader/index.js!./../../../../../../../../../node_modules/less-loader/index.js!./bundle.less", function() {
+				var newContent = require("!!./../../../../../../../../../node_modules/.0.26.1@css-loader/index.js!./../../../../../../../../../node_modules/less-loader/index.js!./bundle.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -28272,7 +28272,8 @@
 	exports.salt = salt;
 	exports.login = login;
 	exports.logout = logout;
-	var DEV_HOST = 'http://www.dinner3000.com:7180';
+	var DEV_SERVER_HOST = '//schoolpal.dinner3000.com:7180';
+	var DEV_HOST = '//127.0.0.1:7180';
 	var PATH = '/web/ajax/';
 
 	function io(options, callback, error) {
@@ -28311,8 +28312,11 @@
 	}
 
 	function formatUrl(url) {
-	    if (location.hostname === '127.0.0.1') {
+	    console.log(location.port);
+	    if (location.port === '3001') {
 	        return DEV_HOST + PATH + url;
+	    } else if (location.port === '3000') {
+	        return DEV_SERVER_HOST + PATH + url;
 	    } else {
 	        return PATH + url;
 	    }
