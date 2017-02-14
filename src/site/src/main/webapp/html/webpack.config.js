@@ -1,15 +1,17 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var ROOT_PATH = path.resolve(__dirname);
-var DEV_PATH = path.resolve(ROOT_PATH, 'src');
-var BUILD_PATH = path.resolve(ROOT_PATH, 'static/dist');
+const ROOT_PATH = path.resolve(__dirname);
+const DEV_PATH = path.resolve(ROOT_PATH, 'src');
+const BUILD_PATH = path.resolve(ROOT_PATH, 'static/dist');
 
 module.exports = {
     entry: path.resolve(DEV_PATH, 'app.jsx'),
     output: {
         path: BUILD_PATH,
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/dist/'
     },
     module: {
         loaders: [{
@@ -30,6 +32,12 @@ module.exports = {
             loader: 'url'
         }]
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(DEV_PATH, 'app.html'),
+            filename: '../index.html'
+        })
+    ],
     resolve: {
         extensions: ['', '.js', '.jsx']
     }

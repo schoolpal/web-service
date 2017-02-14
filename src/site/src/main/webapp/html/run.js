@@ -6,7 +6,7 @@ const port = (process.argv.findIndex(isDinner) < 0) ? 3000 : 3001;
 app.use(express.static('static'));
 
 app.all('*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'static/index.html'));
 });
 
 function isDinner(elem) {

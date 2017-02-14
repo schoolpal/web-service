@@ -1,4 +1,6 @@
-import css from './less/bundle.less';
+window.OMS_CONFIG = {};
+
+require('./less/bundle.less');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -12,8 +14,6 @@ import AuthList from './components/auth/List';
 import UserList from './components/user/List';
 import UserEditor from './components/user/Editor';
 import Login from './components/login';
-
-window.OMS_CONFIG = {};
 
 ReactDOM.render((
     <Router history={browserHistory}>
