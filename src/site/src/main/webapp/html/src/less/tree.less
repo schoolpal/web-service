@@ -1,0 +1,96 @@
+.tree {
+    padding: 10px 20px;
+
+    li,
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        position: relative;
+        min-height: 24px;
+        line-height: 24px;
+        font-size: 16px;
+
+        ul {
+            display: none;
+        }
+
+        li {
+            margin-left: 23px;
+        }
+
+        .hd {
+            padding-left: 5px;
+            min-height: 24px;
+            line-height: 24px;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.tree-select {
+    cursor: pointer;
+
+    &:before {
+        content: "\f096";
+        display: inline-block;
+        margin-right: 5px;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    &.selected {
+        &:before {
+            content: "\f046";
+        }
+    }
+}
+
+.tree-node {
+    margin-bottom: 0;
+
+    &:before {
+        content: "\f147";
+        display: inline-block;
+        margin-right: 10px;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    &.closed {
+        &:before {
+            content: "\f196";
+        }
+    }
+
+    &.not-child {
+        &:before {
+            visibility: hidden;
+        }
+    }
+
+    &.tree-spacing-2 {
+        margin-left: 40px;
+    }
+
+    &.tree-spacing-3 {
+        margin-left: 80px;
+    }
+
+    &.tree-spacing-4 {
+        margin-left: 120px;
+    }
+
+    &.tree-spacing-5 {
+        margin-left: 160px;
+    }
+}

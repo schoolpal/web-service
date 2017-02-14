@@ -1,0 +1,192 @@
+.show > .dropdown-menu {
+    min-width: 100%;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.table thead th {
+    white-space: nowrap;
+}
+
+.b-l {
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 1px;
+        background: #eceeef;
+    }
+}
+
+.b-r {
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 1px;
+        background: #eceeef;
+    }
+}
+
+.b-lr {
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 1px;
+        background: #eceeef;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 1px;
+        background: #eceeef;
+    }
+}
+
+.hide {
+    display: none;
+}
+
+.flex-cell {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 0;
+    -webkit-flex-basis: 0;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+    display: block;
+    position: relative;
+}
+
+.main {
+    position: absolute;
+    top: 54px;
+    left: 56px;
+    right: 0;
+    bottom: 0;
+    padding: 0 20px 20px;
+    overflow: auto;
+
+    h5 {
+        position: relative;
+        margin-bottom: 1rem;
+        padding: 1rem 0;
+        line-height: 38px;
+
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: #eceeef;
+        }
+
+        p {
+            font-size: .8em;
+            font-weight: normal;
+        }
+    }
+}
+
+.role {
+    .col-4 {
+        position: relative;
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 1px;
+            background: #eceeef;
+        }
+    }
+}
+
+.login {
+    position: absolute;
+    top: 54px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .login-form {
+        margin: 50px auto;
+        padding: 0 20px;
+        width: 600px;
+        height: 370px;
+        background: #fff;
+
+        h5 {
+            position: relative;
+            margin-bottom: 0;
+            padding: 20px 0;
+            font-size: 30px;
+            font-weight: normal;
+        }
+
+        li,
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        li {
+            margin-top: 30px;
+            border-bottom: 1px solid #eceeef;
+        }
+
+        input {
+            display: block;
+            padding: 0 10px;
+            width: 100%;
+            font-size: 30px;
+            border: 0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .login-submit {
+            float: right;
+            margin-top: 70px;
+            cursor: pointer;
+
+            i,
+            span {
+                vertical-align: middle;
+            }
+
+            span {
+                margin-left: 10px;
+                font-size: 24px;
+            }
+        }
+    }
+}
