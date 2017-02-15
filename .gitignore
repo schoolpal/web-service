@@ -4,3 +4,4 @@ src/site/.project
 src/site/.settings/*
 *.bak
 .DS_Store
+src/front/node_modules
