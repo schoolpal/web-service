@@ -4,4 +4,6 @@ src/site/.project
 src/site/.settings/*
 *.bak
 .DS_Store
+src/site/target/
 src/front/node_modules
+src/front/html
