@@ -27,6 +27,25 @@
 	</context-param>
 
 	<filter>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<init-param>
+			<param-name>confPath</param-name>
+			<param-value>/WEB-INF/urlrewrite.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>INFO</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>UrlRewriteFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+	<filter>
 		<filter-name>CORS</filter-name>
 		<filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
 		<init-param>
@@ -105,10 +124,8 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
-<!-- 	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
-		<url-pattern>*.html</url-pattern>
-	</servlet-mapping> -->
+	<!-- <servlet-mapping> <servlet-name>spring</servlet-name> <url-pattern>*.html</url-pattern> 
+		</servlet-mapping> -->
 
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
