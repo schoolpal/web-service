@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const ROOT_PATH = path.resolve(__dirname);
 const DEV_PATH = path.resolve(ROOT_PATH, 'src');
-const BUILD_PATH = path.resolve(ROOT_PATH, 'static/dist');
+const BUILD_PATH = path.resolve(ROOT_PATH, 'html/dist');
 
 module.exports = {
     entry: path.resolve(DEV_PATH, 'app.jsx'),
