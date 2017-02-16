@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/dist/";
+/******/ 	__webpack_require__.p = "dist/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -29062,8 +29062,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../../../../../../../../node_modules/.0.26.1@css-loader/index.js!./../../../../../../../../../node_modules/less-loader/index.js!./bundle.less", function() {
-				var newContent = require("!!./../../../../../../../../../node_modules/.0.26.1@css-loader/index.js!./../../../../../../../../../node_modules/less-loader/index.js!./bundle.less");
+			module.hot.accept("!!./../../../../../node_modules/.0.26.1@css-loader/index.js!./../../../../../node_modules/less-loader/index.js!./bundle.less", function() {
+				var newContent = require("!!./../../../../../node_modules/.0.26.1@css-loader/index.js!./../../../../../node_modules/less-loader/index.js!./bundle.less");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});

@@ -11,7 +11,7 @@ module.exports = {
     output: {
         path: BUILD_PATH,
         filename: 'bundle.js',
-        publicPath: '/dist/'
+        publicPath: 'dist/'
     },
     module: {
         loaders: [{
