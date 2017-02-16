@@ -5,7 +5,9 @@
 			The rule means that requests to /test/status/ will be redirected to
 			/rewrite-status the url will be rewritten.
 		</note>
-		<from>^/html/([^\.]+)$</from>
+<!-- 		<condition name="request-uri" operator="notequal">^/html/index\.html$</condition> -->
+<!-- 		<condition name="request-uri" operator="notequal">^/html/dist/(.+)$</condition> -->
+		<from>^/html/(?!index\.html)(?!dist/)(.+)$</from>
 		<to type="forward">/html/index.html</to>
 	</rule>
 <!-- 	<outbound-rule>
