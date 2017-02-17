@@ -60,41 +60,43 @@
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _List = __webpack_require__(228);
+	var _List = __webpack_require__(229);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(229);
+	var _Editor = __webpack_require__(230);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _List3 = __webpack_require__(231);
+	var _List3 = __webpack_require__(232);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(232);
+	var _Editor3 = __webpack_require__(233);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _List5 = __webpack_require__(233);
+	var _List5 = __webpack_require__(234);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _List7 = __webpack_require__(234);
+	var _List7 = __webpack_require__(235);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor5 = __webpack_require__(235);
+	var _Editor5 = __webpack_require__(236);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _login = __webpack_require__(236);
+	var _login = __webpack_require__(237);
 
 	var _login2 = _interopRequireDefault(_login);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	window.OMS_CONFIG = {};
+	window.OMS_CONFIG = {
+	    ROOTPATH: '/web/html/'
+	};
 
 	__webpack_require__(241);
 
@@ -103,7 +105,7 @@
 	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(
 	        _reactRouter.Route,
-	        { path: '/', component: _Dashboard2.default },
+	        { path: OMS_CONFIG.ROOTPATH, component: _Dashboard2.default },
 	        _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List4.default }),
@@ -112,7 +114,7 @@
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List8.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:id', component: _Editor6.default })
 	    ),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: OMS_CONFIG.ROOTPATH + 'login', component: _login2.default })
 	), document.querySelector('#app'));
 
 /***/ },
@@ -25250,7 +25252,7 @@
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(227);
+	var _AsideBar = __webpack_require__(228);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
@@ -25315,7 +25317,9 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _Dialog = __webpack_require__(226);
+	var _api = __webpack_require__(226);
+
+	var _Dialog = __webpack_require__(227);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
@@ -25354,7 +25358,8 @@
 	    }, {
 	        key: 'signout',
 	        value: function signout() {
-	            this.props.router.replace('/login');
+	            (0, _api.logout)();
+	            this.props.router.replace(OMS_CONFIG.ROOTPATH + 'login');
 	        }
 	    }, {
 	        key: 'render',
@@ -25408,6 +25413,95 @@
 
 /***/ },
 /* 226 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.salt = salt;
+	exports.login = login;
+	exports.logout = logout;
+	var PATH = '/web/ajax/';
+
+	function io(options, callback, error) {
+	    var defaults = {
+	        type: 'GET',
+	        dataType: 'json'
+	    };
+	    var settings = $.extend({}, defaults, options);
+	    var jqxhr = $.ajax({
+	        url: formatUrl(settings.url),
+	        type: settings.tyoe,
+	        data: settings.data || {},
+	        dataType: settings.dataType,
+	        statusCode: {
+	            401: function _() {
+	                console.log('not sign in ...');
+	            }
+	        }
+	    });
+
+	    jqxhr.done(function (data, textStatus, jqXHR) {
+	        console.log(data, textStatus, jqXHR.status);
+
+	        if (data.code === 200) {
+	            callback(data.data);
+	        } else {
+	            if (error) {
+	                error(data);
+	            };
+	        };
+	    });
+
+	    jqxhr.fail(function (jqXHR, textStatus, errorThrown) {
+	        console.log(jqXHR.status, textStatus, errorThrown);
+	    });
+	}
+
+	function formatUrl(url) {
+	    return PATH + url;
+	}
+
+	function salt() {
+	    var defer = $.Deferred();
+	    var url = 'user/salt.do';
+
+	    io({ url: url, tyoe: 'POST' }, function (data) {
+	        defer.resolve(data);
+	    });
+
+	    return defer.promise();
+	}
+
+	function login(data) {
+	    var defer = $.Deferred();
+	    var url = 'user/login.do';
+	    var settings = $.extend({ url: url, tyoe: 'POST' }, { data: data });
+
+	    io(settings, function (data) {
+	        defer.resolve(data);
+	    }, function (data) {
+	        defer.reject(data);
+	    });
+
+	    return defer.promise();
+	}
+
+	function logout() {
+	    var defer = $.Deferred();
+	    var url = 'user/logout.do';
+
+	    io({ url: url, tyoe: 'POST' }, function (data) {
+	        defer.resolve(data);
+	    });
+
+	    return defer.promise();
+	}
+
+/***/ },
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25541,7 +25635,7 @@
 	exports.default = Dialog;
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25569,29 +25663,29 @@
 	        { className: 'aside-bar bg-faded' },
 	        _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/org', className: 'btn btn-block btn-link' },
+	            { to: OMS_CONFIG.ROOTPATH + 'org', className: 'btn btn-block btn-link' },
 	            _react2.default.createElement('i', { className: 'fa fa-sitemap fa-lg', 'aria-hidden': 'true' })
 	        ),
 	        _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/role', className: 'btn btn-block btn-link' },
+	            { to: OMS_CONFIG.ROOTPATH + 'role', className: 'btn btn-block btn-link' },
 	            _react2.default.createElement('i', { className: 'fa fa-users fa-lg', 'aria-hidden': 'true' })
 	        ),
 	        _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/auth', className: 'btn btn-block btn-link' },
+	            { to: OMS_CONFIG.ROOTPATH + 'auth', className: 'btn btn-block btn-link' },
 	            _react2.default.createElement('i', { className: 'fa fa-shield fa-lg', 'aria-hidden': 'true' })
 	        ),
 	        _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/user', className: 'btn btn-block btn-link' },
+	            { to: OMS_CONFIG.ROOTPATH + 'user', className: 'btn btn-block btn-link' },
 	            _react2.default.createElement('i', { className: 'fa fa-user fa-lg', 'aria-hidden': 'true' })
 	        )
 	    );
 	}
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25825,7 +25919,7 @@
 	exports.default = List;
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25846,7 +25940,7 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _OrgTree = __webpack_require__(230);
+	var _OrgTree = __webpack_require__(231);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -26135,7 +26229,7 @@
 	exports.default = Editor;
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26333,7 +26427,7 @@
 	exports.default = OrgTree;
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26354,7 +26448,7 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _OrgTree = __webpack_require__(230);
+	var _OrgTree = __webpack_require__(231);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -26517,7 +26611,7 @@
 	exports.default = List;
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26537,7 +26631,7 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _OrgTree = __webpack_require__(230);
+	var _OrgTree = __webpack_require__(231);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -26792,7 +26886,7 @@
 	}
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26813,7 +26907,7 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _OrgTree = __webpack_require__(230);
+	var _OrgTree = __webpack_require__(231);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -27109,7 +27203,7 @@
 	exports.default = List;
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27130,7 +27224,7 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _OrgTree = __webpack_require__(230);
+	var _OrgTree = __webpack_require__(231);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -27393,7 +27487,7 @@
 	exports.default = List;
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27413,7 +27507,7 @@
 
 	var _reactRouter = __webpack_require__(169);
 
-	var _OrgTree = __webpack_require__(230);
+	var _OrgTree = __webpack_require__(231);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -27700,7 +27794,7 @@
 	}
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27723,13 +27817,13 @@
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _Button = __webpack_require__(237);
+	var _Button = __webpack_require__(238);
 
-	var _Dialog = __webpack_require__(226);
+	var _Dialog = __webpack_require__(227);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _api = __webpack_require__(238);
+	var _api = __webpack_require__(226);
 
 	var _md = __webpack_require__(239);
 
@@ -27801,7 +27895,7 @@
 	                    username: username,
 	                    mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
 	                }).done(function (data) {
-	                    _this2.props.router.replace('/');
+	                    _this2.props.router.replace(OMS_CONFIG.ROOTPATH);
 	                }).fail(function (data) {
 	                    _this2.setState({
 	                        loading: false
@@ -27822,16 +27916,6 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'login bg-faded' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'alert alert-danger hide', role: 'alert' },
-	                        _react2.default.createElement(
-	                            'strong',
-	                            null,
-	                            'Oh snap!'
-	                        ),
-	                        ' Change a few things up and try submitting again.'
-	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'login-form' },
@@ -27873,7 +27957,7 @@
 	exports.default = Login;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27908,104 +27992,6 @@
 	            )
 	        );
 	    }
-	}
-
-/***/ },
-/* 238 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.salt = salt;
-	exports.login = login;
-	exports.logout = logout;
-	var DEV_SERVER_HOST = '//schoolpal.dinner3000.com:7180';
-	var DEV_HOST = '//127.0.0.1:7180';
-	var PATH = '/web/ajax/';
-
-	function io(options, callback, error) {
-	    var defaults = {
-	        type: 'GET',
-	        dataType: 'json'
-	    };
-	    var settings = $.extend({}, defaults, options);
-	    var jqxhr = $.ajax({
-	        url: formatUrl(settings.url),
-	        type: settings.tyoe,
-	        data: settings.data || {},
-	        dataType: settings.dataType,
-	        statusCode: {
-	            401: function _() {
-	                console.log('not sign in ...');
-	            }
-	        }
-	    });
-
-	    jqxhr.done(function (data, textStatus, jqXHR) {
-	        console.log(data, textStatus, jqXHR.status);
-
-	        if (data.code === 200) {
-	            callback(data.data);
-	        } else {
-	            if (error) {
-	                error(data);
-	            };
-	        };
-	    });
-
-	    jqxhr.fail(function (jqXHR, textStatus, errorThrown) {
-	        console.log(jqXHR.status, textStatus, errorThrown);
-	    });
-	}
-
-	function formatUrl(url) {
-	    console.log(location.port);
-	    if (location.port === '3001') {
-	        return DEV_HOST + PATH + url;
-	    } else if (location.port === '3000') {
-	        return DEV_SERVER_HOST + PATH + url;
-	    } else {
-	        return PATH + url;
-	    }
-	}
-
-	function salt() {
-	    var defer = $.Deferred();
-	    var url = 'user/salt.do';
-
-	    io({ url: url, tyoe: 'POST' }, function (data) {
-	        defer.resolve(data);
-	    });
-
-	    return defer.promise();
-	}
-
-	function login(data) {
-	    var defer = $.Deferred();
-	    var url = 'user/login.do';
-	    var settings = $.extend({ url: url, tyoe: 'POST' }, { data: data });
-
-	    io(settings, function (data) {
-	        defer.resolve(data);
-	    }, function (data) {
-	        defer.reject(data);
-	    });
-
-	    return defer.promise();
-	}
-
-	function logout() {
-	    var defer = $.Deferred();
-	    var url = 'user/logout.do';
-
-	    io({ url: url, tyoe: 'POST' }, function (data) {
-	        defer.resolve(data);
-	    });
-
-	    return defer.promise();
 	}
 
 /***/ },

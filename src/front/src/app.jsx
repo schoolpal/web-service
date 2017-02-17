@@ -1,4 +1,6 @@
-window.OMS_CONFIG = {};
+window.OMS_CONFIG = {
+    ROOTPATH: '/web/html/'
+};
 
 require('./less/bundle.less');
 
@@ -17,7 +19,7 @@ import Login from './components/login';
 
 ReactDOM.render((
     <Router history={browserHistory}>
-        <Route path="/" component={Dashboard}>
+        <Route path={OMS_CONFIG.ROOTPATH} component={Dashboard}>
             <Route path="org" component={OrgList} />
             <Route path="org/:id" component={OrgEditor} />
             <Route path="role" component={RoleList} />
@@ -26,6 +28,6 @@ ReactDOM.render((
             <Route path="user" component={UserList} />
             <Route path="user/:id" component={UserEditor} />
         </Route>
-        <Route path="/login" component={Login} />
+        <Route path={OMS_CONFIG.ROOTPATH + 'login'} component={Login} />
     </Router>
 ), document.querySelector('#app'));

@@ -56,7 +56,7 @@ export default class Login extends React.Component {
                 username: username,
                 mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
             }).done((data) => {
-                this.props.router.replace('/');
+                this.props.router.replace(OMS_CONFIG.ROOTPATH);
             }).fail((data) => {
                 this.setState({
                     loading: false
@@ -71,9 +71,6 @@ export default class Login extends React.Component {
             <div className="view">
                 <NavBar />
                 <div className="login bg-faded">
-                    <div className="alert alert-danger hide" role="alert">
-                        <strong>Oh snap!</strong> Change a few things up and try submitting again.
-                    </div>
                     <div className="login-form">
                         <h5 className="text-primary">LOGIN</h5>
                         <form ref={(dom) => { this.from = dom }}>

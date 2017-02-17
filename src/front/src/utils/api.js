@@ -1,5 +1,3 @@
-const DEV_SERVER_HOST = '//schoolpal.dinner3000.com:7180';
-const DEV_HOST = '//127.0.0.1:7180';
 const PATH = '/web/ajax/';
 
 function io(options, callback, error) {
@@ -38,14 +36,7 @@ function io(options, callback, error) {
 }
 
 function formatUrl(url) {
-    console.log(location.port)
-    if (location.port === '3001') {
-        return DEV_HOST + PATH + url;
-    } else if (location.port === '3000') {
-        return DEV_SERVER_HOST + PATH + url;
-    } else {
-        return PATH + url;
-    }
+    return PATH + url;
 }
 
 export function salt() {

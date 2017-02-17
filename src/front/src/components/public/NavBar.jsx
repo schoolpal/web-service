@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+import { logout } from '../../utils/api';
 import Dialog from './Dialog';
 
 export default class NavBar extends React.Component {
@@ -24,7 +25,8 @@ export default class NavBar extends React.Component {
     }
 
     signout() {
-        this.props.router.replace('/login');
+        logout();
+        this.props.router.replace(OMS_CONFIG.ROOTPATH + 'login');
     }
 
     render() {
