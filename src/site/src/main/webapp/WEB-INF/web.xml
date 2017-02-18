@@ -35,7 +35,7 @@
 		</init-param>
 		<init-param>
 			<param-name>logLevel</param-name>
-			<param-value>INFO</param-value>
+			<param-value>DEBUG</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -114,6 +114,17 @@
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/html/*</url-pattern>
+		<url-pattern>/ajax_ut/*</url-pattern>
+		<url-pattern>/css/*</url-pattern>
+		<url-pattern>/fonts/*</url-pattern>
+		<url-pattern>/img/*</url-pattern>
+		<url-pattern>/js/*</url-pattern>
+		<url-pattern>/lib/*</url-pattern>
+	</servlet-mapping>
+
 	<servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -124,11 +135,9 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
-	<!-- <servlet-mapping> <servlet-name>spring</servlet-name> <url-pattern>*.html</url-pattern> 
-		</servlet-mapping> -->
-
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
+		<url-pattern>*.html</url-pattern>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 

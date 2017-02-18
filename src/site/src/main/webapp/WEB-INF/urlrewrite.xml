@@ -7,7 +7,7 @@
 		</note>
 <!-- 		<condition name="request-uri" operator="notequal">^/html/index\.html$</condition> -->
 <!-- 		<condition name="request-uri" operator="notequal">^/html/dist/(.+)$</condition> -->
-		<from>^/html/(?!index\.html)(?!dist/)(.+)$</from>
+		<from>^/html/(?!index\.html)(?!dist/)(.*)$</from>
 		<to type="forward">/html/index.html</to>
 	</rule>
 <!-- 	<outbound-rule>

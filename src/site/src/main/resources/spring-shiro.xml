@@ -14,8 +14,8 @@
 
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/index.html" />
-		<property name="unauthorizedUrl" value="/index.html" />
+<!-- 		<property name="loginUrl" value="/index.html" />
+		<property name="unauthorizedUrl" value="/index.html" /> -->
  		<property name="filters">
 			<util:map>
                 <entry key="ajaxc">  
