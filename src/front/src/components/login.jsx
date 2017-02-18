@@ -53,7 +53,7 @@ export default class Login extends React.Component {
 
         salt().done((salt) => {
             login({
-                username: username,
+                loginname: username,
                 mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
             }).done((data) => {
                 this.props.router.replace(OMS_CONFIG.ROOTPATH);
