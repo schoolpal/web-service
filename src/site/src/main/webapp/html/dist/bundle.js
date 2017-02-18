@@ -27892,7 +27892,7 @@
 
 	            (0, _api.salt)().done(function (salt) {
 	                (0, _api.login)({
-	                    username: username,
+	                    loginname: username,
 	                    mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
 	                }).done(function (data) {
 	                    _this2.props.router.replace(OMS_CONFIG.ROOTPATH);

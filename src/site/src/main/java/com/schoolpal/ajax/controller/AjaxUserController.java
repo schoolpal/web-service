@@ -37,6 +37,7 @@ public class AjaxUserController {
 		//
 		Random random = new Random();
 		String salt = Integer.toString(random.nextInt(9000) + 1000);
+//		salt = "0000";
 		
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession(true);
@@ -101,4 +102,19 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value="status.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String status() {
+		Subject currentUser = SecurityUtils.getSubject();
+		AjaxResponse res = new AjaxResponse(200);
+		if (null != currentUser && null != currentUser.getPrincipal()) {
+			
+			Session session = currentUser.getSession();
+
+		} else {
+
+		}
+				
+		return gson.toJson(res);
+	}
 }

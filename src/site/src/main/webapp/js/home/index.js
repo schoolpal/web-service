@@ -11,7 +11,7 @@ $('#btnLogin').click(function(e) {
 	
     $.post('login/salt.do', null, function(salt) {
     	$.post('login/access.do', {
-    			'username': $('#name').val(),
+    			'loginname': $('#name').val(),
     			'mixedPWD': MD5(MD5(MD5($('#pwd').val()))+salt)
 		}, 
 		function(result) {
