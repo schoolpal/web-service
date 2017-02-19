@@ -3,7 +3,7 @@ package com.schoolpal.ajax;
 public class AjaxResponse {
 	private int code = 200;
 	private Object data = null;
-	private String detail = "ok";
+	private String detail = "Ok";
 	
 	public AjaxResponse(){
 		

@@ -107,14 +107,11 @@ public class AjaxUserController {
 	public String status() {
 		Subject currentUser = SecurityUtils.getSubject();
 		AjaxResponse res = new AjaxResponse(200);
-		if (null != currentUser && null != currentUser.getPrincipal()) {
-			
-			Session session = currentUser.getSession();
-
-		} else {
-
+		if (currentUser == null || currentUser.getPrincipal() == null) {
+			//Since shiro filter will intercept if not login, this code should never be reached
+			res.setCode(401);
+			res.setDetail("Not login");
 		}
-				
 		return gson.toJson(res);
 	}
 }
