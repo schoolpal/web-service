@@ -37,6 +37,7 @@ describe('user api test', function () {
     expect(jsonData.data).to.not.empty;
     expect(jsonData.data.length).to.be.equal(4);
     salt = jsonData.data;
+    expect(jsonData.detail).to.be.equal('Ok');
   });
 
   it('login.do', function () {
@@ -56,7 +57,7 @@ describe('user api test', function () {
     resDump('login.do', jsonData);
     expect(jsonData.code).to.be.equal(200);
     expect(jsonData.data).to.be.empty;
-    expect(jsonData.detail).to.be.equal('ok');
+    expect(jsonData.detail).to.be.equal('Ok');
   });
 
   it('logout.do', function () {
@@ -72,6 +73,6 @@ describe('user api test', function () {
     resDump('logout.do', jsonData);
     expect(jsonData.code).to.be.equal(200);
     expect(jsonData.data).to.be.empty;
-    expect(jsonData.detail).to.be.equal('ok');
+    expect(jsonData.detail).to.be.equal('Ok');
   });
 });
