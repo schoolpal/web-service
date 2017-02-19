@@ -11,26 +11,9 @@
     
     <context:component-scan base-package="com.schoolpal.service" />
     
-    <context:component-scan base-package="com.schoolpal.user.db" />
+    <context:component-scan base-package="com.schoolpal.db" />
     <context:component-scan base-package="com.schoolpal.user.service" />
     <context:component-scan base-package="com.schoolpal.user.controller" />
-
-	<bean id="accessHandler" class="com.schoolpal.web.handler.AccessHandler">
-		<property name="ignorePatterns">
-			<list>
-				<value>.*</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
-		<property name="interceptors">
-			<list>
-				<ref bean="accessHandler" />
-			</list>
-		</property>
-	</bean>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"

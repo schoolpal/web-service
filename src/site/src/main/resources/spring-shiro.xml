@@ -45,7 +45,7 @@
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
-	<bean id="realmService" class="com.schoolpal.user.service.RealmService" />
+	<bean id="realmService" class="com.schoolpal.service.RealmService" />
 	<bean id="sessionManager"
 		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<property name="globalSessionTimeout" value="1800000" />

@@ -12,11 +12,11 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations" value="classpath:com/schoolpal/user/db/mapper/*.xml" />
+        <property name="mapperLocations" value="classpath:com/schoolpal/db/mapper/*.xml" />
     </bean>
 
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.schoolpal.user.db.inf" />
+        <property name="basePackage" value="com.schoolpal.db.inf" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
 
