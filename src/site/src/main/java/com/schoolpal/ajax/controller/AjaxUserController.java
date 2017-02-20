@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
+import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LogService;
 import com.schoolpal.service.UserService;
 import com.schoolpal.web.consts.Const;
@@ -111,6 +112,21 @@ public class AjaxUserController {
 			//Since shiro filter will intercept if not login, this code should never be reached
 			res.setCode(401);
 			res.setDetail("Not login");
+		}
+		return gson.toJson(res);
+	}
+	
+	@RequestMapping(value="profile.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String profile() {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			//Since shiro filter will intercept if not login, this code should never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		}else{
+			res.setData(user);
 		}
 		return gson.toJson(res);
 	}
