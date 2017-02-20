@@ -1,17 +1,28 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const ROOT_PATH = path.resolve(__dirname);
 const DEV_PATH = path.resolve(ROOT_PATH, 'src');
 const BUILD_PATH = path.resolve(ROOT_PATH, 'html/dist');
 
 module.exports = {
-    entry: path.resolve(DEV_PATH, 'app.jsx'),
+    entry: {
+        bundle: path.resolve(DEV_PATH, 'app.jsx'),
+        vendor: [
+            './src/utils/vendor',
+            'bootstrap/dist/js/bootstrap'
+        ],
+        react: [
+            'react',
+            'react-dom'
+        ]
+    },
     output: {
         path: BUILD_PATH,
-        filename: 'bundle.js',
-        publicPath: 'dist/'
+        filename: '[name].js',
+        publicPath: '/web/html/dist/'
     },
     module: {
         loaders: [{
@@ -21,6 +32,9 @@ module.exports = {
             query: {
                 presets: ['es2015', 'react']
             }
+        }, {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
         }, {
             test: /\.less$/,
             loader: 'style-loader!css-loader!less-loader'
@@ -33,10 +47,15 @@ module.exports = {
         }]
     },
     plugins: [
+        new webpack.optimize.CommonsChunkPlugin({
+            names: ["vendor", "react"],
+            minChunks: Infinity
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(DEV_PATH, 'app.html'),
             filename: '../index.html'
-        })
+        }),
+        new ExtractTextPlugin('bundle.css')
     ],
     resolve: {
         extensions: ['', '.js', '.jsx']

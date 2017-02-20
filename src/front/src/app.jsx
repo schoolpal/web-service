@@ -2,7 +2,12 @@ window.OMS_CONFIG = {
     ROOTPATH: '/web/html/'
 };
 
+import { $ } from './utils/vendor';
+
+require('bootstrap/dist/css/bootstrap.min.css');
+require('./font/css/font-awesome.css');
 require('./less/bundle.less');
+require('bootstrap/dist/js/bootstrap');
 
 import React from 'react';
 import ReactDOM from 'react-dom';

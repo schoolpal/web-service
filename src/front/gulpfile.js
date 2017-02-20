@@ -19,11 +19,6 @@ gulp.task('clean', function () {
         .pipe(clean({ force: true }));
 });
 
-gulp.task('move-lib', function () {
-    return gulp.src(LIB_PATH)
-        .pipe(gulp.dest(BUILD_LIB_PATH))
-});
-
 gulp.task('build-js', ['clean'], function () {
     return gulp.src('./src/app.jsx')
         .pipe(gulpWebpack(webpackConfig, webpack))
@@ -35,13 +30,7 @@ gulp.task('move-dev', ['build-js'], function () {
         .pipe(gulp.dest(BUILD_PATH))
 });
 
-gulp.task('build-dev', ['clean', 'build-js', 'move-dev'], function () {
-    console.log('=======================================');
-    console.log('front-end build-dev done !');
-    console.log('=======================================');
-});
-
-gulp.task('build', ['clean', 'build-js', 'move-lib', 'move-dev'], function () {
+gulp.task('build', ['clean', 'build-js', 'move-dev'], function () {
     console.log('=======================================');
     console.log('front-end build done !');
     console.log('=======================================');
