@@ -21,6 +21,12 @@ public class TFunction {
     
     private String WidgetType;
     
+    private String cCommandTypeId;
+    
+    private String CommandCode;
+    
+    private String CommandName;
+    
     public String getcId() {
         return cId;
     }
@@ -99,5 +105,29 @@ public class TFunction {
 
 	public void setWidgetType(String widgetType) {
 		WidgetType = widgetType;
+	}
+
+	public String getcCommandTypeId() {
+		return cCommandTypeId;
+	}
+
+	public void setcCommandTypeId(String cCommandTypeId) {
+		this.cCommandTypeId = cCommandTypeId;
+	}
+
+	public String getCommandType() {
+		return CommandCode;
+	}
+
+	public void setCommandType(String commandType) {
+		CommandCode = commandType;
+	}
+
+	public String getCommandTypeName() {
+		return CommandName;
+	}
+
+	public void setCommandTypeName(String commandTypeName) {
+		CommandName = commandTypeName;
 	}
 }
