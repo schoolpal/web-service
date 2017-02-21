@@ -1,6 +1,6 @@
 package com.schoolpal.ajax.controller;
 
-import java.util.Random;
+import java.util.*;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.db.model.TUser;
+import com.schoolpal.db.model.*;
 import com.schoolpal.service.LogService;
 import com.schoolpal.service.UserService;
 import com.schoolpal.web.consts.Const;
@@ -124,6 +124,25 @@ public class AjaxUserController {
 			res.setDetail("Cannot find cached profile data, not login?");
 		}else{
 			res.setData(user);
+		}
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value="permissions.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String permissions() {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			//Since shiro filter will intercept if not login, this code should never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		}else{
+			List<TFunction> fs = new ArrayList();
+			for (TRole r : user.getRoles()){
+				fs.addAll(r.getWidgets());
+			}
+			res.setData(fs);
 		}
 		return gson.toJson(res);
 	}

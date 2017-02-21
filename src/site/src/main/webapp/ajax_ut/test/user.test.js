@@ -76,6 +76,22 @@ describe('user api test', function () {
 //    expect(jsonData.detail).to.be.equal('Ok');
   });
 
+  it('permissions.do', function () {
+	    xhr = $.ajax({
+	      async: false,
+	      method: 'POST',
+	      url: buildUrl(host, path, 'permissions.do'),
+	      dataType: 'json'
+	    });
+
+	    expect(xhr.status).to.be.equal(200);
+	    jsonData = xhr.responseJSON;
+	    resDump('permissions.do', jsonData);
+	    expect(jsonData.code).to.be.equal(200);
+	    expect(jsonData.data).to.not.empty;
+//	    expect(jsonData.detail).to.be.equal('Ok');
+	  });
+
   it('logout.do', function () {
     xhr = $.ajax({
       async: false,
