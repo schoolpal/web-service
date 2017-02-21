@@ -25,6 +25,7 @@
         LEFT JOIN t_widget_type wt on f.c_widget_type_id = wt.c_id
         LEFT JOIN t_command_type ct on f.c_command_type_id = ct.c_id
     WHERE rf.c_role_id = #{cId,jdbcType=CHAR}
+    ORDER BY f.c_id
   </select>
 <!--   <sql id="Example_Where_Clause">
     <where>
