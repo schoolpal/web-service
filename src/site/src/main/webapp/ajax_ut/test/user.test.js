@@ -2,7 +2,7 @@
 
 var expect = chai.expect;
 
-var host = 'http://localhost:8080';
+var host = window.location.protocol + "//" + window.location.host;
 var path = '/web/ajax/user/';
 
 var user = 'sp-admin';

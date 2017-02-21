@@ -65,9 +65,6 @@ public class AjaxUserController {
 			try {
 				userServ.cacheUser(login.getLoginName());
 			} catch (Exception ex) {
-				//
-				// Clear user session while getting exception.
-				//
 				currentUser.logout();
 				
 				res.setCode(500); 
