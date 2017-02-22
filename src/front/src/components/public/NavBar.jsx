@@ -26,15 +26,15 @@ export default class NavBar extends React.Component {
 
     signout() {
         logout();
-        this.props.router.replace(OMS_CONFIG.ROOTPATH + 'login');
+        this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'login');
     }
 
     render() {
-        if (this.props.isLogin) {
+        if (this.props.isSignin) {
             return (
                 <nav className="navbar navbar-inverse bg-primary">
                     <form>
-                        <Link to={`/`} className="btn btn-link text-white">校客</Link>
+                        <Link to={SCHOOLPAL_CONFIG.ROOTPATH} className="btn btn-link text-white">校客</Link>
                         <button type="button" className="btn btn-link text-white"><i className="fa fa-bars fa-lg" aria-hidden="true"></i></button>
                         <button type="button" onClick={this.confrimSignout} className="btn btn-link text-white float-right">
                             <i className="fa fa-sign-out fa-lg" aria-hidden="true"></i>

@@ -56,12 +56,16 @@ export default class Login extends React.Component {
                 loginname: username,
                 mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
             }).done((data) => {
-                this.props.router.replace(OMS_CONFIG.ROOTPATH);
+                if (this.props.router.location.state && this.props.router.location.state.nextPathname) {
+                    this.props.router.replace(this.props.router.location.state.nextPathname);
+                } else {
+                    this.props.router.replace(OMS_CONFIG.ROOTPATH);
+                }
             }).fail((data) => {
                 this.setState({
                     loading: false
                 });
-                this.signinErrorDialog('[' + data.code + '] - ' + data.detail);
+                this.signinErrorDialog('[' + data.data.code + '] - ' + data.data.detail);
             });
         });
     }

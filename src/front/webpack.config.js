@@ -16,7 +16,8 @@ module.exports = {
         ],
         react: [
             'react',
-            'react-dom'
+            'react-dom',
+            'react-router'
         ]
     },
     output: {
