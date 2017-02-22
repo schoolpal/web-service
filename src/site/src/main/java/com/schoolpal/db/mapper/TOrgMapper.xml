@@ -42,7 +42,31 @@
         LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
         WHERE o.c_id = #{cId,jdbcType=VARCHAR}
     </select>
-
+    <resultMap id="selectAllResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_code" jdbcType="VARCHAR" property="cCode" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+        <result column="c_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+        <result column="c_address" jdbcType="VARCHAR" property="cAddress" />
+        <result column="c_city" jdbcType="VARCHAR" property="cCity" />
+        <result column="c_state" jdbcType="VARCHAR" property="cState" />
+        <result column="c_county" jdbcType="VARCHAR" property="cCounty" />
+        <result column="c_owner" jdbcType="VARCHAR" property="cOwner" />
+        <result column="c_owner_phone" jdbcType="VARCHAR" property="cOwnerPhone" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+        <result column="c_root_id" jdbcType="CHAR" property="cRootId" />
+        <result column="c_creator" jdbcType="CHAR" property="cCreator" />
+        <result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+        <result column="c_modifier" jdbcType="VARCHAR" property="cModifier" />
+        <result column="c_modify_time" jdbcType="TIMESTAMP" property="cModifyTime" />
+        <result column="c_available" jdbcType="BIT" property="cAvailable" />
+        <result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
+    </resultMap>    
+    <select id="selectAll" resultMap="selectAllResultMap">
+        SELECT * 
+        FROM  t_org
+        WHERE c_available = 1
+    </select>
 <!--   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TOrg">
     <id column="c_id" jdbcType="CHAR" property="cId" />
     <result column="c_code" jdbcType="VARCHAR" property="cCode" />

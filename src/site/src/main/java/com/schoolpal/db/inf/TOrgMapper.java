@@ -1,10 +1,14 @@
 package com.schoolpal.db.inf;
 
+import java.util.List;
+
 import com.schoolpal.db.model.TOrg;
 
 public interface TOrgMapper {
 	
     TOrg selectOneById(String cId);
+
+    List<TOrg> selectAll();
     
 /*    long countByExample(TOrgExample example);
 

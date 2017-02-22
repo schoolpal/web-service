@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.LogService;
+import com.schoolpal.service.OrgService;
 import com.schoolpal.service.UserService;
 import com.schoolpal.web.consts.Const;
 import com.schoolpal.web.consts.LogLevel;
@@ -28,6 +29,8 @@ public class AjaxUserController {
 	private LogService logServ;
 	@Autowired
 	private UserService userServ;
+	@Autowired
+	private OrgService orgServ;
 	private Gson gson = new Gson();
 
 	@RequestMapping(value="salt.do", method=RequestMethod.POST)
@@ -138,11 +141,27 @@ public class AjaxUserController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		}else{
-			List<TFunction> fs = new ArrayList();
+			List<TFunction> funcList = new ArrayList<TFunction>();
 			for (TRole r : user.getRoles()){
-				fs.addAll(r.getWidgets());
+				funcList.addAll(r.getWidgets());
 			}
-			res.setData(fs);
+			res.setData(funcList);
+		}
+		return gson.toJson(res);
+	}
+	
+	@RequestMapping(value="orglist.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String orglist() {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			//Since shiro filter will intercept if not login, this code should never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		}else{
+			List<TOrg> orgList = orgServ.getOrgListByRootId(user.getcOrgId());
+			res.setData(orgList);
 		}
 		return gson.toJson(res);
 	}

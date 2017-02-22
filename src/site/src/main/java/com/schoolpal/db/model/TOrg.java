@@ -42,6 +42,10 @@ public class TOrg {
     private TOrg parentOrg;
     
     private TOrg rootOrg;
+    
+    private int level;
+    
+    private boolean parent;
 
     public String getcId() {
         return cId;
@@ -201,5 +205,21 @@ public class TOrg {
 
 	public void setRootOrg(TOrg rootOrg) {
 		this.rootOrg = rootOrg;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public boolean isParent() {
+		return parent;
+	}
+
+	public void setParent(boolean parent) {
+		this.parent = parent;
 	}
 }

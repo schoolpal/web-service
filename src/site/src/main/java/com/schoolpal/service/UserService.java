@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
+import com.schoolpal.user.model.page.OrgRow;
 import com.schoolpal.web.consts.*;
 
 @Service
@@ -92,5 +93,7 @@ public class UserService  {
 		Session session = currentUser.getSession(true);
 		return gson.fromJson((String)session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
 	}
+	
+
 
 }
