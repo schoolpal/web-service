@@ -1,50 +1,58 @@
-const PATH = '/web/ajax/';
+function io(options, callback) {
+    if (!(this instanceof io)) {
+        return new io(options, callback);
+    };
 
-function io(options, callback, error) {
     const defaults = {
-        type: 'GET',
+        type: 'POST',
         dataType: 'json'
     };
     const settings = $.extend({}, defaults, options);
     const jqxhr = $.ajax({
         url: formatUrl(settings.url),
-        type: settings.tyoe,
+        type: settings.type,
         data: settings.data || {},
-        dataType: settings.dataType,
-        statusCode: {
-            401: function () {
-                console.log('not sign in ...')
-            }
-        }
+        dataType: settings.dataType
     });
 
     jqxhr.done(function (data, textStatus, jqXHR) {
         console.log(data, textStatus, jqXHR.status);
 
         if (data.code === 200) {
-            callback(data.data);
+            callback({
+                type: SCHOOLPAL_CONFIG.XHR_DONE,
+                data: data.data
+            });
         } else {
-            if (error) {
-                error(data);
-            };
+            callback({
+                type: SCHOOLPAL_CONFIG.XHR_BUSINESS_ERROR,
+                data: data
+            })
         };
     })
 
     jqxhr.fail(function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.status, textStatus, errorThrown)
+        callback({
+            type: jqXHR.status === 401 ? SCHOOLPAL_CONFIG.NOT_SIGNIN : SCHOOLPAL_CONFIG.XHR_ERROR
+        })
     })
 }
 
 function formatUrl(url) {
-    return PATH + url;
+    return SCHOOLPAL_CONFIG.AJAXPATH + url;
 }
 
 export function salt() {
     const defer = $.Deferred();
     const url = 'user/salt.do';
 
-    io({ url: url, tyoe: 'POST' }, function (data) {
-        defer.resolve(data);
+    io({ url: url }, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
     });
 
     return defer.promise();
@@ -53,12 +61,14 @@ export function salt() {
 export function login(data) {
     const defer = $.Deferred();
     const url = 'user/login.do';
-    const settings = $.extend({ url: url, tyoe: 'POST' }, { data: data });
+    const settings = $.extend({ url: url }, { data: data });
 
     io(settings, function (data) {
-        defer.resolve(data);
-    }, function (data) {
-        defer.reject(data);
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
     });
 
     return defer.promise();
@@ -68,8 +78,27 @@ export function logout() {
     const defer = $.Deferred();
     const url = 'user/logout.do';
 
-    io({ url: url, tyoe: 'POST' }, function (data) {
-        defer.resolve(data);
+    io({ url: url }, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function permissions() {
+    const defer = $.Deferred();
+    const url = 'user/permissions.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
     });
 
     return defer.promise();

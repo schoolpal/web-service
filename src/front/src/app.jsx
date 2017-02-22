@@ -1,5 +1,30 @@
-window.OMS_CONFIG = {
-    ROOTPATH: '/web/html/'
+window.SCHOOLPAL_CONFIG = {
+    ROOTPATH: '/web/html/',
+    AJAXPATH: '/web/ajax/',
+
+    XHR_DONE: 'XHR_DONE',
+    XHR_BUSINESS_ERROR: 'XHR_BUSINESS_ERROR',
+    XHR_ERROR: 'XHR_ERROR',
+    NOT_SIGNIN: 'NOT_SIGNIN',
+
+    AUTH_DIC: {
+        '7-1': {
+            PATH: 'org',
+            ICON: 'fa-sitemap'
+        },
+        '7-2': {
+            PATH: 'role',
+            ICON: 'fa-users'
+        },
+        '7-3': {
+            PATH: 'auth',
+            ICON: 'fa-shield'
+        },
+        '7-4': {
+            PATH: 'user',
+            ICON: 'fa-user'
+        }
+    }
 };
 
 import { $ } from './utils/vendor';
@@ -24,7 +49,7 @@ import Login from './components/login';
 
 ReactDOM.render((
     <Router history={browserHistory}>
-        <Route path={OMS_CONFIG.ROOTPATH} component={Dashboard}>
+        <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={Dashboard}>
             <Route path="org" component={OrgList} />
             <Route path="org/:id" component={OrgEditor} />
             <Route path="role" component={RoleList} />
@@ -33,6 +58,6 @@ ReactDOM.render((
             <Route path="user" component={UserList} />
             <Route path="user/:id" component={UserEditor} />
         </Route>
-        <Route path={OMS_CONFIG.ROOTPATH + 'login'} component={Login} />
+        <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'login'} component={Login} />
     </Router>
 ), document.querySelector('#app'));
