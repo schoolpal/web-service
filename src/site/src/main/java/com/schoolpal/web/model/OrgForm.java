@@ -4,7 +4,7 @@ public class OrgForm {
 	
 	private String id;
 	private String name;
-	private String orgCode;
+	private String code;
 	private String parentId;
 	private String parentName;
 	private String state;
@@ -20,11 +20,11 @@ public class OrgForm {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getOrgCode() {
-		return orgCode;
+	public String getCode() {
+		return code;
 	}
-	public void setOrgCode(String orgCode) {
-		this.orgCode = orgCode;
+	public void setCode(String orgCode) {
+		this.code = orgCode;
 	}
 	public String getState() {
 		return state;

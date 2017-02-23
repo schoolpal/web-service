@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TIndexMapper">
+  <select id="selectNextId" parameterType="java.lang.String" resultType="java.lang.String">
+    select f_next_id(#{cTable,jdbcType=VARCHAR})
+  </select>
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TIndex">
+    <id column="c_table" jdbcType="VARCHAR" property="cTable" />
+    <result column="c_prefix" jdbcType="VARCHAR" property="cPrefix" />
+    <result column="c_current" jdbcType="BIGINT" property="cCurrent" />
+    <result column="c_step" jdbcType="INTEGER" property="cStep" />
+    <result column="c_bits" jdbcType="TINYINT" property="cBits" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_table, c_prefix, c_current, c_step, c_bits
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_index
+    where c_table = #{cTable,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_index
+    where c_table = #{cTable,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TIndex">
+    insert into t_index (c_table, c_prefix, c_current, 
+      c_step, c_bits)
+    values (#{cTable,jdbcType=VARCHAR}, #{cPrefix,jdbcType=VARCHAR}, #{cCurrent,jdbcType=BIGINT}, 
+      #{cStep,jdbcType=INTEGER}, #{cBits,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TIndex">
+    insert into t_index
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cTable != null">
+        c_table,
+      </if>
+      <if test="cPrefix != null">
+        c_prefix,
+      </if>
+      <if test="cCurrent != null">
+        c_current,
+      </if>
+      <if test="cStep != null">
+        c_step,
+      </if>
+      <if test="cBits != null">
+        c_bits,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cTable != null">
+        #{cTable,jdbcType=VARCHAR},
+      </if>
+      <if test="cPrefix != null">
+        #{cPrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="cCurrent != null">
+        #{cCurrent,jdbcType=BIGINT},
+      </if>
+      <if test="cStep != null">
+        #{cStep,jdbcType=INTEGER},
+      </if>
+      <if test="cBits != null">
+        #{cBits,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TIndex">
+    update t_index
+    <set>
+      <if test="cPrefix != null">
+        c_prefix = #{cPrefix,jdbcType=VARCHAR},
+      </if>
+      <if test="cCurrent != null">
+        c_current = #{cCurrent,jdbcType=BIGINT},
+      </if>
+      <if test="cStep != null">
+        c_step = #{cStep,jdbcType=INTEGER},
+      </if>
+      <if test="cBits != null">
+        c_bits = #{cBits,jdbcType=TINYINT},
+      </if>
+    </set>
+    where c_table = #{cTable,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TIndex">
+    update t_index
+    set c_prefix = #{cPrefix,jdbcType=VARCHAR},
+      c_current = #{cCurrent,jdbcType=BIGINT},
+      c_step = #{cStep,jdbcType=INTEGER},
+      c_bits = #{cBits,jdbcType=TINYINT}
+    where c_table = #{cTable,jdbcType=VARCHAR}
+  </update>
+</mapper>

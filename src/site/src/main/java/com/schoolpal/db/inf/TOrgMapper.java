@@ -8,6 +8,16 @@ public interface TOrgMapper {
 	
     TOrg selectOneById(String cId);
 
+    TOrg selectOneByCode(String cCode);
+
+    int insertOne(TOrg org);
+
+    int UpdateOneById(String cId);
+
+    int deleteOneById(String cId);
+
+    int deleteOneByCode(String cCode);
+
     List<TOrg> selectAll();
     
     List<TOrg> selectAllIds();

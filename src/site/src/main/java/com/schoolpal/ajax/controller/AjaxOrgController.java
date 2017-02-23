@@ -22,7 +22,7 @@ import com.schoolpal.web.model.OrgForm;
 @Controller
 @RequestMapping("/ajax/org")
 public class AjaxOrgController {
-	
+
 	@Autowired
 	private LogService logServ;
 	@Autowired
@@ -35,12 +35,69 @@ public class AjaxOrgController {
 	private FunctionService funcServ;
 
 	private Gson gson = new Gson();
-	
+
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String add(OrgForm form) {
 		AjaxResponse res = new AjaxResponse(200);
+		do {
+			TUser user = userServ.getCachedUser();
+			
+			TOrg org = orgServ.getOrgByCode(form.getCode());
+			if (org != null) {
+				res.setCode(401);
+				res.setDetail("Duplicated orgnization code");
+				break;
+			}
+			
+			TOrg parentOrg = orgServ.getOrgById(form.getParentId());
+			if (parentOrg == null) {
+				res.setCode(402);
+				res.setDetail("Parent orgnization not exist");
+				break;
+			}
+			
+			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(form.getParentId())) {
+				res.setCode(403);
+				res.setDetail("No permission to add orgnization under parent orgnization");
+			}
+			
+			String id = orgServ.AddOrg(form, parentOrg.getcRootId(), user.getcLoginname());
+			if (id == null){
+				res.setCode(500);
+				res.setDetail("Failed to add orgnization");
+				break;
+			}
+			
+			res.setData(id);
+			
+		} while (false);
 		
 		return gson.toJson(res);
 	}
+
+	@RequestMapping(value = "del.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String del(String id) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			TUser user = userServ.getCachedUser();
+			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(id)) {
+				res.setCode(403);
+				res.setDetail("No permission to add orgnization under parent orgnization");
+			}
+			
+			if (!orgServ.DeleteOrgById(id)){
+				res.setCode(500);
+				res.setDetail("Failed to del orgnization");
+				break;
+			}
+			
+		} while (false);
+		
+		return gson.toJson(res);
+	}
+
 }

@@ -79,13 +79,13 @@ public class AjaxUserController {
 				currentUser.logout();
 
 				res.setCode(500);
-				res.setDetail("系统异常，请联系管理员！");
+				res.setDetail("Failed to login, unexpect error");
 				logServ.log(login.getLoginName(), LogLevel.ERROR, "AjaxUserController.login(LoginForm)",
 						ex.getMessage(), "LoginForm: " + gson.toJson(login));
 			}
 		} else {
 			res.setCode(401);
-			res.setDetail("登录失败，请确认用户名密码正确！");
+			res.setDetail("Failed to login, wrong user/pass");
 		}
 
 		logServ.log(login.getLoginName(), LogLevel.DEBUG, "AjaxUserController.login()", "",
