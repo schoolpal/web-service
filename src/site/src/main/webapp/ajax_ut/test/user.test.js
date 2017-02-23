@@ -108,6 +108,41 @@ describe('user api test', function () {
 //	    expect(jsonData.detail).to.be.equal('Ok');
 	  });
   
+  it('rolelist.do', function () {
+	    xhr = $.ajax({
+	      async: false,
+	      method: 'POST',
+	      url: buildUrl(host, path, 'rolelist.do'),
+	      dataType: 'json'
+	    });
+
+	    expect(xhr.status).to.be.equal(200);
+	    jsonData = xhr.responseJSON;
+	    resDump('rolelist.do', jsonData);
+	    expect(jsonData.code).to.be.equal(200);
+	    expect(jsonData.data).to.not.empty;
+//	    expect(jsonData.detail).to.be.equal('Ok');
+	  });
+
+  it('funclist.do', function () {
+	    xhr = $.ajax({
+	      async: false,
+	      method: 'POST',
+	      url: buildUrl(host, path, 'funclist.do'),
+	      dataType: 'json',
+	      data: {
+	    	  roleId: '16010100000001'
+	      }
+	    });
+
+	    expect(xhr.status).to.be.equal(200);
+	    jsonData = xhr.responseJSON;
+	    resDump('funclist.do', jsonData);
+	    expect(jsonData.code).to.be.equal(200);
+	    expect(jsonData.data).to.not.empty;
+//	    expect(jsonData.detail).to.be.equal('Ok');
+	  });
+
   it('logout.do', function () {
     xhr = $.ajax({
       async: false,

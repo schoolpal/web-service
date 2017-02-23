@@ -67,6 +67,15 @@
         FROM  t_org
         WHERE c_available = 1
     </select>
+    <resultMap id="selectAllIdsResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+    </resultMap>    
+    <select id="selectAllIds" resultMap="selectAllIdsResultMap">
+        SELECT c_id, c_parent_id
+        FROM  t_org
+        WHERE c_available = 1
+    </select>
 <!--   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TOrg">
     <id column="c_id" jdbcType="CHAR" property="cId" />
     <result column="c_code" jdbcType="VARCHAR" property="cCode" />

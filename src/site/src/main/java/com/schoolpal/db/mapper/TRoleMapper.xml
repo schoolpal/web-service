@@ -24,7 +24,13 @@
     SELECT *
     FROM t_role
     WHERE c_available = 1 
-        AND r.c_id = #{cId,jdbcType=CHAR}
+        AND c_id = #{cId,jdbcType=CHAR}
+  </select>
+  <select id="selectRolesByOrgId" parameterType="java.lang.String" resultMap="RoleResultMap">
+    SELECT *
+    FROM t_role
+    WHERE c_available = 1 
+        AND c_org_id = #{cId,jdbcType=CHAR}
   </select>
 <!--   <sql id="Example_Where_Clause">
     <where>

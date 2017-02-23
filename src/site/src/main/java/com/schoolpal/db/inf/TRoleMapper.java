@@ -8,6 +8,8 @@ public interface TRoleMapper {
 	
     List<TRole> selectRolesByUserId(String cId);
     
+    List<TRole> selectRolesByOrgId(String cId);
+    
     TRole selectOneById(String cid);
     
 /*    long countByExample(TRoleExample example);
