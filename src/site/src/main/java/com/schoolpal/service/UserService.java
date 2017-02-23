@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
-import com.schoolpal.user.model.page.OrgRow;
 import com.schoolpal.web.consts.*;
 
 @Service
