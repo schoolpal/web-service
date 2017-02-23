@@ -182,7 +182,7 @@ public class AjaxUserController {
 
 	@RequestMapping(value = "rolelist.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String rolelist() {
+	public String rolelist(String orgId) {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
@@ -191,8 +191,13 @@ public class AjaxUserController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
-			List<TRole> roleList = roleServ.getRoleListByOrgId(user.getcOrgId());
-			res.setData(roleList);
+			if (!orgServ.getOrgIdListByRootId(user.getcOrgId()).contains(orgId)) {
+				res.setCode(401);
+				res.setDetail("No permission for this orgnization");
+			} else {
+				List<TRole> roleList = roleServ.getRoleListByOrgId(orgId);
+				res.setData(roleList);
+			}
 		}
 		return gson.toJson(res);
 	}
