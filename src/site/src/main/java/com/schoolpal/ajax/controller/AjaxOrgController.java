@@ -83,10 +83,16 @@ public class AjaxOrgController {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			TUser user = userServ.getCachedUser();
+
+			if (id == user.getcOrgId()) {
+				res.setCode(401);
+				res.setDetail("No permission to del self-orgnization");
+			}
+			
 			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(id)) {
-				res.setCode(403);
-				res.setDetail("No permission to add orgnization under parent orgnization");
+				res.setCode(402);
+				res.setDetail("No permission to del parent orgnization");
 			}
 			
 			if (!orgServ.DeleteOrgById(id)){
