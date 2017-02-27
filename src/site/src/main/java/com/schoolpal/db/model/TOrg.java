@@ -13,11 +13,17 @@ public class TOrg {
 
     private String cAddress;
 
-    private String cCity;
-
     private String cState;
 
+    private String cCity;
+
     private String cCounty;
+
+    private String cStateCode;
+
+    private String cCityCode;
+
+    private String cCountyCode;
 
     private String cOwner;
 
@@ -221,5 +227,29 @@ public class TOrg {
 
 	public void setParent(boolean parent) {
 		this.parent = parent;
+	}
+
+	public String getcStateCode() {
+		return cStateCode;
+	}
+
+	public void setcStateCode(String cStateCode) {
+		this.cStateCode = cStateCode;
+	}
+
+	public String getcCityCode() {
+		return cCityCode;
+	}
+
+	public void setcCityCode(String cCityCode) {
+		this.cCityCode = cCityCode;
+	}
+
+	public String getcCountyCode() {
+		return cCountyCode;
+	}
+
+	public void setcCountyCode(String cCountyCode) {
+		this.cCountyCode = cCountyCode;
 	}
 }

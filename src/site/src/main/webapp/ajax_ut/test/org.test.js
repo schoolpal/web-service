@@ -80,6 +80,9 @@ describe('org api test', function() {
 				state: 'teststate',
 				city: 'testcity',
 				county: 'testcountry',
+				state_code: '000000',
+				city_code: '000000',
+				county_code: '000000',
 				address: 'testaddr',
 				owner: 'testOwner',
 				phone: 'testphone'

@@ -29,14 +29,7 @@
                 /ajax/user/login.do = anon
                 /ajax/user/logout.do = anon
 				/ajax/** = ajaxc
-				/main/** = authc
-				/market/** = authc
-				/sales/** = authc
-				/service/** = authc
-				/finance/** = authc
-				/academy/** = authc
-				/education/** = authc
-				/config/** = authc
+				/** = anon
 			</value>
 		</property>
 	</bean>

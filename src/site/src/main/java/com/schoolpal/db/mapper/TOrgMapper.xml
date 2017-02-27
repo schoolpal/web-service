@@ -101,14 +101,17 @@
 		WHERE c_available = 1
 	</select>
 	<insert id="insertOne" parameterType="com.schoolpal.db.model.TOrg">
-		insert into t_org (c_id, c_code, c_name, c_name_abbr, c_address, c_city,
-		c_state, c_county, c_owner, c_owner_phone, c_parent_id, c_root_id,
+		insert into t_org (c_id, c_code, c_name, c_name_abbr, c_address, 
+		c_state, c_city, c_county, 
+		c_state_code, c_city_code, c_county_code, 
+		c_owner, c_owner_phone, c_parent_id, c_root_id,
 		c_creator,
 		c_create_time, c_modifier, c_modify_time, c_available, c_order_num ) values
 		(#{cId,jdbcType=VARCHAR}, #{cCode,jdbcType=VARCHAR},
 		#{cName,jdbcType=VARCHAR},
-		#{cNameAbbr,jdbcType=VARCHAR}, #{cAddress,jdbcType=VARCHAR}, #{cCity,jdbcType=VARCHAR},
-		#{cState,jdbcType=VARCHAR}, #{cCounty,jdbcType=VARCHAR},
+		#{cNameAbbr,jdbcType=VARCHAR}, #{cAddress,jdbcType=VARCHAR}, 
+		#{cState,jdbcType=VARCHAR}, #{cCity,jdbcType=VARCHAR}, #{cCounty,jdbcType=VARCHAR},
+        #{cStateCode,jdbcType=VARCHAR}, #{cCityCode,jdbcType=VARCHAR}, #{cCountyCode,jdbcType=VARCHAR},
 		#{cOwner,jdbcType=VARCHAR},
 		#{cOwnerPhone,jdbcType=VARCHAR}, #{cParentId,jdbcType=CHAR}, #{cRootId,jdbcType=CHAR},
 		#{cCreator,jdbcType=CHAR}, now(),
