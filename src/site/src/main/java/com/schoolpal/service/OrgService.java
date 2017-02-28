@@ -90,7 +90,12 @@ public class OrgService {
 		TOrg org = orgDao.selectOneByCode(code);
 		return org;
 	}
-	
+
+	public TOrg getOrgByCodeWithExclusion(String code, String excludeId){
+		TOrg org = orgDao.selectOneByCodeWithExcludeId(code, excludeId);
+		return org;
+	}
+
 	public TOrg getOrgById(String code){
 		TOrg org = orgDao.selectOneById(code);
 		return org;
@@ -115,10 +120,17 @@ public class OrgService {
 		return ret;
 	}
 	
-	public boolean ModifyOrg(){
-		return false;
+	public boolean ModOrgById(OrgForm form){
+		boolean ret = false;
+		try{
+			TOrg org = this.OrgFormToTOrg(form);
+			ret = orgDao.updateOneById(org) > 0;
+		}catch(Exception e){
+			logServ.log("", LogLevel.ERROR, "AjaxOrgController.ModOrg()", "", e.getMessage());
+		}
+		return ret;
 	}
-	
+		
 	public boolean DeleteOrgById(String id){
 		boolean ret = false;
 		try{
@@ -139,16 +151,18 @@ public class OrgService {
 		}
 		
 		TOrg org = new TOrg();
-		org.setcAddress(form.getAddress());
-		org.setcCity(form.getCity());
-		org.setcCode(form.getCode());
-		org.setcCounty(form.getCounty());
 		org.setcId(form.getId());
+		org.setcCode(form.getCode());
 		org.setcName(form.getName());
-		org.setcOwner(form.getOwner());
-		org.setcParentId(form.getParentId());
-		org.setcOwnerPhone(form.getPhone());
+		
 		org.setcState(form.getState());
+		org.setcCity(form.getCity());
+		org.setcCounty(form.getCounty());
+		org.setcAddress(form.getAddress());
+	
+		org.setcParentId(form.getParentId());
+		org.setcOwner(form.getOwner());
+		org.setcOwnerPhone(form.getPhone());
 		
 		return org; 
 	}

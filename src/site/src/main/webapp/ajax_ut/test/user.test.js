@@ -12,7 +12,7 @@ function resDump(id, jsonData) {
 	console.log(id + " detail: " + jsonData.detail);
 }
 
-describe('user api test', function() {
+describe('User APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';

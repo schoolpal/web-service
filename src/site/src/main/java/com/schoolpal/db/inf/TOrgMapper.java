@@ -10,9 +10,11 @@ public interface TOrgMapper {
 
     TOrg selectOneByCode(String cCode);
 
+    TOrg selectOneByCodeWithExcludeId(String cCode, String cId);
+    
     int insertOne(TOrg org);
 
-    int UpdateOneById(String cId);
+    int updateOneById(TOrg org);
 
     int deleteOneById(String cId);
 

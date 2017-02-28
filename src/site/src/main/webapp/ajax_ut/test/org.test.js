@@ -12,7 +12,7 @@ function resDump(id, jsonData) {
 	console.log(id + " detail: " + jsonData.detail);
 }
 
-describe('org api test', function() {
+describe('Org APIs', function() {
 	
 	var date = new Date()
 	
@@ -73,19 +73,19 @@ describe('org api test', function() {
 			dataType : 'json',
 			data : {
 				id: null,
-				name: 'testname',
+				name: 'testName',
 				code: orgCode,
 				parentId: '16010100000001',
 				parentName: null,
-				state: 'teststate',
-				city: 'testcity',
-				county: 'testcountry',
+				state: 'testState',
+				city: 'testSity',
+				county: 'testCounty',
 				state_code: '000000',
 				city_code: '000000',
 				county_code: '000000',
-				address: 'testaddr',
+				address: 'testAddr',
 				owner: 'testOwner',
-				phone: 'testphone'
+				phone: 'testPhone'
 			}
 		});
 
@@ -98,7 +98,38 @@ describe('org api test', function() {
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	var orgId = null;
+	it('mod.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, org_path, 'mod.do'),
+			dataType : 'json',
+			data : {
+				id: orgId,
+				name: 'testNameMod',
+				code: orgCode,
+				parentId: '16010100000001',
+				parentName: null,
+				state: 'testStateMod',
+				city: 'testCityMod',
+				county: 'testCountryMod',
+				state_code: '000000Mod',
+				city_code: '000000Mod',
+				county_code: '000000Mod',
+				address: 'testAddrMod',
+				owner: 'testOwnerMod',
+				phone: 'testphoneMod'
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('mod.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		//expect(jsonData.data).to.be.empty;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
 	it('del.do', function() {
 		xhr = $.ajax({
 			async : false,

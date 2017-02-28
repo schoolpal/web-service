@@ -77,6 +77,44 @@ public class AjaxOrgController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String mod(OrgForm form) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			TUser user = userServ.getCachedUser();
+			
+			TOrg org = orgServ.getOrgByCodeWithExclusion(form.getCode(), form.getId());
+			if (org != null) {
+				res.setCode(401);
+				res.setDetail("Duplicated orgnization code");
+				break;
+			}
+			
+			TOrg parentOrg = orgServ.getOrgById(form.getParentId());
+			if (parentOrg == null) {
+				res.setCode(402);
+				res.setDetail("Parent orgnization not exist");
+				break;
+			}
+			
+			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(form.getParentId())) {
+				res.setCode(403);
+				res.setDetail("No permission to move orgnization to this parent orgnization");
+			}
+			
+			if (!orgServ.ModOrgById(form)){
+				res.setCode(500);
+				res.setDetail("Failed to add orgnization");
+				break;
+			}
+			
+		} while (false);
+		
+		return gson.toJson(res);
+	}
+	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String del(String id) {
