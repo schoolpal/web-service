@@ -12,20 +12,20 @@ function resDump(id, jsonData) {
 	console.log(id + " detail: " + jsonData.detail);
 }
 
-describe('/ajax/user/ APIs', function() {
-
+describe('/ajax/func/ APIs', function() {
 	var host = window.location.protocol + "//" + window.location.host;
-	var path = '/web/ajax/user/';
+	var user_path = '/web/ajax/user/';
+	var func_path = '/web/ajax/func/';
 
 	var user = 'sp-admin';
 	var pass = '123456';
 	var salt = null;
-
+	
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'salt.do'),
+			url : buildUrl(host, user_path, 'salt.do'),
 			dataType : 'json'
 		});
 
@@ -43,7 +43,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'login.do'),
+			url : buildUrl(host, user_path, 'login.do'),
 			dataType : 'json',
 			data : {
 				loginname : user,
@@ -59,68 +59,20 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('profile.do', function() {
+	it('listByRole.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'profile.do'),
-			dataType : 'json'
-		});
-
-		expect(xhr.status).to.be.equal(200);
-		jsonData = xhr.responseJSON;
-		resDump('profile.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
-		// expect(jsonData.detail).to.be.equal('Ok');
-	});
-
-	it('listFuncs.do', function() {
-		xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, path, 'listFuncs.do'),
-			dataType : 'json'
-		});
-
-		expect(xhr.status).to.be.equal(200);
-		jsonData = xhr.responseJSON;
-		resDump('listFuncs.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
-		// expect(jsonData.detail).to.be.equal('Ok');
-	});
-
-	it('listOrgs.do', function() {
-		xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, path, 'listOrgs.do'),
-			dataType : 'json'
-		});
-
-		expect(xhr.status).to.be.equal(200);
-		jsonData = xhr.responseJSON;
-		resDump('listOrgs.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
-		// expect(jsonData.detail).to.be.equal('Ok');
-	});
-
-	it('listRoles.do', function() {
-		xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, path, 'listRoles.do'),
+			url : buildUrl(host, func_path, 'listByRole.do'),
 			dataType : 'json',
 			data : {
-				orgId : '16010100000001'
+				roleId : '16010100000001'
 			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
 		jsonData = xhr.responseJSON;
-		resDump('listRoles.do', jsonData);
+		resDump('listByRole.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');
@@ -130,7 +82,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'logout.do'),
+			url : buildUrl(host, user_path, 'logout.do'),
 			dataType : 'json'
 		});
 

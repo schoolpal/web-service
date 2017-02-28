@@ -12,7 +12,7 @@ function resDump(id, jsonData) {
 	console.log(id + " detail: " + jsonData.detail);
 }
 
-describe('Org APIs', function() {
+describe('/ajax/org/ APIs', function() {
 	
 	var date = new Date()
 	

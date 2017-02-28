@@ -143,9 +143,9 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
-	@RequestMapping(value = "permissions.do", method = RequestMethod.POST)
+	@RequestMapping(value = "listFuncs.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String permissions() {
+	public String listFuncs() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
@@ -163,9 +163,9 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
-	@RequestMapping(value = "orglist.do", method = RequestMethod.POST)
+	@RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String orglist() {
+	public String listOrgs() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
@@ -180,9 +180,9 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
-	@RequestMapping(value = "rolelist.do", method = RequestMethod.POST)
+	@RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String rolelist(String orgId) {
+	public String listRoles(String orgId) {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
@@ -197,29 +197,6 @@ public class AjaxUserController {
 			} else {
 				List<TRole> roleList = roleServ.getRoleListByOrgId(orgId);
 				res.setData(roleList);
-			}
-		}
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "funclist.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String funclist(String roleId) {
-		TUser user = userServ.getCachedUser();
-		AjaxResponse res = new AjaxResponse(200);
-		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
-			// never be reached
-			res.setCode(500);
-			res.setDetail("Cannot find cached profile data, not login?");
-		} else {
-			TRole role = roleServ.getRoleById(roleId);
-			if (!orgServ.getOrgIdListByRootId(user.getcOrgId()).contains(role.getcOrgId())) {
-				res.setCode(401);
-				res.setDetail("No permission for this orgnization");
-			} else {
-				List<TFunction> funcList = funcServ.getFuncListByRoleId(roleId);
-				res.setData(funcList);
 			}
 		}
 		return gson.toJson(res);
