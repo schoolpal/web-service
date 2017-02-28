@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import NavBar from './public/NavBar';
 import { LoginButton } from './public/Button';
 import Dialog from './public/Dialog';
-import { salt, login } from '../utils/api';
+import { salt, login, permissions } from '../utils/api';
 import MD5 from 'crypto-js/md5';
 
 function mixedMD5(string) {
@@ -55,11 +55,11 @@ export default class Login extends React.Component {
             login({
                 loginname: username,
                 mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
-            }).done((data) => {
+            }).done(() => {
                 if (this.props.router.location.state && this.props.router.location.state.nextPathname) {
                     this.props.router.replace(this.props.router.location.state.nextPathname);
                 } else {
-                    this.props.router.replace(OMS_CONFIG.ROOTPATH);
+                    this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
                 }
             }).fail((data) => {
                 this.setState({

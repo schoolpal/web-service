@@ -1,114 +1,221 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
-
-function TableLine(data) {
-    const spacingClass = 'tree-spacing-' + data.level;
-    const childrenClass = data.children ? '' : 'not-child';
-
-    return (
-        <tr key={data.id} data-id={data.id}>
-            <th scope="row">
-                <div className="form-check form-check-inline">
-                    <label className="form-check-label">
-                        <input className="form-check-input" type="checkbox" value="option1" />
-                    </label>
-                </div>
-            </th>
-            <td>
-                <p className={'tree-node ' + childrenClass + ' ' + spacingClass}>{data.name}</p>
-            </td>
-            <td>北京市朝阳区</td>
-            <td>北京市朝阳区望京西里11号二层</td>
-            <td></td>
-            <td></td>
-            <td>
-                <button type="button" className="btn btn-link"><i className="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></button>
-                <button type="button" className="btn btn-link"><i className="fa fa-trash-o fa-lg text-danger" aria-hidden="true"></i></button>
-            </td>
-        </tr>
-    );
-};
+import { CreateButton, EditorButton, DelButton } from '../public/Button';
+import { orgList, orgDel } from '../../utils/api';
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {
-                id: 1,
-                name: 'root',
-                level: 1,
-                children: [
-                    {
-                        id: 2,
-                        name: 'root-1',
-                        level: 2,
-                        children: [
-                            {
-                                id: 3,
-                                name: 'root-1-1',
-                                level: 3
-                            }
-                        ]
-                    },
-                    {
-                        id: 4,
-                        name: 'root-2',
-                        level: 2
-                    }
-                ]
-            }
+            loading: true,
+            delLoading: false,
+            list: [],
+            selected: null,
+            selectedLevel: null,
+            rootLevel: null
         };
+
+        this.renderCommand = this.renderCommand.bind(this);
+        this.renderTable = this.renderTable.bind(this);
+        this.tableLine = this.tableLine.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
+        this.handleEditor = this.handleEditor.bind(this);
+        this.handleDel = this.handleDel.bind(this);
+        this.handleNode = this.handleNode.bind(this);
+    }
+
+    renderCommand() {
+        let temp = [];
+        let isDisabled;
+
+        if (this.state.selectedLevel && this.state.selectedLevel !== this.state.rootLevel) {
+            isDisabled = false;
+        } else {
+            isDisabled = true;
+        };
+
+        if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
+            SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map((item, index) => {
+                if (item === 'Add') {
+                    temp.push(<CreateButton key={index} link={SCHOOLPAL_CONFIG.ROOTPATH + 'org/create'} />)
+                };
+
+                if (item === 'Mod') {
+                    temp.push(<EditorButton key={index} action={this.handleEditor} disabled={isDisabled} />)
+                }
+
+                if (item === 'Del') {
+                    temp.push(<DelButton key={index} action={this.handleDel} disabled={isDisabled} loading={this.state.delLoading} />)
+                }
+            })
+        }
+
+        return temp;
     }
 
     renderTable(data) {
         let table = [];
 
-        if (data.children && data.children.length) {
-            let children = [];
+        if (data.length) {
+            data.map((item) => {
+                table.push(this.tableLine(item));
 
-            table.push(TableLine(data));
+                if (item.children && item.children.length) {
+                    let children = [];
 
-            data.children.forEach((item) => {
-                children.push(this.renderTable(item));
-            });
-
-            table.push(children);
-        } else {
-            table.push(TableLine(data));
-        };
+                    children.push(this.renderTable(item.children));
+                    table.push(children);
+                }
+            })
+        }
 
         return table;
     }
 
+    tableLine(data) {
+        const spacingStyle = { marginLeft: 40 * data.level + 'px' };
+        const childrenClass = data.children ? '' : 'not-child';
+        const area = data.cState + ' ' + data.cCity + ' ' + data.cCounty;
+        const addr = area + ' ' + data.cAddress;
+
+        return (
+            <tr key={data.cId} data-id={data.cId} data-level={data.level}>
+                <th scope="row">
+                    <span onClick={this.handleSelect} className="select"></span>
+                </th>
+                <td>
+                    <p onClick={this.handleNode} className={'tree-node ' + childrenClass} style={spacingStyle}>{data.cName}</p>
+                </td>
+                <td>{area}</td>
+                <td>{addr}</td>
+                <td>{data.cOwner}</td>
+                <td>{data.cOwnerPhone}</td>
+            </tr>
+        );
+    }
+
+    handleSelect(event) {
+        if ($(event.target).hasClass('selected')) {
+            $(event.target).removeClass('selected');
+
+            this.setState({
+                selected: null,
+                selectedLevel: null
+            })
+        } else {
+            $(event.target)
+                .addClass('selected')
+                .parents('[data-id]')
+                .siblings('[data-id]')
+                .find('.select')
+                .removeClass('selected');
+
+            this.setState({
+                selected: $(event.target).parents('tr').data('id'),
+                selectedLevel: $(event.target).parents('tr').data('level')
+            })
+        }
+    }
+
+    handleEditor() {
+        console.log(this.state);
+    }
+
+    handleDel() {
+        this.setState({
+            delLoading: true
+        })
+
+        orgDel(this.state.selected)
+            .done(() => {
+                this.setState({
+                    loading: true,
+                    delLoading: false,
+                    list: [],
+                    selected: null,
+                    selectedLevel: null,
+                    rootLevel: null
+                })
+                orgList()
+                    .done((data, rootLevel) => {
+                        this.setState({
+                            loading: false,
+                            list: data,
+                            rootLevel: rootLevel
+                        })
+                    })
+            })
+
+    }
+
+    handleNode(event) {
+        if ($(event.target).hasClass('not-child')) {
+            return;
+        };
+
+        const tr = $(event.target).parents('tr');
+        const level = tr.data('level');
+
+        tr.nextAll('tr').each((i, item) => {
+            if ($(item).data('level') === level) {
+                return false;
+            };
+
+            if ($(event.target).hasClass('closed')) {
+                if ($(item).data('level') === (level + 1)) {
+                    $(item).show();
+                }
+            } else {
+                $(item)
+                    .hide()
+                    .find('.tree-node')
+                    .addClass('closed');
+            }
+        });
+
+        $(event.target).toggleClass('closed');
+    }
+
+    componentDidMount() {
+        orgList()
+            .done((data, rootLevel) => {
+                this.setState({
+                    loading: false,
+                    list: data,
+                    rootLevel: rootLevel
+                })
+            })
+    }
+
     render() {
-        console.log(this.props)
         return (
             <div className="org">
                 <h5>
                     <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理
-                    <div className="btn-group float-right" role="group">
-                        <Link to={`/org/create`} className="btn btn-primary"><i className="fa fa-clone" aria-hidden="true"></i> 新建</Link>
-                        <button type="button" className="btn btn-danger"><i className="fa fa-trash-o" aria-hidden="true"></i> 删除</button>
+                        <div className="btn-group float-right" role="group">
+                        {this.renderCommand()}
                     </div>
                 </h5>
+                <div className="main-container">
+                    <table className="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>组织名称</th>
+                                <th>所在地区</th>
+                                <th>详细地址</th>
+                                <th>负责人</th>
+                                <th>联系电话</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderTable(this.state.list)}
+                        </tbody>
+                    </table>
 
-                <table className="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>&nbsp;</th>
-                            <th>组织名称</th>
-                            <th>所在地区</th>
-                            <th>详细地址</th>
-                            <th>负责人</th>
-                            <th>联系电话</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderTable(this.state.data)}
-                    </tbody>
-                </table>
+                    {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
+
+                </div>
             </div>
         )
     }

@@ -7,51 +7,59 @@ webpackJsonp([0],{
 
 	var _vendor = __webpack_require__(4);
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _Dashboard = __webpack_require__(227);
+	var _Dashboard = __webpack_require__(229);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _List = __webpack_require__(233);
+	var _List = __webpack_require__(235);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(234);
+	var _Editor = __webpack_require__(237);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _List3 = __webpack_require__(236);
+	var _List3 = __webpack_require__(241);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(237);
+	var _Editor3 = __webpack_require__(242);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _List5 = __webpack_require__(238);
+	var _List5 = __webpack_require__(243);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _List7 = __webpack_require__(239);
+	var _List7 = __webpack_require__(244);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor5 = __webpack_require__(240);
+	var _Editor5 = __webpack_require__(245);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _login = __webpack_require__(241);
+	var _login = __webpack_require__(246);
 
 	var _login2 = _interopRequireDefault(_login);
+
+	var _Error = __webpack_require__(249);
+
+	var _Error2 = _interopRequireDefault(_Error);
+
+	var _checkAuth = __webpack_require__(250);
+
+	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65,50 +73,41 @@ webpackJsonp([0],{
 	    NOT_SIGNIN: 'NOT_SIGNIN',
 
 	    AUTH_DIC: {
-	        '7-1': {
-	            PATH: 'org',
-	            ICON: 'fa-sitemap'
-	        },
-	        '7-2': {
-	            PATH: 'role',
-	            ICON: 'fa-users'
-	        },
-	        '7-3': {
-	            PATH: 'auth',
-	            ICON: 'fa-shield'
-	        },
-	        '7-4': {
-	            PATH: 'user',
-	            ICON: 'fa-user'
-	        }
+	        '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
+	        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
+	        '7-1-2': { PATH_RULE: /^org\/\w(\/)?$/ },
+	        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
+	        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
+	        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' }
 	    }
 	};
 
-	__webpack_require__(245);
-	__webpack_require__(249);
-	__webpack_require__(252);
-	__webpack_require__(254);
+	__webpack_require__(251);
+	__webpack_require__(255);
+	__webpack_require__(258);
+	__webpack_require__(260);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
+	    _react2.default.createElement(_reactRouter.Route, { path: SCHOOLPAL_CONFIG.ROOTPATH + 'login', component: _login2.default }),
 	    _react2.default.createElement(
 	        _reactRouter.Route,
 	        { path: SCHOOLPAL_CONFIG.ROOTPATH, component: _Dashboard2.default },
-	        _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List4.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:id', component: _Editor4.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'auth', component: _List6.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List8.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:id', component: _Editor6.default })
-	    ),
-	    _react2.default.createElement(_reactRouter.Route, { path: SCHOOLPAL_CONFIG.ROOTPATH + 'login', component: _login2.default })
+	        _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List2.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor2.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List4.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:id', component: _Editor4.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'auth', component: _List6.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List8.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:id', component: _Editor6.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '*', component: _Error2.default })
+	    )
 	), document.querySelector('#app'));
 
 /***/ },
 
-/***/ 227:
+/***/ 229:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -119,29 +118,29 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _NavBar = __webpack_require__(228);
+	var _NavBar = __webpack_require__(230);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(231);
+	var _AsideBar = __webpack_require__(233);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Alerts = __webpack_require__(232);
+	var _Alerts = __webpack_require__(234);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _api = __webpack_require__(229);
+	var _api = __webpack_require__(231);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -159,10 +158,7 @@ webpackJsonp([0],{
 
 	        var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-	        _this.state = {
-	            isLoading: true,
-	            hasRole: false
-	        };
+	        _this.state = { isLoading: true };
 	        return _this;
 	    }
 
@@ -171,35 +167,8 @@ webpackJsonp([0],{
 	        value: function componentWillMount() {
 	            var _this2 = this;
 
-	            (0, _api.permissions)().done(function (data) {
-	                if (data.length) {
-	                    (function () {
-	                        var auth = {};
-
-	                        $.each(data, function (i, item) {
-	                            if (item.WidgetType === 'MenuItem') {
-	                                var temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
-
-	                                auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
-	                            };
-
-	                            if (item.WidgetType === 'Command') {
-	                                $.each(auth, function (k, v) {
-	                                    if (v.id === item.cParentId) {
-	                                        v.command.push(item.CommandCode);
-	                                    };
-	                                });
-	                            };
-	                        });
-
-	                        SCHOOLPAL_CONFIG.auth = auth;
-	                    })();
-	                }
-
-	                _this2.setState({
-	                    isLoading: false,
-	                    hasRole: SCHOOLPAL_CONFIG.auth && $.isEmptyObject(SCHOOLPAL_CONFIG.auth) === false ? true : false
-	                });
+	            (0, _api.permissions)().done(function () {
+	                _this2.setState({ isLoading: false });
 	            }).fail(function (data) {
 	                if (data.type === SCHOOLPAL_CONFIG.NOT_SIGNIN) {
 	                    _this2.props.router.replace({
@@ -217,13 +186,13 @@ webpackJsonp([0],{
 	                    'div',
 	                    { className: 'view' },
 	                    _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: true }),
-	                    _react2.default.createElement(_AsideBar2.default, { hasRole: this.state.hasRole }),
+	                    _react2.default.createElement(_AsideBar2.default, null),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'main' },
 	                        _react2.default.createElement(
-	                            'p',
-	                            null,
+	                            'div',
+	                            { className: 'main-container' },
 	                            '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
 	                        )
 	                    )
@@ -233,11 +202,11 @@ webpackJsonp([0],{
 	                    'div',
 	                    { className: 'view' },
 	                    _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: true }),
-	                    _react2.default.createElement(_AsideBar2.default, { hasRole: this.state.hasRole }),
+	                    _react2.default.createElement(_AsideBar2.default, null),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'main' },
-	                        this.state.hasRole === true ? this.props.children : _react2.default.createElement(_Alerts2.default, { title: '\u8B66\u544A \uFF01', text: '\u6CA1\u6709\u6743\u9650\u8BBF\u95EE\u8BE5\u5185\u5BB9 \uFF01' })
+	                        this.props.children
 	                    )
 	                );
 	            };
@@ -251,7 +220,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 228:
+/***/ 230:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -262,19 +231,19 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _api = __webpack_require__(229);
+	var _api = __webpack_require__(231);
 
-	var _Dialog = __webpack_require__(230);
+	var _Dialog = __webpack_require__(232);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
@@ -368,7 +337,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 229:
+/***/ 231:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -380,6 +349,12 @@ webpackJsonp([0],{
 	exports.login = login;
 	exports.logout = logout;
 	exports.permissions = permissions;
+	exports.orgList = orgList;
+	exports.orgAdd = orgAdd;
+	exports.orgDel = orgDel;
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 	function io(options, callback) {
 	    if (!(this instanceof io)) {
 	        return new io(options, callback);
@@ -423,6 +398,48 @@ webpackJsonp([0],{
 
 	function formatUrl(url) {
 	    return SCHOOLPAL_CONFIG.AJAXPATH + url;
+	}
+
+	function conversionOrg(data) {
+	    var tree = [];
+	    var rootLevel = [];
+
+	    if (data.length) {
+	        data.map(function (item) {
+	            rootLevel.push(item.level);
+
+	            if (item.cId === item.cParentId) {
+	                tree.push(item);
+	            } else {
+	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+	                insertTree(tree[rootIndex], item);
+	            }
+	        });
+	    }
+
+	    rootLevel = _.uniq(rootLevel);
+
+	    return {
+	        tree: tree,
+	        rootLevel: rootLevel.length ? Math.min.apply(Math, _toConsumableArray(rootLevel)) : null
+	    };
+
+	    function insertTree(rootData, data) {
+	        if (rootData.cId === data.cParentId) {
+	            if (!rootData.children) {
+	                rootData.children = [];
+	            };
+
+	            rootData.children.push(data);
+	        } else {
+	            if (rootData.children && rootData.children.length) {
+	                rootData.children.map(function (item) {
+	                    insertTree(item, data);
+	                });
+	            };
+	        }
+	    }
 	}
 
 	function salt() {
@@ -473,9 +490,87 @@ webpackJsonp([0],{
 
 	function permissions() {
 	    var defer = $.Deferred();
-	    var url = 'user/permissions.do';
+	    var url = 'user/listFuncs.do';
 
 	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            (function () {
+	                var auth = {};
+	                var authPath = [];
+
+	                if (data.data.length) {
+	                    $.each(data.data, function (i, item) {
+	                        if (item.WidgetType === 'MenuItem') {
+	                            var temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
+
+	                            auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
+	                        };
+
+	                        if (item.WidgetType === 'Command') {
+	                            $.each(auth, function (k, v) {
+	                                if (v.id === item.cParentId) {
+	                                    v.command.push(item.CommandCode);
+	                                };
+	                            });
+	                        };
+
+	                        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]) {
+	                            authPath.push(SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH_RULE);
+	                        };
+	                    });
+	                };
+
+	                SCHOOLPAL_CONFIG.auth = auth;
+	                SCHOOLPAL_CONFIG.authPath = authPath;
+
+	                defer.resolve();
+	            })();
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function orgList() {
+	    var defer = $.Deferred();
+	    var url = 'user/listOrgs.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            var conversionOrgData = conversionOrg(data.data);
+
+	            defer.resolve(conversionOrgData.tree, conversionOrgData.rootLevel);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function orgAdd(data) {
+	    var defer = $.Deferred();
+	    var url = 'org/add.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function orgDel(oid) {
+	    var defer = $.Deferred();
+	    var url = 'org/del.do';
+
+	    io({ url: url, data: { id: oid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -488,7 +583,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 230:
+/***/ 232:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -499,11 +594,11 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -623,93 +718,6 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 231:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	exports.default = AsideBar;
-
-	var _react = __webpack_require__(7);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactRouter = __webpack_require__(172);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function AsideBar(props) {
-	    if (props.hasRole === true) {
-	        var _ret = function () {
-	            var listItems = [];
-
-	            $.each(SCHOOLPAL_CONFIG.auth, function (k, v) {
-	                listItems.push(_react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { key: v.id, to: SCHOOLPAL_CONFIG.ROOTPATH + v.PATH, className: 'btn btn-block btn-link' },
-	                    _react2.default.createElement('i', { className: 'fa ' + v.ICON + ' fa-lg', 'aria-hidden': 'true' })
-	                ));
-	            });
-
-	            return {
-	                v: _react2.default.createElement(
-	                    'div',
-	                    { className: 'aside-bar bg-faded' },
-	                    listItems
-	                )
-	            };
-	        }();
-
-	        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-	    } else {
-	        return _react2.default.createElement('div', { className: 'aside-bar bg-faded' });
-	    };
-	}
-
-/***/ },
-
-/***/ 232:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = Alerts;
-
-	var _react = __webpack_require__(7);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function Alerts(props) {
-	    return _react2.default.createElement(
-	        "div",
-	        { className: "alert alert-danger", role: "alert" },
-	        _react2.default.createElement(
-	            "strong",
-	            null,
-	            props.title
-	        ),
-	        " ",
-	        props.text
-	    );
-	}
-
-/***/ },
-
 /***/ 233:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -718,231 +726,37 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = AsideBar;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	function AsideBar(props) {
+	    var listItems = [];
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function TableLine(data) {
-	    var spacingClass = 'tree-spacing-' + data.level;
-	    var childrenClass = data.children ? '' : 'not-child';
+	    $.each(SCHOOLPAL_CONFIG.auth, function (k, v) {
+	        listItems.push(_react2.default.createElement(
+	            _reactRouter.Link,
+	            { key: v.id, to: SCHOOLPAL_CONFIG.ROOTPATH + v.PATH, className: 'btn btn-block btn-link' },
+	            _react2.default.createElement('i', { className: 'fa ' + v.ICON + ' fa-lg', 'aria-hidden': 'true' })
+	        ));
+	    });
 
 	    return _react2.default.createElement(
-	        'tr',
-	        { key: data.id, 'data-id': data.id },
-	        _react2.default.createElement(
-	            'th',
-	            { scope: 'row' },
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'form-check form-check-inline' },
-	                _react2.default.createElement(
-	                    'label',
-	                    { className: 'form-check-label' },
-	                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' })
-	                )
-	            )
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            _react2.default.createElement(
-	                'p',
-	                { className: 'tree-node ' + childrenClass + ' ' + spacingClass },
-	                data.name
-	            )
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            '\u5317\u4EAC\u5E02\u671D\u9633\u533A'
-	        ),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            '\u5317\u4EAC\u5E02\u671D\u9633\u533A\u671B\u4EAC\u897F\u91CC11\u53F7\u4E8C\u5C42'
-	        ),
-	        _react2.default.createElement('td', null),
-	        _react2.default.createElement('td', null),
-	        _react2.default.createElement(
-	            'td',
-	            null,
-	            _react2.default.createElement(
-	                'button',
-	                { type: 'button', className: 'btn btn-link' },
-	                _react2.default.createElement('i', { className: 'fa fa-pencil-square-o fa-lg', 'aria-hidden': 'true' })
-	            ),
-	            _react2.default.createElement(
-	                'button',
-	                { type: 'button', className: 'btn btn-link' },
-	                _react2.default.createElement('i', { className: 'fa fa-trash-o fa-lg text-danger', 'aria-hidden': 'true' })
-	            )
-	        )
+	        'div',
+	        { className: 'aside-bar bg-faded' },
+	        listItems
 	    );
-	};
-
-	var List = function (_React$Component) {
-	    _inherits(List, _React$Component);
-
-	    function List(props) {
-	        _classCallCheck(this, List);
-
-	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
-
-	        _this.state = {
-	            data: {
-	                id: 1,
-	                name: 'root',
-	                level: 1,
-	                children: [{
-	                    id: 2,
-	                    name: 'root-1',
-	                    level: 2,
-	                    children: [{
-	                        id: 3,
-	                        name: 'root-1-1',
-	                        level: 3
-	                    }]
-	                }, {
-	                    id: 4,
-	                    name: 'root-2',
-	                    level: 2
-	                }]
-	            }
-	        };
-	        return _this;
-	    }
-
-	    _createClass(List, [{
-	        key: 'renderTable',
-	        value: function renderTable(data) {
-	            var _this2 = this;
-
-	            var table = [];
-
-	            if (data.children && data.children.length) {
-	                (function () {
-	                    var children = [];
-
-	                    table.push(TableLine(data));
-
-	                    data.children.forEach(function (item) {
-	                        children.push(_this2.renderTable(item));
-	                    });
-
-	                    table.push(children);
-	                })();
-	            } else {
-	                table.push(TableLine(data));
-	            };
-
-	            return table;
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            console.log(this.props);
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'org' },
-	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
-	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406',
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/org/create', className: 'btn btn-primary' },
-	                            _react2.default.createElement('i', { className: 'fa fa-clone', 'aria-hidden': 'true' }),
-	                            ' \u65B0\u5EFA'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-danger' },
-	                            _react2.default.createElement('i', { className: 'fa fa-trash-o', 'aria-hidden': 'true' }),
-	                            ' \u5220\u9664'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'table',
-	                    { className: 'table table-bordered' },
-	                    _react2.default.createElement(
-	                        'thead',
-	                        null,
-	                        _react2.default.createElement(
-	                            'tr',
-	                            null,
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\xA0'
-	                            ),
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\u7EC4\u7EC7\u540D\u79F0'
-	                            ),
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\u6240\u5728\u5730\u533A'
-	                            ),
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\u8BE6\u7EC6\u5730\u5740'
-	                            ),
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\u8D1F\u8D23\u4EBA'
-	                            ),
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\u8054\u7CFB\u7535\u8BDD'
-	                            ),
-	                            _react2.default.createElement(
-	                                'th',
-	                                null,
-	                                '\u64CD\u4F5C'
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'tbody',
-	                        null,
-	                        this.renderTable(this.state.data)
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return List;
-	}(_react2.default.Component);
-
-	exports.default = List;
+	}
 
 /***/ },
 
@@ -954,306 +768,27 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = Alerts;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactRouter = __webpack_require__(172);
-
-	var _OrgTree = __webpack_require__(235);
-
-	var _OrgTree2 = _interopRequireDefault(_OrgTree);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Editor = function (_React$Component) {
-	    _inherits(Editor, _React$Component);
-
-	    function Editor(props) {
-	        _classCallCheck(this, Editor);
-
-	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
-
-	        _this.state = {
-	            data: {
-	                id: 1,
-	                name: 'root',
-	                level: 1,
-	                children: [{
-	                    id: 2,
-	                    name: 'root-1',
-	                    level: 2,
-	                    children: [{
-	                        id: 3,
-	                        name: 'root-1-1',
-	                        level: 3
-	                    }]
-	                }, {
-	                    id: 4,
-	                    name: 'root-2',
-	                    level: 2
-	                }]
-	            }
-	        };
-	        return _this;
-	    }
-
-	    _createClass(Editor, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'org' },
-	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
-	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'd-inline text-muted' },
-	                        '\u65B0\u5EFA\u7EC4\u7EC7'
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-secondary' },
-	                            '\u4FDD\u5B58'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-secondary' },
-	                            '\u53D6\u6D88'
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'form',
-	                    null,
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u7EC4\u7EC7\u540D\u79F0'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-4' },
-	                            _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'name' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u7236\u7EA7\u7EC4\u7EC7'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-4' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'input-group' },
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', readOnly: true }),
-	                                _react2.default.createElement(
-	                                    'span',
-	                                    { className: 'input-group-btn' },
-	                                    _react2.default.createElement(
-	                                        'button',
-	                                        { 'data-toggle': 'modal', 'data-target': '#orgTreePanel', className: 'btn btn-secondary', type: 'button' },
-	                                        _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' })
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u6240\u5728\u5730\u533A'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-4' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'row' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col' },
-	                                    _react2.default.createElement(
-	                                        'select',
-	                                        { className: 'form-control', id: 'exampleSelect1' },
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '1'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '2'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '3'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '4'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '5'
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col' },
-	                                    _react2.default.createElement(
-	                                        'select',
-	                                        { className: 'form-control', id: 'exampleSelect1' },
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '1'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '2'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '3'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '4'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '5'
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'col' },
-	                                    _react2.default.createElement(
-	                                        'select',
-	                                        { className: 'form-control', id: 'exampleSelect1' },
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '1'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '2'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '3'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '4'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            null,
-	                                            '5'
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'addr', className: 'col-2 col-form-label' },
-	                            '\u8BE6\u7EC6\u5730\u5740'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-4' },
-	                            _react2.default.createElement('textarea', { className: 'form-control', id: 'addr', rows: '3' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u8D1F\u8D23\u4EBA'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-2' },
-	                            _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'name' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u8054\u7CFB\u7535\u8BDD'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-2' },
-	                            _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'name' })
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(_OrgTree2.default, { data: this.state.data, panel: true })
-	            );
-	        }
-	    }]);
-
-	    return Editor;
-	}(_react2.default.Component);
-
-	exports.default = Editor;
+	function Alerts(props) {
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'alert alert-' + props.type, role: 'alert' },
+	        _react2.default.createElement(
+	            'strong',
+	            null,
+	            props.title
+	        ),
+	        ' ',
+	        props.text
+	    );
+	}
 
 /***/ },
 
@@ -1268,9 +803,17 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _Button = __webpack_require__(236);
+
+	var _api = __webpack_require__(231);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1280,179 +823,305 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function TreeItems(data) {
-	    var nodeClass = 'tree-node closed ' + (data.children && data.children.length ? '' : 'not-child');
+	var List = function (_React$Component) {
+	    _inherits(List, _React$Component);
 
-	    return _react2.default.createElement(
-	        'div',
-	        { className: 'hd' },
-	        _react2.default.createElement('i', { 'data-node': true, className: nodeClass }),
-	        _react2.default.createElement(
-	            'p',
-	            { 'data-select': data.id, className: 'tree-select d-inline-block' },
-	            _react2.default.createElement(
-	                'span',
-	                null,
-	                data.name
-	            )
-	        )
-	    );
-	}
+	    function List(props) {
+	        _classCallCheck(this, List);
 
-	var OrgTree = function (_React$Component) {
-	    _inherits(OrgTree, _React$Component);
+	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
-	    function OrgTree(props) {
-	        _classCallCheck(this, OrgTree);
+	        _this.state = {
+	            loading: true,
+	            delLoading: false,
+	            list: [],
+	            selected: null,
+	            selectedLevel: null,
+	            rootLevel: null
+	        };
 
-	        var _this = _possibleConstructorReturn(this, (OrgTree.__proto__ || Object.getPrototypeOf(OrgTree)).call(this, props));
-
-	        _this.renderTree = _this.renderTree.bind(_this);
+	        _this.renderCommand = _this.renderCommand.bind(_this);
+	        _this.renderTable = _this.renderTable.bind(_this);
+	        _this.tableLine = _this.tableLine.bind(_this);
+	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.handleEditor = _this.handleEditor.bind(_this);
+	        _this.handleDel = _this.handleDel.bind(_this);
+	        _this.handleNode = _this.handleNode.bind(_this);
 	        return _this;
 	    }
 
-	    _createClass(OrgTree, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var elem = this;
+	    _createClass(List, [{
+	        key: 'renderCommand',
+	        value: function renderCommand() {
+	            var _this2 = this;
 
-	            $(this.treeDom).on('click', '[data-select]', function () {
-	                if ($(this).hasClass('selected') === false) {
-	                    $(elem.treeDom).find('[data-select]').removeClass('selected');
-	                };
+	            var temp = [];
+	            var isDisabled = void 0;
 
-	                $(this).toggleClass('selected');
-	            }).on('click', '[data-node]', function () {
-	                if ($(this).hasClass('not-child')) {
-	                    return;
-	                };
+	            if (this.state.selectedLevel && this.state.selectedLevel !== this.state.rootLevel) {
+	                isDisabled = false;
+	            } else {
+	                isDisabled = true;
+	            };
 
-	                if ($(this).hasClass('closed')) {
-	                    $(this).removeClass('closed').closest('li').children('ul').show();
-	                } else {
-	                    $(this).closest('li').find('[data-node]').addClass('closed').end().closest('li').find('ul').hide();
-	                };
+	            if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
+	                SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map(function (item, index) {
+	                    if (item === 'Add') {
+	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create' }));
+	                    };
+
+	                    if (item === 'Mod') {
+	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this2.handleEditor, disabled: isDisabled }));
+	                    }
+
+	                    if (item === 'Del') {
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this2.handleDel, disabled: isDisabled, loading: _this2.state.delLoading }));
+	                    }
+	                });
+	            }
+
+	            return temp;
+	        }
+	    }, {
+	        key: 'renderTable',
+	        value: function renderTable(data) {
+	            var _this3 = this;
+
+	            var table = [];
+
+	            if (data.length) {
+	                data.map(function (item) {
+	                    table.push(_this3.tableLine(item));
+
+	                    if (item.children && item.children.length) {
+	                        var children = [];
+
+	                        children.push(_this3.renderTable(item.children));
+	                        table.push(children);
+	                    }
+	                });
+	            }
+
+	            return table;
+	        }
+	    }, {
+	        key: 'tableLine',
+	        value: function tableLine(data) {
+	            var spacingStyle = { marginLeft: 40 * data.level + 'px' };
+	            var childrenClass = data.children ? '' : 'not-child';
+	            var area = data.cState + ' ' + data.cCity + ' ' + data.cCounty;
+	            var addr = area + ' ' + data.cAddress;
+
+	            return _react2.default.createElement(
+	                'tr',
+	                { key: data.cId, 'data-id': data.cId, 'data-level': data.level },
+	                _react2.default.createElement(
+	                    'th',
+	                    { scope: 'row' },
+	                    _react2.default.createElement('span', { onClick: this.handleSelect, className: 'select' })
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
+	                    _react2.default.createElement(
+	                        'p',
+	                        { onClick: this.handleNode, className: 'tree-node ' + childrenClass, style: spacingStyle },
+	                        data.cName
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
+	                    area
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
+	                    addr
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
+	                    data.cOwner
+	                ),
+	                _react2.default.createElement(
+	                    'td',
+	                    null,
+	                    data.cOwnerPhone
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'handleSelect',
+	        value: function handleSelect(event) {
+	            if ($(event.target).hasClass('selected')) {
+	                $(event.target).removeClass('selected');
+
+	                this.setState({
+	                    selected: null,
+	                    selectedLevel: null
+	                });
+	            } else {
+	                $(event.target).addClass('selected').parents('[data-id]').siblings('[data-id]').find('.select').removeClass('selected');
+
+	                this.setState({
+	                    selected: $(event.target).parents('tr').data('id'),
+	                    selectedLevel: $(event.target).parents('tr').data('level')
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleEditor',
+	        value: function handleEditor() {
+	            console.log(this.state);
+	        }
+	    }, {
+	        key: 'handleDel',
+	        value: function handleDel() {
+	            var _this4 = this;
+
+	            this.setState({
+	                delLoading: true
+	            });
+
+	            (0, _api.orgDel)(this.state.selected).done(function () {
+	                _this4.setState({
+	                    loading: true,
+	                    delLoading: false,
+	                    list: [],
+	                    selected: null,
+	                    selectedLevel: null,
+	                    rootLevel: null
+	                });
+	                (0, _api.orgList)().done(function (data, rootLevel) {
+	                    _this4.setState({
+	                        loading: false,
+	                        list: data,
+	                        rootLevel: rootLevel
+	                    });
+	                });
 	            });
 	        }
 	    }, {
-	        key: 'renderTree',
-	        value: function renderTree(data) {
-	            var _this2 = this;
-
-	            var tree = [];
-
-	            if (data.children && data.children.length) {
-	                (function () {
-	                    var children = [];
-
-	                    data.children.forEach(function (item) {
-	                        children.push(_this2.renderTree(item));
-	                    });
-
-	                    tree.push(_react2.default.createElement(
-	                        'li',
-	                        { key: data.id },
-	                        TreeItems(data),
-	                        _react2.default.createElement(
-	                            'ul',
-	                            null,
-	                            children
-	                        )
-	                    ));
-	                })();
-	            } else {
-	                tree.push(_react2.default.createElement(
-	                    'li',
-	                    { key: data.id },
-	                    TreeItems(data)
-	                ));
+	        key: 'handleNode',
+	        value: function handleNode(event) {
+	            if ($(event.target).hasClass('not-child')) {
+	                return;
 	            };
 
-	            return tree;
+	            var tr = $(event.target).parents('tr');
+	            var level = tr.data('level');
+
+	            tr.nextAll('tr').each(function (i, item) {
+	                if ($(item).data('level') === level) {
+	                    return false;
+	                };
+
+	                if ($(event.target).hasClass('closed')) {
+	                    if ($(item).data('level') === level + 1) {
+	                        $(item).show();
+	                    }
+	                } else {
+	                    $(item).hide().find('.tree-node').addClass('closed');
+	                }
+	            });
+
+	            $(event.target).toggleClass('closed');
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this5 = this;
+
+	            (0, _api.orgList)().done(function (data, rootLevel) {
+	                _this5.setState({
+	                    loading: false,
+	                    list: data,
+	                    rootLevel: rootLevel
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this3 = this;
-
-	            if (this.props.panel) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { id: 'orgTreePanel', tabindex: '-1', role: 'dialog', 'aria-hidden': 'true', className: 'modal fade' },
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'org' },
+	                _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
+	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406',
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'modal-dialog', role: 'document' },
+	                        { className: 'btn-group float-right', role: 'group' },
+	                        this.renderCommand()
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'table',
+	                        { className: 'table table-bordered table-sm' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'modal-content' },
+	                            'thead',
+	                            null,
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-header' },
+	                                'tr',
+	                                null,
 	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'modal-title' },
-	                                    '\u9009\u62E9\u7236\u7EA7\u7EC4\u7EC7'
+	                                    'th',
+	                                    null,
+	                                    '\xA0'
 	                                ),
 	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        { 'aria-hidden': 'true' },
-	                                        '\xD7'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-body' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { ref: function ref(dom) {
-	                                            _this3.treeDom = dom;
-	                                        }, className: 'tree' },
-	                                    _react2.default.createElement(
-	                                        'ul',
-	                                        null,
-	                                        this.renderTree(this.props.data)
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-footer' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'btn btn-primary' },
-	                                    '\u786E\u5B9A'
+	                                    'th',
+	                                    null,
+	                                    '\u7EC4\u7EC7\u540D\u79F0'
 	                                ),
 	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
-	                                    '\u53D6\u6D88'
+	                                    'th',
+	                                    null,
+	                                    '\u6240\u5728\u5730\u533A'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u8BE6\u7EC6\u5730\u5740'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u8D1F\u8D23\u4EBA'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u8054\u7CFB\u7535\u8BDD'
 	                                )
 	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'tbody',
+	                            null,
+	                            this.renderTable(this.state.list)
 	                        )
-	                    )
-	                );
-	            } else {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { className: 'tree' },
-	                    _react2.default.createElement(
-	                        'ul',
+	                    ),
+	                    this.state.loading === true ? _react2.default.createElement(
+	                        'p',
 	                        null,
-	                        this.renderTree(this.props.data)
-	                    )
-	                );
-	            };
+	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
+	                    ) : ''
+	                )
+	            );
 	        }
 	    }]);
 
-	    return OrgTree;
+	    return List;
 	}(_react2.default.Component);
 
-	exports.default = OrgTree;
+	exports.default = List;
 
 /***/ },
 
@@ -1464,20 +1133,881 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.LoginButton = LoginButton;
+	exports.CreateButton = CreateButton;
+	exports.EditorButton = EditorButton;
+	exports.DelButton = DelButton;
+	exports.SaveButton = SaveButton;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactRouter = __webpack_require__(174);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function LoginButton(props) {
+	    if (props.loading === true) {
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'login-submit text-danger' },
+	            _react2.default.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-3x fa-fw', 'aria-hidden': 'true' })
+	        );
+	    } else {
+	        return _react2.default.createElement(
+	            'div',
+	            { onClick: props.action, className: 'login-submit text-primary' },
+	            _react2.default.createElement('i', { className: 'fa fa-sign-in fa-3x', 'aria-hidden': 'true' }),
+	            _react2.default.createElement(
+	                'span',
+	                null,
+	                'SING IN'
+	            )
+	        );
+	    }
+	}
+
+	function CreateButton(props) {
+	    return _react2.default.createElement(
+	        _reactRouter.Link,
+	        { to: props.link, className: 'btn btn-primary' },
+	        _react2.default.createElement('i', { className: 'fa fa-clone', 'aria-hidden': 'true' }),
+	        ' \u65B0\u5EFA'
+	    );
+	}
+
+	function EditorButton(props) {
+	    if (props.disabled === true) {
+	        return _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-primary', disabled: 'disabled' },
+	            _react2.default.createElement('i', { className: 'fa fa-pencil-square-o', 'aria-hidden': 'true' }),
+	            ' \u7F16\u8F91'
+	        );
+	    } else {
+	        return _react2.default.createElement(
+	            'button',
+	            { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	            _react2.default.createElement('i', { className: 'fa fa-pencil-square-o', 'aria-hidden': 'true' }),
+	            ' \u7F16\u8F91'
+	        );
+	    }
+	}
+
+	function DelButton(props) {
+	    var text = props.loading === true ? '' : ' 删除';
+
+	    if (props.disabled === true) {
+	        return _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-danger', disabled: 'disabled' },
+	            _react2.default.createElement(Icon, null),
+	            text
+	        );
+	    } else {
+	        return _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-danger', onClick: props.action },
+	            _react2.default.createElement(Icon, null),
+	            text
+	        );
+	    }
+
+	    function Icon() {
+	        if (props.loading === true) {
+	            return _react2.default.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-fw', 'aria-hidden': 'true' });
+	        } else {
+	            return _react2.default.createElement('i', { className: 'fa fa-trash-o', 'aria-hidden': 'true' });
+	        }
+	    }
+	}
+
+	function SaveButton(props) {
+	    var text = props.loading === true ? '' : props.text;
+
+	    function action() {
+	        if (props.loading === false) {
+	            props.action();
+	        };
+	    }
+	    return _react2.default.createElement(
+	        'button',
+	        { onClick: action, type: 'button', className: 'btn btn-primary' },
+	        _react2.default.createElement(Icon, null),
+	        ' ',
+	        text
+	    );
+
+	    function Icon() {
+	        if (props.loading === true) {
+	            return _react2.default.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-fw', 'aria-hidden': 'true' });
+	        } else {
+	            return _react2.default.createElement('i', null);
+	        }
+	    }
+	}
+
+/***/ },
+
+/***/ 237:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(235);
+	var _OrgTree = __webpack_require__(238);
+
+	var _OrgTree2 = _interopRequireDefault(_OrgTree);
+
+	var _subTitle = __webpack_require__(239);
+
+	var _subTitle2 = _interopRequireDefault(_subTitle);
+
+	var _Alerts = __webpack_require__(234);
+
+	var _Alerts2 = _interopRequireDefault(_Alerts);
+
+	var _Button = __webpack_require__(236);
+
+	var _api = __webpack_require__(231);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	__webpack_require__(240);
+
+	var Editor = function (_React$Component) {
+	    _inherits(Editor, _React$Component);
+
+	    function Editor(props) {
+	        _classCallCheck(this, Editor);
+
+	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
+
+	        _this.state = {
+	            loading: true,
+	            saveLoading: false,
+	            orgList: [],
+	            selected: null,
+	            saveResult: null
+	        };
+	        _this.selectOrg = _this.selectOrg.bind(_this);
+	        _this.editorSubmit = _this.editorSubmit.bind(_this);
+	        _this.editorSubmitCallback = _this.editorSubmitCallback.bind(_this);
+	        _this.clearAlert = _this.clearAlert.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Editor, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            (0, _api.orgList)().done(function (data) {
+	                _this2.setState({
+	                    loading: false,
+	                    orgList: data
+	                });
+	            });
+
+	            $('#citys').citys();
+	        }
+	    }, {
+	        key: 'selectOrg',
+	        value: function selectOrg(org) {
+	            if (org) {
+	                this.setState({
+	                    selected: org
+	                });
+	            } else {
+	                this.setState({
+	                    selected: null
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'editorSubmit',
+	        value: function editorSubmit() {
+	            var _this3 = this;
+
+	            var param = {};
+
+	            $(this.editorDom).serializeArray().map(function (item) {
+	                param[item.name] = item.value;
+	            });
+
+	            param.parentId = this.state.selected.id;
+	            param.state = $('#citys').find('[name="state_code"]').find("option:selected").text();
+	            param.city = $('#citys').find('[name="city_code"]').find("option:selected").text();
+	            param.county = $('#citys').find('[name="county_code"]').find("option:selected").text();
+
+	            this.setState({
+	                saveLoading: true
+	            });
+
+	            (0, _api.orgAdd)(param).done(function () {
+	                _this3.editorSubmitCallback();
+	            }).fail(function (data) {
+	                _this3.editorSubmitCallback(data);
+	            });
+	        }
+	    }, {
+	        key: 'editorSubmitCallback',
+	        value: function editorSubmitCallback(data) {
+	            var _this4 = this;
+
+	            if (data) {
+	                this.setState({
+	                    saveLoading: false,
+	                    saveResult: {
+	                        type: 'danger',
+	                        'title': 'Oh snap!',
+	                        'text': '[' + data.data.code + '] ' + data.data.detail
+	                    }
+	                });
+	            } else {
+	                this.setState({
+	                    loading: true,
+	                    saveLoading: false,
+	                    selected: null,
+	                    saveResult: {
+	                        type: 'success',
+	                        title: 'Well done!',
+	                        text: '添加成功 ！'
+	                    }
+	                });
+
+	                $(this.editorDom).find('input, textarea').val('');
+
+	                $('#citys').find('[name="state"]').find('option').eq(0).attr('selected', true).trigger('change');
+
+	                (0, _api.orgList)().done(function (data) {
+	                    _this4.setState({
+	                        loading: false,
+	                        orgList: data
+	                    });
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'clearAlert',
+	        value: function clearAlert() {
+	            this.setState({
+	                saveResult: null
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this5 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'org' },
+	                _react2.default.createElement(
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
+	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                    _react2.default.createElement(
+	                        'p',
+	                        { className: 'd-inline text-muted' },
+	                        (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'btn-group float-right', role: 'group' },
+	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
+	                    )
+	                ),
+	                this.state.saveResult ? _react2.default.createElement(_Alerts2.default, { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text }) : '',
+	                _react2.default.createElement(
+	                    'div',
+	                    { onClick: this.clearAlert, className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'd-flex align-items-stretch flex-nowrap' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: this.state.loading === true ? 'hide' : 'w400' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                        ),
+	                        _react2.default.createElement(
+	                            'form',
+	                            { ref: function ref(dom) {
+	                                    _this5.editorDom = dom;
+	                                }, className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                            _react2.default.createElement(
+	                                'p',
+	                                { className: 'h6 pb-3 b-b' },
+	                                '\u7236\u7EA7\u7EC4\u7EC7\uFF1A',
+	                                this.state.selected ? this.state.selected.name : ''
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'w400' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7EC4\u7EC7\u540D\u79F0'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7EC4\u7EC7\u4EE3\u7801'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u6240\u5728\u5730\u533A'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { id: 'citys', className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col' },
+	                                            _react2.default.createElement('select', { name: 'state_code', className: 'form-control' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col' },
+	                                            _react2.default.createElement('select', { name: 'city_code', className: 'form-control' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col' },
+	                                            _react2.default.createElement('select', { name: 'county_code', className: 'form-control' })
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u8BE6\u7EC6\u5730\u5740'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u8D1F\u8D23\u4EBA'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u8054\u7CFB\u7535\u8BDD'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone' })
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    this.state.loading === true ? _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
+	                    ) : ''
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Editor;
+	}(_react2.default.Component);
+
+	exports.default = Editor;
+
+/***/ },
+
+/***/ 238:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var OrgTree = function (_React$Component) {
+	    _inherits(OrgTree, _React$Component);
+
+	    function OrgTree(props) {
+	        _classCallCheck(this, OrgTree);
+
+	        var _this = _possibleConstructorReturn(this, (OrgTree.__proto__ || Object.getPrototypeOf(OrgTree)).call(this, props));
+
+	        _this.renderTree = _this.renderTree.bind(_this);
+	        _this.renderTreeItem = _this.renderTreeItem.bind(_this);
+	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.handleNode = _this.handleNode.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(OrgTree, [{
+	        key: 'renderTree',
+	        value: function renderTree(data) {
+	            var _this2 = this;
+
+	            var tree = [];
+
+	            data.map(function (item) {
+	                var children = [];
+
+	                if (item.children && item.children.length) {
+	                    var _children = [];
+
+	                    _children.push(_this2.renderTree(item.children));
+	                    tree.push(_react2.default.createElement(
+	                        'li',
+	                        { key: item.cId },
+	                        _this2.renderTreeItem(item),
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _children
+	                        )
+	                    ));
+	                } else {
+	                    tree.push(_react2.default.createElement(
+	                        'li',
+	                        { key: item.cId },
+	                        _this2.renderTreeItem(item)
+	                    ));
+	                }
+	            });
+
+	            return tree;
+	        }
+	    }, {
+	        key: 'renderTreeItem',
+	        value: function renderTreeItem(data) {
+	            var nodeClass = 'tree-node closed ' + (data.children && data.children.length ? '' : 'not-child');
+	            var nodeSelectClass = 'select ' + (this.props.defaults && this.props.defaults.toString() === data.cId ? 'selected' : '');
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'hd' },
+	                _react2.default.createElement('i', { onClick: this.handleNode, 'data-node': true, className: nodeClass }),
+	                _react2.default.createElement(
+	                    'p',
+	                    { onClick: this.handleSelect, 'data-o': data.cId, className: nodeSelectClass },
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        data.cName
+	                    )
+	                )
+	            );
+	        }
+	    }, {
+	        key: 'handleSelect',
+	        value: function handleSelect(event) {
+	            var elem = $(event.target).data('o') ? $(event.target) : $(event.target).parent();
+
+	            if (elem.hasClass('selected')) {
+	                this.props.selected(null);
+	            } else {
+	                this.props.selected({
+	                    id: elem.data('o'),
+	                    name: elem.children('span').text()
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleNode',
+	        value: function handleNode(event) {
+	            if ($(event.target).hasClass('not-child')) {
+	                return;
+	            };
+
+	            if ($(event.target).hasClass('closed')) {
+	                $(event.target).removeClass('closed').closest('li').children('ul').show();
+	            } else {
+	                $(event.target).closest('li').find('[data-node]').addClass('closed').end().closest('li').find('ul').hide();
+	            };
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'tree' },
+	                _react2.default.createElement(
+	                    'ul',
+	                    null,
+	                    this.renderTree(this.props.data)
+	                )
+	            );
+	        }
+	    }]);
+
+	    return OrgTree;
+	}(_react2.default.Component);
+
+	exports.default = OrgTree;
+
+/***/ },
+
+/***/ 239:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = subTitle;
+	function subTitle(id, menu) {
+	    if (id === 'create') {
+	        return '新建' + menu;
+	    } else {
+	        return '编辑' + menu;
+	    }
+	}
+
+/***/ },
+
+/***/ 240:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * jquery.citys.js 1.0
+	 * http://jquerywidget.com
+	 */
+
+	$.fn.citys = function (parameter, getApi) {
+	    if (typeof parameter == 'function') {
+	        //重载
+	        getApi = parameter;
+	        parameter = {};
+	    } else {
+	        parameter = parameter || {};
+	        getApi = getApi || function () {};
+	    }
+	    var defaults = {
+	        dataUrl: 'http://passer-by.com/data_location/list.json', //数据库地址
+	        dataType: 'json', //数据库类型:'json'或'jsonp'
+	        provinceField: 'state_code', //省份字段名
+	        cityField: 'city_code', //城市字段名
+	        areaField: 'county_code', //地区字段名
+	        code: 0, //地区编码
+	        province: 0, //省份,可以为地区编码或者名称
+	        city: 0, //城市,可以为地区编码或者名称
+	        area: 0, //地区,可以为地区编码或者名称
+	        required: true, //是否必须选一个
+	        nodata: 'hidden', //当无数据时的表现形式:'hidden'隐藏,'disabled'禁用,为空不做任何处理
+	        onChange: function onChange() {} //地区切换时触发,回调函数传入地区数据
+	    };
+	    var options = $.extend({}, defaults, parameter);
+	    return this.each(function () {
+	        //对象定义
+	        var _api = {};
+	        var $this = $(this);
+	        var $province = $this.find('select[name="' + options.provinceField + '"]'),
+	            $city = $this.find('select[name="' + options.cityField + '"]'),
+	            $area = $this.find('select[name="' + options.areaField + '"]');
+	        $.ajax({
+	            url: options.dataUrl,
+	            type: 'GET',
+	            crossDomain: true,
+	            dataType: options.dataType,
+	            jsonpCallback: 'jsonp_location',
+	            success: function success(data) {
+	                var _province, _city, _area, hasCity;
+	                if (options.code) {
+	                    //如果设置地区编码，则忽略单独设置的信息
+	                    var c = options.code - options.code % 1e4;
+	                    if (data[c]) {
+	                        options.province = c;
+	                    }
+	                    c = options.code - (options.code % 1e4 ? options.code % 1e2 : options.code);
+	                    if (data[c]) {
+	                        options.city = c;
+	                    }
+	                    c = options.code % 1e2 ? options.code : 0;
+	                    if (data[c]) {
+	                        options.area = c;
+	                    }
+	                }
+	                var updateData = function updateData() {
+	                    _province = {}, _city = {}, _area = {};
+	                    hasCity = false; //判断是非有地级城市
+	                    for (var code in data) {
+	                        if (!(code % 1e4)) {
+	                            //获取所有的省级行政单位
+	                            _province[code] = data[code];
+	                            if (options.required && !options.province) {
+	                                if (options.city && !(options.city % 1e4)) {
+	                                    //省未填，并判断为直辖市
+	                                    options.province = options.city;
+	                                } else {
+	                                    options.province = code;
+	                                }
+	                            } else if (data[code].indexOf(options.province) > -1) {
+	                                options.province = isNaN(options.province) ? code : options.province;
+	                            }
+	                        } else {
+	                            var p = code - options.province;
+	                            if (options.province && p > 0 && p < 1e4) {
+	                                //同省的城市或地区
+	                                if (!(code % 100)) {
+	                                    hasCity = true;
+	                                    _city[code] = data[code];
+	                                    if (options.required && !options.city) {
+	                                        options.city = code;
+	                                    } else if (data[code].indexOf(options.city) > -1) {
+	                                        options.city = isNaN(options.city) ? code : options.city;
+	                                    }
+	                                } else if (p > 9000) {
+	                                    //省直辖县级行政单位
+	                                    _city[code] = data[code];
+	                                    if (options.required && !options.city) {
+	                                        options.city = code;
+	                                    } else if (data[code].indexOf(options.city) > -1) {
+	                                        options.city = isNaN(options.city) ? code : options.city;
+	                                    }
+	                                } else if (hasCity) {
+	                                    //非直辖市
+	                                    var c = code - options.city;
+	                                    if (options.city && c > 0 && c < 100) {
+	                                        //同个城市的地区
+	                                        _area[code] = data[code];
+	                                        if (options.required && !options.area) {
+	                                            options.area = code;
+	                                        } else if (data[code].indexOf(options.area) > -1) {
+	                                            options.area = isNaN(options.area) ? code : options.area;
+	                                        }
+	                                    }
+	                                } else {
+	                                    _city[code] = data[code]; //直辖市
+	                                    if (options.area) {
+	                                        options.city = options.area;
+	                                        options.area = '';
+	                                    }
+	                                    if (options.required && !options.city) {
+	                                        options.city = code;
+	                                    } else if (data[code].indexOf(options.city) > -1) {
+	                                        options.city = isNaN(options.city) ? code : options.city;
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                };
+	                var format = {
+	                    province: function province() {
+	                        $province.empty();
+	                        if (!options.required) {
+	                            $province.append('<option value=""> - 请选择 - </option>');
+	                        }
+	                        for (var i in _province) {
+	                            $province.append('<option value="' + i + '">' + _province[i] + '</option>');
+	                        }
+	                        if (options.province) {
+	                            $province.val(options.province);
+	                        }
+	                        this.city();
+	                    },
+	                    city: function city() {
+	                        $city.empty();
+	                        if (!options.required) {
+	                            $city.append('<option value=""> - 请选择 - </option>');
+	                        }
+	                        if (options.nodata == 'disabled') {
+	                            $city.prop('disabled', $.isEmptyObject(_city));
+	                        } else if (options.nodata == 'hidden') {
+	                            $city.css('display', $.isEmptyObject(_city) ? 'none' : '');
+	                        }
+	                        for (var i in _city) {
+	                            $city.append('<option value="' + i + '">' + _city[i] + '</option>');
+	                        }
+	                        if (options.city) {
+	                            $city.val(options.city);
+	                        }
+	                        this.area();
+	                    },
+	                    area: function area() {
+	                        $area.empty();
+	                        if (!hasCity) {
+	                            $area.css('display', 'none');
+	                        } else {
+	                            $area.css('display', '');
+	                            if (!options.required) {
+	                                $area.append('<option value=""> - 请选择 - </option>');
+	                            }
+	                            if (options.nodata == 'disabled') {
+	                                $area.prop('disabled', $.isEmptyObject(_area));
+	                            } else if (options.nodata == 'hidden') {
+	                                $area.css('display', $.isEmptyObject(_area) ? 'none' : '');
+	                            }
+	                            for (var i in _area) {
+	                                $area.append('<option value="' + i + '">' + _area[i] + '</option>');
+	                            }
+	                            if (options.area) {
+	                                $area.val(options.area);
+	                            }
+	                        }
+	                    }
+	                };
+	                //获取当前地理信息
+	                _api.getInfo = function () {
+	                    var status = {
+	                        direct: !hasCity,
+	                        province: data[options.province] || '',
+	                        city: data[options.city] || '',
+	                        area: data[options.area] || '',
+	                        code: options.area || options.city || options.province
+	                    };
+	                    return status;
+	                };
+	                //事件绑定
+	                $province.on('change', function () {
+	                    options.province = $(this).val();
+	                    options.city = 0;
+	                    options.area = 0;
+	                    updateData();
+	                    format.city();
+	                    options.onChange(_api.getInfo());
+	                });
+	                $city.on('change', function () {
+	                    options.city = $(this).val();
+	                    options.area = 0;
+	                    updateData();
+	                    format.area();
+	                    options.onChange(_api.getInfo());
+	                });
+	                $area.on('change', function () {
+	                    options.area = $(this).val();
+	                    options.onChange(_api.getInfo());
+	                });
+	                //初始化
+	                updateData();
+	                format.province();
+	                if (options.code) {
+	                    options.onChange(_api.getInfo());
+	                }
+	                getApi(_api);
+	            }
+	        });
+	    });
+	};
+
+/***/ },
+
+/***/ 241:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(174);
+
+	var _OrgTree = __webpack_require__(238);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -1641,7 +2171,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 237:
+/***/ 242:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1651,17 +2181,17 @@ webpackJsonp([0],{
 	});
 	exports.default = Editor;
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(235);
+	var _OrgTree = __webpack_require__(238);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -1917,7 +2447,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 238:
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1928,17 +2458,17 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(235);
+	var _OrgTree = __webpack_require__(238);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -2235,7 +2765,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 239:
+/***/ 244:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2246,17 +2776,17 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(235);
+	var _OrgTree = __webpack_require__(238);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -2520,7 +3050,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 240:
+/***/ 245:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2530,17 +3060,17 @@ webpackJsonp([0],{
 	});
 	exports.default = Editor;
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(172);
+	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(235);
+	var _OrgTree = __webpack_require__(238);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -2828,7 +3358,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 241:
+/***/ 246:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2839,27 +3369,27 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(7);
+	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(38);
+	var _reactDom = __webpack_require__(40);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _NavBar = __webpack_require__(228);
+	var _NavBar = __webpack_require__(230);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _Button = __webpack_require__(242);
+	var _Button = __webpack_require__(236);
 
-	var _Dialog = __webpack_require__(230);
+	var _Dialog = __webpack_require__(232);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _api = __webpack_require__(229);
+	var _api = __webpack_require__(231);
 
-	var _md = __webpack_require__(243);
+	var _md = __webpack_require__(247);
 
 	var _md2 = _interopRequireDefault(_md);
 
@@ -2928,11 +3458,11 @@ webpackJsonp([0],{
 	                (0, _api.login)({
 	                    loginname: username,
 	                    mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
-	                }).done(function (data) {
+	                }).done(function () {
 	                    if (_this2.props.router.location.state && _this2.props.router.location.state.nextPathname) {
 	                        _this2.props.router.replace(_this2.props.router.location.state.nextPathname);
 	                    } else {
-	                        _this2.props.router.replace(OMS_CONFIG.ROOTPATH);
+	                        _this2.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
 	                    }
 	                }).fail(function (data) {
 	                    _this2.setState({
@@ -2996,52 +3526,13 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 242:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.LoginButton = LoginButton;
-
-	var _react = __webpack_require__(7);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function LoginButton(props) {
-	    if (props.loading === true) {
-	        return _react2.default.createElement(
-	            "div",
-	            { onClick: props.action, className: "login-submit text-danger" },
-	            _react2.default.createElement("i", { className: "fa fa-circle-o-notch fa-spin fa-3x fa-fw", "aria-hidden": "true" })
-	        );
-	    } else {
-	        return _react2.default.createElement(
-	            "div",
-	            { onClick: props.action, className: "login-submit text-primary" },
-	            _react2.default.createElement("i", { className: "fa fa-sign-in fa-3x", "aria-hidden": "true" }),
-	            _react2.default.createElement(
-	                "span",
-	                null,
-	                "SING IN"
-	            )
-	        );
-	    }
-	}
-
-/***/ },
-
-/***/ 243:
+/***/ 247:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(244));
+			module.exports = exports = factory(__webpack_require__(248));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -3309,7 +3800,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 244:
+/***/ 248:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -4075,14 +4566,71 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 245:
+/***/ 249:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = Error;
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Error(props) {
+	    return _react2.default.createElement(
+	        'p',
+	        null,
+	        '\u6CA1\u6709\u6743\u9650\u8BBF\u95EE\u6B64\u9875\u9762 \uFF01'
+	    );
+	}
+
+/***/ },
+
+/***/ 250:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = checkAuth;
+	function checkAuth(nextState, replace) {
+	    var hasMatch = 0;
+
+	    if (SCHOOLPAL_CONFIG.authPath) {
+	        SCHOOLPAL_CONFIG.authPath.map(function (rule) {
+	            var temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
+
+	            if (rule.test(temp) === true) {
+	                hasMatch++;
+	            }
+	        });
+
+	        if (!hasMatch) {
+	            replace({
+	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'error'
+	            });
+	        }
+	    };
+	}
+
+/***/ },
+
+/***/ 251:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 247:
+/***/ 253:
 /***/ function(module, exports) {
 
 	/*
@@ -4139,7 +4687,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 248:
+/***/ 254:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -4392,23 +4940,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 249:
+/***/ 255:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 252:
+/***/ 258:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(253);
+	var content = __webpack_require__(259);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(248)(content, {});
+	var update = __webpack_require__(254)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -4426,15 +4974,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 253:
+/***/ 259:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(247)();
+	exports = module.exports = __webpack_require__(253)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li ul {\n  display: none;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree-select {\n  cursor: pointer;\n}\n.tree-select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-select.selected:before {\n  content: \"\\F046\";\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.tree-node.tree-spacing-2 {\n  margin-left: 40px;\n}\n.tree-node.tree-spacing-3 {\n  margin-left: 80px;\n}\n.tree-node.tree-spacing-4 {\n  margin-left: 120px;\n}\n.tree-node.tree-spacing-5 {\n  margin-left: 160px;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 0;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.role .col-4 {\n  position: relative;\n}\n.role .col-4:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li ul {\n  display: none;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w400 {\n  width: 400px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.role .col-4 {\n  position: relative;\n}\n.role .col-4:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
 
 	// exports
 

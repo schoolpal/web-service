@@ -43,6 +43,48 @@ function formatUrl(url) {
     return SCHOOLPAL_CONFIG.AJAXPATH + url;
 }
 
+function conversionOrg(data) {
+    let tree = [];
+    let rootLevel = [];
+
+    if (data.length) {
+        data.map((item) => {
+            rootLevel.push(item.level);
+
+            if (item.cId === item.cParentId) {
+                tree.push(item)
+            } else {
+                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+                insertTree(tree[rootIndex], item);
+            }
+        })
+    }
+
+    rootLevel = _.uniq(rootLevel);
+
+    return {
+        tree: tree,
+        rootLevel: rootLevel.length ? Math.min(...rootLevel) : null
+    };
+
+    function insertTree(rootData, data) {
+        if (rootData.cId === data.cParentId) {
+            if (!rootData.children) {
+                rootData.children = [];
+            };
+
+            rootData.children.push(data);
+        } else {
+            if (rootData.children && rootData.children.length) {
+                rootData.children.map((item) => {
+                    insertTree(item, data);
+                })
+            };
+        }
+    }
+}
+
 export function salt() {
     const defer = $.Deferred();
     const url = 'user/salt.do';
@@ -91,15 +133,91 @@ export function logout() {
 
 export function permissions() {
     const defer = $.Deferred();
-    const url = 'user/permissions.do';
+    const url = 'user/listFuncs.do';
 
     io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            let auth = {};
+            let authPath = [];
+
+            if (data.data.length) {
+                $.each(data.data, (i, item) => {
+                    if (item.WidgetType === 'MenuItem') {
+                        const temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
+
+                        auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
+                    };
+
+                    if (item.WidgetType === 'Command') {
+                        $.each(auth, (k, v) => {
+                            if (v.id === item.cParentId) {
+                                v.command.push(item.CommandCode)
+                            };
+                        })
+                    };
+
+                    if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]) {
+                        authPath.push(SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH_RULE)
+                    };
+                })
+            };
+
+            SCHOOLPAL_CONFIG.auth = auth;
+            SCHOOLPAL_CONFIG.authPath = authPath;
+
+            defer.resolve();
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function orgList() {
+    const defer = $.Deferred();
+    const url = 'user/listOrgs.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            const conversionOrgData = conversionOrg(data.data);
+
+            defer.resolve(conversionOrgData.tree, conversionOrgData.rootLevel);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function orgAdd(data) {
+    const defer = $.Deferred();
+    const url = 'org/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {
             defer.reject(data);
         }
     });
+
+    return defer.promise();
+}
+
+export function orgDel(oid) {
+    const defer = $.Deferred();
+    const url = 'org/del.do';
+
+    io({ url: url, data: { id: oid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
 
     return defer.promise();
 }

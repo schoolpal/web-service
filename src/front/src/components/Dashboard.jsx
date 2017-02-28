@@ -9,41 +9,13 @@ import { permissions } from '../utils/api';
 export default class Dashboard extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            isLoading: true,
-            hasRole: false
-        }
+        this.state = { isLoading: true }
     }
 
     componentWillMount() {
         permissions()
-            .done((data) => {
-                if (data.length) {
-                    let auth = {};
-
-                    $.each(data, (i, item) => {
-                        if (item.WidgetType === 'MenuItem') {
-                            const temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
-
-                            auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
-                        };
-
-                        if (item.WidgetType === 'Command') {
-                            $.each(auth, (k, v) => {
-                                if (v.id === item.cParentId) {
-                                    v.command.push(item.CommandCode)
-                                };
-                            })
-                        };
-                    })
-
-                    SCHOOLPAL_CONFIG.auth = auth;
-                }
-
-                this.setState({
-                    isLoading: false,
-                    hasRole: (SCHOOLPAL_CONFIG.auth && $.isEmptyObject(SCHOOLPAL_CONFIG.auth) === false) ? true : false
-                })
+            .done(() => {
+                this.setState({ isLoading: false })
             })
             .fail((data) => {
                 if (data.type === SCHOOLPAL_CONFIG.NOT_SIGNIN) {
@@ -60,9 +32,9 @@ export default class Dashboard extends React.Component {
             return (
                 <div className="view">
                     <NavBar router={this.props.router} isSignin={true} />
-                    <AsideBar hasRole={this.state.hasRole} />
+                    <AsideBar />
                     <div className="main">
-                        <p>数据加载中 ...</p>
+                        <div className="main-container">数据加载中 ...</div>
                     </div>
                 </div>
             )
@@ -70,9 +42,9 @@ export default class Dashboard extends React.Component {
             return (
                 <div className="view">
                     <NavBar router={this.props.router} isSignin={true} />
-                    <AsideBar hasRole={this.state.hasRole} />
+                    <AsideBar />
                     <div className="main">
-                        {this.state.hasRole === true ? this.props.children : <Alerts title='警告 ！' text='没有权限访问该内容 ！' />}
+                        {this.props.children}
                     </div>
                 </div>
             )
