@@ -32,6 +32,67 @@
     WHERE c_available = 1 
         AND c_org_id = #{cId,jdbcType=CHAR}
   </select>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TRole">
+    insert into t_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cOrgId != null">
+        c_org_id,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+      <if test="cDesc != null">
+        c_desc,
+      </if>
+      <if test="cAvailable != null">
+        c_available,
+      </if>
+      <if test="cOrderNum != null">
+        c_order_num,
+      </if>
+      <if test="cRankId != null">
+        c_rank_id,
+      </if>
+      <if test="cCreator != null">
+        c_creator,
+      </if>
+      <if test="cCreateTime != null">
+        c_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=CHAR},
+      </if>
+      <if test="cOrgId != null">
+        #{cOrgId,jdbcType=CHAR},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cDesc != null">
+        #{cDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cAvailable != null">
+        #{cAvailable,jdbcType=BIT},
+      </if>
+      <if test="cOrderNum != null">
+        #{cOrderNum,jdbcType=INTEGER},
+      </if>
+      <if test="cRankId != null">
+        #{cRankId,jdbcType=INTEGER},
+      </if>
+      <if test="cCreator != null">
+        #{cCreator,jdbcType=CHAR},
+      </if>
+      <if test="cCreateTime != null">
+        #{cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>  
 <!--   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -134,67 +195,7 @@
       #{cRankId,jdbcType=INTEGER}, #{cCreator,jdbcType=CHAR}, #{cCreateTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TRole">
-    insert into t_role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="cId != null">
-        c_id,
-      </if>
-      <if test="cOrgId != null">
-        c_org_id,
-      </if>
-      <if test="cName != null">
-        c_name,
-      </if>
-      <if test="cDesc != null">
-        c_desc,
-      </if>
-      <if test="cAvailable != null">
-        c_available,
-      </if>
-      <if test="cOrderNum != null">
-        c_order_num,
-      </if>
-      <if test="cRankId != null">
-        c_rank_id,
-      </if>
-      <if test="cCreator != null">
-        c_creator,
-      </if>
-      <if test="cCreateTime != null">
-        c_create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="cId != null">
-        #{cId,jdbcType=CHAR},
-      </if>
-      <if test="cOrgId != null">
-        #{cOrgId,jdbcType=CHAR},
-      </if>
-      <if test="cName != null">
-        #{cName,jdbcType=VARCHAR},
-      </if>
-      <if test="cDesc != null">
-        #{cDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="cAvailable != null">
-        #{cAvailable,jdbcType=BIT},
-      </if>
-      <if test="cOrderNum != null">
-        #{cOrderNum,jdbcType=INTEGER},
-      </if>
-      <if test="cRankId != null">
-        #{cRankId,jdbcType=INTEGER},
-      </if>
-      <if test="cCreator != null">
-        #{cCreator,jdbcType=CHAR},
-      </if>
-      <if test="cCreateTime != null">
-        #{cCreateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+
   <select id="countByExample" parameterType="com.schoolpal.db.model.TRoleExample" resultType="java.lang.Long">
     select count(*) from t_role
     <if test="_parameter != null">
