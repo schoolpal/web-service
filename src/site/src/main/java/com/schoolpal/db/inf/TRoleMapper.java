@@ -12,13 +12,13 @@ public interface TRoleMapper {
     
     TRole selectOneById(String cid);
     
+    int insertOne(TRole record);
+
 /*    long countByExample(TRoleExample example);
 
     int deleteByExample(TRoleExample example);
 
     int deleteByPrimaryKey(String cId);
-
-    int insert(TRole record);
 
     int insertSelective(TRole record);
 
