@@ -65,7 +65,7 @@ public class UserService  {
 		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
 		for(TRole role : roles){
 			List<TFunction> funcs = funcDao.selectFuncsByRoleId(role.getcId());
-			role.setWidgets(funcs);
+			role.setFunctions(funcs);
 		}
 		user.setRoles(roles);
 		
@@ -93,6 +93,12 @@ public class UserService  {
 		return gson.fromJson((String)session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
 	}
 	
-
-
+	public void clearUserCache(String username) {		
+		Subject currentUser = SecurityUtils.getSubject();
+		Session session = currentUser.getSession();
+		session.removeAttribute(Const.SESSION_KEY_CURRENT_USER);
+		
+		logServ.log(username, LogLevel.TRACE, "LoginService.clearUserCache(String)", "", "");
+	}
+	
 }

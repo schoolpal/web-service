@@ -26,7 +26,7 @@ public class TRole {
     
     private Integer RankOrder;
 
-	private List<TFunction> widgets;
+	private List<TFunction> functions;
 	
     public String getcId() {
         return cId;
@@ -116,11 +116,11 @@ public class TRole {
 		RankOrder = rankOrder;
 	}
 
-	public List<TFunction> getWidgets() {
-		return widgets;
+	public List<TFunction> getFunctions() {
+		return functions;
 	}
 
-	public void setWidgets(List<TFunction> widgets) {
-		this.widgets = widgets;
+	public void setFunctions(List<TFunction> funcs) {
+		this.functions = funcs;
 	}
 }

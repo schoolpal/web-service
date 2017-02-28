@@ -78,7 +78,7 @@ public class TestTUserMapper {
 		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
 		for(TRole role : roles){
 			List<TFunction> funcs = funcDao.selectFuncsByRoleId(role.getcId());
-			role.setWidgets(funcs);
+			role.setFunctions(funcs);
 		}
 		Assert.assertTrue(roles.size() > 0);
 		

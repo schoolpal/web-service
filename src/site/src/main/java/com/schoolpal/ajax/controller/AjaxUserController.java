@@ -100,10 +100,13 @@ public class AjaxUserController {
 		Subject currentUser = SecurityUtils.getSubject();
 		AjaxResponse res = new AjaxResponse(200);
 		if (null != currentUser && null != currentUser.getPrincipal()) {
+			String username = userServ.getCachedUser().getcLoginname();
 			Session session = currentUser.getSession();
 			logServ.log(userServ.getCachedUser().getcLoginname(), LogLevel.TRACE, "AjaxUserController.logout()", "",
 					"SESSION_KEY_CURRENT_USER: " + gson.toJson(session.getAttribute(Const.SESSION_KEY_CURRENT_USER)));
+
 			currentUser.logout();
+			userServ.clearUserCache(username);
 		} else {
 			res.setCode(500);
 			res.setDetail("Illegal access");
@@ -156,10 +159,37 @@ public class AjaxUserController {
 		} else {
 			List<TFunction> funcList = new ArrayList<TFunction>();
 			for (TRole r : user.getRoles()) {
-				funcList.addAll(r.getWidgets());
+				funcList.addAll(r.getFunctions());
 			}
 			res.setData(funcList);
 		}
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "listFuncsByRole.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listFuncsByRole(String id) {
+		AjaxResponse res = new AjaxResponse(200);
+
+		do {
+			TUser user = userServ.getCachedUser();
+			if (user == null) {
+				res.setCode(500);
+				res.setDetail("Cannot find cached profile data, not login?");
+				break;
+			}
+
+			if (!user.getRoleIds().contains(id)) {
+				res.setCode(401);
+				res.setDetail("User don't have this role");
+				break;
+			}
+
+			List<TFunction> funcList = user.getRoleById(id).getFunctions();
+			res.setData(funcList);
+
+		} while (false);
+
 		return gson.toJson(res);
 	}
 

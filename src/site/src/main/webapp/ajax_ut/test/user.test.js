@@ -20,6 +20,8 @@ describe('/ajax/user/ APIs', function() {
 	var user = 'sp-admin';
 	var pass = '123456';
 	var salt = null;
+	
+	var roleId = null;
 
 	it('salt.do', function() {
 		var xhr = $.ajax({
@@ -121,6 +123,27 @@ describe('/ajax/user/ APIs', function() {
 		expect(xhr.status).to.be.equal(200);
 		jsonData = xhr.responseJSON;
 		resDump('listRoles.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.data[0].cId).to.not.empty;
+		roleId = jsonData.data[0].cId;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('listFuncsByRole.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, path, 'listFuncsByRole.do'),
+			dataType : 'json',
+			data : {
+				id : roleId
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('listFuncsByRole.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');

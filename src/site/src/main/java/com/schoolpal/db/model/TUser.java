@@ -2,7 +2,9 @@ package com.schoolpal.db.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TUser {
     private String cId;
@@ -39,20 +41,22 @@ public class TUser {
 
 	private List<TRole> roles;
 	
+	private Map<String, TRole> roleIndex = new HashMap<String, TRole>();
+	
+	public TRole getRoleById(String roleId){
+		return this.roleIndex.get(roleId);
+	}
+	
 	public List<String> getRoleIds() {
-		List<String> ids = new ArrayList<String>();
-		for (TRole role : roles) {
-			ids.add(role.getcId());
-		}
-		return ids;
+		return new ArrayList<String>(this.roleIndex.keySet());
 	}
 	
 	public List<TFunction> getWidgets() {
-		List<TFunction> widgets = new ArrayList<TFunction>();
+		List<TFunction> funcs = new ArrayList<TFunction>();
 		for (TRole role : roles) {
-			widgets.addAll(role.getWidgets());
+			funcs.addAll(role.getFunctions());
 		}
-		return widgets;
+		return funcs;
 	}
 	
     public String getcId() {
@@ -189,5 +193,9 @@ public class TUser {
 
 	public void setRoles(List<TRole> roles) {
 		this.roles = roles;
+		this.roleIndex.clear();
+		for (TRole r : roles){
+			this.roleIndex.put(r.getcId(), r);
+		}
 	}
 }

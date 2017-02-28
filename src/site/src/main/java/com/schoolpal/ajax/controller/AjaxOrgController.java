@@ -102,6 +102,7 @@ public class AjaxOrgController {
 			if (!orgList.contains(form.getParentId())) {
 				res.setCode(403);
 				res.setDetail("No permission to move orgnization to this parent orgnization");
+				break;
 			}
 			
 			if (!orgServ.ModOrgById(form)){
@@ -125,12 +126,14 @@ public class AjaxOrgController {
 			if (id == user.getcOrgId()) {
 				res.setCode(401);
 				res.setDetail("No permission to del self-orgnization");
+				break;
 			}
 			
 			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(id)) {
 				res.setCode(402);
 				res.setDetail("No permission to del parent orgnization");
+				break;
 			}
 			
 			if (!orgServ.DeleteOrgById(id)){
