@@ -97,7 +97,7 @@ public class AjaxOrgController {
 				res.setDetail("No permission to add orgnization under parent orgnization");
 			}
 			
-			String id = orgServ.AddOrg(form, parentOrg.getcRootId(), user.getcLoginname());
+			String id = orgServ.addOrg(form, parentOrg.getcRootId(), user.getcLoginname());
 			if (id == null){
 				res.setCode(500);
 				res.setDetail("Failed to add orgnization");
@@ -139,7 +139,7 @@ public class AjaxOrgController {
 				break;
 			}
 			
-			if (!orgServ.ModOrgById(form)){
+			if (!orgServ.modOrgById(form)){
 				res.setCode(500);
 				res.setDetail("Failed to add orgnization");
 				break;
@@ -170,7 +170,7 @@ public class AjaxOrgController {
 				break;
 			}
 			
-			if (!orgServ.DeleteOrgById(id)){
+			if (!orgServ.delOrgById(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del orgnization");
 				break;

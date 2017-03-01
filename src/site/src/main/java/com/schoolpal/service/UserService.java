@@ -46,9 +46,9 @@ public class UserService  {
 			
 			this.userDao.updateLastVisitByLoginName(username, request.getRemoteAddr());
 			
-			logServ.log(username, LogLevel.TRACE, "LoginService.login(String,String)", "", "Login-Success: " + username);
+			logServ.log(username, LogLevel.TRACE, "UserService.login(String,String)", "", "Login-Success: " + username);
 		} catch(Exception ex) {
-			logServ.log(username, LogLevel.WARNING, "LoginService.login(String,String)", ex.getMessage(), "Username: " + username + ", MixedPWD: " + mixedPWD);
+			logServ.log(username, LogLevel.WARNING, "UserService.login(String,String)", ex.getMessage(), "Username: " + username + ", MixedPWD: " + mixedPWD);
 			return false;
 		}
 		return true;
@@ -80,7 +80,7 @@ public class UserService  {
 		Session session = currentUser.getSession();
 		session.setAttribute(Const.SESSION_KEY_CURRENT_USER, jsonUser);
 		
-		logServ.log(username, LogLevel.TRACE, "LoginService.cacheUserData(String)", "", "SESSION_KEY_CURRENT_USER: " + jsonUser);
+		logServ.log(username, LogLevel.TRACE, "UserService.cacheUserData(String)", "", "SESSION_KEY_CURRENT_USER: " + jsonUser);
 	}
 	
 	public TUser getCachedUser() {
@@ -98,7 +98,7 @@ public class UserService  {
 		Session session = currentUser.getSession();
 		session.removeAttribute(Const.SESSION_KEY_CURRENT_USER);
 		
-		logServ.log(username, LogLevel.TRACE, "LoginService.clearUserCache(String)", "", "");
+		logServ.log(username, LogLevel.TRACE, "UserService.clearUserCache(String)", "", "");
 	}
 	
 }

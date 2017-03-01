@@ -14,9 +14,11 @@ public interface TRoleMapper {
     
     int insertOne(TRole record);
 
-/*    long countByExample(TRoleExample example);
+    int updateOneById(TRole record);
 
-    int deleteByExample(TRoleExample example);
+    int deleteOneById(String cId);
+    
+    /*    long countByExample(TRoleExample example);
 
     int deleteByPrimaryKey(String cId);
 
@@ -32,5 +34,5 @@ public interface TRoleMapper {
 
     int updateByPrimaryKeySelective(TRole record);
 
-    int updateByPrimaryKey(TRole record);*/
+*/
 }

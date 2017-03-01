@@ -47,10 +47,10 @@ public class AjaxRoleController {
 			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(form.getOrgId())) {
 				res.setCode(401);
-				res.setDetail("No permission to add orgnization under parent orgnization");
+				res.setDetail("No permission to add role under parent orgnization");
 			}
 			
-			String id = roleServ.AddRole(form, user.getcLoginname());
+			String id = roleServ.addRole(form, user.getcLoginname());
 			if (id == null){
 				res.setCode(500);
 				res.setDetail("Failed to add orgnization");
@@ -92,7 +92,7 @@ public class AjaxRoleController {
 				break;
 			}
 			
-			if (!orgServ.ModOrgById(form)){
+			if (!orgServ.modOrgById(form)){
 				res.setCode(500);
 				res.setDetail("Failed to add orgnization");
 				break;
@@ -123,7 +123,7 @@ public class AjaxRoleController {
 				break;
 			}
 			
-			if (!orgServ.DeleteOrgById(id)){
+			if (!orgServ.delOrgById(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del orgnization");
 				break;

@@ -10,6 +10,9 @@ public class OrgForm {
 	private String state;
 	private String city;
 	private String county;
+	private String stateCode;
+	private String cityCode;
+	private String countyCode;
 	private String address;
 	private String owner;
 	private String phone;
@@ -79,6 +82,24 @@ public class OrgForm {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getStateCode() {
+		return stateCode;
+	}
+	public void setStateCode(String stateCode) {
+		this.stateCode = stateCode;
+	}
+	public String getCityCode() {
+		return cityCode;
+	}
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+	public String getCountyCode() {
+		return countyCode;
+	}
+	public void setCountyCode(String countyCode) {
+		this.countyCode = countyCode;
 	}
 
 }

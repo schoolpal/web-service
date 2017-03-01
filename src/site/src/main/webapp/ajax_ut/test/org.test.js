@@ -80,9 +80,9 @@ describe('/ajax/org/ APIs', function() {
 				state: 'testState',
 				city: 'testSity',
 				county: 'testCounty',
-				state_code: '000000',
-				city_code: '000000',
-				county_code: '000000',
+				stateCode: '000000',
+				cityCode: '000000',
+				countyCode: '000000',
 				address: 'testAddr',
 				owner: 'testOwner',
 				phone: 'testPhone'

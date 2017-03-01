@@ -101,7 +101,7 @@ public class OrgService {
 		return org;
 	}
 	
-	public String AddOrg(OrgForm form, String rootOrgId, String creatorId){
+	public String addOrg(OrgForm form, String rootOrgId, String creatorId){
 		String ret = null;
 		try{
 			String id = idxDao.selectNextId("t_org");
@@ -115,28 +115,28 @@ public class OrgService {
 				ret = id;
 			}
 		}catch(Exception e){
-			logServ.log("", LogLevel.ERROR, "AjaxOrgController.AddOrg()", "", e.getMessage());
+			logServ.log("", LogLevel.ERROR, "OrgService.AddOrg()", "", e.getMessage());
 		}
 		return ret;
 	}
 	
-	public boolean ModOrgById(OrgForm form){
+	public boolean modOrgById(OrgForm form){
 		boolean ret = false;
 		try{
 			TOrg org = this.OrgFormToTOrg(form);
 			ret = orgDao.updateOneById(org) > 0;
 		}catch(Exception e){
-			logServ.log("", LogLevel.ERROR, "AjaxOrgController.ModOrg()", "", e.getMessage());
+			logServ.log("", LogLevel.ERROR, "OrgService.ModOrg()", "", e.getMessage());
 		}
 		return ret;
 	}
 		
-	public boolean DeleteOrgById(String id){
+	public boolean delOrgById(String id){
 		boolean ret = false;
 		try{
 			ret = orgDao.deleteOneById(id) > 0;
 		}catch(Exception e){
-			logServ.log("", LogLevel.ERROR, "AjaxOrgController.DelOrgById()", "", e.getMessage());
+			logServ.log("", LogLevel.ERROR, "OrgService.DelOrgById()", "", e.getMessage());
 		}
 		return ret;
 	}
@@ -158,6 +158,9 @@ public class OrgService {
 		org.setcState(form.getState());
 		org.setcCity(form.getCity());
 		org.setcCounty(form.getCounty());
+		org.setcStateCode(form.getStateCode());
+		org.setcCityCode(form.getCityCode());
+		org.setcCountyCode(form.getCountyCode());
 		org.setcAddress(form.getAddress());
 	
 		org.setcParentId(form.getParentId());
