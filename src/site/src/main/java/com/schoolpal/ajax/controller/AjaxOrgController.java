@@ -36,6 +36,40 @@ public class AjaxOrgController {
 
 	private Gson gson = new Gson();
 
+	@RequestMapping(value = "query.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String query(String id) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			TUser user = userServ.getCachedUser();
+			
+			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(id)) {
+				res.setCode(401);
+				res.setDetail("No permission to query orgnization");
+			}
+			
+			TOrg org = null;
+			try{
+				org = orgServ.getOrgById(id);
+				if (org == null){
+					res.setCode(402);
+					res.setDetail("Failed to query orgnization");
+					break;
+				}
+			}catch(Exception e){
+				res.setCode(500);
+				res.setDetail("Unexpect error");
+				break;
+			}
+			
+			res.setData(org);
+			
+		} while (false);
+		
+		return gson.toJson(res);
+	}
+
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String add(OrgForm form) {
