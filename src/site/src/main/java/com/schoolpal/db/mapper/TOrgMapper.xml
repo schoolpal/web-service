@@ -168,9 +168,9 @@
             <if test="cState != null"> c_state = #{cState,jdbcType=VARCHAR}, </if>
             <if test="cCity != null"> c_city = #{cCity,jdbcType=VARCHAR}, </if>
             <if test="cCounty != null"> c_county = #{cCounty,jdbcType=VARCHAR}, </if>
-            <if test="cStateCode != null"> c_state = #{cStateCode,jdbcType=VARCHAR}, </if>
-            <if test="cCityCode != null"> c_city = #{cCityCode,jdbcType=VARCHAR}, </if>
-            <if test="cCountyCode != null"> c_county = #{cCountyCode,jdbcType=VARCHAR}, </if>
+            <if test="cStateCode != null"> c_state_code = #{cStateCode,jdbcType=VARCHAR}, </if>
+            <if test="cCityCode != null"> c_city_code = #{cCityCode,jdbcType=VARCHAR}, </if>
+            <if test="cCountyCode != null"> c_county_code = #{cCountyCode,jdbcType=VARCHAR}, </if>
             <if test="cOwner != null"> c_owner = #{cOwner,jdbcType=VARCHAR}, </if>
             <if test="cOwnerPhone != null"> c_owner_phone = #{cOwnerPhone,jdbcType=VARCHAR}, </if>
             <if test="cParentId != null"> c_parent_id = #{cParentId,jdbcType=CHAR}, </if>

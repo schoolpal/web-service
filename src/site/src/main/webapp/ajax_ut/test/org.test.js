@@ -78,7 +78,7 @@ describe('/ajax/org/ APIs', function() {
 				parentId: '16010100000001',
 				parentName: null,
 				state: 'testState',
-				city: 'testSity',
+				city: 'testCity',
 				county: 'testCounty',
 				stateCode: '000000',
 				cityCode: '000000',
@@ -98,7 +98,7 @@ describe('/ajax/org/ APIs', function() {
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('query.do', function() {
+	it('query.do - verify add.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
@@ -114,6 +114,10 @@ describe('/ajax/org/ APIs', function() {
 		resDump('query.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
+		expect(jsonData.data.cId).to.be.equal(orgId);
+		expect(jsonData.data.cCode).to.be.equal(orgCode);
+		expect(jsonData.data.cCounty).to.be.equal("testCounty");
+		expect(jsonData.data.cCountyCode).to.be.equal("000000");
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
@@ -131,10 +135,10 @@ describe('/ajax/org/ APIs', function() {
 				parentName: null,
 				state: 'testStateMod',
 				city: 'testCityMod',
-				county: 'testCountryMod',
-				state_code: '000000Mod',
-				city_code: '000000Mod',
-				county_code: '000000Mod',
+				county: 'testCountyMod',
+				stateCode: '000000Mod',
+				cityCode: '000000Mod',
+				countyCode: '000000Mod',
 				address: 'testAddrMod',
 				owner: 'testOwnerMod',
 				phone: 'testphoneMod'
@@ -146,6 +150,29 @@ describe('/ajax/org/ APIs', function() {
 		resDump('mod.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		//expect(jsonData.data).to.be.empty;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
+	it('query.do - verify mod.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, org_path, 'query.do'),
+			dataType : 'json',
+			data : {
+				id: orgId
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('query.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.data.cId).to.be.equal(orgId);
+		expect(jsonData.data.cCode).to.be.equal(orgCode + "Mod");
+		expect(jsonData.data.cCounty).to.be.equal("testCountyMod");
+		expect(jsonData.data.cCountyCode).to.be.equal("000000Mod");
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
