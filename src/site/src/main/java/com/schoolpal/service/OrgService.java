@@ -25,7 +25,7 @@ public class OrgService {
 	@Autowired
 	private LogService logServ;
 
-	public List<TOrg> getOrgListByRootId(String id){
+	public List<TOrg> queryOrgListByRootId(String id){
 		List<TOrg> orgRows = orgDao.selectAll();
 		List<TOrg> results = new ArrayList<TOrg>();
 
@@ -57,7 +57,7 @@ public class OrgService {
 		return results;
 	}
 
-	public List<String> getOrgIdListByRootId(String id){
+	public List<String> queryOrgIdListByRootId(String id){
 		List<TOrg> orgRows = orgDao.selectAll();
 		List<String> results = new ArrayList<String>();
 
@@ -86,17 +86,17 @@ public class OrgService {
 		return results;
 	}
 
-	public TOrg getOrgByCode(String code){
+	public TOrg queryOrgByCode(String code){
 		TOrg org = orgDao.selectOneByCode(code);
 		return org;
 	}
 
-	public TOrg getOrgByCodeWithExclusion(String code, String excludeId){
+	public TOrg queryOrgByCodeWithExclusion(String code, String excludeId){
 		TOrg org = orgDao.selectOneByCodeWithExcludeId(code, excludeId);
 		return org;
 	}
 
-	public TOrg getOrgById(String code){
+	public TOrg queryOrgById(String code){
 		TOrg org = orgDao.selectOneById(code);
 		return org;
 	}

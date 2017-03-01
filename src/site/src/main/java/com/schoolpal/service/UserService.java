@@ -29,7 +29,7 @@ public class UserService  {
 	@Autowired
 	private TRoleMapper roleDao; 
 	@Autowired
-	private TFunctionMapper funcDao; 
+	private TRoleFunctionMapper roleFuncDao; 
 	@Autowired
 	private LogService logServ;
 	private Gson gson = new Gson();
@@ -64,7 +64,7 @@ public class UserService  {
 		//Get roles
 		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
 		for(TRole role : roles){
-			List<TFunction> funcs = funcDao.selectFuncsByRoleId(role.getcId());
+			List<TFunction> funcs = roleFuncDao.selectManyByRoleId(role.getcId());
 			role.setFunctions(funcs);
 		}
 		user.setRoles(roles);

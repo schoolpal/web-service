@@ -204,7 +204,7 @@ public class AjaxUserController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
-			List<TOrg> orgList = orgServ.getOrgListByRootId(user.getcOrgId());
+			List<TOrg> orgList = orgServ.queryOrgListByRootId(user.getcOrgId());
 			res.setData(orgList);
 		}
 		return gson.toJson(res);
@@ -221,11 +221,11 @@ public class AjaxUserController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
-			if (!orgServ.getOrgIdListByRootId(user.getcOrgId()).contains(orgId)) {
+			if (!orgServ.queryOrgIdListByRootId(user.getcOrgId()).contains(orgId)) {
 				res.setCode(401);
 				res.setDetail("No permission for this orgnization");
 			} else {
-				List<TRole> roleList = roleServ.getRoleListByOrgId(orgId);
+				List<TRole> roleList = roleServ.queryRoleListByOrgId(orgId);
 				res.setData(roleList);
 			}
 		}

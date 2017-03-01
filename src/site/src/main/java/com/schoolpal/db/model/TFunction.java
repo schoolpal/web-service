@@ -26,7 +26,7 @@ public class TFunction {
     private String CommandCode;
     
     private String CommandName;
-    
+
     public String getcId() {
         return cId;
     }

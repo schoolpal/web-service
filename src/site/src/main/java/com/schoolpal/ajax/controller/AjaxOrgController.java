@@ -43,7 +43,7 @@ public class AjaxOrgController {
 		do {
 			TUser user = userServ.getCachedUser();
 			
-			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(id)) {
 				res.setCode(401);
 				res.setDetail("No permission to query orgnization");
@@ -51,10 +51,10 @@ public class AjaxOrgController {
 			
 			TOrg org = null;
 			try{
-				org = orgServ.getOrgById(id);
+				org = orgServ.queryOrgById(id);
 				if (org == null){
 					res.setCode(402);
-					res.setDetail("Failed to query orgnization");
+					res.setDetail("Cannot find orgnization");
 					break;
 				}
 			}catch(Exception e){
@@ -77,21 +77,21 @@ public class AjaxOrgController {
 		do {
 			TUser user = userServ.getCachedUser();
 			
-			TOrg org = orgServ.getOrgByCode(form.getCode());
+			TOrg org = orgServ.queryOrgByCode(form.getCode());
 			if (org != null) {
 				res.setCode(401);
 				res.setDetail("Duplicated orgnization code");
 				break;
 			}
 			
-			TOrg parentOrg = orgServ.getOrgById(form.getParentId());
+			TOrg parentOrg = orgServ.queryOrgById(form.getParentId());
 			if (parentOrg == null) {
 				res.setCode(402);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
 			
-			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(form.getParentId())) {
 				res.setCode(403);
 				res.setDetail("No permission to add orgnization under parent orgnization");
@@ -118,23 +118,41 @@ public class AjaxOrgController {
 		do {
 			TUser user = userServ.getCachedUser();
 			
-			TOrg org = orgServ.getOrgByCodeWithExclusion(form.getCode(), form.getId());
-			if (org != null) {
+			if (form.getId() == null || form.getId().isEmpty()) {
 				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			if (form.getParentId() == null || form.getParentId().isEmpty()) {
+				res.setCode(402);
+				res.setDetail("Parent id cannot be empty");
+				break;
+			}
+			
+			TOrg org = orgServ.queryOrgByCodeWithExclusion(form.getCode(), form.getId());
+			if (org != null) {
+				res.setCode(403);
 				res.setDetail("Duplicated orgnization code");
 				break;
 			}
 			
-			TOrg parentOrg = orgServ.getOrgById(form.getParentId());
+			TOrg parentOrg = orgServ.queryOrgById(form.getParentId());
 			if (parentOrg == null) {
-				res.setCode(402);
+				res.setCode(404);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
-			
-			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(form.getParentId())) {
+
+			if (form.getId() != parentOrg.getcRootId() && form.getParentId() == form.getId()) {
 				res.setCode(403);
+				res.setDetail("Parent orgnization cannot be self");
+				break;
+			}
+			
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(form.getParentId())) {
+				res.setCode(405);
 				res.setDetail("No permission to move orgnization to this parent orgnization");
 				break;
 			}
@@ -163,7 +181,7 @@ public class AjaxOrgController {
 				break;
 			}
 			
-			List<String> orgList = orgServ.getOrgIdListByRootId(user.getcOrgId());
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(id)) {
 				res.setCode(402);
 				res.setDetail("No permission to del parent orgnization");

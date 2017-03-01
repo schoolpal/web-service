@@ -22,8 +22,4 @@ public class FunctionService {
 	@Autowired
 	private LogService logServ;
 
-	public List<TFunction> getFuncListByRoleId(String id){
-		List<TFunction> roleList = funcDao.selectFuncsByRoleId(id);
-		return roleList;
-	}
 }

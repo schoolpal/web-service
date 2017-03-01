@@ -49,12 +49,12 @@ public class AjaxFuncController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
-			TRole role = roleServ.getRoleById(roleId);
-			if (!orgServ.getOrgIdListByRootId(user.getcOrgId()).contains(role.getcOrgId())) {
+			TRole role = roleServ.queryRoleById(roleId);
+			if (!orgServ.queryOrgIdListByRootId(user.getcOrgId()).contains(role.getcOrgId())) {
 				res.setCode(401);
 				res.setDetail("No permission for this orgnization");
 			} else {
-				List<TFunction> funcList = funcServ.getFuncListByRoleId(roleId);
+				List<TFunction> funcList = roleServ.queryFuncListByRoleId(roleId);
 				res.setData(funcList);
 			}
 		}
