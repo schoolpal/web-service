@@ -10,7 +10,7 @@ window.SCHOOLPAL_CONFIG = {
     AUTH_DIC: {
         '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
-        '7-1-2': { PATH_RULE: /^org\/\w(\/)?$/ },
+        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
         '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
         '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
         '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' }

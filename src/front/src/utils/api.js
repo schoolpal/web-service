@@ -191,9 +191,40 @@ export function orgList() {
     return defer.promise();
 }
 
+export function orgDetails(oid) {
+    const defer = $.Deferred();
+    const url = 'org/query.do';
+
+    io({ url: url, data: { id: oid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
 export function orgAdd(data) {
     const defer = $.Deferred();
     const url = 'org/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function orgMod(data) {
+    const defer = $.Deferred();
+    const url = 'org/mod.do';
     const settings = $.extend({ url: url }, { data: data });
 
     io(settings, function (data) {
