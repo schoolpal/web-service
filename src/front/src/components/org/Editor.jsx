@@ -5,7 +5,7 @@ import OrgTree from '../public/OrgTree';
 import subTitle from '../../utils/subTitle';
 import Alerts from '../public/Alerts';
 import { SaveButton } from '../public/Button';
-import { orgList, orgAdd } from '../../utils/api';
+import { orgList, orgDetails, orgAdd, orgMod } from '../../utils/api';
 
 require('../../utils/city');
 
@@ -22,19 +22,56 @@ export default class Editor extends React.Component {
         this.selectOrg = this.selectOrg.bind(this);
         this.editorSubmit = this.editorSubmit.bind(this);
         this.editorSubmitCallback = this.editorSubmitCallback.bind(this);
+        this.showAlert = this.showAlert.bind(this);
         this.clearAlert = this.clearAlert.bind(this);
     }
 
     componentDidMount() {
-        orgList()
-            .done((data) => {
-                this.setState({
-                    loading: false,
-                    orgList: data
+        if (this.props.params.id === 'create') {
+            orgList()
+                .done((data) => {
+                    this.setState({
+                        loading: false,
+                        orgList: data
+                    })
                 })
-            })
 
-        $('#citys').citys();
+            $('#citys').citys();
+        } else {
+            orgDetails(this.props.params.id)
+                .done((data) => {
+                    this.setState({
+                        loading: false,
+                        editorId: data.cId,
+                        selected: {
+                            id: data.parentOrg.cId,
+                            name: data.parentOrg.cName
+                        }
+                    })
+
+                    $(this.editorDom)
+                        .find('[name=name]')
+                        .val(data.cName)
+                        .end()
+                        .find('[name=code]')
+                        .val(data.cCode)
+                        .end()
+                        .find('[name=address]')
+                        .val(data.cAddress)
+                        .end()
+                        .find('[name=owner]')
+                        .val(data.cOwner)
+                        .end()
+                        .find('[name=phone]')
+                        .val(data.cOwnerPhone)
+
+                    $('#citys').citys({
+                        province: data.cStateCode,
+                        city: data.cCityCode,
+                        area: data.cCountyCode || null
+                    });
+                })
+        }
     }
 
     selectOrg(org) {
@@ -57,17 +94,34 @@ export default class Editor extends React.Component {
         })
 
         param.parentId = this.state.selected.id;
-        param.state = $('#citys').find('[name="state_code"]').find("option:selected").text();
-        param.city = $('#citys').find('[name="city_code"]').find("option:selected").text();
-        param.county = $('#citys').find('[name="county_code"]').find("option:selected").text();
+        param.state = $('#citys').find('[name="stateCode"]').find("option:selected").text();
+        param.city = $('#citys').find('[name="cityCode"]').find("option:selected").text();
+        param.county = $('#citys').find('[name="countyCode"]').find("option:selected").text();
 
         this.setState({
             saveLoading: true
         })
 
-        orgAdd(param)
-            .done(() => { this.editorSubmitCallback(); })
-            .fail((data) => { this.editorSubmitCallback(data); })
+        if (this.state.editorId) {
+            param.id = this.state.editorId;
+
+            orgMod(param)
+                .done(() => {
+                    this.setState({
+                        saveLoading: false,
+                        saveResult: {
+                            type: 'success',
+                            title: 'Well done!',
+                            text: '编辑成功 ！'
+                        }
+                    })
+                })
+                .fail((data) => { this.editorSubmitCallback(data); })
+        } else {
+            orgAdd(param)
+                .done(() => { this.editorSubmitCallback(); })
+                .fail((data) => { this.editorSubmitCallback(data); })
+        }
     }
 
     editorSubmitCallback(data) {
@@ -113,6 +167,18 @@ export default class Editor extends React.Component {
         }
     }
 
+    showAlert() {
+        if (this.state.saveResult) {
+            return (
+                <Alerts type={this.state.saveResult.type} title={this.state.saveResult.title} text={this.state.saveResult.text}>
+                    <Link to={SCHOOLPAL_CONFIG.ROOTPATH + 'org'} className="alert-link">返回列表</Link>
+                </Alerts>
+            )
+        } else {
+            return '';
+        }
+    }
+
     clearAlert() {
         this.setState({
             saveResult: null
@@ -128,10 +194,10 @@ export default class Editor extends React.Component {
                         <SaveButton action={this.editorSubmit} text="保存" loading={this.state.saveLoading} />
                     </div>
                 </h5>
-                {this.state.saveResult ? <Alerts type={this.state.saveResult.type} title={this.state.saveResult.title} text={this.state.saveResult.text} /> : ''}
+                {this.showAlert()}
                 <div onClick={this.clearAlert} className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true ? 'hide' : 'w400'}>
+                        <div className={this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w400'}>
                             <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
                         </div>
                         <form ref={(dom) => { this.editorDom = dom }} className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
@@ -149,13 +215,13 @@ export default class Editor extends React.Component {
                                     <label for="name"><em className="text-danger">*</em>所在地区</label>
                                     <div id="citys" className="row">
                                         <div className="col">
-                                            <select name="state_code" className="form-control"></select>
+                                            <select name="stateCode" className="form-control"></select>
                                         </div>
                                         <div className="col">
-                                            <select name="city_code" className="form-control"></select>
+                                            <select name="cityCode" className="form-control"></select>
                                         </div>
                                         <div className="col">
-                                            <select name="county_code" className="form-control"></select>
+                                            <select name="countyCode" className="form-control"></select>
                                         </div>
                                     </div>
                                 </div>

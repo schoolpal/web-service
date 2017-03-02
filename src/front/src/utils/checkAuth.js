@@ -4,7 +4,7 @@ export default function checkAuth(nextState, replace) {
     if (SCHOOLPAL_CONFIG.authPath) {
         SCHOOLPAL_CONFIG.authPath.map((rule) => {
             const temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-
+            console.log(temp);
             if (rule.test(temp) === true) {
                 hasMatch++
             }

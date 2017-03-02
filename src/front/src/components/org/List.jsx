@@ -73,15 +73,18 @@ export default class List extends React.Component {
     }
 
     tableLine(data) {
+        const selectedClass = 'select' + ((this.state.selected && this.state.selected.toString() === data.cId) ? ' selected' : '');
         const spacingStyle = { marginLeft: 40 * data.level + 'px' };
         const childrenClass = data.children ? '' : 'not-child';
         const area = data.cState + ' ' + data.cCity + ' ' + data.cCounty;
         const addr = area + ' ' + data.cAddress;
 
+        console.log(selectedClass)
+
         return (
             <tr key={data.cId} data-id={data.cId} data-level={data.level}>
                 <th scope="row">
-                    <span onClick={this.handleSelect} className="select"></span>
+                    <span onClick={this.handleSelect} className={selectedClass}></span>
                 </th>
                 <td>
                     <p onClick={this.handleNode} className={'tree-node ' + childrenClass} style={spacingStyle}>{data.cName}</p>
@@ -96,20 +99,11 @@ export default class List extends React.Component {
 
     handleSelect(event) {
         if ($(event.target).hasClass('selected')) {
-            $(event.target).removeClass('selected');
-
             this.setState({
                 selected: null,
                 selectedLevel: null
             })
         } else {
-            $(event.target)
-                .addClass('selected')
-                .parents('[data-id]')
-                .siblings('[data-id]')
-                .find('.select')
-                .removeClass('selected');
-
             this.setState({
                 selected: $(event.target).parents('tr').data('id'),
                 selectedLevel: $(event.target).parents('tr').data('level')
@@ -118,7 +112,9 @@ export default class List extends React.Component {
     }
 
     handleEditor() {
-        console.log(this.state);
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected;
+
+        this.props.router.push(editorPath)
     }
 
     handleDel() {

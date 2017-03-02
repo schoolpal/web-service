@@ -75,7 +75,7 @@ webpackJsonp([0],{
 	    AUTH_DIC: {
 	        '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
 	        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
-	        '7-1-2': { PATH_RULE: /^org\/\w(\/)?$/ },
+	        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
 	        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
 	        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
 	        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' }
@@ -350,7 +350,9 @@ webpackJsonp([0],{
 	exports.logout = logout;
 	exports.permissions = permissions;
 	exports.orgList = orgList;
+	exports.orgDetails = orgDetails;
 	exports.orgAdd = orgAdd;
+	exports.orgMod = orgMod;
 	exports.orgDel = orgDel;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -550,9 +552,40 @@ webpackJsonp([0],{
 	    return defer.promise();
 	}
 
+	function orgDetails(oid) {
+	    var defer = $.Deferred();
+	    var url = 'org/query.do';
+
+	    io({ url: url, data: { id: oid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
 	function orgAdd(data) {
 	    var defer = $.Deferred();
 	    var url = 'org/add.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function orgMod(data) {
+	    var defer = $.Deferred();
+	    var url = 'org/mod.do';
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
@@ -786,7 +819,9 @@ webpackJsonp([0],{
 	            props.title
 	        ),
 	        ' ',
-	        props.text
+	        props.text,
+	        ' ',
+	        props.children
 	    );
 	}
 
@@ -907,10 +942,13 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'tableLine',
 	        value: function tableLine(data) {
+	            var selectedClass = 'select' + (this.state.selected && this.state.selected.toString() === data.cId ? ' selected' : '');
 	            var spacingStyle = { marginLeft: 40 * data.level + 'px' };
 	            var childrenClass = data.children ? '' : 'not-child';
 	            var area = data.cState + ' ' + data.cCity + ' ' + data.cCounty;
 	            var addr = area + ' ' + data.cAddress;
+
+	            console.log(selectedClass);
 
 	            return _react2.default.createElement(
 	                'tr',
@@ -918,7 +956,7 @@ webpackJsonp([0],{
 	                _react2.default.createElement(
 	                    'th',
 	                    { scope: 'row' },
-	                    _react2.default.createElement('span', { onClick: this.handleSelect, className: 'select' })
+	                    _react2.default.createElement('span', { onClick: this.handleSelect, className: selectedClass })
 	                ),
 	                _react2.default.createElement(
 	                    'td',
@@ -955,15 +993,11 @@ webpackJsonp([0],{
 	        key: 'handleSelect',
 	        value: function handleSelect(event) {
 	            if ($(event.target).hasClass('selected')) {
-	                $(event.target).removeClass('selected');
-
 	                this.setState({
 	                    selected: null,
 	                    selectedLevel: null
 	                });
 	            } else {
-	                $(event.target).addClass('selected').parents('[data-id]').siblings('[data-id]').find('.select').removeClass('selected');
-
 	                this.setState({
 	                    selected: $(event.target).parents('tr').data('id'),
 	                    selectedLevel: $(event.target).parents('tr').data('level')
@@ -973,7 +1007,9 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            console.log(this.state);
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected;
+
+	            this.props.router.push(editorPath);
 	        }
 	    }, {
 	        key: 'handleDel',
@@ -1315,6 +1351,7 @@ webpackJsonp([0],{
 	        _this.selectOrg = _this.selectOrg.bind(_this);
 	        _this.editorSubmit = _this.editorSubmit.bind(_this);
 	        _this.editorSubmitCallback = _this.editorSubmitCallback.bind(_this);
+	        _this.showAlert = _this.showAlert.bind(_this);
 	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
@@ -1324,14 +1361,35 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data
+	            if (this.props.params.id === 'create') {
+	                (0, _api.orgList)().done(function (data) {
+	                    _this2.setState({
+	                        loading: false,
+	                        orgList: data
+	                    });
 	                });
-	            });
 
-	            $('#citys').citys();
+	                $('#citys').citys();
+	            } else {
+	                (0, _api.orgDetails)(this.props.params.id).done(function (data) {
+	                    _this2.setState({
+	                        loading: false,
+	                        editorId: data.cId,
+	                        selected: {
+	                            id: data.parentOrg.cId,
+	                            name: data.parentOrg.cName
+	                        }
+	                    });
+
+	                    $(_this2.editorDom).find('[name=name]').val(data.cName).end().find('[name=code]').val(data.cCode).end().find('[name=address]').val(data.cAddress).end().find('[name=owner]').val(data.cOwner).end().find('[name=phone]').val(data.cOwnerPhone);
+
+	                    $('#citys').citys({
+	                        province: data.cStateCode,
+	                        city: data.cCityCode,
+	                        area: data.cCountyCode || null
+	                    });
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'selectOrg',
@@ -1358,19 +1416,36 @@ webpackJsonp([0],{
 	            });
 
 	            param.parentId = this.state.selected.id;
-	            param.state = $('#citys').find('[name="state_code"]').find("option:selected").text();
-	            param.city = $('#citys').find('[name="city_code"]').find("option:selected").text();
-	            param.county = $('#citys').find('[name="county_code"]').find("option:selected").text();
+	            param.state = $('#citys').find('[name="stateCode"]').find("option:selected").text();
+	            param.city = $('#citys').find('[name="cityCode"]').find("option:selected").text();
+	            param.county = $('#citys').find('[name="countyCode"]').find("option:selected").text();
 
 	            this.setState({
 	                saveLoading: true
 	            });
 
-	            (0, _api.orgAdd)(param).done(function () {
-	                _this3.editorSubmitCallback();
-	            }).fail(function (data) {
-	                _this3.editorSubmitCallback(data);
-	            });
+	            if (this.state.editorId) {
+	                param.id = this.state.editorId;
+
+	                (0, _api.orgMod)(param).done(function () {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'success',
+	                            title: 'Well done!',
+	                            text: '编辑成功 ！'
+	                        }
+	                    });
+	                }).fail(function (data) {
+	                    _this3.editorSubmitCallback(data);
+	                });
+	            } else {
+	                (0, _api.orgAdd)(param).done(function () {
+	                    _this3.editorSubmitCallback();
+	                }).fail(function (data) {
+	                    _this3.editorSubmitCallback(data);
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'editorSubmitCallback',
@@ -1411,6 +1486,23 @@ webpackJsonp([0],{
 	            }
 	        }
 	    }, {
+	        key: 'showAlert',
+	        value: function showAlert() {
+	            if (this.state.saveResult) {
+	                return _react2.default.createElement(
+	                    _Alerts2.default,
+	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'org', className: 'alert-link' },
+	                        '\u8FD4\u56DE\u5217\u8868'
+	                    )
+	                );
+	            } else {
+	                return '';
+	            }
+	        }
+	    }, {
 	        key: 'clearAlert',
 	        value: function clearAlert() {
 	            this.setState({
@@ -1441,7 +1533,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
 	                    )
 	                ),
-	                this.state.saveResult ? _react2.default.createElement(_Alerts2.default, { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text }) : '',
+	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
 	                    { onClick: this.clearAlert, className: 'main-container' },
@@ -1450,7 +1542,7 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w400' },
+	                            { className: this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w400' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
@@ -1516,17 +1608,17 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'col' },
-	                                            _react2.default.createElement('select', { name: 'state_code', className: 'form-control' })
+	                                            _react2.default.createElement('select', { name: 'stateCode', className: 'form-control' })
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'col' },
-	                                            _react2.default.createElement('select', { name: 'city_code', className: 'form-control' })
+	                                            _react2.default.createElement('select', { name: 'cityCode', className: 'form-control' })
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'col' },
-	                                            _react2.default.createElement('select', { name: 'county_code', className: 'form-control' })
+	                                            _react2.default.createElement('select', { name: 'countyCode', className: 'form-control' })
 	                                        )
 	                                    )
 	                                ),
@@ -1779,9 +1871,9 @@ webpackJsonp([0],{
 	    var defaults = {
 	        dataUrl: 'http://passer-by.com/data_location/list.json', //数据库地址
 	        dataType: 'json', //数据库类型:'json'或'jsonp'
-	        provinceField: 'state_code', //省份字段名
-	        cityField: 'city_code', //城市字段名
-	        areaField: 'county_code', //地区字段名
+	        provinceField: 'stateCode', //省份字段名
+	        cityField: 'cityCode', //城市字段名
+	        areaField: 'countyCode', //地区字段名
 	        code: 0, //地区编码
 	        province: 0, //省份,可以为地区编码或者名称
 	        city: 0, //城市,可以为地区编码或者名称
@@ -4607,7 +4699,7 @@ webpackJsonp([0],{
 	    if (SCHOOLPAL_CONFIG.authPath) {
 	        SCHOOLPAL_CONFIG.authPath.map(function (rule) {
 	            var temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-
+	            console.log(temp);
 	            if (rule.test(temp) === true) {
 	                hasMatch++;
 	            }
