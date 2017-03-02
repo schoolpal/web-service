@@ -10,10 +10,12 @@ import org.springframework.util.StringUtils;
 import com.schoolpal.db.inf.TFunctionMapper;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TOrgMapper;
+import com.schoolpal.db.inf.TRankMapper;
 import com.schoolpal.db.inf.TRoleFunctionMapper;
 import com.schoolpal.db.inf.TRoleMapper;
 import com.schoolpal.db.model.TFunction;
 import com.schoolpal.db.model.TOrg;
+import com.schoolpal.db.model.TRank;
 import com.schoolpal.db.model.TRole;
 import com.schoolpal.db.model.TRoleFunction;
 import com.schoolpal.web.consts.LogLevel;
@@ -31,6 +33,8 @@ public class RoleService {
 	private TRoleFunctionMapper roleFuncDao;
 	@Autowired
 	private TFunctionMapper funcDao;
+	@Autowired
+	private TRankMapper rankDao;
 
 	@Autowired
 	private LogService logServ;
@@ -154,4 +158,7 @@ public class RoleService {
 		return ret;
 	}
 	
+	public List<TRank> queryRankList(){
+		return rankDao.selectAll();
+	}
 }

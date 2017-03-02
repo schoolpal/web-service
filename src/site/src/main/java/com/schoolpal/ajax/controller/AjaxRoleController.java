@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.db.model.TOrg;
+import com.schoolpal.db.model.TRank;
 import com.schoolpal.db.model.TRole;
 import com.schoolpal.db.model.TRoleFunction;
 import com.schoolpal.db.model.TUser;
@@ -221,6 +222,27 @@ public class AjaxRoleController {
 				res.setDetail("Failed to del orgnization");
 				break;
 			}
+			
+		} while (false);
+		
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "ranks.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String ranks() {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			List<TRank> rankList = null;
+			try{
+				rankList = roleServ.queryRankList();
+			}catch(Exception e){
+				res.setCode(501);
+				res.setDetail("Unexpect error");
+				break;
+			}
+			
+			res.setData(rankList);
 			
 		} while (false);
 		

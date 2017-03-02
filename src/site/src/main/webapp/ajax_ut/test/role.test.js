@@ -162,6 +162,21 @@ describe('/ajax/role/ APIs', function() {
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
+	it('ranks.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, role_path, 'ranks.do'),
+			dataType : 'json'
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('ranks.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+	});
+	
 	it('logout.do', function() {
 		xhr = $.ajax({
 			async : false,
@@ -177,4 +192,5 @@ describe('/ajax/role/ APIs', function() {
 		expect(jsonData.data).to.be.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
+
 });
