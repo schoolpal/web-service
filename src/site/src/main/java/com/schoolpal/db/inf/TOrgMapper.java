@@ -22,8 +22,8 @@ public interface TOrgMapper {
 
     List<TOrg> selectAll();
     
-    List<TOrg> selectAllIds();
-    
+//    List<TOrg> selectAllIds();
+//    
 /*    long countByExample(TOrgExample example);
 
     int deleteByExample(TOrgExample example);
