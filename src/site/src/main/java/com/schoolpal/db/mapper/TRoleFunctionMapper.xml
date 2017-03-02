@@ -26,7 +26,17 @@
     WHERE rf.c_role_id = #{cId,jdbcType=CHAR}
     ORDER BY f.c_id
   </select>
-
+  <select id="selectRootFuncsByRoleId" parameterType="java.lang.String" resultMap="FuncResultMap">
+    SELECT f.*, 
+        wt.c_name AS widget_name, 
+        ct.c_code AS command_code, ct.c_name AS command_name
+    FROM t_role_function rf
+        INNER JOIN t_function f on rf.c_function_root_id = f.c_id
+        LEFT JOIN t_widget_type wt on f.c_widget_type_id = wt.c_id
+        LEFT JOIN t_command_type ct on f.c_command_type_id = ct.c_id
+    WHERE rf.c_role_id = #{cId,jdbcType=CHAR} and #{cId,jdbcType=CHAR} = #{cRootId,jdbcType=CHAR}
+    ORDER BY f.c_id
+  </select>
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TRoleFunction">
     <id column="c_role_id" jdbcType="CHAR" property="cRoleId" />
     <id column="c_function_root_id" jdbcType="CHAR" property="cFunctionRootId" />

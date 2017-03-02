@@ -9,6 +9,7 @@ public interface TRoleFunctionMapper {
 	
 	TRoleFunction selectOneByPrimaryKey(String roleId, String funcRootId);
 	List<TFunction> selectManyByRoleId(String roleId);
+	List<TFunction> selectRootFuncsByRoleId(String roleId);
 	
     int insertOne(TRoleFunction record);
     

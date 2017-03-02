@@ -48,24 +48,31 @@ public class AjaxRoleController {
 		do {
 			TUser user = userServ.getCachedUser();
 			
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
-				res.setCode(401);
-				res.setDetail("No permission to query role under parent orgnization");
+			List<String> orgList = null;
+			try{
+				orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+			}catch(Exception e){
+				res.setCode(501);
+				res.setDetail("Unexpect error");
+				break;
 			}
 			
 			TRole role = null;
 			try{
 				role = roleServ.queryRoleById(id);
-				if (role == null){
-					res.setCode(402);
-					res.setDetail("Cannot find role");
-					break;
-				}
 			}catch(Exception e){
-				res.setCode(500);
+				res.setCode(502);
 				res.setDetail("Unexpect error");
 				break;
+			}
+			if (role == null){
+				res.setCode(401);
+				res.setDetail("Cannot find role");
+				break;
+			}
+			if (!orgList.contains(role.getcOrgId())) {
+				res.setCode(402);
+				res.setDetail("No permission to query role under parent orgnization");
 			}
 			
 			res.setData(role);
@@ -181,11 +188,31 @@ public class AjaxRoleController {
 		do {
 			TUser user = userServ.getCachedUser();
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
-				res.setCode(402);
-				res.setDetail("No permission to del this role under parent orgnization");
+			List<String> orgList = null;
+			try{
+				orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+			}catch(Exception e){
+				res.setCode(501);
+				res.setDetail("Unexpect error");
 				break;
+			}
+			
+			TRole role = null;
+			try{
+				role = roleServ.queryRoleById(id);
+			}catch(Exception e){
+				res.setCode(502);
+				res.setDetail("Unexpect error");
+				break;
+			}
+			if (role == null){
+				res.setCode(401);
+				res.setDetail("Cannot find role");
+				break;
+			}
+			if (!orgList.contains(role.getcOrgId())) {
+				res.setCode(402);
+				res.setDetail("No permission to del role under parent orgnization");
 			}
 			
 			roleServ.delRoleFuncs(id);

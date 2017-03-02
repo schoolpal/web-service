@@ -42,6 +42,7 @@ public class RoleService {
 
 	public TRole queryRoleById(String id) {
 		TRole role = roleDao.selectOneById(id);
+		role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(id));
 		role.setFunctions(roleFuncDao.selectManyByRoleId(id));
 		return role;
 	}
@@ -110,16 +111,8 @@ public class RoleService {
 		role.setcId(form.getId());
 		role.setcName(form.getName());
 		role.setcOrgId(form.getOrgId());
-		// role.getFunctions(form.getStrFuncIds()
-		// form.getRankId()
-		// form.getName()
-		// form.getDesc()
-		// private String orgId;
-		// private String orgHierarchy;
-		// private String strFuncIds;
-		// private int rankId;
-		// private String name;
-		// private String desc;
+		role.setcRankId(form.getRankId());
+		role.setcDesc(form.getDesc());
 
 		return role;
 	}

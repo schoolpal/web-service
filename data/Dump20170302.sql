@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `schoolpal` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `schoolpal`;
--- MySQL dump 10.13  Distrib 5.6.24, for osx10.8 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: schoolpal
+-- Host: localhost    Database: schoolpal
 -- ------------------------------------------------------
--- Server version	5.7.13
+-- Server version	5.5.5-10.1.20-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -661,6 +661,15 @@ CREATE TABLE `t_log` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `t_log`
+--
+
+LOCK TABLES `t_log` WRITE;
+/*!40000 ALTER TABLE `t_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `t_org`
 --
 
@@ -823,9 +832,10 @@ DROP TABLE IF EXISTS `t_role_function`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_role_function` (
-  `c_role_id` char(50) DEFAULT NULL,
-  `c_function_root_id` char(50) DEFAULT NULL,
+  `c_role_id` char(50) NOT NULL,
+  `c_function_root_id` char(50) NOT NULL,
   `c_order_num` int(11) DEFAULT NULL,
+  PRIMARY KEY (`c_role_id`,`c_function_root_id`),
   KEY `c_role_id` (`c_role_id`),
   KEY `c_order` (`c_order_num`),
   KEY `fk_t_role_function_t_function1_idx` (`c_function_root_id`),
@@ -840,7 +850,7 @@ CREATE TABLE `t_role_function` (
 
 LOCK TABLES `t_role_function` WRITE;
 /*!40000 ALTER TABLE `t_role_function` DISABLE KEYS */;
-INSERT INTO `t_role_function` VALUES ('16122700000001','7',1),('16010100000001','7',1),('16122700000002','1',1);
+INSERT INTO `t_role_function` VALUES ('16010100000001','7',1),('16122700000001','7',1),('16122700000002','1',1);
 /*!40000 ALTER TABLE `t_role_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1117,4 +1127,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-24  0:14:15
+-- Dump completed on 2017-03-02 16:54:35

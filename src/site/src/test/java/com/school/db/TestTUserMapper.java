@@ -16,7 +16,7 @@ import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
 
 public class TestTUserMapper {
-
+/*
 	private static TUserMapper userDao = null;
 	private static TOrgMapper orgDao = null;
 	private static TRoleMapper roleDao = null;
@@ -107,5 +107,5 @@ public class TestTUserMapper {
 		Assert.assertTrue(user.getcLastVisitTime().compareTo(date) > 0);
 		Assert.assertEquals(user.getcLastVisitIp(), currentDateText);
 	}
-
+*/
 }

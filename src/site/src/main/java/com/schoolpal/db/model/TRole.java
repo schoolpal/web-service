@@ -26,6 +26,7 @@ public class TRole {
     
     private Integer RankOrder;
 
+    private List<TFunction> rootFuncs;
 	private List<TFunction> functions;
 	
     public String getcId() {
@@ -122,5 +123,13 @@ public class TRole {
 
 	public void setFunctions(List<TFunction> funcs) {
 		this.functions = funcs;
+	}
+
+	public List<TFunction> getRootFuncs() {
+		return rootFuncs;
+	}
+
+	public void setRootFuncs(List<TFunction> rootFuncs) {
+		this.rootFuncs = rootFuncs;
 	}
 }
