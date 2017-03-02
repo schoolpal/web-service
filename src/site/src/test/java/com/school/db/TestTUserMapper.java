@@ -20,6 +20,7 @@ public class TestTUserMapper {
 	private static TUserMapper userDao = null;
 	private static TOrgMapper orgDao = null;
 	private static TRoleMapper roleDao = null;
+	private static TRoleFunctionMapper roleFuncDao = null;
 	private static TFunctionMapper funcDao = null;
 
 	private static String testUserLoginName = "sp-admin";
@@ -77,7 +78,7 @@ public class TestTUserMapper {
 		Assert.assertNotNull(user.getcId());
 		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
 		for(TRole role : roles){
-			List<TFunction> funcs = funcDao.selectManyByRoleId(role.getcId());
+			List<TFunction> funcs = roleFuncDao.selectManyByRoleId(role.getcId());
 			role.setFunctions(funcs);
 		}
 		Assert.assertTrue(roles.size() > 0);
