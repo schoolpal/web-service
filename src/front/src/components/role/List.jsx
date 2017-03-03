@@ -2,36 +2,102 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
+import { CreateButton, EditorButton, DelButton } from '../public/Button';
+import { orgList, roleList } from '../../utils/api';
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: {
-                id: 1,
-                name: 'root',
-                level: 1,
-                children: [
-                    {
-                        id: 2,
-                        name: 'root-1',
-                        level: 2,
-                        children: [
-                            {
-                                id: 3,
-                                name: 'root-1-1',
-                                level: 3
-                            }
-                        ]
-                    },
-                    {
-                        id: 4,
-                        name: 'root-2',
-                        level: 2
-                    }
-                ]
-            }
+            loading: true,
+            orgList: [],
+            selected: null,
+
+            roleLoading: false,
+            roleList: [],
+
+            selectedRole: null
         };
+
+        this.renderCommand = this.renderCommand.bind(this);
+        this.selectOrg = this.selectOrg.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
+        this.handleEditor = this.handleEditor.bind(this);
+        this.handleDel = this.handleDel.bind(this);
+    }
+
+    componentDidMount() {
+        orgList()
+            .done((data) => {
+                this.setState({
+                    loading: false,
+                    orgList: data
+                })
+            })
+    }
+
+    renderCommand() {
+        let temp = [];
+
+        if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
+            SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map((item, index) => {
+                if (item === 'Add') {
+                    temp.push(<CreateButton key={index} link={SCHOOLPAL_CONFIG.ROOTPATH + 'role/create'} />)
+                };
+
+                if (item === 'Mod') {
+                    temp.push(<EditorButton key={index} action={this.handleEditor} />)
+                }
+
+                if (item === 'Del') {
+                    temp.push(<DelButton key={index} action={this.handleDel} loading={this.state.delLoading} />)
+                }
+            })
+        }
+
+        return temp;
+    }
+
+    selectOrg(org) {
+        if (org) {
+            this.setState({
+                selected: org,
+                roleLoading: true
+            })
+
+            roleList(org.id)
+                .done((data) => {
+                    this.setState({
+                        roleLoading: false,
+                        roleList: data
+                    })
+                })
+        } else {
+            this.setState({
+                selected: null
+            })
+        };
+    }
+
+    handleSelect(event) {
+        if ($(event.target).hasClass('selected')) {
+            this.setState({
+                selectedRole: null
+            })
+        } else {
+            this.setState({
+                selectedRole: $(event.target).parents('tr').data('id')
+            })
+        }
+    }
+
+    handleEditor() {
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
+
+    }
+
+    handleDel() {
+
     }
 
     render() {
@@ -40,39 +106,49 @@ export default class List extends React.Component {
                 <h5>
                     <i className='fa fa-glass'></i>&nbsp;角色管理
                     <div className="btn-group float-right" role="group">
-                        <Link to={`/role/create`} className="btn btn-secondary">新建</Link>
-                        <button type="button" className="btn btn-secondary">删除</button>
+                        {this.renderCommand()}
                     </div>
                 </h5>
-                <div className="row">
-                    <div className="col-4">
-                        <OrgTree data={this.state.data} />
-                    </div>
-                    <div className="col-8">
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>角色职能</th>
-                                    <th>角色职级</th>
-                                    <th>角色名称</th>
-                                    <th>角色描述</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <label className="form-check-label">
-                                            <input className="form-check-input" type="checkbox" id="blankCheckbox" value="option1" aria-label="..." />
-                                        </label>
-                                    </td>
-                                    <td>市场、销售、客服、财务、教务、教学</td>
-                                    <td>经理</td>
-                                    <td>校长</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                <div className="main-container">
+                    <div className="d-flex align-items-stretch flex-nowrap">
+                        <div className={this.state.loading === true ? 'hide' : 'w400'}>
+                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
+                        </div>
+                        <div className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
+                            <table className={this.state.roleLoading === true ? 'hide' : 'table table-bordered table-sm'}>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>角色职能</th>
+                                        <th>角色职级</th>
+                                        <th>角色名称</th>
+                                        <th>角色描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.roleList.map((item) => {
+                                            return (
+                                                <tr key={item.cId} data-id={item.cId}>
+                                                    <td>
+                                                        <span onClick={this.handleSelect} className={this.state.selectedRole ? 'select selected' : 'select'}></span>
+                                                    </td>
+                                                    <td>市场、销售、客服、财务、教务、教学</td>
+                                                    <td>经理</td>
+                                                    <td>{item.cName}</td>
+                                                    <td>{item.cDesc}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+
+                            {this.state.roleLoading === true ? <p>数据加载中 ...</p> : ''}
+                        </div>
+
+                        {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
                     </div>
                 </div>
             </div>

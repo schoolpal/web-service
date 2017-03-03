@@ -14,9 +14,10 @@ export default class Editor extends React.Component {
         super(props)
         this.state = {
             loading: true,
-            saveLoading: false,
             orgList: [],
             selected: null,
+
+            saveLoading: false,
             saveResult: null
         };
         this.selectOrg = this.selectOrg.bind(this);

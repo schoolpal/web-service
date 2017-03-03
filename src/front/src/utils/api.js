@@ -252,3 +252,18 @@ export function orgDel(oid) {
 
     return defer.promise();
 }
+
+export function roleList(oid) {
+    const defer = $.Deferred();
+    const url = 'org/listRoles.do';
+
+    io({ url: url, data: { id: oid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}

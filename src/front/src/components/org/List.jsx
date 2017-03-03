@@ -79,8 +79,6 @@ export default class List extends React.Component {
         const area = data.cState + ' ' + data.cCity + ' ' + data.cCounty;
         const addr = area + ' ' + data.cAddress;
 
-        console.log(selectedClass)
-
         return (
             <tr key={data.cId} data-id={data.cId} data-level={data.level}>
                 <th scope="row">
@@ -188,7 +186,7 @@ export default class List extends React.Component {
             <div className="org">
                 <h5>
                     <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理
-                        <div className="btn-group float-right" role="group">
+                    <div className="btn-group float-right" role="group">
                         {this.renderCommand()}
                     </div>
                 </h5>

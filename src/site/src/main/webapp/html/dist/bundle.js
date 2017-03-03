@@ -77,6 +77,8 @@ webpackJsonp([0],{
 	        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
 	        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
 	        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
+	        '7-2-1': { PATH_RULE: /^role\/create(\/)?$/ },
+	        '7-2-2': { PATH_RULE: /^role\/\w+(\/)?$/ },
 	        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
 	        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' }
 	    }
@@ -354,6 +356,7 @@ webpackJsonp([0],{
 	exports.orgAdd = orgAdd;
 	exports.orgMod = orgMod;
 	exports.orgDel = orgDel;
+	exports.roleList = roleList;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -604,6 +607,21 @@ webpackJsonp([0],{
 	    var url = 'org/del.do';
 
 	    io({ url: url, data: { id: oid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function roleList(oid) {
+	    var defer = $.Deferred();
+	    var url = 'user/listRoles.do';
+
+	    io({ url: url, data: { orgId: oid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -947,8 +965,6 @@ webpackJsonp([0],{
 	            var childrenClass = data.children ? '' : 'not-child';
 	            var area = data.cState + ' ' + data.cCity + ' ' + data.cCounty;
 	            var addr = area + ' ' + data.cAddress;
-
-	            console.log(selectedClass);
 
 	            return _react2.default.createElement(
 	                'tr',
@@ -1343,9 +1359,10 @@ webpackJsonp([0],{
 
 	        _this.state = {
 	            loading: true,
-	            saveLoading: false,
 	            orgList: [],
 	            selected: null,
+
+	            saveLoading: false,
 	            saveResult: null
 	        };
 	        _this.selectOrg = _this.selectOrg.bind(_this);
@@ -2103,6 +2120,10 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _Button = __webpack_require__(236);
+
+	var _api = __webpack_require__(231);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2120,32 +2141,110 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            data: {
-	                id: 1,
-	                name: 'root',
-	                level: 1,
-	                children: [{
-	                    id: 2,
-	                    name: 'root-1',
-	                    level: 2,
-	                    children: [{
-	                        id: 3,
-	                        name: 'root-1-1',
-	                        level: 3
-	                    }]
-	                }, {
-	                    id: 4,
-	                    name: 'root-2',
-	                    level: 2
-	                }]
-	            }
+	            loading: true,
+	            orgList: [],
+	            selected: null,
+
+	            roleLoading: false,
+	            roleList: [],
+
+	            selectedRole: null
 	        };
+
+	        _this.renderCommand = _this.renderCommand.bind(_this);
+	        _this.selectOrg = _this.selectOrg.bind(_this);
+	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.handleEditor = _this.handleEditor.bind(_this);
+	        _this.handleDel = _this.handleDel.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(List, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            (0, _api.orgList)().done(function (data) {
+	                _this2.setState({
+	                    loading: false,
+	                    orgList: data
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'renderCommand',
+	        value: function renderCommand() {
+	            var _this3 = this;
+
+	            var temp = [];
+
+	            if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
+	                SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map(function (item, index) {
+	                    if (item === 'Add') {
+	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH + 'role/create' }));
+	                    };
+
+	                    if (item === 'Mod') {
+	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
+	                    }
+
+	                    if (item === 'Del') {
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading }));
+	                    }
+	                });
+	            }
+
+	            return temp;
+	        }
+	    }, {
+	        key: 'selectOrg',
+	        value: function selectOrg(org) {
+	            var _this4 = this;
+
+	            if (org) {
+	                this.setState({
+	                    selected: org,
+	                    roleLoading: true
+	                });
+
+	                (0, _api.roleList)(org.id).done(function (data) {
+	                    _this4.setState({
+	                        roleLoading: false,
+	                        roleList: data
+	                    });
+	                });
+	            } else {
+	                this.setState({
+	                    selected: null
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'handleSelect',
+	        value: function handleSelect(event) {
+	            if ($(event.target).hasClass('selected')) {
+	                this.setState({
+	                    selectedRole: null
+	                });
+	            } else {
+	                this.setState({
+	                    selectedRole: $(event.target).parents('tr').data('id')
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'handleEditor',
+	        value: function handleEditor() {
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
+	        }
+	    }, {
+	        key: 'handleDel',
+	        value: function handleDel() {}
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this5 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'role' },
@@ -2157,99 +2256,106 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/role/create', className: 'btn btn-secondary' },
-	                            '\u65B0\u5EFA'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-secondary' },
-	                            '\u5220\u9664'
-	                        )
+	                        this.renderCommand()
 	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'row' },
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'col-4' },
-	                        _react2.default.createElement(_OrgTree2.default, { data: this.state.data })
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'col-8' },
+	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
-	                            'table',
-	                            { className: 'table table-bordered' },
+	                            'div',
+	                            { className: this.state.loading === true ? 'hide' : 'w400' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
-	                                'thead',
-	                                null,
+	                                'table',
+	                                { className: this.state.roleLoading === true ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
-	                                    'tr',
+	                                    'thead',
 	                                    null,
 	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '#'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u89D2\u8272\u804C\u80FD'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u89D2\u8272\u804C\u7EA7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u89D2\u8272\u540D\u79F0'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u89D2\u8272\u63CF\u8FF0'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'tbody',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'td',
+	                                        'tr',
 	                                        null,
 	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { className: 'form-check-label' },
-	                                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', id: 'blankCheckbox', value: 'option1', 'aria-label': '...' })
+	                                            'th',
+	                                            null,
+	                                            '#'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u804C\u80FD'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u804C\u7EA7'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u540D\u79F0'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u63CF\u8FF0'
 	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u5E02\u573A\u3001\u9500\u552E\u3001\u5BA2\u670D\u3001\u8D22\u52A1\u3001\u6559\u52A1\u3001\u6559\u5B66'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u7ECF\u7406'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u6821\u957F'
-	                                    ),
-	                                    _react2.default.createElement('td', null)
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'tbody',
+	                                    null,
+	                                    this.state.roleList.map(function (item) {
+	                                        return _react2.default.createElement(
+	                                            'tr',
+	                                            { key: item.cId, 'data-id': item.cId },
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                _react2.default.createElement('span', { onClick: _this5.handleSelect, className: _this5.state.selectedRole ? 'select selected' : 'select' })
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                '\u5E02\u573A\u3001\u9500\u552E\u3001\u5BA2\u670D\u3001\u8D22\u52A1\u3001\u6559\u52A1\u3001\u6559\u5B66'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                '\u7ECF\u7406'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cName
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cDesc
+	                                            )
+	                                        );
+	                                    })
 	                                )
-	                            )
-	                        )
+	                            ),
+	                            this.state.roleLoading === true ? _react2.default.createElement(
+	                                'p',
+	                                null,
+	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
+	                            ) : ''
+	                        ),
+	                        this.state.loading === true ? _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
+	                        ) : ''
 	                    )
 	                )
 	            );
@@ -2271,7 +2377,8 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = Editor;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(9);
 
@@ -2287,255 +2394,278 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _api = __webpack_require__(231);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Editor(props) {
-	    var data = {
-	        id: 1,
-	        name: 'root',
-	        level: 1,
-	        children: [{
-	            id: 2,
-	            name: 'root-1',
-	            level: 2,
-	            children: [{
-	                id: 3,
-	                name: 'root-1-1',
-	                level: 3
-	            }]
-	        }, {
-	            id: 4,
-	            name: 'root-2',
-	            level: 2
-	        }]
-	    };
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	    return _react2.default.createElement(
-	        'div',
-	        { className: 'org' },
-	        _react2.default.createElement(
-	            'h5',
-	            null,
-	            _react2.default.createElement('i', { className: 'fa fa-glass' }),
-	            '\xA0\u89D2\u8272\u7BA1\u7406\xA0|\xA0',
-	            _react2.default.createElement(
-	                'p',
-	                { className: 'd-inline text-muted' },
-	                '\u89D2\u8272\u7EC4\u7EC7'
-	            ),
-	            _react2.default.createElement(
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Editor = function (_React$Component) {
+	    _inherits(Editor, _React$Component);
+
+	    function Editor(props) {
+	        _classCallCheck(this, Editor);
+
+	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
+
+	        _this.state = {
+	            loading: true,
+	            orgList: [],
+	            selected: null
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Editor, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            (0, _api.orgList)().done(function (data) {
+	                _this2.setState({
+	                    loading: false,
+	                    orgList: data
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'selectOrg',
+	        value: function selectOrg(org) {
+	            if (org) {
+	                this.setState({
+	                    selected: org
+	                });
+	            } else {
+	                this.setState({
+	                    selected: null
+	                });
+	            };
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
 	                'div',
-	                { className: 'btn-group float-right', role: 'group' },
+	                { className: 'org' },
 	                _react2.default.createElement(
-	                    'button',
-	                    { type: 'button', className: 'btn btn-secondary' },
-	                    '\u4FDD\u5B58'
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { type: 'button', className: 'btn btn-secondary' },
-	                    '\u53D6\u6D88'
-	                )
-	            )
-	        ),
-	        _react2.default.createElement(
-	            'form',
-	            null,
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'form-group row' },
-	                _react2.default.createElement(
-	                    'label',
-	                    { 'for': 'name', className: 'col-2 col-form-label' },
-	                    '\u6240\u5C5E\u7EC4\u7EC7'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-4' },
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-glass' }),
+	                    '\xA0\u89D2\u8272\u7BA1\u7406\xA0|\xA0',
+	                    _react2.default.createElement(
+	                        'p',
+	                        { className: 'd-inline text-muted' },
+	                        '\u89D2\u8272\u7EC4\u7EC7'
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'input-group' },
-	                        _react2.default.createElement('input', { type: 'text', className: 'form-control', readOnly: true }),
+	                        { className: 'btn-group float-right', role: 'group' },
 	                        _react2.default.createElement(
-	                            'span',
-	                            { className: 'input-group-btn' },
+	                            'button',
+	                            { type: 'button', className: 'btn btn-secondary' },
+	                            '\u4FDD\u5B58'
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { type: 'button', className: 'btn btn-secondary' },
+	                            '\u53D6\u6D88'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    null,
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group row' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { 'for': 'name', className: 'col-2 col-form-label' },
+	                            '\u6240\u5C5E\u7EC4\u7EC7'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-4' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group row' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { 'for': 'name', className: 'col-2 col-form-label' },
+	                            '\u89D2\u8272\u804C\u80FD'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-10' },
 	                            _react2.default.createElement(
-	                                'button',
-	                                { 'data-toggle': 'modal', 'data-target': '#orgTreePanel', className: 'btn btn-secondary', type: 'button' },
-	                                _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' })
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
+	                                    ' \u5E02\u573A'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
+	                                    ' \u9500\u552E'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
+	                                    ' \u5BA2\u670D'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
+	                                    ' \u8D22\u52A1'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
+	                                    ' \u6559\u52A1'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
+	                                    ' \u6559\u5B66'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'inlineRadioOptions', value: 'option1' }),
+	                                    ' \u7CFB\u7EDF\u7BA1\u7406'
+	                                )
 	                            )
 	                        )
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'form-group row' },
-	                _react2.default.createElement(
-	                    'label',
-	                    { 'for': 'name', className: 'col-2 col-form-label' },
-	                    '\u89D2\u8272\u804C\u80FD'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-10' },
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-check form-check-inline' },
+	                        { className: 'form-group row' },
 	                        _react2.default.createElement(
 	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                            ' \u5E02\u573A'
+	                            { 'for': 'name', className: 'col-2 col-form-label' },
+	                            '\u89D2\u8272\u804C\u7EA7'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-10' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
+	                                    ' \u7ECF\u7406'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
+	                                    ' \u4E3B\u7BA1'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
+	                                    ' \u4E13\u5458'
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-check form-check-inline' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { className: 'form-check-label' },
+	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'inlineRadioOptions', value: 'option1' }),
+	                                    ' \u7CFB\u7EDF\u7BA1\u7406\u5458'
+	                                )
+	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-check form-check-inline' },
+	                        { className: 'form-group row' },
 	                        _react2.default.createElement(
 	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                            ' \u9500\u552E'
+	                            { 'for': 'name', className: 'col-2 col-form-label' },
+	                            '\u8D1F\u8D23\u4EBA'
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col-4' },
+	                            _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'name' })
 	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-check form-check-inline' },
+	                        { className: 'form-group row' },
 	                        _react2.default.createElement(
 	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                            ' \u5BA2\u670D'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
+	                            { 'for': 'addr', className: 'col-2 col-form-label' },
+	                            '\u89D2\u8272\u63CF\u8FF0'
+	                        ),
 	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                            ' \u8D22\u52A1'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                            ' \u6559\u52A1'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                            ' \u6559\u5B66'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'inlineRadioOptions', value: 'option1' }),
-	                            ' \u7CFB\u7EDF\u7BA1\u7406'
-	                        )
-	                    )
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'form-group row' },
-	                _react2.default.createElement(
-	                    'label',
-	                    { 'for': 'name', className: 'col-2 col-form-label' },
-	                    '\u89D2\u8272\u804C\u7EA7'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-10' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
-	                            ' \u7ECF\u7406'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
-	                            ' \u4E3B\u7BA1'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
-	                            ' \u4E13\u5458'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-check form-check-inline' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { className: 'form-check-label' },
-	                            _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'inlineRadioOptions', value: 'option1' }),
-	                            ' \u7CFB\u7EDF\u7BA1\u7406\u5458'
+	                            'div',
+	                            { className: 'col-4' },
+	                            _react2.default.createElement('textarea', { className: 'form-control', id: 'addr', rows: '3' })
 	                        )
 	                    )
 	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'form-group row' },
-	                _react2.default.createElement(
-	                    'label',
-	                    { 'for': 'name', className: 'col-2 col-form-label' },
-	                    '\u8D1F\u8D23\u4EBA'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-4' },
-	                    _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'name' })
-	                )
-	            ),
-	            _react2.default.createElement(
-	                'div',
-	                { className: 'form-group row' },
-	                _react2.default.createElement(
-	                    'label',
-	                    { 'for': 'addr', className: 'col-2 col-form-label' },
-	                    '\u89D2\u8272\u63CF\u8FF0'
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-4' },
-	                    _react2.default.createElement('textarea', { className: 'form-control', id: 'addr', rows: '3' })
-	                )
-	            )
-	        ),
-	        _react2.default.createElement(_OrgTree2.default, { data: data, panel: true })
-	    );
-	}
+	            );
+	        }
+	    }]);
+
+	    return Editor;
+	}(_react2.default.Component);
+
+	exports.default = Editor;
 
 /***/ },
 

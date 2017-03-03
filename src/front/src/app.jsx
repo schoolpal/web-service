@@ -12,6 +12,8 @@ window.SCHOOLPAL_CONFIG = {
         '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
         '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
         '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
+        '7-2-1': { PATH_RULE: /^role\/create(\/)?$/ },
+        '7-2-2': { PATH_RULE: /^role\/\w+(\/)?$/ },
         '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
         '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' }
     }
