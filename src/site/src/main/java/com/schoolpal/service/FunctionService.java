@@ -22,4 +22,15 @@ public class FunctionService {
 	@Autowired
 	private LogService logServ;
 
+	public List<TFunction> queryRootFuncList(){
+		return funcDao.selectAllRoots();
+	}
+
+	public List<TFunction> queryAllFuncList(){
+		return funcDao.selectAll();
+	}
+
+	public List<TFunction> queryFuncListByRootId(String id){
+		return funcDao.selectManyByRootId(id);
+	}
 }

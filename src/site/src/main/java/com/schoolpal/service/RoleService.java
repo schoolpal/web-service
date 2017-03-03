@@ -50,7 +50,7 @@ public class RoleService {
 	public TRole queryRoleById(String id) {
 		TRole role = roleDao.selectOneById(id);
 		role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(id));
-		role.setFunctions(roleFuncDao.selectManyByRoleId(id));
+		role.setFunctions(roleFuncDao.selectAllFuncsByRoleId(id));
 		return role;
 	}
 
@@ -124,10 +124,10 @@ public class RoleService {
 		return role;
 	}
 
-	public List<TFunction> queryFuncListByRoleId(String id) {
-		List<TFunction> roleList = roleFuncDao.selectManyByRoleId(id);
-		return roleList;
-	}
+//	public List<TFunction> queryFuncListByRoleId(String id) {
+//		List<TFunction> roleList = roleFuncDao.selectAllFuncsByRoleId(id);
+//		return roleList;
+//	}
 	
 	public boolean delRoleFuncs(String roleId) {
 		return roleFuncDao.deleteManyByRoleId(roleId) > 0;

@@ -23,6 +23,23 @@
     from t_function
     where c_id = #{cId,jdbcType=CHAR}
   </select>
+  <select id="selectAllRoots" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+    where c_id = c_root_id
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+  </select>
+  <select id="selectManyByRootId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+    where c_root_id = #{cId,jdbcType=CHAR}
+  </select>
   <select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(*)
     from t_function

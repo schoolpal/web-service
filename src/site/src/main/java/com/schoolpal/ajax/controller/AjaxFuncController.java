@@ -38,9 +38,32 @@ public class AjaxFuncController {
 
 	private Gson gson = new Gson();
 
-	@RequestMapping(value = "listByRole.do", method = RequestMethod.POST)
+//	@RequestMapping(value = "listByRole.do", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String listByRole(String roleId) {
+//		TUser user = userServ.getCachedUser();
+//		AjaxResponse res = new AjaxResponse(200);
+//		if (user == null) {
+//			// Since shiro filter will intercept if not login, this code should
+//			// never be reached
+//			res.setCode(500);
+//			res.setDetail("Cannot find cached profile data, not login?");
+//		} else {
+//			TRole role = roleServ.queryRoleById(roleId);
+//			if (!orgServ.queryOrgIdListByRootId(user.getcOrgId()).contains(role.getcOrgId())) {
+//				res.setCode(401);
+//				res.setDetail("No permission for this orgnization");
+//			} else {
+//				List<TFunction> funcList = roleServ.queryFuncListByRoleId(roleId);
+//				res.setData(funcList);
+//			}
+//		}
+//		return gson.toJson(res);
+//	}
+
+	@RequestMapping(value = "listRootFuncs.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listByRole(String roleId) {
+	public String listRootFuncs() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
@@ -49,14 +72,42 @@ public class AjaxFuncController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
-			TRole role = roleServ.queryRoleById(roleId);
-			if (!orgServ.queryOrgIdListByRootId(user.getcOrgId()).contains(role.getcOrgId())) {
-				res.setCode(401);
-				res.setDetail("No permission for this orgnization");
-			} else {
-				List<TFunction> funcList = roleServ.queryFuncListByRoleId(roleId);
-				res.setData(funcList);
-			}
+			List<TFunction> rootFuncs = funcServ.queryRootFuncList();
+			res.setData(rootFuncs);
+		}
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "listAllFuncs.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listAllFuncs() {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			// Since shiro filter will intercept if not login, this code should
+			// never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		} else {
+			List<TFunction> rootFuncs = funcServ.queryAllFuncList();
+			res.setData(rootFuncs);
+		}
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "list.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listFuncs(String id) {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			// Since shiro filter will intercept if not login, this code should
+			// never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		} else {
+			List<TFunction> rootFuncs = funcServ.queryFuncListByRootId(id);
+			res.setData(rootFuncs);
 		}
 		return gson.toJson(res);
 	}
@@ -67,7 +118,7 @@ public class AjaxFuncController {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
 
@@ -77,17 +128,17 @@ public class AjaxFuncController {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
-	
+
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String del(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
 

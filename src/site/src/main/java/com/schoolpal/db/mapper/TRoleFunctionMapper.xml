@@ -15,15 +15,18 @@
     <result column="command_code" jdbcType="VARCHAR" property="CommandCode" />
     <result column="command_name" jdbcType="VARCHAR" property="CommandName" />
   </resultMap>
-  <select id="selectManyByRoleId" parameterType="java.lang.String" resultMap="FuncResultMap">
+  <select id="selectAllFuncsByRoleId" parameterType="java.lang.String" resultMap="FuncResultMap">
     SELECT f.*, 
         wt.c_name AS widget_name, 
-        ct.c_code AS command_code, ct.c_name AS command_name
-    FROM t_role_function rf
-        INNER JOIN t_function f on f.c_root_id = rf.c_function_root_id 
+        ct.c_code AS command_code, ct.c_name AS command_name,
+        rfe.c_function_id AS exclude_func_id
+    FROM t_role_function AS rf
+        INNER JOIN t_function AS f on f.c_root_id = rf.c_function_root_id 
+        LEFT JOIN t_role_function_exclude AS rfe on rf.c_role_id = rfe.c_role_id AND f.c_id = rfe.c_function_id
         LEFT JOIN t_widget_type wt on f.c_widget_type_id = wt.c_id
         LEFT JOIN t_command_type ct on f.c_command_type_id = ct.c_id
     WHERE rf.c_role_id = #{cId,jdbcType=CHAR}
+    HAVING exclude_func_id is null
     ORDER BY f.c_id
   </select>
   <select id="selectRootFuncsByRoleId" parameterType="java.lang.String" resultMap="FuncResultMap">
