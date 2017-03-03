@@ -22,10 +22,8 @@ public class TRole {
 
     private Date cCreateTime;
     
-    private String RankName;
+    private String cRankName;
     
-    private Integer RankOrder;
-
     private List<TFunction> rootFuncs;
 	private List<TFunction> functions;
 	
@@ -101,20 +99,12 @@ public class TRole {
         this.cCreateTime = cCreateTime;
     }
 
-	public String getRankName() {
-		return RankName;
+	public String getcRankName() {
+		return cRankName;
 	}
 
-	public void setRankName(String rankName) {
-		RankName = rankName;
-	}
-
-	public Integer getRankOrder() {
-		return RankOrder;
-	}
-
-	public void setRankOrder(Integer rankOrder) {
-		RankOrder = rankOrder;
+	public void setcRankName(String rankName) {
+		cRankName = rankName;
 	}
 
 	public List<TFunction> getFunctions() {

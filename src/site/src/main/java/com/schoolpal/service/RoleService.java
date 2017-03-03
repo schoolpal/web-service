@@ -41,6 +41,9 @@ public class RoleService {
 
 	public List<TRole> queryRoleListByOrgId(String id) {
 		List<TRole> roleList = roleDao.selectRolesByOrgId(id);
+		for (TRole role : roleList){
+			role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(role.getcId()));
+		}
 		return roleList;
 	}
 

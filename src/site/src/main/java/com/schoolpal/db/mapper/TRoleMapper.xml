@@ -9,11 +9,9 @@
 		<result column="c_available" jdbcType="BIT" property="cAvailable" />
 		<result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
 		<result column="c_rank_id" jdbcType="INTEGER" property="cRankId" />
-		<result column="rank_name" jdbcType="VARCHAR" property="RankName" />
-		<result column="rank_order" jdbcType="INTEGER" property="RankOrder" />
+		<result column="c_rank_name" jdbcType="VARCHAR" property="cRankName" />
 	</resultMap>
-	<select id="selectRolesByUserId" parameterType="java.lang.String"
-		resultMap="RoleResultMap">
+	<select id="selectRolesByUserId" parameterType="java.lang.String" resultMap="RoleResultMap">
 		SELECT r.*
 		FROM t_user_role AS ur
 		INNER JOIN t_role AS r ON r.c_id = ur.c_role_id
@@ -21,17 +19,16 @@
 		AND r.c_available = 1
 		AND ur.c_user_id = #{cId,jdbcType=CHAR}
 	</select>
-	<select id="selectOneById" parameterType="java.lang.String"
-		resultMap="RoleResultMap">
+	<select id="selectOneById" parameterType="java.lang.String"	resultMap="RoleResultMap">
 		SELECT *
 		FROM t_role
 		WHERE c_available = 1
 		AND c_id = #{cId,jdbcType=CHAR}
 	</select>
-	<select id="selectRolesByOrgId" parameterType="java.lang.String"
-		resultMap="RoleResultMap">
-		SELECT *
-		FROM t_role
+	<select id="selectRolesByOrgId" parameterType="java.lang.String" resultMap="RoleResultMap">
+		SELECT ro.*, ra.c_name AS c_rank_name
+		FROM t_role AS ro
+		LEFT JOIN t_rank AS ra ON ro.c_rank_id = ra.c_id
 		WHERE c_available = 1
 		AND c_org_id = #{cId,jdbcType=CHAR}
 	</select>
