@@ -146,6 +146,23 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listRoles() {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			// Since shiro filter will intercept if not login, this code should
+			// never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		} else {
+			List<TRole> roleList = user.getRoles();
+			res.setData(roleList);
+		}
+		return gson.toJson(res);
+	}
+
 	@RequestMapping(value = "listFuncs.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String listFuncs() {
@@ -206,28 +223,6 @@ public class AjaxUserController {
 		} else {
 			List<TOrg> orgList = orgServ.queryOrgListByRootId(user.getcOrgId());
 			res.setData(orgList);
-		}
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listRoles(String orgId) {
-		TUser user = userServ.getCachedUser();
-		AjaxResponse res = new AjaxResponse(200);
-		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
-			// never be reached
-			res.setCode(500);
-			res.setDetail("Cannot find cached profile data, not login?");
-		} else {
-			if (!orgServ.queryOrgIdListByRootId(user.getcOrgId()).contains(orgId)) {
-				res.setCode(401);
-				res.setDetail("No permission for this orgnization");
-			} else {
-				List<TRole> roleList = roleServ.queryRoleListByOrgId(orgId);
-				res.setData(roleList);
-			}
 		}
 		return gson.toJson(res);
 	}

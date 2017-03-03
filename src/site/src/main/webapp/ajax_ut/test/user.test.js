@@ -102,10 +102,7 @@ describe('/ajax/user/ APIs', function() {
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, path, 'listRoles.do'),
-			dataType : 'json',
-			data : {
-				orgId : '16010100000001'
-			}
+			dataType : 'json'
 		});
 
 		expect(xhr.status).to.be.equal(200);
