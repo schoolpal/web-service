@@ -175,8 +175,8 @@ export default class List extends React.Component {
             .done((data, rootLevel) => {
                 this.setState({
                     loading: false,
-                    list: data,
-                    rootLevel: rootLevel
+                    list: data.tree,
+                    rootLevel: data.rootLevel
                 })
             })
     }

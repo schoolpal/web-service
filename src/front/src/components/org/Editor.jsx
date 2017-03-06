@@ -33,7 +33,7 @@ export default class Editor extends React.Component {
                 .done((data) => {
                     this.setState({
                         loading: false,
-                        orgList: data
+                        orgList: data.tree
                     })
                 })
 

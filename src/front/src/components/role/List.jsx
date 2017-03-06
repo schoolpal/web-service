@@ -5,6 +5,16 @@ import OrgTree from '../public/OrgTree';
 import { CreateButton, EditorButton, DelButton } from '../public/Button';
 import { orgList, roleList } from '../../utils/api';
 
+function getFuncStr(data) {
+    let funcArr = [];
+
+    data.map((item) => {
+        funcArr.push(item.cNameShort);
+    })
+
+    return funcArr.join(',');
+}
+
 export default class List extends React.Component {
     constructor(props) {
         super(props)
@@ -31,7 +41,7 @@ export default class List extends React.Component {
             .done((data) => {
                 this.setState({
                     loading: false,
-                    orgList: data
+                    orgList: data.tree
                 })
             })
     }
@@ -134,8 +144,8 @@ export default class List extends React.Component {
                                                     <td>
                                                         <span onClick={this.handleSelect} className={this.state.selectedRole ? 'select selected' : 'select'}></span>
                                                     </td>
-                                                    <td>市场、销售、客服、财务、教务、教学</td>
-                                                    <td>经理</td>
+                                                    <td>{getFuncStr(item.rootFuncs)}</td>
+                                                    <td>{item.cRankName}</td>
                                                     <td>{item.cName}</td>
                                                     <td>{item.cDesc}</td>
                                                 </tr>

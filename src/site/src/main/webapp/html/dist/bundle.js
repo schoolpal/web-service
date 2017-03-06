@@ -357,6 +357,9 @@ webpackJsonp([0],{
 	exports.orgMod = orgMod;
 	exports.orgDel = orgDel;
 	exports.roleList = roleList;
+	exports.rankDic = rankDic;
+	exports.funcDic = funcDic;
+	exports.roleAdd = roleAdd;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -546,7 +549,7 @@ webpackJsonp([0],{
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            var conversionOrgData = conversionOrg(data.data);
 
-	            defer.resolve(conversionOrgData.tree, conversionOrgData.rootLevel);
+	            defer.resolve(conversionOrgData);
 	        } else {
 	            defer.reject(data);
 	        }
@@ -619,9 +622,55 @@ webpackJsonp([0],{
 
 	function roleList(oid) {
 	    var defer = $.Deferred();
-	    var url = 'user/listRoles.do';
+	    var url = 'org/listRoles.do';
 
-	    io({ url: url, data: { orgId: oid } }, function (data) {
+	    io({ url: url, data: { id: oid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function rankDic() {
+	    var defer = $.Deferred();
+	    var url = 'role/ranks.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function funcDic() {
+	    var defer = $.Deferred();
+	    var url = 'func/listAllFuncs.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function roleAdd(data) {
+	    var defer = $.Deferred();
+	    var url = 'role/add.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -1088,8 +1137,8 @@ webpackJsonp([0],{
 	            (0, _api.orgList)().done(function (data, rootLevel) {
 	                _this5.setState({
 	                    loading: false,
-	                    list: data,
-	                    rootLevel: rootLevel
+	                    list: data.tree,
+	                    rootLevel: data.rootLevel
 	                });
 	            });
 	        }
@@ -1382,7 +1431,7 @@ webpackJsonp([0],{
 	                (0, _api.orgList)().done(function (data) {
 	                    _this2.setState({
 	                        loading: false,
-	                        orgList: data
+	                        orgList: data.tree
 	                    });
 	                });
 
@@ -2132,6 +2181,16 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function getFuncStr(data) {
+	    var funcArr = [];
+
+	    data.map(function (item) {
+	        funcArr.push(item.cNameShort);
+	    });
+
+	    return funcArr.join(',');
+	}
+
 	var List = function (_React$Component) {
 	    _inherits(List, _React$Component);
 
@@ -2167,7 +2226,7 @@ webpackJsonp([0],{
 	            (0, _api.orgList)().done(function (data) {
 	                _this2.setState({
 	                    loading: false,
-	                    orgList: data
+	                    orgList: data.tree
 	                });
 	            });
 	        }
@@ -2324,12 +2383,12 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
-	                                                '\u5E02\u573A\u3001\u9500\u552E\u3001\u5BA2\u670D\u3001\u8D22\u52A1\u3001\u6559\u52A1\u3001\u6559\u5B66'
+	                                                getFuncStr(item.rootFuncs)
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
-	                                                '\u7ECF\u7406'
+	                                                item.cRankName
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
@@ -2394,6 +2453,12 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _Alerts = __webpack_require__(234);
+
+	var _Alerts2 = _interopRequireDefault(_Alerts);
+
+	var _Button = __webpack_require__(236);
+
 	var _api = __webpack_require__(231);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2403,6 +2468,21 @@ webpackJsonp([0],{
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FUNC_ADMIN_ID = '7';
+	var RANK_ADMIN_ID = '4';
+
+	function formatFuncData(data) {
+	    var temp = [];
+
+	    data.map(function (item) {
+	        if (item.cId === item.cRootId) {
+	            temp.push(item);
+	        }
+	    });
+
+	    return temp;
+	}
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -2415,8 +2495,25 @@ webpackJsonp([0],{
 	        _this.state = {
 	            loading: true,
 	            orgList: [],
-	            selected: null
+	            selected: null,
+
+	            rank: [],
+	            func: [],
+
+	            isAdmin: false,
+	            checkedFunc: {},
+	            checkedRank: null,
+
+	            saveLoading: false,
+	            saveResult: null
 	        };
+
+	        _this.selectOrg = _this.selectOrg.bind(_this);
+	        _this.showAlert = _this.showAlert.bind(_this);
+	        _this.clearAlert = _this.clearAlert.bind(_this);
+	        _this.checkedFunc = _this.checkedFunc.bind(_this);
+	        _this.checkedRank = _this.checkedRank.bind(_this);
+	        _this.editorSubmit = _this.editorSubmit.bind(_this);
 	        return _this;
 	    }
 
@@ -2425,10 +2522,12 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgList)().done(function (data) {
+	            $.when((0, _api.orgList)(), (0, _api.funcDic)(), (0, _api.rankDic)()).done(function (org, func, rank) {
 	                _this2.setState({
 	                    loading: false,
-	                    orgList: data
+	                    orgList: org.tree,
+	                    rank: rank,
+	                    func: formatFuncData(func)
 	                });
 	            });
 	        }
@@ -2446,8 +2545,122 @@ webpackJsonp([0],{
 	            };
 	        }
 	    }, {
+	        key: 'checkedFunc',
+	        value: function checkedFunc(event) {
+	            var isAdmin = event.target.value === FUNC_ADMIN_ID ? true : false;
+	            var tempFunc = $.extend({}, this.state.checkedFunc);
+	            var tempRank = this.state.checkedRank;
+
+	            if (isAdmin && event.target.checked === true) {
+	                tempFunc = {};
+	                tempRank = RANK_ADMIN_ID;
+	            } else {
+	                delete tempFunc[FUNC_ADMIN_ID];
+
+	                if (tempRank === RANK_ADMIN_ID) {
+	                    tempRank = null;
+	                }
+	            }
+
+	            tempFunc[event.target.value] = event.target.checked;
+
+	            this.setState({
+	                isAdmin: isAdmin === true && event.target.checked === true ? true : false,
+	                checkedFunc: tempFunc,
+	                checkedRank: tempRank
+	            });
+	        }
+	    }, {
+	        key: 'checkedRank',
+	        value: function checkedRank(event) {
+	            if (event.target.checked === true) {
+	                this.setState({
+	                    checkedRank: event.target.value
+	                });
+	            } else {
+	                this.setState({
+	                    checkedRank: null
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'editorSubmit',
+	        value: function editorSubmit() {
+	            var _this3 = this;
+
+	            var param = {};
+	            var funcIds = [];
+
+	            param.orgId = this.state.selected.id;
+
+	            for (var key in this.state.checkedFunc) {
+	                if (this.state.checkedFunc[key] === true) {
+	                    funcIds.push(key);
+	                };
+	            }
+
+	            param.strFuncIds = funcIds.join(',');
+	            param.rankId = this.state.checkedRank;
+	            param.name = $(this.editorDom).find('[name=name]').val();
+	            param.desc = $(this.editorDom).find('[name=desc]').val();
+
+	            this.setState({
+	                saveLoading: true
+	            });
+
+	            (0, _api.roleAdd)(param).done(function () {
+	                _this3.setState({
+	                    saveLoading: false,
+	                    selected: null,
+	                    isAdmin: false,
+	                    checkedFunc: {},
+	                    checkedRank: null,
+	                    saveResult: {
+	                        type: 'success',
+	                        title: 'Well done!',
+	                        text: '添加成功 ！'
+	                    }
+	                });
+	            }).fail(function (data) {
+	                _this3.setState({
+	                    saveLoading: false,
+	                    saveResult: {
+	                        type: 'danger',
+	                        'title': 'Oh snap!',
+	                        'text': '[' + data.data.code + '] ' + data.data.detail
+	                    }
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'showAlert',
+	        value: function showAlert() {
+	            if (this.state.saveResult) {
+	                return _react2.default.createElement(
+	                    _Alerts2.default,
+	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'role', className: 'alert-link' },
+	                        '\u8FD4\u56DE\u5217\u8868'
+	                    )
+	                );
+	            } else {
+	                return '';
+	            }
+	        }
+	    }, {
+	        key: 'clearAlert',
+	        value: function clearAlert() {
+	            this.setState({
+	                saveResult: null
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this4 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'org' },
@@ -2464,199 +2677,159 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-secondary' },
-	                            '\u4FDD\u5B58'
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', className: 'btn btn-secondary' },
-	                            '\u53D6\u6D88'
-	                        )
+	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
 	                    )
 	                ),
+	                this.showAlert(),
 	                _react2.default.createElement(
-	                    'form',
-	                    null,
+	                    'div',
+	                    { onClick: this.clearAlert, className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u6240\u5C5E\u7EC4\u7EC7'
-	                        ),
+	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'col-4' },
+	                            { className: this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u89D2\u8272\u804C\u80FD'
 	                        ),
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-10' },
+	                            'form',
+	                            { ref: function ref(dom) {
+	                                    _this4.editorDom = dom;
+	                                }, className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                                    ' \u5E02\u573A'
-	                                )
+	                                'p',
+	                                { className: 'h6 pb-3 b-b' },
+	                                '\u6240\u5C5E\u7EC4\u7EC7\uFF1A',
+	                                this.state.selected ? this.state.selected.name : ''
 	                            ),
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'form-check form-check-inline' },
+	                                { className: 'w500' },
 	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                                    ' \u9500\u552E'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u804C\u80FD'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        null,
+	                                        this.state.func.map(function (item) {
+	                                            return _react2.default.createElement(
+	                                                'div',
+	                                                { key: item.cId, className: 'form-check form-check-inline' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'form-check-label' },
+	                                                    _react2.default.createElement('input', {
+	                                                        onChange: _this4.checkedFunc,
+	                                                        className: 'form-check-input',
+	                                                        type: 'checkbox',
+	                                                        value: item.cId,
+	                                                        checked: _this4.state.checkedFunc[item.cId] ? _this4.state.checkedFunc[item.cId] : false,
+	                                                        name: 'func'
+	                                                    }),
+	                                                    item.cNameShort
+	                                                )
+	                                            );
+	                                        })
+	                                    )
+	                                ),
 	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                                    ' \u5BA2\u670D'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u804C\u7EA7'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        null,
+	                                        this.state.rank.map(function (item) {
+	                                            var isDisabled = false;
+	                                            var checkedFuncCount = 0;
+
+	                                            for (var key in _this4.state.checkedFunc) {
+	                                                if (_this4.state.checkedFunc[key] === true) {
+	                                                    checkedFuncCount++;
+	                                                }
+	                                            }
+
+	                                            if (_this4.state.isAdmin === true) {
+	                                                isDisabled = item.cId.toString() !== RANK_ADMIN_ID ? true : false;
+	                                            } else {
+	                                                if (checkedFuncCount > 1) {
+	                                                    isDisabled = item.cId === 1 ? false : true;
+	                                                }
+
+	                                                if (checkedFuncCount === 1) {
+	                                                    isDisabled = item.cId.toString() === RANK_ADMIN_ID ? true : false;
+	                                                }
+	                                            }
+
+	                                            return _react2.default.createElement(
+	                                                'div',
+	                                                { key: item.cId, className: 'form-check form-check-inline' },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'form-check-label' },
+	                                                    _react2.default.createElement('input', {
+	                                                        onChange: _this4.checkedRank,
+	                                                        className: 'form-check-input',
+	                                                        type: 'radio',
+	                                                        name: 'rank',
+	                                                        disabled: isDisabled,
+	                                                        checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
+	                                                        value: item.cId
+	                                                    }),
+	                                                    item.cName
+	                                                )
+	                                            );
+	                                        })
+	                                    )
+	                                ),
 	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                                    ' \u8D22\u52A1'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        '\u8D1F\u8D23\u4EBA'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
+	                                ),
 	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                                    ' \u6559\u52A1'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: 'option1' }),
-	                                    ' \u6559\u5B66'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'inlineRadioOptions', value: 'option1' }),
-	                                    ' \u7CFB\u7EDF\u7BA1\u7406'
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        '\u89D2\u8272\u63CF\u8FF0'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
 	                                )
 	                            )
 	                        )
 	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u89D2\u8272\u804C\u7EA7'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-10' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
-	                                    ' \u7ECF\u7406'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
-	                                    ' \u4E3B\u7BA1'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'rank', value: 'option1' }),
-	                                    ' \u4E13\u5458'
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-check form-check-inline' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { className: 'form-check-label' },
-	                                    _react2.default.createElement('input', { className: 'form-check-input', type: 'radio', name: 'inlineRadioOptions', value: 'option1' }),
-	                                    ' \u7CFB\u7EDF\u7BA1\u7406\u5458'
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'name', className: 'col-2 col-form-label' },
-	                            '\u8D1F\u8D23\u4EBA'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-4' },
-	                            _react2.default.createElement('input', { className: 'form-control', type: 'text', id: 'name' })
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'form-group row' },
-	                        _react2.default.createElement(
-	                            'label',
-	                            { 'for': 'addr', className: 'col-2 col-form-label' },
-	                            '\u89D2\u8272\u63CF\u8FF0'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'col-4' },
-	                            _react2.default.createElement('textarea', { className: 'form-control', id: 'addr', rows: '3' })
-	                        )
-	                    )
+	                    this.state.loading === true ? _react2.default.createElement(
+	                        'p',
+	                        null,
+	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
+	                    ) : ''
 	                )
 	            );
 	        }
@@ -5204,7 +5377,7 @@ webpackJsonp([0],{
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li ul {\n  display: none;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w400 {\n  width: 400px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.role .col-4 {\n  position: relative;\n}\n.role .col-4:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li ul {\n  display: none;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.role .col-4 {\n  position: relative;\n}\n.role .col-4:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
 
 	// exports
 

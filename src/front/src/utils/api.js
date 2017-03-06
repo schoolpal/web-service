@@ -182,7 +182,7 @@ export function orgList() {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             const conversionOrgData = conversionOrg(data.data);
 
-            defer.resolve(conversionOrgData.tree, conversionOrgData.rootLevel);
+            defer.resolve(conversionOrgData);
         } else {
             defer.reject(data);
         }
@@ -264,6 +264,52 @@ export function roleList(oid) {
             defer.reject(data);
         }
     })
+
+    return defer.promise();
+}
+
+export function rankDic() {
+    const defer = $.Deferred();
+    const url = 'role/ranks.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function funcDic() {
+    const defer = $.Deferred();
+    const url = 'func/listAllFuncs.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function roleAdd(data) {
+    const defer = $.Deferred();
+    const url = 'role/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
 
     return defer.promise();
 }
