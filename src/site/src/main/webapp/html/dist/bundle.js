@@ -360,6 +360,7 @@ webpackJsonp([0],{
 	exports.rankDic = rankDic;
 	exports.funcDic = funcDic;
 	exports.roleAdd = roleAdd;
+	exports.roleDel = roleDel;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -671,6 +672,21 @@ webpackJsonp([0],{
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function roleDel(rid) {
+	    var defer = $.Deferred();
+	    var url = 'role/del.do';
+
+	    io({ url: url, data: { id: rid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -2207,7 +2223,9 @@ webpackJsonp([0],{
 	            roleLoading: false,
 	            roleList: [],
 
-	            selectedRole: null
+	            selectedRole: null,
+
+	            delLoading: false
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
@@ -2281,6 +2299,10 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleSelect',
 	        value: function handleSelect(event) {
+	            if (this.state.delLoading === true) {
+	                return;
+	            }
+
 	            if ($(event.target).hasClass('selected')) {
 	                this.setState({
 	                    selectedRole: null
@@ -2295,14 +2317,36 @@ webpackJsonp([0],{
 	        key: 'handleEditor',
 	        value: function handleEditor() {
 	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
+
+	            this.props.router.push(editorPath);
 	        }
 	    }, {
 	        key: 'handleDel',
-	        value: function handleDel() {}
+	        value: function handleDel() {
+	            var _this5 = this;
+
+	            this.setState({
+	                delLoading: true
+	            });
+
+	            (0, _api.roleDel)(this.state.selectedRole).done(function () {
+	                _this5.setState({
+	                    delLoading: false,
+	                    roleLoading: true
+	                });
+
+	                (0, _api.roleList)(_this5.state.selected.id).done(function (data) {
+	                    _this5.setState({
+	                        roleLoading: false,
+	                        roleList: data
+	                    });
+	                });
+	            });
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -2326,7 +2370,7 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w400' },
+	                            { className: this.state.loading === true ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
@@ -2378,7 +2422,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
-	                                                _react2.default.createElement('span', { onClick: _this5.handleSelect, className: _this5.state.selectedRole ? 'select selected' : 'select' })
+	                                                _react2.default.createElement('span', { onClick: _this6.handleSelect, className: _this6.state.selectedRole && _this6.state.selectedRole.toString() === item.cId ? 'select selected' : 'select' })
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
