@@ -23,6 +23,12 @@
     from t_function
     where c_id = #{cId,jdbcType=CHAR}
   </select>
+  <select id="selectIdByAction" parameterType="java.lang.String" resultType="java.lang.String">
+    select c_id
+    from t_function
+    where c_action = #{cAction,jdbcType=CHAR}
+    limit 1
+  </select>
   <select id="selectAllRoots" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

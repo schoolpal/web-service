@@ -12,6 +12,7 @@ public interface TFunctionMapper {
 //    int insertSelective(TFunction record);
 //
     TFunction selectOneById(String cId);
+    String selectIdByAction(String cAction);
     List<TFunction> selectAllRoots();
     List<TFunction> selectAll();
     List<TFunction> selectManyByRootId(String cId);

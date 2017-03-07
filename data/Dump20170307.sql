@@ -332,7 +332,7 @@ CREATE TABLE `t_function` (
   `c_parent_id` varchar(50) DEFAULT NULL,
   `c_name_short` varchar(50) DEFAULT NULL,
   `c_name_long` varchar(50) DEFAULT NULL,
-  `c_action` varchar(512) DEFAULT NULL,
+  `c_action` varchar(255) DEFAULT NULL,
   `c_widget_type_id` int(11) DEFAULT NULL,
   `c_order_num` int(11) DEFAULT NULL,
   `c_icon` varchar(50) DEFAULT NULL,
@@ -343,6 +343,7 @@ CREATE TABLE `t_function` (
   KEY `c_parent_id` (`c_parent_id`,`c_order_num`),
   KEY `fk_t_function_t_widget_type1_idx` (`c_widget_type_id`),
   KEY `fk_t_function_t_command_type1_idx` (`c_command_type_id`),
+  KEY `c_action` (`c_action`),
   CONSTRAINT `fk_t_function_t_command_type1` FOREIGN KEY (`c_command_type_id`) REFERENCES `t_command_type` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_t_function_t_widget_type1` FOREIGN KEY (`c_widget_type_id`) REFERENCES `t_widget_type` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -354,7 +355,38 @@ CREATE TABLE `t_function` (
 
 LOCK TABLES `t_function` WRITE;
 /*!40000 ALTER TABLE `t_function` DISABLE KEYS */;
-INSERT INTO `t_function` VALUES ('1','1','1','市场','市场管理','/market',1,1,'',NULL),('1-1','1','1','','市场活动','/market/act.html',2,1,'',NULL),('1-1-1','1','1-1','','新建','/market/act/new.do',3,1,'',1),('1-1-2','1','1-1','','编辑','/market/act/mod.do',3,2,'',2),('1-1-3','1','1-1','','删除','/market/act/del.do',3,3,'',3),('1-2','1','1','','销售线索','/market/leads.html',2,1,'',NULL),('1-2-1','1','1-2','','新建','/market/leads/new.do',3,1,'',1),('1-2-2','1','1-2','','编辑','/market/leads/mod.do',3,2,'',2),('1-2-3','1','1-2','','删除','/market/leads/del.do',3,3,'',3),('2','2','2','销售','销售管理','/sales',1,2,'',NULL),('3','3','3','客服','客户服务','/service',1,3,'',NULL),('4','4','4','财务','财务管理','/finance',1,4,'',NULL),('5','5','5','教务','教务管理','/academy',1,5,'',NULL),('6','6','6','教学','教学管理','/education',1,6,'',NULL),('7','7','7','系统','系统管理','/config',1,7,'glyphicon glyphicon-cog',NULL),('7-1','7','7','','组织管理','/config/org.html',2,1,'glyphicon glyphicon-home',NULL),('7-1-1','7','7-1','','新建','/config/org/new.html',3,1,'glyphicon glyphicon-plus',1),('7-1-2','7','7-1','','编辑','/config/org/edit.html',3,2,'glyphicon glyphicon-edit',2),('7-1-3','7','7-1','','删除','/config/org/remove.do',3,3,'glyphicon glyphicon-remove',3),('7-2','7','7','','角色管理','/config/role.html',2,2,'glyphicon glyphicon-education',NULL),('7-2-1','7','7-2','','新建','/config/role/new.html',3,1,'glyphicon glyphicon-plus',1),('7-2-2','7','7-2','','编辑','/config/role/edit.html',3,2,'glyphicon glyphicon-edit',2),('7-2-3','7','7-2','','删除','/config/role/remove.do',3,3,'glyphicon glyphicon-remove',3),('7-3','7','7','','权限管理','/config/auth.html',2,3,'glyphicon glyphicon-king',NULL),('7-3-1','7','7-3','','授权','/config/auth/apply.html',3,1,'glyphicon glyphicon-pawn',4),('7-4','7','7','','用户管理','/config/user.html',2,4,'glyphicon glyphicon-user',NULL),('7-4-1','7','7-4','','新建','/config/user/new.html',3,1,'glyphicon glyphicon-plus',1),('7-4-2','7','7-4','','编辑','/config/user/edit.html',3,2,'glyphicon glyphicon-edit',2),('7-4-3','7','7-4','','删除','/config/user/remove.html',3,3,'glyphicon glyphicon-remove',3),('7-4-4','7','7-4','','启用','/config/user/enable.html',3,4,'glyphicon glyphicon-ok-circle',NULL),('7-4-5','7','7-4','','停用','/config/user/disable.html',3,5,'glyphicon glyphicon-ban-circle',NULL);
+INSERT INTO `t_function` VALUES 
+('1','1','1','市场','市场管理','/ajax/mkt/',1,1,'',NULL),
+('1-1','1','1','','市场活动','/ajax/mkt/',2,1,'',NULL),
+('1-1-1','1','1-1','','新建','/ajax/mkt/activity/add.do',3,1,'',1),
+('1-1-2','1','1-1','','编辑','/ajax/mkt/activity/mod.do',3,2,'',2),
+('1-1-3','1','1-1','','删除','/ajax/mkt/activity/del.do',3,3,'',3),
+('1-2','1','1','','销售线索','/ajax/mkt/',2,1,'',NULL),
+('1-2-1','1','1-2','','新建','/ajax/mkt/leads/add.do',3,1,'',1),
+('1-2-2','1','1-2','','编辑','/ajax/mkt/leads/mod.do',3,2,'',2),
+('1-2-3','1','1-2','','删除','/ajax/mkt/leads/del.do',3,3,'',3),
+('2','2','2','销售','销售管理','/ajax/sales',1,2,'',NULL),
+('3','3','3','客服','客户服务','/ajax/service',1,3,'',NULL),
+('4','4','4','财务','财务管理','/ajax/finance',1,4,'',NULL),
+('5','5','5','教务','教务管理','/ajax/academy',1,5,'',NULL),
+('6','6','6','教学','教学管理','/ajax/education',1,6,'',NULL),
+('7','7','7','系统','系统管理','/sys/',1,7,'',NULL),
+('7-1','7','7','','组织管理','/ajax/sys/',2,1,'',NULL),
+('7-1-1','7','7-1','','新建','/config/sys/org/add.do',3,1,'',1),
+('7-1-2','7','7-1','','编辑','/config/sys/org/mod.do',3,2,'',2),
+('7-1-3','7','7-1','','删除','/config/sys/org/del.do',3,3,'',3),
+('7-2','7','7','','角色管理','/config/sys/role/',2,2,'',NULL),
+('7-2-1','7','7-2','','新建','/config/sys/role/add.do',3,1,'',1),
+('7-2-2','7','7-2','','编辑','/config/sys/role/mod.do',3,2,'',2),
+('7-2-3','7','7-2','','删除','/config/sys/role/new.do',3,3,'',3),
+('7-3','7','7','','权限管理','/config/sys/auth/',2,3,'',NULL),
+('7-3-1','7','7-3','','授权','/config/sys/auth/mod.do',3,1,'',4),
+('7-4','7','7','','用户管理','/config/sys/user/',2,4,'',NULL),
+('7-4-1','7','7-4','','新建','/config/sys/user/add.do',3,1,'',1),
+('7-4-2','7','7-4','','编辑','/config/sys/user/mod.do',3,2,'',2),
+('7-4-3','7','7-4','','删除','/config/sys/user/del.do',3,3,'',3),
+('7-4-4','7','7-4','','启用','/config/sys/user/enable.do',3,4,'',NULL),
+('7-4-5','7','7-4','','停用','/config/sys/user/disable.do',3,5,'',NULL);
 /*!40000 ALTER TABLE `t_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1127,4 +1159,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-02 16:54:35
+-- Dump completed on 2017-03-07 17:52:15

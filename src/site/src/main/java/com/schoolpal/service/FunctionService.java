@@ -33,4 +33,8 @@ public class FunctionService {
 	public List<TFunction> queryFuncListByRootId(String id){
 		return funcDao.selectManyByRootId(id);
 	}
+	
+	public String getFunctionIdByActionPath(String actionPath){
+		return funcDao.selectIdByAction(actionPath);
+	}
 }

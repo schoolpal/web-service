@@ -2,11 +2,16 @@ package com.schoolpal.ajax.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
@@ -120,9 +125,18 @@ public class AjaxOrgController {
 
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(OrgForm form) {
+	public String add(OrgForm form, HttpServletRequest request) {	    
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+//		    String mappedPath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
+//		    String permissionId = funcServ.getFunctionIdByActionPath(mappedPath);
+//			Subject currentUser = SecurityUtils.getSubject();
+//			if(!currentUser.isPermitted(permissionId)){
+//				res.setCode(400);
+//				res.setDetail("No permission");
+//				break;
+//			}
+			
 			TUser user = userServ.getCachedUser();
 
 			if (form == null) {
