@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
 import { CreateButton, EditorButton, DelButton } from '../public/Button';
-import { orgList, roleList } from '../../utils/api';
+import { orgList, roleList, roleDel } from '../../utils/api';
 
 function getFuncStr(data) {
     let funcArr = [];
@@ -26,7 +26,9 @@ export default class List extends React.Component {
             roleLoading: false,
             roleList: [],
 
-            selectedRole: null
+            selectedRole: null,
+
+            delLoading: false
         };
 
         this.renderCommand = this.renderCommand.bind(this);
@@ -90,6 +92,10 @@ export default class List extends React.Component {
     }
 
     handleSelect(event) {
+        if (this.state.delLoading === true) {
+            return;
+        }
+
         if ($(event.target).hasClass('selected')) {
             this.setState({
                 selectedRole: null
@@ -104,10 +110,28 @@ export default class List extends React.Component {
     handleEditor() {
         const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
 
+        this.props.router.push(editorPath)
     }
 
     handleDel() {
+        this.setState({
+            delLoading: true
+        })
 
+        roleDel(this.state.selectedRole).done(() => {
+            this.setState({
+                delLoading: false,
+                roleLoading: true
+            })
+
+            roleList(this.state.selected.id)
+                .done((data) => {
+                    this.setState({
+                        roleLoading: false,
+                        roleList: data
+                    })
+                })
+        })
     }
 
     render() {
@@ -122,7 +146,7 @@ export default class List extends React.Component {
 
                 <div className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true ? 'hide' : 'w400'}>
+                        <div className={this.state.loading === true ? 'hide' : 'w300'}>
                             <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
                         </div>
                         <div className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
@@ -142,7 +166,7 @@ export default class List extends React.Component {
                                             return (
                                                 <tr key={item.cId} data-id={item.cId}>
                                                     <td>
-                                                        <span onClick={this.handleSelect} className={this.state.selectedRole ? 'select selected' : 'select'}></span>
+                                                        <span onClick={this.handleSelect} className={this.state.selectedRole && this.state.selectedRole.toString() === item.cId ? 'select selected' : 'select'}></span>
                                                     </td>
                                                     <td>{getFuncStr(item.rootFuncs)}</td>
                                                     <td>{item.cRankName}</td>

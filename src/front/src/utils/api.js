@@ -313,3 +313,18 @@ export function roleAdd(data) {
 
     return defer.promise();
 }
+
+export function roleDel(rid) {
+    const defer = $.Deferred();
+    const url = 'role/del.do';
+
+    io({ url: url, data: { id: rid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
