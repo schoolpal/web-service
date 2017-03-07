@@ -2,6 +2,8 @@ package com.schoolpal.ajax.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,29 +39,6 @@ public class AjaxFuncController {
 	private FunctionService funcServ;
 
 	private Gson gson = new Gson();
-
-//	@RequestMapping(value = "listByRole.do", method = RequestMethod.POST)
-//	@ResponseBody
-//	public String listByRole(String roleId) {
-//		TUser user = userServ.getCachedUser();
-//		AjaxResponse res = new AjaxResponse(200);
-//		if (user == null) {
-//			// Since shiro filter will intercept if not login, this code should
-//			// never be reached
-//			res.setCode(500);
-//			res.setDetail("Cannot find cached profile data, not login?");
-//		} else {
-//			TRole role = roleServ.queryRoleById(roleId);
-//			if (!orgServ.queryOrgIdListByRootId(user.getcOrgId()).contains(role.getcOrgId())) {
-//				res.setCode(401);
-//				res.setDetail("No permission for this orgnization");
-//			} else {
-//				List<TFunction> funcList = roleServ.queryFuncListByRoleId(roleId);
-//				res.setData(funcList);
-//			}
-//		}
-//		return gson.toJson(res);
-//	}
 
 	@RequestMapping(value = "listRootFuncs.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -112,34 +91,5 @@ public class AjaxFuncController {
 		return gson.toJson(res);
 	}
 
-	@RequestMapping(value = "add.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String add(OrgForm form) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String mod(OrgForm form) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "del.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String del(String id) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-		} while (false);
-
-		return gson.toJson(res);
-	}
 
 }

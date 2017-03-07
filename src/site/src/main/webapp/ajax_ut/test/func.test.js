@@ -4,6 +4,7 @@ describe('/ajax/func/ APIs', function() {
 	var host = window.location.protocol + "//" + window.location.host;
 	var user_path = '/web/ajax/user/';
 	var func_path = '/web/ajax/func/';
+	var sys_func_path = '/web/ajax/sys/func/';
 
 	var user = 'sp-admin';
 	var pass = '123456';

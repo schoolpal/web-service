@@ -61,7 +61,7 @@ describe('/ajax/user/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('status.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
+		expect(jsonData.data).to.be.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 

@@ -5,6 +5,7 @@ describe('/ajax/role/ APIs', function() {
 	var host = window.location.protocol + "//" + window.location.host;
 	var user_path = '/web/ajax/user/';
 	var role_path = '/web/ajax/role/';
+	var sys_role_path = '/web/ajax/sys/role/';
 
 	var user = 'sp-admin';
 	var pass = '123456';
@@ -55,7 +56,7 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, role_path, 'add.do'),
+			url : buildUrl(host, sys_role_path, 'add.do'),
 			dataType : 'json',
 			data : {
 				id: null,
@@ -101,7 +102,7 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, role_path, 'mod.do'),
+			url : buildUrl(host, sys_role_path, 'mod.do'),
 			dataType : 'json',
 			data : {
 				id: roleId,
@@ -147,7 +148,7 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, role_path, 'del.do'),
+			url : buildUrl(host, sys_role_path, 'del.do'),
 			dataType : 'json',
 			data : {
 				id: roleId,

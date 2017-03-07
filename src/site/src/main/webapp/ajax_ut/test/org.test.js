@@ -7,6 +7,7 @@ describe('/ajax/org/ APIs', function() {
 	var host = window.location.protocol + "//" + window.location.host;
 	var user_path = '/web/ajax/user/';
 	var org_path = '/web/ajax/org/';
+	var sys_org_path = '/web/ajax/sys/org/';
 
 	var user = 'sp-admin';
 	var pass = '123456';
@@ -76,7 +77,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'add.do'),
+			url : buildUrl(host, sys_org_path, 'add.do'),
 			dataType : 'json',
 			data : {
 				id: null,
@@ -132,7 +133,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'mod.do'),
+			url : buildUrl(host, sys_org_path, 'mod.do'),
 			dataType : 'json',
 			data : {
 				id: orgId,
@@ -187,7 +188,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'del.do'),
+			url : buildUrl(host, sys_org_path, 'del.do'),
 			dataType : 'json',
 			data : {
 				id: orgId,

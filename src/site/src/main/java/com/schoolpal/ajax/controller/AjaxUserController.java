@@ -2,6 +2,8 @@ package com.schoolpal.ajax.controller;
 
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -10,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
+import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.FunctionService;
 import com.schoolpal.service.LogService;
@@ -22,6 +26,8 @@ import com.schoolpal.service.UserService;
 import com.schoolpal.web.consts.Const;
 import com.schoolpal.web.consts.LogLevel;
 import com.schoolpal.web.model.LoginForm;
+import com.schoolpal.web.model.OrgForm;
+import com.schoolpal.web.model.UserForm;
 
 @Controller
 @RequestMapping("/ajax/user")
@@ -146,6 +152,23 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listOrgs() {
+		TUser user = userServ.getCachedUser();
+		AjaxResponse res = new AjaxResponse(200);
+		if (user == null) {
+			// Since shiro filter will intercept if not login, this code should
+			// never be reached
+			res.setCode(500);
+			res.setDetail("Cannot find cached profile data, not login?");
+		} else {
+			List<TOrg> orgList = orgServ.queryOrgListByRootId(user.getcOrgId());
+			res.setData(orgList);
+		}
+		return gson.toJson(res);
+	}
+
 	@RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String listRoles() {
@@ -207,23 +230,6 @@ public class AjaxUserController {
 
 		} while (false);
 
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listOrgs() {
-		TUser user = userServ.getCachedUser();
-		AjaxResponse res = new AjaxResponse(200);
-		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
-			// never be reached
-			res.setCode(500);
-			res.setDetail("Cannot find cached profile data, not login?");
-		} else {
-			List<TOrg> orgList = orgServ.queryOrgListByRootId(user.getcOrgId());
-			res.setData(orgList);
-		}
 		return gson.toJson(res);
 	}
 
