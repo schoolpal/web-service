@@ -1,6 +1,8 @@
 package com.schoolpal.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -11,21 +13,29 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthenticatingRealm;
+import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.Gson;
+import com.schoolpal.db.inf.TFunctionMapper;
+import com.schoolpal.db.inf.TRoleMapper;
 import com.schoolpal.db.inf.TUserMapper;
+import com.schoolpal.db.model.TFunction;
+import com.schoolpal.db.model.TRole;
+import com.schoolpal.db.model.TUser;
 import com.schoolpal.web.consts.*;
 import com.schoolpal.web.util.MD5;
 
-public class RealmService extends AuthenticatingRealm {
+public class RealmService extends AuthorizingRealm {
 
 	private final static String REALM_NAME = "SchoolPal_ShiroRealm";
 
 	@Autowired
-	private TUserMapper userDAO; 
+	private TUserMapper userDAO;
+	private Gson gson = new Gson();
 
 	public RealmService() {
 		setName(REALM_NAME);
@@ -53,9 +63,21 @@ public class RealmService extends AuthenticatingRealm {
 	}
 
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+		Subject currentUser = SecurityUtils.getSubject();
+		if (currentUser == null || currentUser.getPrincipal() == null) {
+			return null;
+		}
+
+		Session session = currentUser.getSession(true);
+		TUser cachedUser = gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
+
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.addRole("ROLE_USER");
-		info.addStringPermission("user:all");
+		List<TFunction> funcList = new ArrayList<TFunction>();
+		for (TRole r : cachedUser.getRoles()) {
+			info.addRole(r.getcId());
+			funcList.addAll(r.getFunctions());
+		}
+		info.addStringPermissions(funcList);
 		return info;
 	}
 
