@@ -72,12 +72,10 @@ public class RealmService extends AuthorizingRealm {
 		TUser cachedUser = gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
 
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		List<TFunction> funcList = new ArrayList<TFunction>();
 		for (TRole r : cachedUser.getRoles()) {
 			info.addRole(r.getcId());
-			funcList.addAll(r.getFunctions());
+			info.addStringPermissions(r.getAllFuncIds());
 		}
-		info.addStringPermissions(funcList);
 		return info;
 	}
 

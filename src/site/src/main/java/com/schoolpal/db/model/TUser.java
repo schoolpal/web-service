@@ -51,7 +51,7 @@ public class TUser {
 		return new ArrayList<String>(this.roleIndex.keySet());
 	}
 	
-	public List<TFunction> getWidgets() {
+	public List<TFunction> getFuncs() {
 		List<TFunction> funcs = new ArrayList<TFunction>();
 		for (TRole role : roles) {
 			funcs.addAll(role.getFunctions());

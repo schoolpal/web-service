@@ -1,5 +1,6 @@
 package com.schoolpal.db.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -121,5 +122,20 @@ public class TRole {
 
 	public void setRootFuncs(List<TFunction> rootFuncs) {
 		this.rootFuncs = rootFuncs;
+	}
+	
+	public List<String> getRootFuncIds(){
+		List<String> ids = new ArrayList<String>();
+		for (TFunction f : rootFuncs){
+			ids.add(f.getcId());
+		}
+		return ids;
+	}
+	public List<String> getAllFuncIds(){
+		List<String> ids = new ArrayList<String>();
+		for (TFunction f : functions){
+			ids.add(f.getcId());
+		}
+		return ids;
 	}
 }

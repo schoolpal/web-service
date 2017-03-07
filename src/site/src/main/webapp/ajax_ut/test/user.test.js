@@ -49,6 +49,22 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
+	it('status.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, path, 'status.do'),
+			dataType : 'json'
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('status.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+
 	it('profile.do', function() {
 		xhr = $.ajax({
 			async : false,

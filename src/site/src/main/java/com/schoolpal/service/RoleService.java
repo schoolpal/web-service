@@ -124,11 +124,6 @@ public class RoleService {
 		return role;
 	}
 
-//	public List<TFunction> queryFuncListByRoleId(String id) {
-//		List<TFunction> roleList = roleFuncDao.selectAllFuncsByRoleId(id);
-//		return roleList;
-//	}
-	
 	public boolean delRoleFuncs(String roleId) {
 		return roleFuncDao.deleteManyByRoleId(roleId) > 0;
 	}
