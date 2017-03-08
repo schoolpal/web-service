@@ -162,7 +162,7 @@ export default class Editor extends React.Component {
                 .done((data) => {
                     this.setState({
                         loading: false,
-                        orgList: data
+                        orgList: data.tree
                     })
                 })
         }
@@ -198,7 +198,7 @@ export default class Editor extends React.Component {
                 {this.showAlert()}
                 <div onClick={this.clearAlert} className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w400'}>
+                        <div className={this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300'}>
                             <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
                         </div>
                         <form ref={(dom) => { this.editorDom = dom }} className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>

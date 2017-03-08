@@ -37,7 +37,7 @@ export default class OrgTree extends React.Component {
     }
 
     renderTreeItem(data) {
-        const nodeClass = 'tree-node closed ' + ((data.children && data.children.length) ? '' : 'not-child');
+        const nodeClass = 'tree-node ' + ((data.children && data.children.length) ? '' : 'not-child');
         const nodeSelectClass = 'select ' + (this.props.defaults && this.props.defaults.toString() === data.cId ? 'selected' : '');
 
         return (

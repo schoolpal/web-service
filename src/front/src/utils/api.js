@@ -208,7 +208,7 @@ export function orgDetails(oid) {
 
 export function orgAdd(data) {
     const defer = $.Deferred();
-    const url = 'org/add.do';
+    const url = 'sys/org/add.do';
     const settings = $.extend({ url: url }, { data: data });
 
     io(settings, function (data) {
@@ -224,7 +224,7 @@ export function orgAdd(data) {
 
 export function orgMod(data) {
     const defer = $.Deferred();
-    const url = 'org/mod.do';
+    const url = 'sys/org/mod.do';
     const settings = $.extend({ url: url }, { data: data });
 
     io(settings, function (data) {
@@ -240,7 +240,7 @@ export function orgMod(data) {
 
 export function orgDel(oid) {
     const defer = $.Deferred();
-    const url = 'org/del.do';
+    const url = 'sys/org/del.do';
 
     io({ url: url, data: { id: oid } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -300,7 +300,7 @@ export function funcDic() {
 
 export function roleAdd(data) {
     const defer = $.Deferred();
-    const url = 'role/add.do';
+    const url = 'sys/role/add.do';
     const settings = $.extend({ url: url }, { data: data });
 
     io(settings, function (data) {
@@ -316,7 +316,7 @@ export function roleAdd(data) {
 
 export function roleDel(rid) {
     const defer = $.Deferred();
-    const url = 'role/del.do';
+    const url = 'sys/role/del.do';
 
     io({ url: url, data: { id: rid } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -325,6 +325,37 @@ export function roleDel(rid) {
             defer.reject(data);
         }
     })
+
+    return defer.promise();
+}
+
+export function roleDetails(rid) {
+    const defer = $.Deferred();
+    const url = 'role/query.do';
+
+    io({ url: url, data: { id: rid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function roleMod(data) {
+    const defer = $.Deferred();
+    const url = 'sys/role/mod.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
 
     return defer.promise();
 }
