@@ -1,18 +1,10 @@
 package com.schoolpal.service;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthenticatingRealm;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.*;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -20,12 +12,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
-import com.schoolpal.db.inf.TFunctionMapper;
-import com.schoolpal.db.inf.TRoleMapper;
-import com.schoolpal.db.inf.TUserMapper;
-import com.schoolpal.db.model.TFunction;
-import com.schoolpal.db.model.TRole;
-import com.schoolpal.db.model.TUser;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.*;
 import com.schoolpal.web.consts.*;
 import com.schoolpal.web.util.MD5;
 

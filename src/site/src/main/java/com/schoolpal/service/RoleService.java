@@ -1,25 +1,13 @@
 package com.schoolpal.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import com.schoolpal.db.inf.TFunctionMapper;
-import com.schoolpal.db.inf.TIndexMapper;
-import com.schoolpal.db.inf.TOrgMapper;
-import com.schoolpal.db.inf.TRankMapper;
-import com.schoolpal.db.inf.TRoleFunctionMapper;
-import com.schoolpal.db.inf.TRoleMapper;
-import com.schoolpal.db.model.TFunction;
-import com.schoolpal.db.model.TOrg;
-import com.schoolpal.db.model.TRank;
-import com.schoolpal.db.model.TRole;
-import com.schoolpal.db.model.TRoleFunction;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.*;
 import com.schoolpal.web.consts.LogLevel;
-import com.schoolpal.web.model.OrgForm;
 import com.schoolpal.web.model.RoleForm;
 
 @Service

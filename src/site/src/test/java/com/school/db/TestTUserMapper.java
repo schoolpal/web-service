@@ -1,19 +1,19 @@
 package com.school.db;
 
-import java.util.Date;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.schoolpal.db.inf.*;
-import com.schoolpal.db.model.*;
+//import java.util.Date;
+//import java.util.List;
+//
+//import org.junit.After;
+//import org.junit.AfterClass;
+//import org.junit.Assert;
+//import org.junit.Before;
+//import org.junit.BeforeClass;
+//import org.junit.Test;
+//import org.springframework.context.ApplicationContext;
+//import org.springframework.context.support.ClassPathXmlApplicationContext;
+//
+//import com.schoolpal.db.inf.*;
+//import com.schoolpal.db.model.*;
 
 public class TestTUserMapper {
 /*

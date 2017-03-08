@@ -4,47 +4,32 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
+import com.schoolpal.ajax.*;
 import com.schoolpal.db.model.*;
-import com.schoolpal.service.FunctionService;
-import com.schoolpal.service.LogService;
-import com.schoolpal.service.OrgService;
-import com.schoolpal.service.RoleService;
-import com.schoolpal.service.UserService;
-import com.schoolpal.web.consts.Const;
-import com.schoolpal.web.consts.LogLevel;
-import com.schoolpal.web.model.LoginForm;
-import com.schoolpal.web.model.OrgForm;
-import com.schoolpal.web.model.RoleForm;
-import com.schoolpal.web.model.UserForm;
+import com.schoolpal.service.*;
+import com.schoolpal.web.model.*;
 
 @Controller
 @RequestMapping("/ajax/sys/")
 public class AjaxSystemController {
 
-	@Autowired
-	private LogService logServ;
+//	@Autowired
+//	private LogService logServ;
 	@Autowired
 	private UserService userServ;
 	@Autowired
 	private OrgService orgServ;
 	@Autowired
 	private RoleService roleServ;
-	@Autowired
-	private FunctionService funcServ;
+//	@Autowired
+//	private FunctionService funcServ;
 
 	private Gson gson = new Gson();
 

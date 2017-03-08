@@ -2,39 +2,27 @@ package com.schoolpal.ajax.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.db.model.TFunction;
-import com.schoolpal.db.model.TOrg;
-import com.schoolpal.db.model.TRole;
-import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.FunctionService;
-import com.schoolpal.service.LogService;
-import com.schoolpal.service.OrgService;
-import com.schoolpal.service.RoleService;
-import com.schoolpal.service.UserService;
-import com.schoolpal.web.model.OrgForm;
+import com.schoolpal.db.model.*;
+import com.schoolpal.service.*;
 
 @Controller
 @RequestMapping("/ajax/func")
 public class AjaxFuncController {
 
-	@Autowired
-	private LogService logServ;
+//	@Autowired
+//	private LogService logServ;
 	@Autowired
 	private UserService userServ;
-	@Autowired
-	private OrgService orgServ;
-	@Autowired
-	private RoleService roleServ;
+//	@Autowired
+//	private OrgService orgServ;
+//	@Autowired
+//	private RoleService roleServ;
 	@Autowired
 	private FunctionService funcServ;
 

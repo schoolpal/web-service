@@ -6,11 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.inf.TIndexMapper;
-import com.schoolpal.db.inf.TOrgMapper;
-import com.schoolpal.db.inf.TRoleMapper;
-import com.schoolpal.db.model.TOrg;
-import com.schoolpal.db.model.TRole;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.*;
 import com.schoolpal.web.consts.LogLevel;
 import com.schoolpal.web.model.OrgForm;
 
