@@ -33,13 +33,17 @@ public class AjaxSystemController {
 
 	private Gson gson = new Gson();
 
-
-
 	@RequestMapping(value = "org/add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String addOrg(OrgForm form, HttpServletRequest request) {	    
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+			if (form == null) {
+				res.setCode(401);
+				res.setDetail("Form data cannot be empty");
+				break;
+			}
+
 			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
 				res.setCode(400);
 				res.setDetail("No permission");
@@ -47,12 +51,6 @@ public class AjaxSystemController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-
-			if (form == null) {
-				res.setCode(401);
-				res.setDetail("Form data cannot be empty");
-				break;
-			}
 
 			TOrg org = orgServ.queryOrgByCode(form.getCode());
 			if (org != null) {
@@ -93,6 +91,12 @@ public class AjaxSystemController {
 	public String modOrg(OrgForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+			if (form == null || form.getId() == null || form.getId().isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
 			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
 				res.setCode(400);
 				res.setDetail("No permission");
@@ -100,12 +104,6 @@ public class AjaxSystemController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-
-			if (form == null || form.getId() == null || form.getId().isEmpty()) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
 
 			if (form.getParentId() == null || form.getParentId().isEmpty()) {
 				res.setCode(402);
@@ -156,6 +154,12 @@ public class AjaxSystemController {
 	public String delOrg(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
 			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
 				res.setCode(400);
 				res.setDetail("No permission");
@@ -163,12 +167,6 @@ public class AjaxSystemController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-
-			if (id == null || id.isEmpty()) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
 
 			if (id == user.getcOrgId()) {
 				res.setCode(402);
@@ -199,6 +197,12 @@ public class AjaxSystemController {
 	public String addRole(RoleForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+			if (form == null) {
+				res.setCode(401);
+				res.setDetail("Form data cannot be empty");
+				break;
+			}
+
 			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
 				res.setCode(400);
 				res.setDetail("No permission");
@@ -209,14 +213,14 @@ public class AjaxSystemController {
 			
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
-				res.setCode(401);
+				res.setCode(402);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
 			
 			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(form.getOrgId())) {
-				res.setCode(402);
+				res.setCode(403);
 				res.setDetail("No permission to add role under parent orgnization");
 			}
 			
@@ -249,6 +253,12 @@ public class AjaxSystemController {
 	public String modRole(RoleForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+			if (form == null || form.getId() == null || form.getId().isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
 			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
 				res.setCode(400);
 				res.setDetail("No permission");
@@ -258,27 +268,27 @@ public class AjaxSystemController {
 			TUser user = userServ.getCachedUser();
 			
 			if (form.getId() == null || form.getId().isEmpty()) {
-				res.setCode(401);
+				res.setCode(402);
 				res.setDetail("Id cannot be empty");
 				break;
 			}
 			
 			if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
-				res.setCode(402);
+				res.setCode(403);
 				res.setDetail("Parent orgnization cannot be empty");
 				break;
 			}
 			
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
-				res.setCode(403);
+				res.setCode(404);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
 			
 			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(form.getOrgId())) {
-				res.setCode(404);
+				res.setCode(405);
 				res.setDetail("No permission to move orgnization to this parent orgnization");
 				break;
 			}
@@ -310,6 +320,12 @@ public class AjaxSystemController {
 	public String delRole(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
 			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
 				res.setCode(400);
 				res.setDetail("No permission");
@@ -336,12 +352,12 @@ public class AjaxSystemController {
 				break;
 			}
 			if (role == null){
-				res.setCode(401);
+				res.setCode(402);
 				res.setDetail("Cannot find role");
 				break;
 			}
 			if (!orgList.contains(role.getcOrgId())) {
-				res.setCode(402);
+				res.setCode(403);
 				res.setDetail("No permission to del role under parent orgnization");
 			}
 			
@@ -357,6 +373,111 @@ public class AjaxSystemController {
 		return gson.toJson(res);
 	}
 	
+
+	@RequestMapping(value = "user/add.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String addUser(UserForm form, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (form == null) {
+				res.setCode(401);
+				res.setDetail("Form data cannot be empty");
+				break;
+			}
+			if(form.getOrgId() == null || form.getOrgId().isEmpty()){
+				res.setCode(402);
+				res.setDetail("Org id not specified");
+				break;
+			}
+
+			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+
+			TUser user = userServ.getCachedUser();
+			
+			TOrg org = orgServ.queryOrgById(form.getOrgId());
+			if (org == null) {
+				res.setCode(403);
+				res.setDetail("Parent orgnization not exist");
+				break;
+			}
+			
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(form.getOrgId())) {
+				res.setCode(404);
+				res.setDetail("No permission to add user under parent orgnization");
+				break;
+			}
+			
+			String id = userServ.addUser(form, user.getcLoginname());
+			if (id == null){
+				res.setCode(501);
+				res.setDetail("Failed to add role");
+				break;
+			}
+			
+			if(form.getRoles() != null && !form.getRoles().isEmpty()){
+				TRole role = null;
+				for (String roleId : StringUtils.split(form.getRoles(), ",")){
+					role = roleServ.queryRoleById(roleId);
+					if (role != null){
+						//Add user/role relation
+						if (false){
+							res.setCode(502);
+							res.setDetail("Failed to add role functions");
+							break;
+						}
+					}
+				}
+				
+			}			
+			res.setData(id);			
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "user/mod.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String modUser(UserForm form, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (form == null || form.getUserId() == null || form.getUserId().isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "user/del.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String delUser(String id, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
 	@RequestMapping(value = "func/add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String addFunc(OrgForm form, HttpServletRequest request) {
@@ -386,53 +507,4 @@ public class AjaxSystemController {
 
 		return gson.toJson(res);
 	}
-
-	@RequestMapping(value = "user/add.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String addUser(UserForm form, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "user/mod.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String modUser(UserForm form, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "user/del.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String delUser(String id, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
 }

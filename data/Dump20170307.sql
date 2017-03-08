@@ -1038,13 +1038,14 @@ DROP TABLE IF EXISTS `t_user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_user_role` (
-  `c_id` char(50) NOT NULL,
   `c_user_id` char(50) DEFAULT NULL,
   `c_role_id` char(50) DEFAULT NULL,
   `c_available` tinyint(1) DEFAULT NULL,
   `c_creator` char(50) DEFAULT NULL,
   `c_create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`c_id`),
+  PRIMARY KEY (`c_user_id`,`c_role_id`),
+  KEY `c_user_id` (`c_user_id`),
+  KEY `c_role_id` (`c_role_id`),
   KEY `fk_t_user_role_t_role1_idx` (`c_role_id`),
   KEY `fk_t_user_role_t_user1_idx` (`c_user_id`),
   CONSTRAINT `fk_t_user_role_t_role1` FOREIGN KEY (`c_role_id`) REFERENCES `t_role` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
