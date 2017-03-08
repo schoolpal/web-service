@@ -361,6 +361,8 @@ webpackJsonp([0],{
 	exports.funcDic = funcDic;
 	exports.roleAdd = roleAdd;
 	exports.roleDel = roleDel;
+	exports.roleDetails = roleDetails;
+	exports.roleMod = roleMod;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -576,7 +578,7 @@ webpackJsonp([0],{
 
 	function orgAdd(data) {
 	    var defer = $.Deferred();
-	    var url = 'org/add.do';
+	    var url = 'sys/org/add.do';
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
@@ -592,7 +594,7 @@ webpackJsonp([0],{
 
 	function orgMod(data) {
 	    var defer = $.Deferred();
-	    var url = 'org/mod.do';
+	    var url = 'sys/org/mod.do';
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
@@ -608,7 +610,7 @@ webpackJsonp([0],{
 
 	function orgDel(oid) {
 	    var defer = $.Deferred();
-	    var url = 'org/del.do';
+	    var url = 'sys/org/del.do';
 
 	    io({ url: url, data: { id: oid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -668,7 +670,7 @@ webpackJsonp([0],{
 
 	function roleAdd(data) {
 	    var defer = $.Deferred();
-	    var url = 'role/add.do';
+	    var url = 'sys/role/add.do';
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
@@ -684,9 +686,40 @@ webpackJsonp([0],{
 
 	function roleDel(rid) {
 	    var defer = $.Deferred();
-	    var url = 'role/del.do';
+	    var url = 'sys/role/del.do';
 
 	    io({ url: url, data: { id: rid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function roleDetails(rid) {
+	    var defer = $.Deferred();
+	    var url = 'role/query.do';
+
+	    io({ url: url, data: { id: rid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function roleMod(data) {
+	    var defer = $.Deferred();
+	    var url = 'sys/role/mod.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -1110,11 +1143,11 @@ webpackJsonp([0],{
 	                    selectedLevel: null,
 	                    rootLevel: null
 	                });
-	                (0, _api.orgList)().done(function (data, rootLevel) {
+	                (0, _api.orgList)().done(function (data) {
 	                    _this4.setState({
 	                        loading: false,
-	                        list: data,
-	                        rootLevel: rootLevel
+	                        list: data.tree,
+	                        rootLevel: data.rootLevel
 	                    });
 	                });
 	            });
@@ -1562,7 +1595,7 @@ webpackJsonp([0],{
 	                (0, _api.orgList)().done(function (data) {
 	                    _this4.setState({
 	                        loading: false,
-	                        orgList: data
+	                        orgList: data.tree
 	                    });
 	                });
 	            }
@@ -1624,7 +1657,7 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w400' },
+	                            { className: this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
@@ -1845,7 +1878,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'renderTreeItem',
 	        value: function renderTreeItem(data) {
-	            var nodeClass = 'tree-node closed ' + (data.children && data.children.length ? '' : 'not-child');
+	            var nodeClass = 'tree-node ' + (data.children && data.children.length ? '' : 'not-child');
 	            var nodeSelectClass = 'select ' + (this.props.defaults && this.props.defaults.toString() === data.cId ? 'selected' : '');
 
 	            return _react2.default.createElement(
@@ -2503,6 +2536,10 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(236);
 
+	var _subTitle = __webpack_require__(239);
+
+	var _subTitle2 = _interopRequireDefault(_subTitle);
+
 	var _api = __webpack_require__(231);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2567,12 +2604,42 @@ webpackJsonp([0],{
 	            var _this2 = this;
 
 	            $.when((0, _api.orgList)(), (0, _api.funcDic)(), (0, _api.rankDic)()).done(function (org, func, rank) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: org.tree,
-	                    rank: rank,
-	                    func: formatFuncData(func)
-	                });
+
+	                if (_this2.props.params.id === 'create') {
+	                    _this2.setState({
+	                        loading: false,
+	                        orgList: org.tree,
+	                        rank: rank,
+	                        func: formatFuncData(func)
+	                    });
+	                } else {
+	                    (0, _api.roleDetails)(_this2.props.params.id).done(function (data) {
+	                        var selected = org.tree.find(function (item) {
+	                            return item.cId === data.cOrgId;
+	                        });
+	                        var tempCheckedFunc = {};
+
+	                        data.rootFuncs.map(function (item) {
+	                            tempCheckedFunc[item.cId] = true;
+	                        });
+
+	                        _this2.setState({
+	                            loading: false,
+	                            orgList: org.tree,
+	                            rank: rank,
+	                            func: formatFuncData(func),
+
+	                            selected: {
+	                                id: selected.cId,
+	                                name: selected.cName
+	                            },
+	                            checkedFunc: tempCheckedFunc,
+	                            checkedRank: data.cRankId.toString()
+	                        });
+
+	                        $(_this2.editorDom).find('[name=name]').val(data.cName).end().find('[name=desc]').val(data.cDesc);
+	                    });
+	                }
 	            });
 	        }
 	    }, {
@@ -2635,6 +2702,7 @@ webpackJsonp([0],{
 	            var param = {};
 	            var funcIds = [];
 
+	            param.id = this.props.params.id === 'create' ? null : this.props.params.id;
 	            param.orgId = this.state.selected.id;
 
 	            for (var key in this.state.checkedFunc) {
@@ -2652,29 +2720,52 @@ webpackJsonp([0],{
 	                saveLoading: true
 	            });
 
-	            (0, _api.roleAdd)(param).done(function () {
-	                _this3.setState({
-	                    saveLoading: false,
-	                    selected: null,
-	                    isAdmin: false,
-	                    checkedFunc: {},
-	                    checkedRank: null,
-	                    saveResult: {
-	                        type: 'success',
-	                        title: 'Well done!',
-	                        text: '添加成功 ！'
-	                    }
+	            if (this.props.params.id === 'create') {
+	                (0, _api.roleAdd)(param).done(function () {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        isAdmin: false,
+	                        checkedFunc: {},
+	                        checkedRank: null,
+	                        saveResult: {
+	                            type: 'success',
+	                            title: 'Well done!',
+	                            text: '添加成功 ！'
+	                        }
+	                    });
+
+	                    $(_this3.editorDom).find('[name=name]').val('').end().find('[name=desc]').val('');
+	                }).fail(function (data) {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'danger',
+	                            'title': 'Oh snap!',
+	                            'text': '[' + data.data.code + '] ' + data.data.detail
+	                        }
+	                    });
 	                });
-	            }).fail(function (data) {
-	                _this3.setState({
-	                    saveLoading: false,
-	                    saveResult: {
-	                        type: 'danger',
-	                        'title': 'Oh snap!',
-	                        'text': '[' + data.data.code + '] ' + data.data.detail
-	                    }
+	            } else {
+	                (0, _api.roleMod)(param).done(function () {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'success',
+	                            title: 'Well done!',
+	                            text: '添加成功 ！'
+	                        }
+	                    });
+	                }).fail(function (data) {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'danger',
+	                            'title': 'Oh snap!',
+	                            'text': '[' + data.data.code + '] ' + data.data.detail
+	                        }
+	                    });
 	                });
-	            });
+	            }
 	        }
 	    }, {
 	        key: 'showAlert',
@@ -2716,7 +2807,7 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'p',
 	                        { className: 'd-inline text-muted' },
-	                        '\u89D2\u8272\u7EC4\u7EC7'
+	                        (0, _subTitle2.default)(this.props.router.params.id, '角色')
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -2733,7 +2824,7 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300' },
+	                            { className: this.state.loading === true ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
@@ -5421,7 +5512,7 @@ webpackJsonp([0],{
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li ul {\n  display: none;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.role .col-4 {\n  position: relative;\n}\n.role .col-4:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.role .col-4 {\n  position: relative;\n}\n.role .col-4:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
 
 	// exports
 

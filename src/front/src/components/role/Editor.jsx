@@ -4,7 +4,8 @@ import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
 import Alerts from '../public/Alerts';
 import { SaveButton } from '../public/Button';
-import { orgList, funcDic, rankDic, roleAdd } from '../../utils/api';
+import subTitle from '../../utils/subTitle';
+import { orgList, funcDic, rankDic, roleAdd, roleDetails, roleMod } from '../../utils/api';
 
 const FUNC_ADMIN_ID = '7';
 const RANK_ADMIN_ID = '4';
@@ -52,12 +53,46 @@ export default class Editor extends React.Component {
     componentDidMount() {
         $.when(orgList(), funcDic(), rankDic())
             .done((org, func, rank) => {
-                this.setState({
-                    loading: false,
-                    orgList: org.tree,
-                    rank: rank,
-                    func: formatFuncData(func)
-                })
+
+                if (this.props.params.id === 'create') {
+                    this.setState({
+                        loading: false,
+                        orgList: org.tree,
+                        rank: rank,
+                        func: formatFuncData(func)
+                    })
+                } else {
+                    roleDetails(this.props.params.id).done((data) => {
+                        const selected = org.tree.find((item) => { return item.cId === data.cOrgId });
+                        let tempCheckedFunc = {};
+
+                        data.rootFuncs.map((item) => {
+                            tempCheckedFunc[item.cId] = true;
+                        })
+
+                        this.setState({
+                            loading: false,
+                            orgList: org.tree,
+                            rank: rank,
+                            func: formatFuncData(func),
+
+                            selected: {
+                                id: selected.cId,
+                                name: selected.cName
+                            },
+                            checkedFunc: tempCheckedFunc,
+                            checkedRank: data.cRankId.toString()
+                        })
+
+                        $(this.editorDom)
+                            .find('[name=name]')
+                            .val(data.cName)
+                            .end()
+                            .find('[name=desc]')
+                            .val(data.cDesc)
+                    })
+                }
+
             })
     }
 
@@ -114,6 +149,7 @@ export default class Editor extends React.Component {
         let param = {};
         let funcIds = [];
 
+        param.id = this.props.params.id === 'create' ? null : this.props.params.id;
         param.orgId = this.state.selected.id;
 
         for (const key in this.state.checkedFunc) {
@@ -131,31 +167,61 @@ export default class Editor extends React.Component {
             saveLoading: true
         })
 
-        roleAdd(param)
-            .done(() => {
-                this.setState({
-                    saveLoading: false,
-                    selected: null,
-                    isAdmin: false,
-                    checkedFunc: {},
-                    checkedRank: null,
-                    saveResult: {
-                        type: 'success',
-                        title: 'Well done!',
-                        text: '添加成功 ！'
-                    }
+        if (this.props.params.id === 'create') {
+            roleAdd(param)
+                .done(() => {
+                    this.setState({
+                        saveLoading: false,
+                        isAdmin: false,
+                        checkedFunc: {},
+                        checkedRank: null,
+                        saveResult: {
+                            type: 'success',
+                            title: 'Well done!',
+                            text: '添加成功 ！'
+                        }
+                    })
+
+                    $(this.editorDom)
+                        .find('[name=name]')
+                        .val('')
+                        .end()
+                        .find('[name=desc]')
+                        .val('');
                 })
-            })
-            .fail((data) => {
-                this.setState({
-                    saveLoading: false,
-                    saveResult: {
-                        type: 'danger',
-                        'title': 'Oh snap!',
-                        'text': '[' + data.data.code + '] ' + data.data.detail
-                    }
+                .fail((data) => {
+                    this.setState({
+                        saveLoading: false,
+                        saveResult: {
+                            type: 'danger',
+                            'title': 'Oh snap!',
+                            'text': '[' + data.data.code + '] ' + data.data.detail
+                        }
+                    })
                 })
-            })
+        } else {
+            roleMod(param)
+                .done(() => {
+                    this.setState({
+                        saveLoading: false,
+                        saveResult: {
+                            type: 'success',
+                            title: 'Well done!',
+                            text: '添加成功 ！'
+                        }
+                    })
+                })
+                .fail((data) => {
+                    this.setState({
+                        saveLoading: false,
+                        saveResult: {
+                            type: 'danger',
+                            'title': 'Oh snap!',
+                            'text': '[' + data.data.code + '] ' + data.data.detail
+                        }
+                    })
+                })
+        }
     }
 
     showAlert() {
@@ -180,7 +246,7 @@ export default class Editor extends React.Component {
         return (
             <div className="org">
                 <h5>
-                    <i className='fa fa-glass'></i>&nbsp;角色管理&nbsp;|&nbsp;<p className="d-inline text-muted">角色组织</p>
+                    <i className='fa fa-glass'></i>&nbsp;角色管理&nbsp;|&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.id, '角色')}</p>
                     <div className="btn-group float-right" role="group">
                         <SaveButton action={this.editorSubmit} text="保存" loading={this.state.saveLoading} />
                     </div>
@@ -190,7 +256,7 @@ export default class Editor extends React.Component {
 
                 <div onClick={this.clearAlert} className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300'}>
+                        <div className={this.state.loading === true ? 'hide' : 'w300'}>
                             <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
                         </div>
                         <form ref={(dom) => { this.editorDom = dom }} className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>

@@ -131,11 +131,11 @@ export default class List extends React.Component {
                     rootLevel: null
                 })
                 orgList()
-                    .done((data, rootLevel) => {
+                    .done((data) => {
                         this.setState({
                             loading: false,
-                            list: data,
-                            rootLevel: rootLevel
+                            list: data.tree,
+                            rootLevel: data.rootLevel
                         })
                     })
             })
