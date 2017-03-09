@@ -77,7 +77,7 @@ CREATE TABLE `t_command_type` (
 
 LOCK TABLES `t_command_type` WRITE;
 /*!40000 ALTER TABLE `t_command_type` DISABLE KEYS */;
-INSERT INTO `t_command_type` VALUES (1,'Add','Add'),(2,'Mod','Modify'),(3,'Del','Delete'),(4,'Auth','Authorize');
+INSERT INTO `t_command_type` VALUES (1,'Add','Add'),(2,'Mod','Modify'),(3,'Del','Delete'),(4,'Auth','Authorize'),(5,'Enable','Enable'),(6,'Disable','Disable');
 /*!40000 ALTER TABLE `t_command_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,8 +385,8 @@ INSERT INTO `t_function` VALUES
 ('7-4-1','7','7-4','','新建','/ajax/sys/user/add.do',3,1,'',1),
 ('7-4-2','7','7-4','','编辑','/ajax/sys/user/mod.do',3,2,'',2),
 ('7-4-3','7','7-4','','删除','/ajax/sys/user/del.do',3,3,'',3),
-('7-4-4','7','7-4','','启用','/ajax/sys/user/enable.do',3,4,'',NULL),
-('7-4-5','7','7-4','','停用','/ajax/sys/user/disable.do',3,5,'',NULL);
+('7-4-4','7','7-4','','启用','/ajax/sys/user/enable.do',3,4,'',5),
+('7-4-5','7','7-4','','停用','/ajax/sys/user/disable.do',3,5,'',6);
 /*!40000 ALTER TABLE `t_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
