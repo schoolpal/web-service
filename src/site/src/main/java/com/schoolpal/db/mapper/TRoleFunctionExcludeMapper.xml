@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TRoleFunctionExcludeMapper">
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TRoleFunctionExclude">
+    <id column="c_role_id" jdbcType="CHAR" property="cRoleId" />
+    <id column="c_function_id" jdbcType="CHAR" property="cFunctionId" />
+    <result column="c_creator" jdbcType="CHAR" property="cCreator" />
+    <result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_role_id, c_function_id, c_creator, c_create_time
+  </sql>
+  <select id="selectOneByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_role_function_exclude
+    where c_role_id = #{arg0} and c_function_id = #{arg1}
+  </select>
+  <delete id="deleteOneByPrimaryKey" parameterType="java.lang.String">
+    delete from t_role_function_exclude
+    where c_role_id = #{arg0} and c_function_id = #{arg1}
+  </delete>
+  <delete id="deleteManyByRoleId" parameterType="java.lang.String">
+    delete from t_role_function_exclude
+    where c_role_id = #{arg0}
+  </delete>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TRoleFunctionExclude">
+    insert into t_role_function_exclude
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cRoleId != null">
+        c_role_id,
+      </if>
+      <if test="cFunctionId != null">
+        c_function_id,
+      </if>
+      <if test="cCreator != null">
+        c_creator,
+      </if>
+      <if test="cCreateTime != null">
+        c_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cRoleId != null">
+        #{cRoleId,jdbcType=CHAR},
+      </if>
+      <if test="cFunctionId != null">
+        #{cFunctionId,jdbcType=CHAR},
+      </if>
+      <if test="cCreator != null">
+        #{cCreator,jdbcType=CHAR},
+      </if>
+      <if test="cCreateTime != null">
+        #{cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

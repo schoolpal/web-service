@@ -28,7 +28,7 @@
 		</sqlMapGenerator>
 		<javaClientGenerator targetPackage="com.schoolpal.db.inf"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		<table schema="schoolpal" tableName="t_user_role"
+		<table schema="schoolpal" tableName="t_role_function_exclude"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

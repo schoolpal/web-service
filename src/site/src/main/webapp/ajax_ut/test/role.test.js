@@ -61,7 +61,7 @@ describe('/ajax/role/ APIs', function() {
 			data : {
 				id: null,
 				orgId: orgIdVal,
-				strFuncIds: "1,3",
+				strFuncIds: "1,7",
 				rankId: 1,
 				name: "testName",
 				desc: "testDesc"
@@ -74,6 +74,25 @@ describe('/ajax/role/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		roleId = jsonData.data;
+	});
+
+	it('auth.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_role_path, 'auth.do'),
+			dataType : 'json',
+			data : {
+				id: roleId,
+				funcIds: '1,1-1,1-1-1,1-1-2,1-1-3'
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('auth.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.be.empty;
 	});
 
 	it('query.do - verify add.do', function() {

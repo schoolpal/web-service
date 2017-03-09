@@ -234,7 +234,7 @@ public class AjaxSystemController {
 			if(form.getStrFuncIds()!= null && !form.getStrFuncIds().isEmpty()){
 				String[] funcIds = StringUtils.delimitedListToStringArray(form.getStrFuncIds(), ",");
 				if (funcIds.length > 0){
-					if (!roleServ.addRoleFuncs(id, funcIds)){
+					if (!roleServ.addRoleRootFuncs(id, funcIds)){
 						res.setCode(502);
 						res.setDetail("Failed to add role functions");
 						break;
@@ -299,11 +299,11 @@ public class AjaxSystemController {
 				break;
 			}
 			
-			roleServ.delRoleFuncs(form.getId());
+			roleServ.delRootFuncsByRoleId(form.getId());
 			if(form.getStrFuncIds()!= null && !form.getStrFuncIds().isEmpty()){
 				String[] funcIds = StringUtils.delimitedListToStringArray(form.getStrFuncIds(), ",");
 				if (funcIds.length > 0){
-					if (!roleServ.addRoleFuncs(form.getId(), funcIds)){
+					if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)){
 						res.setCode(502);
 						res.setDetail("Failed to mod role functions");
 						break;
@@ -361,7 +361,8 @@ public class AjaxSystemController {
 				res.setDetail("No permission to del role under parent orgnization");
 			}
 			
-			roleServ.delRoleFuncs(id);
+			roleServ.delExcFuncsByRoleId(id);
+			roleServ.delRootFuncsByRoleId(id);
 			if (!roleServ.delRoleById(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del orgnization");
@@ -375,7 +376,7 @@ public class AjaxSystemController {
 
 	@RequestMapping(value = "role/auth.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String authRole(String id, String funcIds, HttpServletRequest request) {
+	public String addRoleFunc(String id, String funcIds, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			//Validate param
@@ -427,8 +428,14 @@ public class AjaxSystemController {
 			}
 			
 			//Work out exclude-function id and insert it
+			roleServ.delExcFuncsByRoleId(id);
 			for(String funcId : allFuncIdList){
 				if (!funcIdList.contains(funcId)){
+					if(!roleServ.addRoleExcFunc(id, funcId, user.getcLoginname())){
+						res.setCode(405);
+						res.setDetail("Failed to authorize to current role");
+						break;
+					}
 				}
 			}
 			
