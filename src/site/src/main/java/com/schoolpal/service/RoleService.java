@@ -45,6 +45,10 @@ public class RoleService {
 		return role;
 	}
 
+	public boolean roleExists(String id){
+		return roleDao.ifExistsById(id) > 0;
+	}
+	
 	public String addRole(RoleForm form, String creatorId) {
 		String ret = null;
 

@@ -12,6 +12,8 @@ public interface TRoleMapper {
     
     TRole selectOneById(String cid);
     
+    int ifExistsById(String cId);
+    
     int insertOne(TRole record);
 
     int updateOneById(TRole record);

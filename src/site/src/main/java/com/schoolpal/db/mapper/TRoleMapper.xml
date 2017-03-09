@@ -32,6 +32,11 @@
 		WHERE c_available = 1
 		AND c_org_id = #{cId,jdbcType=CHAR}
 	</select>
+	  <select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
+	    select count(*)
+	    from t_role
+	    where c_id = #{cId,jdbcType=CHAR}
+	  </select>
 	<insert id="insertOne" parameterType="com.schoolpal.db.model.TRole">
 		insert into t_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">

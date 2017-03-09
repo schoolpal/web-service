@@ -98,6 +98,11 @@ public class OrgService {
 		return org;
 	}
 	
+	public boolean orgExistsById(String id){
+		return  orgDao.ifExistsById(id) > 0;
+		
+	}
+	
 	public String addOrg(OrgForm form, String rootOrgId, String creatorId){
 		String ret = null;
 		try{

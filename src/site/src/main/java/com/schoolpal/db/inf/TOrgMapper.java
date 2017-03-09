@@ -12,6 +12,8 @@ public interface TOrgMapper {
 
     TOrg selectOneByCodeWithExcludeId(String cCode, String cId);
     
+    int ifExistsById(String cId);
+    
     int insertOne(TOrg org);
 
     int updateOneById(TOrg org);

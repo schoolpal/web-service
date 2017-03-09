@@ -4,13 +4,20 @@ describe('/ajax/user/ APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';
+	var sys_path = '/web/ajax/sys/user/';
 
 	var user = 'sp-admin';
 	var pass = '123456';
 	var salt = null;
 	
-	var roleId = null;
+	var userIdVal = null;
+	var orgIdVal = null;
+	var roleIdVal = null;
 
+	var date = new Date()
+	var loginNameVal = 'testLoginName' + date.getTime();
+	var phoneVal = '139' + date.getTime();
+	
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -78,6 +85,7 @@ describe('/ajax/user/ APIs', function() {
 		resDump('profile.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
+		orgIdVal = jsonData.data.cOrgId;
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
@@ -127,7 +135,7 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data[0].cId).to.not.empty;
-		roleId = jsonData.data[0].cId;
+		roleIdVal = jsonData.data[0].cId;
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
@@ -138,7 +146,7 @@ describe('/ajax/user/ APIs', function() {
 			url : buildUrl(host, path, 'listFuncsByRole.do'),
 			dataType : 'json',
 			data : {
-				id : roleId
+				id : roleIdVal
 			}
 		});
 
@@ -148,6 +156,81 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('add.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_path, 'add.do'),
+			dataType : 'json',
+			data : {
+				loginName: loginNameVal,
+				loginPass: MD5(MD5(pass)),
+				realName: 'testRealName',
+				nickName: 'testNickName',
+				phone: phoneVal,
+				email: 'test@mail.com',
+				im: '13678990',
+				orgId: orgIdVal,
+				roles: roleIdVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('add.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		userIdVal = jsonData.data;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('mod.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_path, 'mod.do'),
+			dataType : 'json',
+			data : {
+				userId: userIdVal,
+				loginName: loginNameVal + 'Mod',
+				loginPass: MD5(MD5(pass)),
+				realName: 'testRealNameMod',
+				nickName: 'testNickNameMod',
+				phone: phoneVal + 'Mod',
+				email: 'test@mail.comMod',
+				im: '13678990Mod',
+				orgId: orgIdVal,
+				roles: roleIdVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('mod.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.be.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('del.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_path, 'del.do'),
+			dataType : 'json',
+			data : {
+				id: userIdVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('del.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.be.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
 	it('logout.do', function() {

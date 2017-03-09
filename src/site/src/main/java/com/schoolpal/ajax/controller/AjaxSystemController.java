@@ -20,8 +20,8 @@ import com.schoolpal.web.model.*;
 @RequestMapping("/ajax/sys/")
 public class AjaxSystemController {
 
-//	@Autowired
-//	private LogService logServ;
+	// @Autowired
+	// private LogService logServ;
 	@Autowired
 	private UserService userServ;
 	@Autowired
@@ -35,7 +35,7 @@ public class AjaxSystemController {
 
 	@RequestMapping(value = "org/add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String addOrg(OrgForm form, HttpServletRequest request) {	    
+	public String addOrg(OrgForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null) {
@@ -44,12 +44,13 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
 			TUser user = userServ.getCachedUser();
 
 			TOrg org = orgServ.queryOrgByCode(form.getCode());
@@ -97,12 +98,13 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
 			TUser user = userServ.getCachedUser();
 
 			if (form.getParentId() == null || form.getParentId().isEmpty()) {
@@ -160,12 +162,13 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
 			TUser user = userServ.getCachedUser();
 
 			if (id == user.getcOrgId()) {
@@ -203,48 +206,49 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 
 			TUser user = userServ.getCachedUser();
-			
+
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
 				res.setCode(402);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
-			
+
 			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(form.getOrgId())) {
 				res.setCode(403);
 				res.setDetail("No permission to add role under parent orgnization");
 			}
-			
+
 			String id = roleServ.addRole(form, user.getcLoginname());
-			if (id == null){
+			if (id == null) {
 				res.setCode(501);
 				res.setDetail("Failed to add role");
 				break;
 			}
-			
-			if(form.getStrFuncIds()!= null && !form.getStrFuncIds().isEmpty()){
+
+			if (form.getStrFuncIds() != null && !form.getStrFuncIds().isEmpty()) {
 				String[] funcIds = StringUtils.delimitedListToStringArray(form.getStrFuncIds(), ",");
-				if (funcIds.length > 0){
-					if (!roleServ.addRoleRootFuncs(id, funcIds)){
+				if (funcIds.length > 0) {
+					if (!roleServ.addRoleRootFuncs(id, funcIds)) {
 						res.setCode(502);
 						res.setDetail("Failed to add role functions");
 						break;
 					}
 				}
-			}			
+			}
 			res.setData(id);
-			
+
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
 
@@ -259,62 +263,63 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
 			TUser user = userServ.getCachedUser();
-			
+
 			if (form.getId() == null || form.getId().isEmpty()) {
 				res.setCode(402);
 				res.setDetail("Id cannot be empty");
 				break;
 			}
-			
+
 			if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
 				res.setCode(403);
 				res.setDetail("Parent orgnization cannot be empty");
 				break;
 			}
-			
+
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
 				res.setCode(404);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
-			
+
 			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(form.getOrgId())) {
 				res.setCode(405);
 				res.setDetail("No permission to move orgnization to this parent orgnization");
 				break;
 			}
-			
-			if (!roleServ.modRoleById(form)){
+
+			if (!roleServ.modRoleById(form)) {
 				res.setCode(500);
 				res.setDetail("Failed to mod orgnization");
 				break;
 			}
-			
+
 			roleServ.delRootFuncsByRoleId(form.getId());
-			if(form.getStrFuncIds()!= null && !form.getStrFuncIds().isEmpty()){
+			if (form.getStrFuncIds() != null && !form.getStrFuncIds().isEmpty()) {
 				String[] funcIds = StringUtils.delimitedListToStringArray(form.getStrFuncIds(), ",");
-				if (funcIds.length > 0){
-					if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)){
+				if (funcIds.length > 0) {
+					if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)) {
 						res.setCode(502);
 						res.setDetail("Failed to mod role functions");
 						break;
 					}
 				}
-			}			
+			}
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
-	
+
 	@RequestMapping(value = "role/del.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String delRole(String id, HttpServletRequest request) {
@@ -326,32 +331,33 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
 			TUser user = userServ.getCachedUser();
 
 			List<String> orgList = null;
-			try{
+			try {
 				orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			}catch(Exception e){
+			} catch (Exception e) {
 				res.setCode(501);
 				res.setDetail("Unexpect error");
 				break;
 			}
-			
+
 			TRole role = null;
-			try{
+			try {
 				role = roleServ.queryRoleById(id);
-			}catch(Exception e){
+			} catch (Exception e) {
 				res.setCode(502);
 				res.setDetail("Unexpect error");
 				break;
 			}
-			if (role == null){
+			if (role == null) {
 				res.setCode(402);
 				res.setDetail("Cannot find role");
 				break;
@@ -360,17 +366,17 @@ public class AjaxSystemController {
 				res.setCode(403);
 				res.setDetail("No permission to del role under parent orgnization");
 			}
-			
+
 			roleServ.delExcFuncsByRoleId(id);
 			roleServ.delRootFuncsByRoleId(id);
-			if (!roleServ.delRoleById(id)){
+			if (!roleServ.delRoleById(id)) {
 				res.setCode(500);
 				res.setDetail("Failed to del orgnization");
 				break;
 			}
-			
+
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
 
@@ -379,7 +385,7 @@ public class AjaxSystemController {
 	public String addRoleFunc(String id, String funcIds, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			//Validate param
+			// Validate param
 			if (id == null || id.isEmpty()) {
 				res.setCode(401);
 				res.setDetail("Id cannot be empty");
@@ -391,56 +397,57 @@ public class AjaxSystemController {
 				break;
 			}
 
-			//Validate permission
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			// Validate permission
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
 			TUser user = userServ.getCachedUser();
-			
-			//Validate role
+
+			// Validate role
 			TRole role = roleServ.queryRoleById(id);
 			if (role == null) {
 				res.setCode(403);
 				res.setDetail("Role not exist");
 				break;
 			}
-			//Validate organization relation 
+			// Validate organization relation
 			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
 			if (!orgList.contains(role.getcOrgId())) {
 				res.setCode(404);
 				res.setDetail("No permission to access parent orgnization");
 				break;
 			}
-			
-			//Get all available function ids for current role
+
+			// Get all available function ids for current role
 			List<String> allFuncIdList = new ArrayList<String>();
-			for (String rootFuncId : role.getRootFuncIds()){
+			for (String rootFuncId : role.getRootFuncIds()) {
 				allFuncIdList.addAll(funcServ.queryFuncIdListByRootId(rootFuncId));
 			}
-			
-			//Collect submitted functions ids
+
+			// Collect submitted functions ids
 			HashSet<String> funcIdList = new HashSet<String>();
-			if (!funcIds.isEmpty()){
+			if (!funcIds.isEmpty()) {
 				funcIdList.addAll(Arrays.asList(funcIds.split(",")));
 			}
-			
-			//Work out exclude-function id and insert it
+
+			// Work out exclude-function id and insert it
 			roleServ.delExcFuncsByRoleId(id);
-			for(String funcId : allFuncIdList){
-				if (!funcIdList.contains(funcId)){
-					if(!roleServ.addRoleExcFunc(id, funcId, user.getcLoginname())){
+			for (String funcId : allFuncIdList) {
+				if (!funcIdList.contains(funcId)) {
+					if (!roleServ.addRoleExcFunc(id, funcId, user.getcLoginname())) {
 						res.setCode(405);
 						res.setDetail("Failed to authorize to current role");
 						break;
 					}
 				}
 			}
-			
+
 		} while (false);
-		
+
 		return gson.toJson(res);
 	}
 
@@ -454,57 +461,63 @@ public class AjaxSystemController {
 				res.setDetail("Form data cannot be empty");
 				break;
 			}
-			if(form.getOrgId() == null || form.getOrgId().isEmpty()){
+			if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
 				res.setCode(402);
-				res.setDetail("Org id not specified");
+				res.setDetail("Org id cannot be empty");
 				break;
 			}
 
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (form.getRoles() == null && form.getRoles().isEmpty()) {
+				res.setCode(403);
+				res.setDetail("Role ids cannot be empty");
+				break;
+			}
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 
-			TUser user = userServ.getCachedUser();
-			
+			TUser currentUser = userServ.getCachedUser();
+
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
-				res.setCode(403);
+				res.setCode(404);
 				res.setDetail("Parent orgnization not exist");
 				break;
 			}
-			
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
 			if (!orgList.contains(form.getOrgId())) {
-				res.setCode(404);
+				res.setCode(405);
 				res.setDetail("No permission to add user under parent orgnization");
 				break;
 			}
-			
-			String id = userServ.addUser(form, user.getcLoginname());
-			if (id == null){
+
+			TUser user = this.userFormToTUser(form);
+			user.setcOrgId(org.getcId());
+			user.setcOrgRootId(org.getcRootId());
+
+			String id = userServ.addUser(user, user.getcLoginname());
+			if (id == null) {
 				res.setCode(501);
 				res.setDetail("Failed to add role");
 				break;
 			}
-			
-			if(form.getRoles() != null && !form.getRoles().isEmpty()){
-				TRole role = null;
-				for (String roleId : StringUtils.split(form.getRoles(), ",")){
-					role = roleServ.queryRoleById(roleId);
-					if (role != null){
-						//Add user/role relation
-						if (false){
-							res.setCode(502);
-							res.setDetail("Failed to add role functions");
-							break;
-						}
+
+			for (String roleId : form.getRoles().split(",")) {
+				if (roleServ.roleExists(roleId)) {
+					// Add user/role relation
+					if (!userServ.addUserRole(id, roleId)) {
+						res.setCode(502);
+						res.setDetail("Failed to add user-role relation");
+						break;
 					}
 				}
-				
-			}			
-			res.setData(id);			
+			}
+
+			res.setData(id);
 		} while (false);
 
 		return gson.toJson(res);
@@ -515,18 +528,71 @@ public class AjaxSystemController {
 	public String modUser(UserForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (form == null || form.getUserId() == null || form.getUserId().isEmpty()) {
+			if (form == null) {
 				res.setCode(401);
-				res.setDetail("Id cannot be empty");
+				res.setDetail("Form data cannot be empty");
 				break;
 			}
-
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (form.getUserId() == null || form.getUserId().isEmpty()) {
+				res.setCode(402);
+				res.setDetail("User id cannot be empty");
+				break;
+			}
+			if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
+				res.setCode(403);
+				res.setDetail("Org id cannot be empty");
+				break;
+			}
+			if (form.getRoles() == null && form.getRoles().isEmpty()) {
+				res.setCode(404);
+				res.setDetail("Role ids cannot be empty");
+				break;
+			}
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
+
+			TUser currentUser = userServ.getCachedUser();
+
+			TOrg org = orgServ.queryOrgById(form.getOrgId());
+			if (org == null) {
+				res.setCode(405);
+				res.setDetail("Parent orgnization not exist");
+				break;
+			}
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
+			if (!orgList.contains(form.getOrgId())) {
+				res.setCode(406);
+				res.setDetail("No permission to add user under parent orgnization");
+				break;
+			}
+
+			TUser user = this.userFormToTUser(form);
+			user.setcOrgId(org.getcId());
+			user.setcOrgRootId(org.getcRootId());
 			
+			if (!userServ.modUserById(user)) {
+				res.setCode(501);
+				res.setDetail("Failed to add role");
+				break;
+			}
+
+			userServ.delUserRolesByUserId(user.getcId());
+			for (String roleId : form.getRoles().split(",")) {
+				if (roleServ.roleExists(roleId)) {
+					// Add user/role relation
+					if (!userServ.addUserRole(form.getUserId(), roleId)) {
+						res.setCode(502);
+						res.setDetail("Failed to add user-role relation");
+						break;
+					}
+				}
+			}
+
 		} while (false);
 
 		return gson.toJson(res);
@@ -537,17 +603,57 @@ public class AjaxSystemController {
 	public String delUser(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
-			
+
+
+			TUser currentUser = userServ.getCachedUser();
+			TUser targetUser = userServ.queryUserById(id);
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
+			if (!orgList.contains(targetUser.getcOrgId())) {
+				res.setCode(406);
+				res.setDetail("No permission to del user under parent orgnization");
+				break;
+			}
+
+			userServ.delUserRolesByUserId(id);
+			if (!userServ.delUserById(id)) {
+				res.setCode(501);
+				res.setDetail("Failed to delete user");
+				break;
+			}
+
 		} while (false);
 
 		return gson.toJson(res);
 	}
 
+	public TUser userFormToTUser(UserForm form){
+		TUser user = new TUser();
+		user.setcId(form.getUserId());
+		user.setcLoginname(form.getLoginName());
+		user.setcLoginpass(form.getLoginPass());
+		user.setcNickname(form.getNickName());
+		user.setcAvailable(true);
+		user.setcOrgId(form.getOrgId());
+		user.setcEmail(form.getEmail());
+		user.setcPhone(form.getPhone());
+		user.setcQq(form.getIm());
+		user.setcRealname(form.getRealName());
+		return user;
+	}
+	
 	@RequestMapping(value = "func/add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String addFunc(OrgForm form, HttpServletRequest request) {

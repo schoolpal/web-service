@@ -19,11 +19,20 @@
 			property="cLastVisitTime" />
 		<result column="c_last_visit_ip" jdbcType="VARCHAR" property="cLastVisitIp" />
 	</resultMap>
-	<select id="selectOneByLoginName" parameterType="java.lang.String"
-		resultMap="UserResultMap">
+	<select id="selectOneById" parameterType="java.lang.String" resultMap="UserResultMap">
+		SELECT *
+		FROM t_user
+		WHERE c_available = 1 AND c_id = #{cId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectOneByLoginName" parameterType="java.lang.String" resultMap="UserResultMap">
 		SELECT *
 		FROM t_user
 		WHERE c_available = 1 AND c_loginname = #{cName,jdbcType=VARCHAR}
+	</select>
+	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(*)
+		FROM t_user
+		WHERE c_available = 1 and c_id = #{cId,jdbcType=CHAR}
 	</select>
 	<select id="selectPasswordByLoginName" parameterType="java.lang.String"
 		resultType="java.lang.String">

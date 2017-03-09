@@ -27,6 +27,8 @@ public class UserService  {
 	@Autowired
 	private TUserMapper userDao; 
 	@Autowired
+	private TUserRoleMapper userRoleDao; 
+	@Autowired
 	private TOrgMapper orgDao; 
 	@Autowired
 	private TRoleMapper roleDao; 
@@ -54,6 +56,24 @@ public class UserService  {
 			return false;
 		}
 		return true;
+	}
+	
+	public TUser queryUserById(String id){
+		TUser user = userDao.selectOneById(id);
+		
+		//Get orgs
+		TOrg org = orgDao.selectOneById(user.getcOrgId());
+		user.setOrg(org);
+		
+		//Get roles
+		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+		for(TRole role : roles){
+			List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
+			role.setFunctions(funcs);
+		}
+		user.setRoles(roles);
+		
+		return user;
 	}
 	
 	private TUser queryUserByLoginName(String username){
@@ -103,11 +123,10 @@ public class UserService  {
 		logServ.log(username, LogLevel.TRACE, "UserService.clearUserCache(String)", "", "");
 	}
 	
-	public String addUser(UserForm form, String creatorId){
+	public String addUser(TUser user, String creatorId){
 		String ret = null;
 		try{
 			String id = idxDao.selectNextId("t_user");
-			TUser user = this.userFormToTUser(form);
 			user.setcId(id);
 			user.setcCreator(creatorId);
 			user.setcAvailable(true);
@@ -120,10 +139,9 @@ public class UserService  {
 		return ret;
 	}
 	
-	public boolean modUserById(UserForm form){
+	public boolean modUserById(TUser user){
 		boolean ret = false;
 		try{
-			TUser user = this.userFormToTUser(form);
 			ret = userDao.updateOneById(user) > 0;
 		}catch(Exception e){
 			logServ.log("", LogLevel.ERROR, "UserService.ModOrg()", "", e.getMessage());
@@ -141,18 +159,45 @@ public class UserService  {
 		return ret;
 	}
 	
-	public TUser userFormToTUser(UserForm form){
-		TUser user = new TUser();
-		user.setcId(form.getUserId());
-		user.setcLoginname(form.getLoginName());
-		user.setcLoginpass(form.getLoginPass());
-		user.setcNickname(form.getNickName());
-		user.setcAvailable(true);
-		user.setcOrgId(form.getOrgId());
-		user.setcEmail(form.getEmail());
-		user.setcPhone(form.getPhone());
-		user.setcQq(form.getIm());
-		user.setcRealname(form.getRealName());
-		return user;
+	public boolean addUserRole(String userId, String roleId) {
+		boolean ret = true;
+
+		TUserRole userRole = new TUserRole();
+		userRole.setcRoleId(roleId);
+		userRole.setcUserId(userId);
+		userRole.setcAvailable(true);
+
+		try {
+			userRoleDao.insertOne(userRole);
+		} catch (Exception e) {
+			ret = false;
+		}
+
+		return ret;
+	}
+
+	public boolean addUserRoles(String userId, String[] roleIds) {
+		boolean ret = true;
+		for (String roleId : roleIds) {
+			if (roleId.length() == 0) {
+				continue;
+			}
+
+			if (roleDao.ifExistsById(roleId) < 1) {
+				logServ.log("", LogLevel.ERROR, "RoleService.addRoleRootFuncs()", "", "Function id not exists");
+				continue;
+			}
+
+			if(!this.addUserRole(userId, roleId)){
+				ret = false;
+				break;
+			}
+		}
+
+		return ret;
+	}
+
+	public boolean delUserRolesByUserId(String userId) {
+		return userRoleDao.deleteManyByUserId(userId) > 0;
 	}
 }
