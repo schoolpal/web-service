@@ -14,12 +14,16 @@ import com.google.gson.Gson;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
 import com.schoolpal.web.consts.*;
+import com.schoolpal.web.model.OrgForm;
+import com.schoolpal.web.model.UserForm;
 
 @Service
 public class UserService  {
 	
 	@Autowired
 	private HttpServletRequest request;
+	@Autowired
+	private TIndexMapper idxDao;
 	@Autowired
 	private TUserMapper userDao; 
 	@Autowired
@@ -99,4 +103,56 @@ public class UserService  {
 		logServ.log(username, LogLevel.TRACE, "UserService.clearUserCache(String)", "", "");
 	}
 	
+	public String addUser(UserForm form, String creatorId){
+		String ret = null;
+		try{
+			String id = idxDao.selectNextId("t_user");
+			TUser user = this.userFormToTUser(form);
+			user.setcId(id);
+			user.setcCreator(creatorId);
+			user.setcAvailable(true);
+			if (userDao.insertOne(user) > 0){
+				ret = id;
+			}
+		}catch(Exception e){
+			logServ.log("", LogLevel.ERROR, "UserService.AddOrg()", "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public boolean modUserById(UserForm form){
+		boolean ret = false;
+		try{
+			TUser user = this.userFormToTUser(form);
+			ret = userDao.updateOneById(user) > 0;
+		}catch(Exception e){
+			logServ.log("", LogLevel.ERROR, "UserService.ModOrg()", "", e.getMessage());
+		}
+		return ret;
+	}
+		
+	public boolean delUserById(String id){
+		boolean ret = false;
+		try{
+			ret = userDao.deleteOneById(id) > 0;
+		}catch(Exception e){
+			logServ.log("", LogLevel.ERROR, "UserService.DelOrgById()", "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public TUser userFormToTUser(UserForm form){
+		TUser user = new TUser();
+		user.setcId(form.getUserId());
+		user.setcLoginname(form.getLoginName());
+		user.setcLoginpass(form.getLoginPass());
+		user.setcNickname(form.getNickName());
+		user.setcAvailable(true);
+		user.setcOrgId(form.getOrgId());
+		user.setcEmail(form.getEmail());
+		user.setcPhone(form.getPhone());
+		user.setcQq(form.getIm());
+		user.setcRealname(form.getRealName());
+		return user;
+	}
 }

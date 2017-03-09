@@ -102,7 +102,7 @@ public class OrgService {
 		String ret = null;
 		try{
 			String id = idxDao.selectNextId("t_org");
-			TOrg org = this.OrgFormToTOrg(form);
+			TOrg org = this.orgFormToTOrg(form);
 			org.setcId(id);
 			org.setcRootId(rootOrgId);
 			org.setcCreator(creatorId);
@@ -120,7 +120,7 @@ public class OrgService {
 	public boolean modOrgById(OrgForm form){
 		boolean ret = false;
 		try{
-			TOrg org = this.OrgFormToTOrg(form);
+			TOrg org = this.orgFormToTOrg(form);
 			ret = orgDao.updateOneById(org) > 0;
 		}catch(Exception e){
 			logServ.log("", LogLevel.ERROR, "OrgService.ModOrg()", "", e.getMessage());
@@ -138,11 +138,11 @@ public class OrgService {
 		return ret;
 	}
 	
-	public boolean DelOrgByCode(String code){
+	public boolean delOrgByCode(String code){
 		return false;
 	}
 	
-	private TOrg OrgFormToTOrg(OrgForm form){
+	private TOrg orgFormToTOrg(OrgForm form){
 		if (form == null) {
 			return null;
 		}
