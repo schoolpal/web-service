@@ -54,7 +54,7 @@ function conversionOrg(data) {
             if (item.cId === item.cParentId) {
                 tree.push(item)
             } else {
-                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+                const rootIndex = _.findIndex(tree, { cId: item.cRootId });
 
                 insertTree(tree[rootIndex], item);
             }
@@ -75,6 +75,49 @@ function conversionOrg(data) {
             };
 
             rootData.children.push(data);
+        } else {
+            if (rootData.children && rootData.children.length) {
+                rootData.children.map((item) => {
+                    insertTree(item, data);
+                })
+            };
+        }
+    }
+}
+
+
+function conversionFunc(data) {
+    let tree = [];
+
+    if (data.length) {
+        data.map((item) => {
+            if (item.cId === item.cRootId) {
+                tree.push(item);
+            } else {
+                const rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+                insertTree(tree[rootIndex], item);
+            };
+        })
+    }
+
+    return tree;
+
+    function insertTree(rootData, data) {
+        if (rootData.cId === data.cParentId) {
+            if (data.cCommandTypeId) {
+                if (!rootData.action) {
+                    rootData.action = [];
+                };
+
+                rootData.action.push(data);
+            } else {
+                if (!rootData.children) {
+                    rootData.children = [];
+                };
+
+                rootData.children.push(data);
+            }
         } else {
             if (rootData.children && rootData.children.length) {
                 rootData.children.map((item) => {
@@ -356,6 +399,26 @@ export function roleMod(data) {
             defer.reject(data);
         }
     });
+
+    return defer.promise();
+}
+
+export function funcByIds(fids) {
+    const defer = $.Deferred();
+    const url = 'func/list.do';
+
+    io({ url: url, data: { ids: fids } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            const conversionFuncData = conversionFunc(data.data)
+
+            defer.resolve({
+                tree: conversionFuncData,
+                data: data.data
+            });
+        } else {
+            defer.reject(data);
+        }
+    })
 
     return defer.promise();
 }
