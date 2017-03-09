@@ -29,6 +29,10 @@ public class FunctionService {
 		return funcDao.selectManyByRootId(id);
 	}
 	
+	public List<String> queryFuncIdListByRootId(String id){
+		return funcDao.selectIdsByRootId(id);
+	}
+	
 	public String getFunctionIdByActionPath(String actionPath){
 		return funcDao.selectIdByAction(actionPath);
 	}

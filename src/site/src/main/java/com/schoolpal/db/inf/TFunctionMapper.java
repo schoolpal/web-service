@@ -16,6 +16,7 @@ public interface TFunctionMapper {
     List<TFunction> selectAllRoots();
     List<TFunction> selectAll();
     List<TFunction> selectManyByRootId(String cId);
+    List<String> selectIdsByRootId(String cId);
     int ifExistsById(String cId);
 
 //    int updateByPrimaryKeySelective(TFunction record);

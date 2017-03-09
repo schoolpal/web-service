@@ -28,8 +28,8 @@ public class AjaxSystemController {
 	private OrgService orgServ;
 	@Autowired
 	private RoleService roleServ;
-//	@Autowired
-//	private FunctionService funcServ;
+	@Autowired
+	private FunctionService funcServ;
 
 	private Gson gson = new Gson();
 
@@ -372,7 +372,70 @@ public class AjaxSystemController {
 		
 		return gson.toJson(res);
 	}
-	
+
+	@RequestMapping(value = "role/auth.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String authRole(String id, String funcIds, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			//Validate param
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+			if (funcIds == null) {
+				res.setCode(402);
+				res.setDetail("Func ids cannot be empty");
+				break;
+			}
+
+			//Validate permission
+			if(!AuthorizationHelper.CheckPermissionByMappedPath((String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))){
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+			TUser user = userServ.getCachedUser();
+			
+			//Validate role
+			TRole role = roleServ.queryRoleById(id);
+			if (role == null) {
+				res.setCode(403);
+				res.setDetail("Role not exist");
+				break;
+			}
+			//Validate organization relation 
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(role.getcOrgId())) {
+				res.setCode(404);
+				res.setDetail("No permission to access parent orgnization");
+				break;
+			}
+			
+			//Get all available function ids for current role
+			List<String> allFuncIdList = new ArrayList<String>();
+			for (String rootFuncId : role.getRootFuncIds()){
+				allFuncIdList.addAll(funcServ.queryFuncIdListByRootId(rootFuncId));
+			}
+			
+			//Collect submitted functions ids
+			HashSet<String> funcIdList = new HashSet<String>();
+			if (!funcIds.isEmpty()){
+				funcIdList.addAll(Arrays.asList(funcIds.split(",")));
+			}
+			
+			//Work out exclude-function id and insert it
+			for(String funcId : allFuncIdList){
+				if (!funcIdList.contains(funcId)){
+				}
+			}
+			
+		} while (false);
+		
+		return gson.toJson(res);
+	}
 
 	@RequestMapping(value = "user/add.do", method = RequestMethod.POST)
 	@ResponseBody

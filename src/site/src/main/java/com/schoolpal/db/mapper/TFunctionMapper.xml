@@ -46,6 +46,11 @@
     from t_function
     where c_root_id = #{cId,jdbcType=CHAR}
   </select>
+  <select id="selectIdsByRootId" parameterType="java.lang.String" resultType="java.lang.String">
+    select c_id
+    from t_function
+    where c_root_id = #{cId,jdbcType=CHAR}
+  </select>
   <select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(*)
     from t_function

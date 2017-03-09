@@ -87,7 +87,7 @@ describe('/ajax/func/ APIs', function() {
 			url : buildUrl(host, func_path, 'list.do'),
 			dataType : 'json',
 			data : {
-				ids : '1,3'
+				ids : '1,7'
 			}
 		});
 
