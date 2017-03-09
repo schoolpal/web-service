@@ -86,7 +86,7 @@ public class AjaxFuncController {
 			}
 			
 			List<TFunction> funcList = new ArrayList<TFunction>();
-			for (String id : StringUtils.split(ids, ",")) {
+			for (String id : ids.split(",")) {
 				if (!id.isEmpty()) {
 					List<TFunction> funcs = funcServ.queryFuncListByRootId(id);
 					if (funcs != null && funcs.size() > 0) {
