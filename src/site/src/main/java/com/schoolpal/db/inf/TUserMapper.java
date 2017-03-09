@@ -13,5 +13,7 @@ public interface TUserMapper {
     TUser selectOneById(String cId);
     TUser selectOneByLoginName(String cName);
     String selectPasswordByLoginName(String cName);
+    
     int updateLastVisitByLoginName(@Param("cName")String cName, @Param("cLastVisitIp")String cLastVisitIp);
+    int updateAvaiabilityById(@Param("cId")String cId, @Param("cAvailable")boolean cAvailable);
 }

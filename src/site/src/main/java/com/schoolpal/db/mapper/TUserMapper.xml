@@ -22,17 +22,17 @@
 	<select id="selectOneById" parameterType="java.lang.String" resultMap="UserResultMap">
 		SELECT *
 		FROM t_user
-		WHERE c_available = 1 AND c_id = #{cId,jdbcType=VARCHAR}
+		WHERE c_id = #{cId,jdbcType=VARCHAR}
 	</select>
 	<select id="selectOneByLoginName" parameterType="java.lang.String" resultMap="UserResultMap">
 		SELECT *
 		FROM t_user
-		WHERE c_available = 1 AND c_loginname = #{cName,jdbcType=VARCHAR}
+		WHERE c_loginname = #{cName,jdbcType=VARCHAR}
 	</select>
 	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT count(*)
 		FROM t_user
-		WHERE c_available = 1 and c_id = #{cId,jdbcType=CHAR}
+		WHERE c_id = #{cId,jdbcType=CHAR}
 	</select>
 	<select id="selectPasswordByLoginName" parameterType="java.lang.String"
 		resultType="java.lang.String">
@@ -188,6 +188,12 @@
 			</if>
 		</set>
 		where c_id = #{cId,jdbcType=CHAR}
+	</update>
+	<update id="updateAvaiabilityById">
+		UPDATE
+		t_user
+		SET c_available = #{cAvailable,jdbcType=BIT}
+		WHERE c_id = #{cId,jdbcType=CHAR}
 	</update>
 	<update id="updateLastVisitByLoginName">
 		UPDATE

@@ -159,6 +159,26 @@ public class UserService  {
 		return ret;
 	}
 	
+	public boolean enableUserById(String id){
+		boolean ret = false;
+		try{
+			ret = userDao.updateAvaiabilityById(id, true) > 0;
+		}catch(Exception e){
+			logServ.log("", LogLevel.ERROR, "UserService.enableUserById()", "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public boolean disableUserById(String id){
+		boolean ret = false;
+		try{
+			ret = userDao.updateAvaiabilityById(id, false) > 0;
+		}catch(Exception e){
+			logServ.log("", LogLevel.ERROR, "UserService.enableUserById()", "", e.getMessage());
+		}
+		return ret;
+	}
+	
 	public boolean addUserRole(String userId, String roleId) {
 		boolean ret = true;
 

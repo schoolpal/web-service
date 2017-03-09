@@ -639,6 +639,85 @@ public class AjaxSystemController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "user/enable.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String enableUser(String id, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+
+			TUser currentUser = userServ.getCachedUser();
+			TUser targetUser = userServ.queryUserById(id);
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
+			if (!orgList.contains(targetUser.getcOrgId())) {
+				res.setCode(406);
+				res.setDetail("No permission to access user under parent orgnization");
+				break;
+			}
+
+			if (!userServ.enableUserById(id)) {
+				res.setCode(501);
+				res.setDetail("Failed to enable user");
+				break;
+			}
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
+	@RequestMapping(value = "user/disable.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String disableUser(String id, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+
+
+			TUser currentUser = userServ.getCachedUser();
+			TUser targetUser = userServ.queryUserById(id);
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
+			if (!orgList.contains(targetUser.getcOrgId())) {
+				res.setCode(406);
+				res.setDetail("No permission to access user under parent orgnization");
+				break;
+			}
+
+			if (!userServ.disableUserById(id)) {
+				res.setCode(501);
+				res.setDetail("Failed to disable user");
+				break;
+			}
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
 	public TUser userFormToTUser(UserForm form){
 		TUser user = new TUser();
 		user.setcId(form.getUserId());
