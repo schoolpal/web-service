@@ -68,6 +68,24 @@ export function DelButton(props) {
     }
 }
 
+export function AuthButton(props) {
+    const text = props.loading === true ? '' : '授权';
+
+    if (props.disabled === true) {
+        return <button className="btn btn-danger"><Icon />{text}</button>
+    } else {
+        return <button className="btn btn-danger" onClick={props.action}><Icon />{text}</button>
+    }
+
+    function Icon() {
+        if (props.loading === true) {
+            return <i className="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>;
+        } else {
+            return <i className='fa fa-shield' aria-hidden="true"></i>
+        }
+    }
+}
+
 export function SaveButton(props) {
     const text = props.loading === true ? '' : props.text;
 
