@@ -19,11 +19,27 @@ export function LoginButton(props) {
 }
 
 export function CreateButton(props) {
-    return (
-        <Link to={props.link} className="btn btn-primary">
-            <i className="fa fa-clone" aria-hidden="true"></i> 新建
-        </Link>
-    )
+    if (props.action) {
+        if (props.disabled === true) {
+            return (
+                <button type="button" className="btn btn-primary" disabled="disabled">
+                    <i className="fa fa-clone" aria-hidden="true"></i> 新建
+                </button>
+            )
+        } else {
+            return (
+                <button onClick={props.action} type="button" className="btn btn-primary">
+                    <i className="fa fa-clone" aria-hidden="true"></i> 新建
+                </button>
+            )
+        }
+    } else {
+        return (
+            <Link to={props.link} className="btn btn-primary">
+                <i className="fa fa-clone" aria-hidden="true"></i> 新建
+            </Link>
+        )
+    }
 }
 
 export function EditorButton(props) {

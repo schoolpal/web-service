@@ -15,7 +15,9 @@ window.SCHOOLPAL_CONFIG = {
         '7-2-1': { PATH_RULE: /^role\/create(\/)?$/ },
         '7-2-2': { PATH_RULE: /^role\/\w+(\/)?$/ },
         '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
-        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' }
+        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' },
+        '7-4-1': { PATH_RULE: /^user\/\w+\/create(\/)?$/ },
+        '7-4-2': { PATH_RULE: /^user\/\w+\/\w+(\/)?$/ },
     }
 };
 
@@ -51,7 +53,7 @@ ReactDOM.render((
             <Route path="role/:id" component={RoleEditor} onEnter={checkAuth} />
             <Route path="auth" component={AuthList} onEnter={checkAuth} />
             <Route path="user" component={UserList} onEnter={checkAuth} />
-            <Route path="user/:id" component={UserEditor} onEnter={checkAuth} />
+            <Route path="user/:oid/:uid" component={UserEditor} onEnter={checkAuth} />
             <Route path='*' component={Error} />
         </Route>
     </Router>

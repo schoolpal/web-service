@@ -438,3 +438,18 @@ export function funcByIds(fids) {
 
     return defer.promise();
 }
+
+export function userList(oid){
+    const defer = $.Deferred();
+    const url = 'org/listUsers.do';
+
+    io({ url: url, data: { id: oid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
