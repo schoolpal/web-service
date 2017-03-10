@@ -116,7 +116,8 @@
 
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>
-		<url-pattern>/html/*</url-pattern>
+        <url-pattern>/index.html</url-pattern>
+        <url-pattern>/html/*</url-pattern>
 		<url-pattern>/ajax_ut/*</url-pattern>
 		<url-pattern>/css/*</url-pattern>
 		<url-pattern>/fonts/*</url-pattern>
