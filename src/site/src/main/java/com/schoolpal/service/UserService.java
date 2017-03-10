@@ -96,6 +96,16 @@ public class UserService  {
 	
 	public List<TUser> queryUsersByOrgId(String id){
 		List<TUser> users = userDao.selectManyByOrgId(id);
+		
+		for (TUser user : users){
+			//Get roles
+			List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+//			for(TRole role : roles){
+//				List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
+//				role.setFunctions(funcs);
+//			}
+			user.setRoles(roles);
+		}
 		return users;
 	}
 	

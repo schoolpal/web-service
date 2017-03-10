@@ -15,8 +15,7 @@
 		<result column="c_org_root_id" jdbcType="CHAR" property="cOrgRootId" />
 		<result column="c_creator" jdbcType="CHAR" property="cCreator" />
 		<result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
-		<result column="c_last_visit_time" jdbcType="TIMESTAMP"
-			property="cLastVisitTime" />
+		<result column="c_last_visit_time" jdbcType="TIMESTAMP" property="cLastVisitTime" />
 		<result column="c_last_visit_ip" jdbcType="VARCHAR" property="cLastVisitIp" />
 	</resultMap>
 	<select id="selectOneById" parameterType="java.lang.String" resultMap="UserResultMap">
