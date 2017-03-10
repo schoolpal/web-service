@@ -69,6 +69,47 @@ public class AjaxOrgController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "listUsers.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listUsers(String id) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			TUser user = userServ.getCachedUser();
+
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+			if (!orgList.contains(id)) {
+				res.setCode(402);
+				res.setDetail("No permission to query orgnization");
+				break;
+			}
+
+			List<TUser> users = null;
+			try {
+				users = userServ.queryUsersByOrgId(id);
+				if (users == null) {
+					res.setCode(403);
+					res.setDetail("Cannot find orgnization");
+					break;
+				}
+			} catch (Exception e) {
+				res.setCode(500);
+				res.setDetail("Unexpect error");
+				break;
+			}
+
+			res.setData(users);
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
 	@RequestMapping(value = "query.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String query(String id) {

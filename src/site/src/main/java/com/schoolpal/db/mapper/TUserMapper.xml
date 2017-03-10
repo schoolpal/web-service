@@ -29,6 +29,11 @@
 		FROM t_user
 		WHERE c_loginname = #{cName,jdbcType=VARCHAR}
 	</select>
+    <select id="selectManyByOrgId" parameterType="java.lang.String" resultMap="UserResultMap">
+        SELECT *
+        FROM t_user
+        WHERE c_org_id = #{cId,jdbcType=VARCHAR}
+    </select>
 	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT count(*)
 		FROM t_user

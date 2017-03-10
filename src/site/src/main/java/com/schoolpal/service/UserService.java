@@ -94,6 +94,11 @@ public class UserService  {
 		return user;
 	}
 	
+	public List<TUser> queryUsersByOrgId(String id){
+		List<TUser> users = userDao.selectManyByOrgId(id);
+		return users;
+	}
+	
 	public void cacheUser(String username) {
 		TUser user = this.queryUserByLoginName(username);
 		

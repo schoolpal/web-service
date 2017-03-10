@@ -718,6 +718,47 @@ public class AjaxSystemController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "user/query.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String queryUser(String id, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (id == null || id.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+
+			if (!AuthorizationHelper.CheckPermissionById("7-4")) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+
+
+			TUser currentUser = userServ.getCachedUser();
+			TUser targetUser = userServ.queryUserById(id);
+
+			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
+			if (!orgList.contains(targetUser.getcOrgId())) {
+				res.setCode(406);
+				res.setDetail("No permission to access user under parent orgnization");
+				break;
+			}
+
+			TUser user = userServ.queryUserById(id);
+			if (user == null) {
+				res.setCode(501);
+				res.setDetail("Failed to disable user");
+				break;
+			}
+
+			res.setData(user);
+		} while (false);
+
+		return gson.toJson(res);
+	}
+
 	public TUser userFormToTUser(UserForm form){
 		TUser user = new TUser();
 		user.setcId(form.getUserId());

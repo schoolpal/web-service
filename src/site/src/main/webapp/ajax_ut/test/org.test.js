@@ -75,6 +75,25 @@ describe('/ajax/org/ APIs', function() {
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
+	it('listUsers.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, org_path, 'listUsers.do'),
+			dataType : 'json',
+			data : {
+				id: '16010100000001'
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('listUsers.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+
 	it('add.do', function() {
 		xhr = $.ajax({
 			async : false,

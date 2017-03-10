@@ -188,6 +188,24 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
+	it('query.do - verify add.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_path, 'query.do'),
+			dataType : 'json',
+			data : {
+				id: userIdVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('query.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+	});
+
 	it('mod.do', function() {
 		xhr = $.ajax({
 			async : false,
@@ -214,6 +232,24 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.be.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('query.do - verify mod.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_path, 'query.do'),
+			dataType : 'json',
+			data : {
+				id: userIdVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('query.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
 	});
 
 	it('enable.do', function() {
