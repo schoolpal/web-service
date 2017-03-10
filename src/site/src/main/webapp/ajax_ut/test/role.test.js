@@ -14,6 +14,8 @@ describe('/ajax/role/ APIs', function() {
 	var roleId = null;
 	var orgIdVal = "16010100000001";
 
+	this.timeout(0);
+
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,

@@ -10,6 +10,8 @@ describe('/ajax/func/ APIs', function() {
 	var pass = '123456';
 	var salt = null;
 	
+	this.timeout(0);
+	
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,

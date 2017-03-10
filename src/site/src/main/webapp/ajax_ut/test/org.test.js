@@ -16,6 +16,8 @@ describe('/ajax/org/ APIs', function() {
 	var orgId = null;
 	var orgCode = 'test' + date.getTime();
 
+	this.timeout(0);
+	
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,

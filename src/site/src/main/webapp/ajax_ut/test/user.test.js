@@ -18,6 +18,8 @@ describe('/ajax/user/ APIs', function() {
 	var loginNameVal = 'testLoginName' + date.getTime();
 	var phoneVal = '139' + date.getTime();
 	
+	this.timeout(0);
+
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
