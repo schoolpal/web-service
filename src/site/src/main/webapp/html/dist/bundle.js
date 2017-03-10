@@ -363,6 +363,7 @@ webpackJsonp([0],{
 	exports.roleDel = roleDel;
 	exports.roleDetails = roleDetails;
 	exports.roleMod = roleMod;
+	exports.roleAuth = roleAuth;
 	exports.funcByIds = funcByIds;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -760,6 +761,22 @@ webpackJsonp([0],{
 	function roleMod(data) {
 	    var defer = $.Deferred();
 	    var url = 'sys/role/mod.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function roleAuth(data) {
+	    var defer = $.Deferred();
+	    var url = 'sys/role/auth.do';
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
@@ -3094,6 +3111,10 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _Alerts = __webpack_require__(234);
+
+	var _Alerts2 = _interopRequireDefault(_Alerts);
+
 	var _Button = __webpack_require__(236);
 
 	var _api = __webpack_require__(231);
@@ -3128,7 +3149,8 @@ webpackJsonp([0],{
 	            funcList: [],
 	            checkedFunc: {},
 
-	            authLoading: false
+	            authLoading: false,
+	            authResult: null
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
@@ -3138,6 +3160,8 @@ webpackJsonp([0],{
 	        _this.checkedRole = _this.checkedRole.bind(_this);
 	        _this.checkedFunc = _this.checkedFunc.bind(_this);
 	        _this.handleAuth = _this.handleAuth.bind(_this);
+	        _this.showAlert = _this.showAlert.bind(_this);
+	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -3271,11 +3295,38 @@ webpackJsonp([0],{
 	                authLoading: true
 	            });
 
-	            setTimeout(function () {
+	            var funcIdArr = [];
+
+	            for (var key in this.state.checkedFunc) {
+	                if (this.state.checkedFunc[key] === true) {
+	                    funcIdArr.push(key);
+	                }
+	            }
+
+	            var param = {
+	                id: this.state.checkedRole,
+	                funcIds: funcIdArr.join(',')
+	            };
+
+	            (0, _api.roleAuth)(param).done(function () {
 	                _this6.setState({
-	                    authLoading: false
+	                    authLoading: false,
+	                    authResult: {
+	                        type: 'success',
+	                        title: 'Well done!',
+	                        text: '授权成功 ！需要用户重新登陆后，才会更新权限信息 ！'
+	                    }
 	                });
-	            }, 1000);
+	            }).fail(function (data) {
+	                _this6.setState({
+	                    authLoading: false,
+	                    authResult: {
+	                        type: 'danger',
+	                        'title': 'Oh snap!',
+	                        'text': '[' + data.data.code + '] ' + data.data.detail
+	                    }
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'renderTable',
@@ -3370,6 +3421,26 @@ webpackJsonp([0],{
 	            );
 	        }
 	    }, {
+	        key: 'showAlert',
+	        value: function showAlert() {
+	            if (this.state.authResult) {
+	                return _react2.default.createElement(_Alerts2.default, {
+	                    type: this.state.authResult.type,
+	                    title: this.state.authResult.title,
+	                    text: this.state.authResult.text
+	                });
+	            } else {
+	                return '';
+	            }
+	        }
+	    }, {
+	        key: 'clearAlert',
+	        value: function clearAlert() {
+	            this.setState({
+	                authResult: null
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this9 = this;
@@ -3388,9 +3459,10 @@ webpackJsonp([0],{
 	                        this.renderCommand()
 	                    )
 	                ),
+	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'main-container' },
+	                    { onClick: this.clearAlert, className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },

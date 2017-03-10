@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
+import Alerts from '../public/Alerts';
 import { AuthButton } from '../public/Button';
-import { orgList, roleList, funcByIds, roleDetails } from '../../utils/api';
+import { orgList, roleList, funcByIds, roleDetails, roleAuth } from '../../utils/api';
 
 export default class List extends React.Component {
     constructor(props) {
@@ -22,7 +23,8 @@ export default class List extends React.Component {
             funcList: [],
             checkedFunc: {},
 
-            authLoading: false
+            authLoading: false,
+            authResult: null
         };
 
         this.renderCommand = this.renderCommand.bind(this)
@@ -32,6 +34,8 @@ export default class List extends React.Component {
         this.checkedRole = this.checkedRole.bind(this)
         this.checkedFunc = this.checkedFunc.bind(this)
         this.handleAuth = this.handleAuth.bind(this)
+        this.showAlert = this.showAlert.bind(this)
+        this.clearAlert = this.clearAlert.bind(this)
     }
 
     componentDidMount() {
@@ -149,11 +153,40 @@ export default class List extends React.Component {
             authLoading: true
         })
 
-        setTimeout(() => {
-            this.setState({
-                authLoading: false
+        let funcIdArr = [];
+
+        for (const key in this.state.checkedFunc) {
+            if (this.state.checkedFunc[key] === true) {
+                funcIdArr.push(key)
+            }
+        }
+
+        const param = {
+            id: this.state.checkedRole,
+            funcIds: funcIdArr.join(',')
+        }
+
+        roleAuth(param)
+            .done(() => {
+                this.setState({
+                    authLoading: false,
+                    authResult: {
+                        type: 'success',
+                        title: 'Well done!',
+                        text: '授权成功 ！需要用户重新登陆后，才会更新权限信息 ！'
+                    }
+                })
             })
-        }, 1000)
+            .fail((data) => {
+                this.setState({
+                    authLoading: false,
+                    authResult: {
+                        type: 'danger',
+                        'title': 'Oh snap!',
+                        'text': '[' + data.data.code + '] ' + data.data.detail
+                    }
+                })
+            })
     }
 
     renderTable(data) {
@@ -224,6 +257,26 @@ export default class List extends React.Component {
         );
     }
 
+    showAlert() {
+        if (this.state.authResult) {
+            return (
+                <Alerts
+                    type={this.state.authResult.type}
+                    title={this.state.authResult.title}
+                    text={this.state.authResult.text}
+                />
+            )
+        } else {
+            return '';
+        }
+    }
+
+    clearAlert() {
+        this.setState({
+            authResult: null
+        })
+    }
+
     render() {
         return (
             <div className="auth">
@@ -234,7 +287,9 @@ export default class List extends React.Component {
                     </div>
                 </h5>
 
-                <div className="main-container">
+                {this.showAlert()}
+
+                <div onClick={this.clearAlert} className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
                         <div className={this.state.loading === true ? 'hide' : 'w300'}>
                             <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />

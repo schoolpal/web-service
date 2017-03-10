@@ -403,6 +403,22 @@ export function roleMod(data) {
     return defer.promise();
 }
 
+export function roleAuth(data){
+    const defer = $.Deferred();
+    const url = 'sys/role/auth.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
 export function funcByIds(fids) {
     const defer = $.Deferred();
     const url = 'func/list.do';
