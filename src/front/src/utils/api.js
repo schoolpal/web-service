@@ -453,3 +453,50 @@ export function userList(oid){
 
     return defer.promise();
 }
+
+export function userAdd(data){
+    const defer = $.Deferred();
+    const url = 'sys/user/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function userDetails(uid) {
+    const defer = $.Deferred();
+    const url = 'sys/user/query.do';
+
+    io({ url: url, data: { id: uid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function userMod(data){
+    const defer = $.Deferred();
+    const url = 'sys/user/mod.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}

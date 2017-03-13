@@ -4,11 +4,7 @@ import NavBar from './public/NavBar';
 import { LoginButton } from './public/Button';
 import Dialog from './public/Dialog';
 import { salt, login, permissions } from '../utils/api';
-import MD5 from 'crypto-js/md5';
-
-function mixedMD5(string) {
-    return MD5(string).toString();
-}
+import mixedMD5 from '../utils/mixedMD5'
 
 export default class Login extends React.Component {
     constructor(props) {

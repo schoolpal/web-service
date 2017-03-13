@@ -15,9 +15,12 @@ export default class List extends React.Component {
 
             userLoading: false,
             userList: [],
+
+            checkedUser: null
         }
 
         this.selectOrg = this.selectOrg.bind(this);
+        this.checkedUser = this.checkedUser.bind(this);
         this.renderCommand = this.renderCommand.bind(this);
         this.handleCreate = this.handleCreate.bind(this);
         this.handleEditor = this.handleEditor.bind(this);
@@ -64,11 +67,11 @@ export default class List extends React.Component {
                 };
 
                 if (item === 'Mod') {
-                    temp.push(<EditorButton key={index} action={this.handleEditor} />)
+                    temp.push(<EditorButton key={index} action={this.handleEditor} disabled={this.state.checkedUser === null ? true : false} />)
                 }
 
                 if (item === 'Del') {
-                    temp.push(<DelButton key={index} action={this.handleDel} loading={this.state.delLoading} />)
+                    temp.push(<DelButton key={index} action={this.handleDel} loading={this.state.delLoading} disabled={this.state.checkedUser === null ? true : false} />)
                 }
             })
         }
@@ -98,13 +101,29 @@ export default class List extends React.Component {
         };
     }
 
+    checkedUser(event) {
+        if (event.target.checked === true) {
+            this.setState({
+                checkedUser: event.target.value
+            })
+        } else {
+            this.setState({
+                checkedUser: null
+            })
+        }
+    }
+
     handleCreate() {
         const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/create';
 
         this.props.router.push(editorPath)
     }
 
-    handleEditor() { }
+    handleEditor() {
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser;
+
+        this.props.router.push(editorPath)
+    }
 
     handleDel() { }
 
@@ -147,7 +166,13 @@ export default class List extends React.Component {
                                                     <td>
                                                         <div className="form-check form-check">
                                                             <label className="form-check-label">
-                                                                <input className="form-check-input" type="checkbox" value={item.cId} />
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="checkbox"
+                                                                    value={item.cId}
+                                                                    onChange={this.checkedUser}
+                                                                    checked={this.state.checkedUser === item.cId ? true : false}
+                                                                />
                                                             </label>
                                                         </div>
                                                     </td>

@@ -49,15 +49,15 @@ webpackJsonp([0],{
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _login = __webpack_require__(246);
+	var _login = __webpack_require__(249);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _Error = __webpack_require__(249);
+	var _Error = __webpack_require__(250);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(250);
+	var _checkAuth = __webpack_require__(251);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -86,10 +86,10 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(251);
-	__webpack_require__(255);
-	__webpack_require__(258);
-	__webpack_require__(260);
+	__webpack_require__(252);
+	__webpack_require__(256);
+	__webpack_require__(259);
+	__webpack_require__(261);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -368,6 +368,9 @@ webpackJsonp([0],{
 	exports.roleAuth = roleAuth;
 	exports.funcByIds = funcByIds;
 	exports.userList = userList;
+	exports.userAdd = userAdd;
+	exports.userDetails = userDetails;
+	exports.userMod = userMod;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -818,6 +821,53 @@ webpackJsonp([0],{
 	    var url = 'org/listUsers.do';
 
 	    io({ url: url, data: { id: oid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function userAdd(data) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/add.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function userDetails(uid) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/query.do';
+
+	    io({ url: url, data: { id: uid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function userMod(data) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/mod.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -3649,10 +3699,13 @@ webpackJsonp([0],{
 	            selected: null,
 
 	            userLoading: false,
-	            userList: []
+	            userList: [],
+
+	            checkedUser: null
 	        };
 
 	        _this.selectOrg = _this.selectOrg.bind(_this);
+	        _this.checkedUser = _this.checkedUser.bind(_this);
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
@@ -3706,11 +3759,11 @@ webpackJsonp([0],{
 	                    };
 
 	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
+	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.checkedUser === null ? true : false }));
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading, disabled: _this3.state.checkedUser === null ? true : false }));
 	                    }
 	                });
 	            }
@@ -3742,6 +3795,19 @@ webpackJsonp([0],{
 	            };
 	        }
 	    }, {
+	        key: 'checkedUser',
+	        value: function checkedUser(event) {
+	            if (event.target.checked === true) {
+	                this.setState({
+	                    checkedUser: event.target.value
+	                });
+	            } else {
+	                this.setState({
+	                    checkedUser: null
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'handleCreate',
 	        value: function handleCreate() {
 	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/create';
@@ -3750,13 +3816,19 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'handleEditor',
-	        value: function handleEditor() {}
+	        value: function handleEditor() {
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser;
+
+	            this.props.router.push(editorPath);
+	        }
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {}
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this5 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'user' },
@@ -3857,7 +3929,13 @@ webpackJsonp([0],{
 	                                                    _react2.default.createElement(
 	                                                        'label',
 	                                                        { className: 'form-check-label' },
-	                                                        _react2.default.createElement('input', { className: 'form-check-input', type: 'checkbox', value: item.cId })
+	                                                        _react2.default.createElement('input', {
+	                                                            className: 'form-check-input',
+	                                                            type: 'checkbox',
+	                                                            value: item.cId,
+	                                                            onChange: _this5.checkedUser,
+	                                                            checked: _this5.state.checkedUser === item.cId ? true : false
+	                                                        })
 	                                                    )
 	                                                )
 	                                            ),
@@ -3954,11 +4032,19 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(236);
 
+	var _Alerts = __webpack_require__(234);
+
+	var _Alerts2 = _interopRequireDefault(_Alerts);
+
 	var _subTitle = __webpack_require__(239);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
+
+	var _mixedMD = __webpack_require__(246);
+
+	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3978,8 +4064,18 @@ webpackJsonp([0],{
 
 	        _this.state = {
 	            loading: true,
-	            org: null
+	            org: null,
+	            roleList: [],
+	            checkedRole: {},
+
+	            saveLoading: false,
+	            saveResult: null
 	        };
+
+	        _this.checkedRole = _this.checkedRole.bind(_this);
+	        _this.editorSubmit = _this.editorSubmit.bind(_this);
+	        _this.showAlert = _this.showAlert.bind(_this);
+	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -3990,17 +4086,155 @@ webpackJsonp([0],{
 
 	            (0, _api.orgDetails)(this.props.params.oid).done(function (data) {
 	                _this2.setState({
-	                    loading: false,
 	                    org: {
 	                        id: data.cId,
 	                        name: data.cName
 	                    }
 	                });
+
+	                (0, _api.roleList)(data.cId).done(function (role) {
+
+	                    if (_this2.props.params.uid === 'create') {
+	                        _this2.setState({
+	                            loading: false,
+	                            roleList: role
+	                        });
+	                    } else {
+	                        (0, _api.userDetails)(_this2.props.params.uid).done(function (user) {
+	                            var checkedRole = {};
+
+	                            user.roles.map(function (item) {
+	                                checkedRole[item.cId] = true;
+	                            });
+
+	                            $(_this2.editorDom).find('[name=loginName]').val(user.cLoginname).end().find('[name=realName]').val(user.cRealname).end().find('[name=nickName]').val(user.cNickname).end().find('[name=phone]').val(user.cPhone).end().find('[name=email]').val(user.cEmail).end().find('[name=im]').val(user.cQq);
+
+	                            _this2.setState({
+	                                loading: false,
+	                                roleList: role,
+	                                checkedRole: checkedRole
+	                            });
+	                        });
+	                    }
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'checkedRole',
+	        value: function checkedRole(event) {
+	            var tempRole = $.extend({}, this.state.checkedRole);
+
+	            tempRole[event.target.value] = event.target.checked;
+	            this.setState({
+	                checkedRole: tempRole
+	            });
+	        }
+	    }, {
+	        key: 'editorSubmit',
+	        value: function editorSubmit() {
+	            var _this3 = this;
+
+	            var param = {};
+	            var temp = $(this.editorDom).serializeArray();
+	            var rolesArr = [];
+
+	            this.setState({ saveLoading: true });
+
+	            for (var key in this.state.checkedRole) {
+	                if (this.state.checkedRole[key] === true) {
+	                    rolesArr.push(key);
+	                }
+	            }
+
+	            if (this.props.params.uid !== 'create') {
+	                param.userId = this.props.params.uid;
+	            }
+
+	            param.orgId = this.state.org.id;
+	            param.roles = rolesArr.join(',');
+
+	            temp.map(function (item) {
+	                if (item.name === 'loginPass') {
+	                    param[item.name] = (0, _mixedMD2.default)((0, _mixedMD2.default)(item.value));
+	                } else {
+	                    param[item.name] = item.value;
+	                }
+	            });
+
+	            if (this.props.params.uid === 'create') {
+	                (0, _api.userAdd)(param).done(function () {
+	                    $(_this3.editorDom).find('input').val('');
+
+	                    _this3.setState({
+	                        checkedRole: {},
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'success',
+	                            title: 'Well done!',
+	                            text: '添加成功 ！'
+	                        }
+	                    });
+	                }).fail(function (data) {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'danger',
+	                            'title': 'Oh snap!',
+	                            'text': '[' + data.data.code + '] ' + data.data.detail
+	                        }
+	                    });
+	                });
+	            } else {
+	                (0, _api.userMod)(param).done(function () {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'success',
+	                            title: 'Well done!',
+	                            text: '添加成功 ！'
+	                        }
+	                    });
+	                }).fail(function (data) {
+	                    _this3.setState({
+	                        saveLoading: false,
+	                        saveResult: {
+	                            type: 'danger',
+	                            'title': 'Oh snap!',
+	                            'text': '[' + data.data.code + '] ' + data.data.detail
+	                        }
+	                    });
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'showAlert',
+	        value: function showAlert() {
+	            if (this.state.saveResult) {
+	                return _react2.default.createElement(
+	                    _Alerts2.default,
+	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
+	                    _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'user', className: 'alert-link' },
+	                        '\u8FD4\u56DE\u5217\u8868'
+	                    )
+	                );
+	            } else {
+	                return '';
+	            }
+	        }
+	    }, {
+	        key: 'clearAlert',
+	        value: function clearAlert() {
+	            this.setState({
+	                saveResult: null
 	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this4 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'user' },
@@ -4020,14 +4254,122 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
 	                    )
 	                ),
+	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'main-container' },
+	                    { onClick: this.clearAlert, className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'p',
 	                        { className: this.state.loading === true ? 'hide' : 'h6 pb-3 b-b' },
 	                        '\u6240\u5C5E\u7EC4\u7EC7\uFF1A',
 	                        this.state.org ? this.state.org.name : ''
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: this.state.loading === true ? 'hide' : 'd-flex align-items-stretch flex-nowrap' },
+	                        _react2.default.createElement(
+	                            'form',
+	                            { ref: function ref(dom) {
+	                                    _this4.editorDom = dom;
+	                                }, className: 'w500 pr-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u7528\u6237\u540D'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u767B\u9646\u5BC6\u7801'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'loginPass' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u59D3\u540D'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'realName' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u6635\u79F0'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'nickName' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u7535\u8BDD\u53F7\u7801'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u7535\u5B50\u90AE\u7BB1'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    'IM(QQ...)'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'im' })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'flex-cell pl-3 b-l' },
+	                            _react2.default.createElement(
+	                                'p',
+	                                { className: 'ht pb-3 b-b' },
+	                                '\u7528\u6237\u89D2\u8272'
+	                            ),
+	                            this.state.roleList.map(function (item) {
+	                                return _react2.default.createElement(
+	                                    'div',
+	                                    { key: item.cId, className: 'form-check' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { className: 'form-check-label' },
+	                                        _react2.default.createElement('input', {
+	                                            onChange: _this4.checkedRole,
+	                                            className: 'form-check-input',
+	                                            type: 'checkbox',
+	                                            value: item.cId,
+	                                            checked: _this4.state.checkedRole[item.cId] ? _this4.state.checkedRole[item.cId] : false
+	                                        }),
+	                                        item.cName
+	                                    )
+	                                );
+	                            })
+	                        )
 	                    ),
 	                    this.state.loading === true ? _react2.default.createElement(
 	                        'p',
@@ -4054,28 +4396,7 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(9);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(40);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _NavBar = __webpack_require__(230);
-
-	var _NavBar2 = _interopRequireDefault(_NavBar);
-
-	var _Button = __webpack_require__(236);
-
-	var _Dialog = __webpack_require__(232);
-
-	var _Dialog2 = _interopRequireDefault(_Dialog);
-
-	var _api = __webpack_require__(231);
+	exports.default = mixedMD5;
 
 	var _md = __webpack_require__(247);
 
@@ -4083,134 +4404,9 @@ webpackJsonp([0],{
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	function mixedMD5(string) {
 	    return (0, _md2.default)(string).toString();
 	}
-
-	var Login = function (_React$Component) {
-	    _inherits(Login, _React$Component);
-
-	    function Login(props) {
-	        _classCallCheck(this, Login);
-
-	        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
-
-	        _this.state = {
-	            loading: false
-	        };
-	        _this.signin = _this.signin.bind(_this);
-	        _this.signinErrorDialog = _this.signinErrorDialog.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(Login, [{
-	        key: 'signinErrorDialog',
-	        value: function signinErrorDialog(text) {
-	            var div = document.createElement('div');
-
-	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
-	                container: div,
-	                text: text
-	            }), document.body.appendChild(div));
-	        }
-	    }, {
-	        key: 'signin',
-	        value: function signin() {
-	            var _this2 = this;
-
-	            var $from = $(this.from);
-	            var username = $from.find('[name=username]').val();
-	            var mixedPWD = $from.find('[name=mixedPWD]').val();
-
-	            if (!username) {
-	                this.signinErrorDialog('请输入用户名 ！');
-	                return;
-	            }
-
-	            if (!mixedPWD) {
-	                this.signinErrorDialog('请输入密码 ！');
-	                return;
-	            }
-
-	            this.setState({
-	                loading: true
-	            });
-
-	            (0, _api.salt)().done(function (salt) {
-	                (0, _api.login)({
-	                    loginname: username,
-	                    mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
-	                }).done(function () {
-	                    if (_this2.props.router.location.state && _this2.props.router.location.state.nextPathname) {
-	                        _this2.props.router.replace(_this2.props.router.location.state.nextPathname);
-	                    } else {
-	                        _this2.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
-	                    }
-	                }).fail(function (data) {
-	                    _this2.setState({
-	                        loading: false
-	                    });
-	                    _this2.signinErrorDialog('[' + data.data.code + '] - ' + data.data.detail);
-	                });
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this3 = this;
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'view' },
-	                _react2.default.createElement(_NavBar2.default, null),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'login bg-faded' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'login-form' },
-	                        _react2.default.createElement(
-	                            'h5',
-	                            { className: 'text-primary' },
-	                            'LOGIN'
-	                        ),
-	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this3.from = dom;
-	                                } },
-	                            _react2.default.createElement(
-	                                'ul',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement('input', { name: 'username', type: 'text', placeholder: 'Enter your Email ...' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'li',
-	                                    null,
-	                                    _react2.default.createElement('input', { name: 'mixedPWD', type: 'password', placeholder: 'Enter your Password ...' })
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(_Button.LoginButton, { loading: this.state.loading, action: this.signin })
-	                    )
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Login;
-	}(_react2.default.Component);
-
-	exports.default = Login;
 
 /***/ },
 
@@ -5262,6 +5458,170 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _NavBar = __webpack_require__(230);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _Button = __webpack_require__(236);
+
+	var _Dialog = __webpack_require__(232);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
+	var _api = __webpack_require__(231);
+
+	var _mixedMD = __webpack_require__(246);
+
+	var _mixedMD2 = _interopRequireDefault(_mixedMD);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Login = function (_React$Component) {
+	    _inherits(Login, _React$Component);
+
+	    function Login(props) {
+	        _classCallCheck(this, Login);
+
+	        var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+
+	        _this.state = {
+	            loading: false
+	        };
+	        _this.signin = _this.signin.bind(_this);
+	        _this.signinErrorDialog = _this.signinErrorDialog.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Login, [{
+	        key: 'signinErrorDialog',
+	        value: function signinErrorDialog(text) {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: text
+	            }), document.body.appendChild(div));
+	        }
+	    }, {
+	        key: 'signin',
+	        value: function signin() {
+	            var _this2 = this;
+
+	            var $from = $(this.from);
+	            var username = $from.find('[name=username]').val();
+	            var mixedPWD = $from.find('[name=mixedPWD]').val();
+
+	            if (!username) {
+	                this.signinErrorDialog('请输入用户名 ！');
+	                return;
+	            }
+
+	            if (!mixedPWD) {
+	                this.signinErrorDialog('请输入密码 ！');
+	                return;
+	            }
+
+	            this.setState({
+	                loading: true
+	            });
+
+	            (0, _api.salt)().done(function (salt) {
+	                (0, _api.login)({
+	                    loginname: username,
+	                    mixedPWD: (0, _mixedMD2.default)((0, _mixedMD2.default)((0, _mixedMD2.default)(mixedPWD)) + salt)
+	                }).done(function () {
+	                    if (_this2.props.router.location.state && _this2.props.router.location.state.nextPathname) {
+	                        _this2.props.router.replace(_this2.props.router.location.state.nextPathname);
+	                    } else {
+	                        _this2.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
+	                    }
+	                }).fail(function (data) {
+	                    _this2.setState({
+	                        loading: false
+	                    });
+	                    _this2.signinErrorDialog('[' + data.data.code + '] - ' + data.data.detail);
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this3 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'view' },
+	                _react2.default.createElement(_NavBar2.default, null),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'login bg-faded' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'login-form' },
+	                        _react2.default.createElement(
+	                            'h5',
+	                            { className: 'text-primary' },
+	                            'LOGIN'
+	                        ),
+	                        _react2.default.createElement(
+	                            'form',
+	                            { ref: function ref(dom) {
+	                                    _this3.from = dom;
+	                                } },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement('input', { name: 'username', type: 'text', placeholder: 'Enter your Email ...' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    null,
+	                                    _react2.default.createElement('input', { name: 'mixedPWD', type: 'password', placeholder: 'Enter your Password ...' })
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(_Button.LoginButton, { loading: this.state.loading, action: this.signin })
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Login;
+	}(_react2.default.Component);
+
+	exports.default = Login;
+
+/***/ },
+
+/***/ 250:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.default = Error;
 
 	var _react = __webpack_require__(9);
@@ -5280,7 +5640,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 250:
+/***/ 251:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5311,14 +5671,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 251:
+/***/ 252:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 253:
+/***/ 254:
 /***/ function(module, exports) {
 
 	/*
@@ -5375,7 +5735,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 254:
+/***/ 255:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -5628,23 +5988,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 255:
+/***/ 256:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 258:
+/***/ 259:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(259);
+	var content = __webpack_require__(260);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(254)(content, {});
+	var update = __webpack_require__(255)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -5662,10 +6022,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 259:
+/***/ 260:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(253)();
+	exports = module.exports = __webpack_require__(254)();
 	// imports
 
 
