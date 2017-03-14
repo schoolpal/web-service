@@ -530,3 +530,18 @@ export function userDisable(uid) {
 
     return defer.promise();
 }
+
+export function userDel(uid) {
+    const defer = $.Deferred();
+    const url = 'sys/user/del.do';
+
+    io({ url: url, data: { id: uid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}

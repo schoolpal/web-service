@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
 import { CreateButton, EditorButton, DelButton, ToggleButton } from '../public/Button';
-import { orgList, userList, userEnable, userDisable } from '../../utils/api';
+import { orgList, userList, userEnable, userDisable, userDel } from '../../utils/api';
 
 export default class List extends React.Component {
     constructor(props) {
@@ -19,7 +19,8 @@ export default class List extends React.Component {
             enable: false,
             disable: false,
 
-            checkedUser: null
+            checkedUser: null,
+            delLoading: false,
         }
 
         this.selectOrg = this.selectOrg.bind(this);
@@ -129,7 +130,31 @@ export default class List extends React.Component {
         this.props.router.push(editorPath)
     }
 
-    handleDel() { }
+    handleDel() {
+        this.setState({ delLoading: true })
+
+        userDel(this.state.checkedUser)
+            .done(() => {
+                const temp = $.extend({}, this.state);
+                let nextUserList;
+
+                nextUserList = temp.userList.filter((item) => {
+                    if (item.cId !== this.state.checkedUser) {
+                        return item;
+                    }
+                })
+
+                this.setState({
+                    delLoading: false,
+                    userList: nextUserList
+                })
+            })
+            .fail((data) => {
+                this.setState({
+                    delLoading: false
+                })
+            })
+    }
 
     handleToggle(param) {
         const temp = $.extend({}, this.state);
@@ -189,7 +214,7 @@ export default class List extends React.Component {
                                     {
                                         this.state.userList.map((item) => {
                                             return (
-                                                <tr key={item.cId}>
+                                                <tr key={item.cId} data-uid={item.cId}>
                                                     <td>
                                                         <div className="form-check form-check">
                                                             <label className="form-check-label">

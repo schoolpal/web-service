@@ -143,7 +143,7 @@ export function ToggleButton(props) {
         )
     }
 
-    return <p>{props.available === true ? '启用' : '禁用'}</p>
+    return <span>{props.available === true ? '启用' : '禁用'}</span>
 
     function action() {
         props.action({

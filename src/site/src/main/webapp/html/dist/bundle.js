@@ -373,6 +373,7 @@ webpackJsonp([0],{
 	exports.userMod = userMod;
 	exports.userEnable = userEnable;
 	exports.userDisable = userDisable;
+	exports.userDel = userDel;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -898,6 +899,21 @@ webpackJsonp([0],{
 	function userDisable(uid) {
 	    var defer = $.Deferred();
 	    var url = 'sys/user/disable.do';
+
+	    io({ url: url, data: { id: uid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function userDel(uid) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/del.do';
 
 	    io({ url: url, data: { id: uid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -1645,7 +1661,7 @@ webpackJsonp([0],{
 	    }
 
 	    return _react2.default.createElement(
-	        'p',
+	        'span',
 	        null,
 	        props.available === true ? '启用' : '禁用'
 	    );
@@ -3769,7 +3785,8 @@ webpackJsonp([0],{
 	            enable: false,
 	            disable: false,
 
-	            checkedUser: null
+	            checkedUser: null,
+	            delLoading: false
 	        };
 
 	        _this.selectOrg = _this.selectOrg.bind(_this);
@@ -3892,7 +3909,31 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'handleDel',
-	        value: function handleDel() {}
+	        value: function handleDel() {
+	            var _this5 = this;
+
+	            this.setState({ delLoading: true });
+
+	            (0, _api.userDel)(this.state.checkedUser).done(function () {
+	                var temp = $.extend({}, _this5.state);
+	                var nextUserList = void 0;
+
+	                nextUserList = temp.userList.filter(function (item) {
+	                    if (item.cId !== _this5.state.checkedUser) {
+	                        return item;
+	                    }
+	                });
+
+	                _this5.setState({
+	                    delLoading: false,
+	                    userList: nextUserList
+	                });
+	            }).fail(function (data) {
+	                _this5.setState({
+	                    delLoading: false
+	                });
+	            });
+	        }
 	    }, {
 	        key: 'handleToggle',
 	        value: function handleToggle(param) {
@@ -3920,7 +3961,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this5 = this;
+	            var _this6 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -4012,7 +4053,7 @@ webpackJsonp([0],{
 	                                    this.state.userList.map(function (item) {
 	                                        return _react2.default.createElement(
 	                                            'tr',
-	                                            { key: item.cId },
+	                                            { key: item.cId, 'data-uid': item.cId },
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
@@ -4026,8 +4067,8 @@ webpackJsonp([0],{
 	                                                            className: 'form-check-input',
 	                                                            type: 'checkbox',
 	                                                            value: item.cId,
-	                                                            onChange: _this5.checkedUser,
-	                                                            checked: _this5.state.checkedUser === item.cId ? true : false
+	                                                            onChange: _this6.checkedUser,
+	                                                            checked: _this6.state.checkedUser === item.cId ? true : false
 	                                                        })
 	                                                    )
 	                                                )
@@ -4037,10 +4078,10 @@ webpackJsonp([0],{
 	                                                null,
 	                                                _react2.default.createElement(_Button.ToggleButton, {
 	                                                    uid: item.cId,
-	                                                    enable: _this5.state.enable,
-	                                                    disable: _this5.state.disable,
+	                                                    enable: _this6.state.enable,
+	                                                    disable: _this6.state.disable,
 	                                                    available: item.cAvailable,
-	                                                    action: _this5.handleToggle
+	                                                    action: _this6.handleToggle
 	                                                })
 	                                            ),
 	                                            _react2.default.createElement(
