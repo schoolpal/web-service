@@ -1009,7 +1009,6 @@ CREATE TABLE `t_user` (
   `c_last_visit_ip` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`c_id`),
   UNIQUE KEY `c_username_UNIQUE` (`c_loginname`),
-  UNIQUE KEY `c_phone` (`c_phone`),
   KEY `c_nickname` (`c_nickname`),
   KEY `c_org_id` (`c_org_id`),
   KEY `c_org_root_id` (`c_org_root_id`,`c_org_id`),
