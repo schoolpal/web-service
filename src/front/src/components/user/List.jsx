@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
-import { CreateButton, EditorButton, DelButton } from '../public/Button';
-import { orgList, userList } from '../../utils/api';
+import { CreateButton, EditorButton, DelButton, ToggleButton } from '../public/Button';
+import { orgList, userList, userEnable, userDisable } from '../../utils/api';
 
 export default class List extends React.Component {
     constructor(props) {
@@ -16,6 +16,9 @@ export default class List extends React.Component {
             userLoading: false,
             userList: [],
 
+            enable: false,
+            disable: false,
+
             checkedUser: null
         }
 
@@ -25,6 +28,7 @@ export default class List extends React.Component {
         this.handleCreate = this.handleCreate.bind(this);
         this.handleEditor = this.handleEditor.bind(this);
         this.handleDel = this.handleDel.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
     }
 
     componentDidMount() {
@@ -127,6 +131,29 @@ export default class List extends React.Component {
 
     handleDel() { }
 
+    handleToggle(param) {
+        const temp = $.extend({}, this.state);
+        const nextAvailable = !param.available;
+
+        if (param.available === true) {
+            userDisable(param.uid)
+        } else {
+            userEnable(param.uid)
+        }
+
+        temp.userList.map((item) => {
+            if (item.cId === param.uid) {
+                item.cAvailable = nextAvailable;
+            }
+
+            return item;
+        })
+
+        this.setState({
+            userList: temp.userList
+        });
+    }
+
     render() {
         return (
             <div className="user">
@@ -176,7 +203,15 @@ export default class List extends React.Component {
                                                             </label>
                                                         </div>
                                                     </td>
-                                                    <td>{item.cAvailable === true ? '启用' : '禁用'}</td>
+                                                    <td>
+                                                        <ToggleButton
+                                                            uid={item.cId}
+                                                            enable={this.state.enable}
+                                                            disable={this.state.disable}
+                                                            available={item.cAvailable}
+                                                            action={this.handleToggle}
+                                                        />
+                                                    </td>
                                                     <td>{item.cLoginname}</td>
                                                     <td>{item.cRealname}</td>
                                                     <td>{item.cNickname}</td>

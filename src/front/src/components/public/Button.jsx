@@ -105,16 +105,17 @@ export function AuthButton(props) {
 export function SaveButton(props) {
     const text = props.loading === true ? '' : props.text;
 
-    function action() {
-        if (props.loading === false) {
-            props.action();
-        };
-    }
     return (
         <button onClick={action} type="button" className="btn btn-primary">
             <Icon /> {text}
         </button>
     )
+
+    function action() {
+        if (props.loading === false) {
+            props.action();
+        };
+    }
 
     function Icon() {
         if (props.loading === true) {
@@ -122,5 +123,32 @@ export function SaveButton(props) {
         } else {
             return <i></i>;
         }
+    }
+}
+
+export function ToggleButton(props) {
+    if (props.enable === true && props.available === false) {
+        return (
+            <button onClick={action} type="button" className="btn btn-link text-danger">
+                <i className="fa fa-toggle-off fa-2x" aria-hidden="true"></i>
+            </button>
+        )
+    }
+
+    if (props.disable === true && props.available === true) {
+        return (
+            <button onClick={action} type="button" className="btn btn-link text-success">
+                <i className="fa fa-toggle-on fa-2x" aria-hidden="true"></i>
+            </button>
+        )
+    }
+
+    return <p>{props.available === true ? '启用' : '禁用'}</p>
+
+    function action() {
+        props.action({
+            uid: props.uid,
+            available: props.available
+        })
     }
 }

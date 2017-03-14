@@ -371,6 +371,8 @@ webpackJsonp([0],{
 	exports.userAdd = userAdd;
 	exports.userDetails = userDetails;
 	exports.userMod = userMod;
+	exports.userEnable = userEnable;
+	exports.userDisable = userDisable;
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -868,6 +870,36 @@ webpackJsonp([0],{
 	    var settings = $.extend({ url: url }, { data: data });
 
 	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function userEnable(uid) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/enable.do';
+
+	    io({ url: url, data: { id: uid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function userDisable(uid) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/disable.do';
+
+	    io({ url: url, data: { id: uid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -1437,6 +1469,7 @@ webpackJsonp([0],{
 	exports.DelButton = DelButton;
 	exports.AuthButton = AuthButton;
 	exports.SaveButton = SaveButton;
+	exports.ToggleButton = ToggleButton;
 
 	var _react = __webpack_require__(9);
 
@@ -1571,11 +1604,6 @@ webpackJsonp([0],{
 	function SaveButton(props) {
 	    var text = props.loading === true ? '' : props.text;
 
-	    function action() {
-	        if (props.loading === false) {
-	            props.action();
-	        };
-	    }
 	    return _react2.default.createElement(
 	        'button',
 	        { onClick: action, type: 'button', className: 'btn btn-primary' },
@@ -1584,12 +1612,49 @@ webpackJsonp([0],{
 	        text
 	    );
 
+	    function action() {
+	        if (props.loading === false) {
+	            props.action();
+	        };
+	    }
+
 	    function Icon() {
 	        if (props.loading === true) {
 	            return _react2.default.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-fw', 'aria-hidden': 'true' });
 	        } else {
 	            return _react2.default.createElement('i', null);
 	        }
+	    }
+	}
+
+	function ToggleButton(props) {
+	    if (props.enable === true && props.available === false) {
+	        return _react2.default.createElement(
+	            'button',
+	            { onClick: action, type: 'button', className: 'btn btn-link text-danger' },
+	            _react2.default.createElement('i', { className: 'fa fa-toggle-off fa-2x', 'aria-hidden': 'true' })
+	        );
+	    }
+
+	    if (props.disable === true && props.available === true) {
+	        return _react2.default.createElement(
+	            'button',
+	            { onClick: action, type: 'button', className: 'btn btn-link text-success' },
+	            _react2.default.createElement('i', { className: 'fa fa-toggle-on fa-2x', 'aria-hidden': 'true' })
+	        );
+	    }
+
+	    return _react2.default.createElement(
+	        'p',
+	        null,
+	        props.available === true ? '启用' : '禁用'
+	    );
+
+	    function action() {
+	        props.action({
+	            uid: props.uid,
+	            available: props.available
+	        });
 	    }
 	}
 
@@ -3701,6 +3766,9 @@ webpackJsonp([0],{
 	            userLoading: false,
 	            userList: [],
 
+	            enable: false,
+	            disable: false,
+
 	            checkedUser: null
 	        };
 
@@ -3710,6 +3778,7 @@ webpackJsonp([0],{
 	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
+	        _this.handleToggle = _this.handleToggle.bind(_this);
 	        return _this;
 	    }
 
@@ -3824,6 +3893,30 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {}
+	    }, {
+	        key: 'handleToggle',
+	        value: function handleToggle(param) {
+	            var temp = $.extend({}, this.state);
+	            var nextAvailable = !param.available;
+
+	            if (param.available === true) {
+	                (0, _api.userDisable)(param.uid);
+	            } else {
+	                (0, _api.userEnable)(param.uid);
+	            }
+
+	            temp.userList.map(function (item) {
+	                if (item.cId === param.uid) {
+	                    item.cAvailable = nextAvailable;
+	                }
+
+	                return item;
+	            });
+
+	            this.setState({
+	                userList: temp.userList
+	            });
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -3942,7 +4035,13 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
-	                                                item.cAvailable === true ? '启用' : '禁用'
+	                                                _react2.default.createElement(_Button.ToggleButton, {
+	                                                    uid: item.cId,
+	                                                    enable: _this5.state.enable,
+	                                                    disable: _this5.state.disable,
+	                                                    available: item.cAvailable,
+	                                                    action: _this5.handleToggle
+	                                                })
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
