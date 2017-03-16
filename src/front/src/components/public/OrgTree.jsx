@@ -7,15 +7,41 @@ export default class OrgTree extends React.Component {
         this.renderTree = this.renderTree.bind(this);
         this.renderTreeItem = this.renderTreeItem.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
-        this.handleNode = this.handleNode.bind(this);
+    }
+
+    componentDidMount() {
+        $(this.treeDom).on('click', '[data-node]', function (event) {
+            event.stopPropagation();
+
+            if ($(this).hasClass('not-child')) {
+                return;
+            };
+
+            if ($(this).hasClass('closed')) {
+                $(this)
+                    .removeClass('closed')
+                    .closest('li')
+                    .children('ul')
+                    .show();
+            } else {
+                $(this)
+                    .closest('li')
+                    .find('[data-node]')
+                    .addClass('closed')
+                    .end()
+                    .closest('li')
+                    .find('ul')
+                    .hide();
+            };
+        })
     }
 
     renderTree(data) {
         let tree = [];
 
         data.map((item) => {
-            let children = [];            
-            
+            let children = [];
+
             if (item.children && item.children.length) {
                 let children = [];
 
@@ -61,32 +87,9 @@ export default class OrgTree extends React.Component {
         }
     }
 
-    handleNode(event) {
-        if ($(event.target).hasClass('not-child')) {
-            return;
-        };
-
-        if ($(event.target).hasClass('closed')) {
-            $(event.target)
-                .removeClass('closed')
-                .closest('li')
-                .children('ul')
-                .show();
-        } else {
-            $(event.target)
-                .closest('li')
-                .find('[data-node]')
-                .addClass('closed')
-                .end()
-                .closest('li')
-                .find('ul')
-                .hide();
-        };
-    }
-
     render() {
         return (
-            <div className="tree">
+            <div ref={(dom) => { this.treeDom = dom }} className="tree">
                 <ul>
                     {this.renderTree(this.props.data)}
                 </ul>

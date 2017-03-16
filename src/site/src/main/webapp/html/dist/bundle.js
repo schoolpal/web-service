@@ -25,39 +25,39 @@ webpackJsonp([0],{
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(237);
+	var _Editor = __webpack_require__(238);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _List3 = __webpack_require__(241);
+	var _List3 = __webpack_require__(242);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(242);
+	var _Editor3 = __webpack_require__(243);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _List5 = __webpack_require__(243);
+	var _List5 = __webpack_require__(244);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _List7 = __webpack_require__(244);
+	var _List7 = __webpack_require__(245);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor5 = __webpack_require__(245);
+	var _Editor5 = __webpack_require__(246);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _login = __webpack_require__(249);
+	var _login = __webpack_require__(250);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _Error = __webpack_require__(250);
+	var _Error = __webpack_require__(251);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(251);
+	var _checkAuth = __webpack_require__(252);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -86,10 +86,10 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(252);
-	__webpack_require__(256);
-	__webpack_require__(259);
-	__webpack_require__(261);
+	__webpack_require__(253);
+	__webpack_require__(257);
+	__webpack_require__(260);
+	__webpack_require__(262);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -197,7 +197,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'main-container' },
-	                            '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
+	                            '\u6743\u9650\u521D\u59CB\u5316\u4E2D ...'
 	                        )
 	                    )
 	                );
@@ -301,18 +301,14 @@ webpackJsonp([0],{
 	                        null,
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
-	                            { to: SCHOOLPAL_CONFIG.ROOTPATH, className: 'btn btn-link text-white' },
+	                            { to: SCHOOLPAL_CONFIG.ROOTPATH, className: 'text-white' },
 	                            '\u6821\u5BA2'
 	                        ),
 	                        _react2.default.createElement(
 	                            'button',
-	                            { type: 'button', className: 'btn btn-link text-white' },
-	                            _react2.default.createElement('i', { className: 'fa fa-bars fa-lg', 'aria-hidden': 'true' })
-	                        ),
-	                        _react2.default.createElement(
-	                            'button',
-	                            { type: 'button', onClick: this.confrimSignout, className: 'btn btn-link text-white float-right' },
-	                            _react2.default.createElement('i', { className: 'fa fa-sign-out fa-lg', 'aria-hidden': 'true' })
+	                            { type: 'button', onClick: this.confrimSignout, className: 'btn btn-warning float-right' },
+	                            _react2.default.createElement('i', { className: 'fa fa-sign-out fa-lg', 'aria-hidden': 'true' }),
+	                            ' \u9000\u51FA\u7CFB\u7EDF'
 	                        )
 	                    )
 	                );
@@ -325,7 +321,7 @@ webpackJsonp([0],{
 	                        null,
 	                        _react2.default.createElement(
 	                            'a',
-	                            { className: 'btn btn-link text-white' },
+	                            { className: 'text-white' },
 	                            '\u6821\u5BA2'
 	                        )
 	                    )
@@ -1162,6 +1158,10 @@ webpackJsonp([0],{
 
 	var _api = __webpack_require__(231);
 
+	var _DialogTips = __webpack_require__(237);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1179,18 +1179,18 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
-	            delLoading: false,
 	            list: [],
+	            rootLevel: null,
+
 	            selected: null,
-	            selectedLevel: null,
-	            rootLevel: null
+
+	            delLoading: false
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.renderTable = _this.renderTable.bind(_this);
 	        _this.tableLine = _this.tableLine.bind(_this);
-	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.checkedOrg = _this.checkedOrg.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
 	        _this.handleNode = _this.handleNode.bind(_this);
@@ -1198,14 +1198,33 @@ webpackJsonp([0],{
 	    }
 
 	    _createClass(List, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (data, rootLevel) {
+	                _this2.setState({
+	                    loading: false,
+	                    list: data.tree,
+	                    rootLevel: data.rootLevel
+	                });
+	            }).always(function () {
+	                dialogTips.close();
+	            });
+	        }
+	    }, {
 	        key: 'renderCommand',
 	        value: function renderCommand() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var temp = [];
 	            var isDisabled = void 0;
 
-	            if (this.state.selectedLevel && this.state.selectedLevel !== this.state.rootLevel) {
+	            if (this.state.selected) {
 	                isDisabled = false;
 	            } else {
 	                isDisabled = true;
@@ -1218,11 +1237,11 @@ webpackJsonp([0],{
 	                    };
 
 	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this2.handleEditor, disabled: isDisabled }));
+	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: isDisabled }));
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this2.handleDel, disabled: isDisabled, loading: _this2.state.delLoading }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, disabled: isDisabled, loading: _this3.state.delLoading }));
 	                    }
 	                });
 	            }
@@ -1232,18 +1251,18 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'renderTable',
 	        value: function renderTable(data) {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            var table = [];
 
 	            if (data.length) {
 	                data.map(function (item) {
-	                    table.push(_this3.tableLine(item));
+	                    table.push(_this4.tableLine(item));
 
 	                    if (item.children && item.children.length) {
 	                        var children = [];
 
-	                        children.push(_this3.renderTable(item.children));
+	                        children.push(_this4.renderTable(item.children));
 	                        table.push(children);
 	                    }
 	                });
@@ -1262,11 +1281,27 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'tr',
-	                { key: data.cId, 'data-id': data.cId, 'data-level': data.level },
+	                { key: data.cId, 'data-id': data.cId },
 	                _react2.default.createElement(
 	                    'th',
 	                    { scope: 'row' },
-	                    _react2.default.createElement('span', { onClick: this.handleSelect, className: selectedClass })
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-check' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { className: 'form-check-label' },
+	                            _react2.default.createElement('input', {
+	                                onChange: this.checkedOrg,
+	                                className: 'form-check-input',
+	                                type: 'radio',
+	                                name: 'rank',
+	                                disabled: data.level === 0 ? true : false,
+	                                checked: data.cId.toString() === this.state.selected ? true : false,
+	                                value: data.cId
+	                            })
+	                        )
+	                    )
 	                ),
 	                _react2.default.createElement(
 	                    'td',
@@ -1300,17 +1335,11 @@ webpackJsonp([0],{
 	            );
 	        }
 	    }, {
-	        key: 'handleSelect',
-	        value: function handleSelect(event) {
-	            if ($(event.target).hasClass('selected')) {
+	        key: 'checkedOrg',
+	        value: function checkedOrg(event) {
+	            if (event.target.checked === true) {
 	                this.setState({
-	                    selected: null,
-	                    selectedLevel: null
-	                });
-	            } else {
-	                this.setState({
-	                    selected: $(event.target).parents('tr').data('id'),
-	                    selectedLevel: $(event.target).parents('tr').data('level')
+	                    selected: event.target.value
 	                });
 	            }
 	        }
@@ -1324,14 +1353,14 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            this.setState({
 	                delLoading: true
 	            });
 
 	            (0, _api.orgDel)(this.state.selected).done(function () {
-	                _this4.setState({
+	                _this5.setState({
 	                    loading: true,
 	                    delLoading: false,
 	                    list: [],
@@ -1340,7 +1369,7 @@ webpackJsonp([0],{
 	                    rootLevel: null
 	                });
 	                (0, _api.orgList)().done(function (data) {
-	                    _this4.setState({
+	                    _this5.setState({
 	                        loading: false,
 	                        list: data.tree,
 	                        rootLevel: data.rootLevel
@@ -1373,19 +1402,6 @@ webpackJsonp([0],{
 	            });
 
 	            $(event.target).toggleClass('closed');
-	        }
-	    }, {
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this5 = this;
-
-	            (0, _api.orgList)().done(function (data, rootLevel) {
-	                _this5.setState({
-	                    loading: false,
-	                    list: data.tree,
-	                    rootLevel: data.rootLevel
-	                });
-	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -1453,12 +1469,7 @@ webpackJsonp([0],{
 	                            null,
 	                            this.renderTable(this.state.list)
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -1485,6 +1496,7 @@ webpackJsonp([0],{
 	exports.DelButton = DelButton;
 	exports.AuthButton = AuthButton;
 	exports.SaveButton = SaveButton;
+	exports.BackButton = BackButton;
 	exports.ToggleButton = ToggleButton;
 
 	var _react = __webpack_require__(9);
@@ -1504,13 +1516,13 @@ webpackJsonp([0],{
 	        );
 	    } else {
 	        return _react2.default.createElement(
-	            'div',
-	            { onClick: props.action, className: 'login-submit text-primary' },
+	            'button',
+	            { type: 'submit', className: 'btn btn-link login-submit' },
 	            _react2.default.createElement('i', { className: 'fa fa-sign-in fa-3x', 'aria-hidden': 'true' }),
 	            _react2.default.createElement(
 	                'span',
 	                null,
-	                'SING IN'
+	                '\u767B\u9646'
 	            )
 	        );
 	    }
@@ -1618,29 +1630,21 @@ webpackJsonp([0],{
 	}
 
 	function SaveButton(props) {
-	    var text = props.loading === true ? '' : props.text;
-
 	    return _react2.default.createElement(
 	        'button',
-	        { onClick: action, type: 'button', className: 'btn btn-primary' },
-	        _react2.default.createElement(Icon, null),
-	        ' ',
-	        text
+	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	        props.text
 	    );
+	}
 
-	    function action() {
-	        if (props.loading === false) {
-	            props.action();
-	        };
-	    }
-
-	    function Icon() {
-	        if (props.loading === true) {
-	            return _react2.default.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-fw', 'aria-hidden': 'true' });
-	        } else {
-	            return _react2.default.createElement('i', null);
-	        }
-	    }
+	function BackButton(props) {
+	    return _react2.default.createElement(
+	        'button',
+	        { onClick: function onClick() {
+	                props.router.goBack();
+	            }, type: 'button', className: 'btn btn-secondary' },
+	        '\u8FD4\u56DE'
+	    );
 	}
 
 	function ToggleButton(props) {
@@ -1677,6 +1681,63 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 237:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = DialogTips;
+	var ICON_LOADING = '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" aria-hidden="true"></i>';
+	var ICON_SUCCESS = '<i class="fa fa-hand-peace-o fa-3x" aria-hidden="true"></i>';
+	var ICON_FAIL = '<i class="fa fa-close fa-3x" aria-hidden="true"></i>';
+	var AUTO_CLOSED = 2000;
+
+	function DialogTips(options) {
+	    if (!(this instanceof DialogTips)) {
+	        return new DialogTips(options);
+	    }
+
+	    var $elem = $(getTipsHtml());
+
+	    function getTipsHtml() {
+	        if (options.type === 'loading') {
+	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_LOADING + '\n                        <span>\u52A0\u8F7D\u4E2D</span>\n                    </div>\n                </div>\n            ';
+	        };
+
+	        if (options.type === 'success') {
+	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_SUCCESS + '\n                        <span>\u64CD\u4F5C\u6210\u529F</span>\n                    </div>\n                </div>\n            ';
+	        };
+
+	        if (options.type === 'fail') {
+	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_FAIL + '\n                        <span>\u64CD\u4F5C\u5931\u8D25</span>\n                    </div>\n                </div>\n            ';
+	        };
+	    }
+
+	    function open() {
+	        $elem.appendTo('#app');
+
+	        if (options.autoClose && options.autoClose === true) {
+	            setTimeout(function () {
+	                $elem.detach();
+	            }, AUTO_CLOSED);
+	        }
+	    }
+
+	    function close() {
+	        $elem.detach();
+	    }
+
+	    return {
+	        open: open,
+	        close: close
+	    };
+	}
+
+/***/ },
+
+/***/ 238:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1697,21 +1758,21 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(238);
+	var _OrgTree = __webpack_require__(239);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _subTitle = __webpack_require__(239);
+	var _subTitle = __webpack_require__(240);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
-
-	var _Alerts = __webpack_require__(234);
-
-	var _Alerts2 = _interopRequireDefault(_Alerts);
 
 	var _Button = __webpack_require__(236);
 
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(237);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1721,7 +1782,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(240);
+	__webpack_require__(241);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -1732,18 +1793,11 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
-	            selected: null,
-
-	            saveLoading: false,
-	            saveResult: null
+	            selected: null
 	        };
 	        _this.selectOrg = _this.selectOrg.bind(_this);
 	        _this.editorSubmit = _this.editorSubmit.bind(_this);
-	        _this.editorSubmitCallback = _this.editorSubmitCallback.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -1752,19 +1806,23 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
 	            if (this.props.params.id === 'create') {
 	                (0, _api.orgList)().done(function (data) {
 	                    _this2.setState({
-	                        loading: false,
 	                        orgList: data.tree
 	                    });
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
 
 	                $('#citys').citys();
 	            } else {
 	                (0, _api.orgDetails)(this.props.params.id).done(function (data) {
 	                    _this2.setState({
-	                        loading: false,
 	                        editorId: data.cId,
 	                        selected: {
 	                            id: data.parentOrg.cId,
@@ -1779,6 +1837,8 @@ webpackJsonp([0],{
 	                        city: data.cCityCode,
 	                        area: data.cCountyCode || null
 	                    });
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
 	            }
 	        }
@@ -1800,6 +1860,10 @@ webpackJsonp([0],{
 	        value: function editorSubmit() {
 	            var _this3 = this;
 
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org';
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 	            var param = {};
 
 	            $(this.editorDom).serializeArray().map(function (item) {
@@ -1811,99 +1875,40 @@ webpackJsonp([0],{
 	            param.city = $('#citys').find('[name="cityCode"]').find("option:selected").text();
 	            param.county = $('#citys').find('[name="countyCode"]').find("option:selected").text();
 
-	            this.setState({
-	                saveLoading: true
-	            });
+	            loading.open();
 
 	            if (this.state.editorId) {
 	                param.id = this.state.editorId;
 
 	                (0, _api.orgMod)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '编辑成功 ！'
-	                        }
-	                    });
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.editorSubmitCallback(data);
+	                    loading.close();
+	                    fail.open();
 	                });
 	            } else {
 	                (0, _api.orgAdd)(param).done(function () {
-	                    _this3.editorSubmitCallback();
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.editorSubmitCallback(data);
+	                    loading.close();
+	                    fail.open();
 	                });
 	            }
-	        }
-	    }, {
-	        key: 'editorSubmitCallback',
-	        value: function editorSubmitCallback(data) {
-	            var _this4 = this;
-
-	            if (data) {
-	                this.setState({
-	                    saveLoading: false,
-	                    saveResult: {
-	                        type: 'danger',
-	                        'title': 'Oh snap!',
-	                        'text': '[' + data.data.code + '] ' + data.data.detail
-	                    }
-	                });
-	            } else {
-	                this.setState({
-	                    loading: true,
-	                    saveLoading: false,
-	                    selected: null,
-	                    saveResult: {
-	                        type: 'success',
-	                        title: 'Well done!',
-	                        text: '添加成功 ！'
-	                    }
-	                });
-
-	                $(this.editorDom).find('input, textarea').val('');
-
-	                $('#citys').find('[name="state"]').find('option').eq(0).attr('selected', true).trigger('change');
-
-	                (0, _api.orgList)().done(function (data) {
-	                    _this4.setState({
-	                        loading: false,
-	                        orgList: data.tree
-	                    });
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.saveResult) {
-	                return _react2.default.createElement(
-	                    _Alerts2.default,
-	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'org', className: 'alert-link' },
-	                        '\u8FD4\u56DE\u5217\u8868'
-	                    )
-	                );
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                saveResult: null
-	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this5 = this;
+	            var _this4 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -1921,32 +1926,21 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
+	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
 	                    )
 	                ),
-	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300' },
-	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                        ),
-	                        _react2.default.createElement(
 	                            'form',
 	                            { ref: function ref(dom) {
-	                                    _this5.editorDom = dom;
-	                                }, className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'h6 pb-3 b-b' },
-	                                '\u7236\u7EA7\u7EC4\u7EC7\uFF1A',
-	                                this.state.selected ? this.state.selected.name : ''
-	                            ),
+	                                    _this4.editorDom = dom;
+	                                }, className: 'flex-cell' },
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'w400' },
@@ -1979,6 +1973,42 @@ webpackJsonp([0],{
 	                                        '\u7EC4\u7EC7\u4EE3\u7801'
 	                                    ),
 	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7236\u7EA7\u7EC4\u7EC7\uFF1A'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'form-group' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'btn-group' },
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { type: 'button', className: 'btn btn-secondary dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	                                                _react2.default.createElement(
+	                                                    'span',
+	                                                    { className: 'd-inline-block minw210 text-left' },
+	                                                    this.state.selected ? this.state.selected.name : ''
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'dropdown-menu' },
+	                                                _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                                            )
+	                                        )
+	                                    )
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2060,12 +2090,7 @@ webpackJsonp([0],{
 	                                )
 	                            )
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -2078,7 +2103,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 238:
+/***/ 239:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2112,11 +2137,27 @@ webpackJsonp([0],{
 	        _this.renderTree = _this.renderTree.bind(_this);
 	        _this.renderTreeItem = _this.renderTreeItem.bind(_this);
 	        _this.handleSelect = _this.handleSelect.bind(_this);
-	        _this.handleNode = _this.handleNode.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(OrgTree, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            $(this.treeDom).on('click', '[data-node]', function (event) {
+	                event.stopPropagation();
+
+	                if ($(this).hasClass('not-child')) {
+	                    return;
+	                };
+
+	                if ($(this).hasClass('closed')) {
+	                    $(this).removeClass('closed').closest('li').children('ul').show();
+	                } else {
+	                    $(this).closest('li').find('[data-node]').addClass('closed').end().closest('li').find('ul').hide();
+	                };
+	            });
+	        }
+	    }, {
 	        key: 'renderTree',
 	        value: function renderTree(data) {
 	            var _this2 = this;
@@ -2187,24 +2228,15 @@ webpackJsonp([0],{
 	            }
 	        }
 	    }, {
-	        key: 'handleNode',
-	        value: function handleNode(event) {
-	            if ($(event.target).hasClass('not-child')) {
-	                return;
-	            };
-
-	            if ($(event.target).hasClass('closed')) {
-	                $(event.target).removeClass('closed').closest('li').children('ul').show();
-	            } else {
-	                $(event.target).closest('li').find('[data-node]').addClass('closed').end().closest('li').find('ul').hide();
-	            };
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this3 = this;
+
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'tree' },
+	                { ref: function ref(dom) {
+	                        _this3.treeDom = dom;
+	                    }, className: 'tree' },
 	                _react2.default.createElement(
 	                    'ul',
 	                    null,
@@ -2221,7 +2253,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 239:
+/***/ 240:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2240,7 +2272,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 240:
+/***/ 241:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2469,7 +2501,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 241:
+/***/ 242:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2490,7 +2522,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(238);
+	var _OrgTree = __webpack_require__(239);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -2781,7 +2813,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 242:
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2802,7 +2834,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(238);
+	var _OrgTree = __webpack_require__(239);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -2812,7 +2844,7 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(236);
 
-	var _subTitle = __webpack_require__(239);
+	var _subTitle = __webpack_require__(240);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
@@ -3253,7 +3285,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 243:
+/***/ 244:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3274,7 +3306,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(238);
+	var _OrgTree = __webpack_require__(239);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -3729,7 +3761,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 244:
+/***/ 245:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3750,7 +3782,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(238);
+	var _OrgTree = __webpack_require__(239);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -4149,7 +4181,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 245:
+/***/ 246:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4176,13 +4208,13 @@ webpackJsonp([0],{
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _subTitle = __webpack_require__(239);
+	var _subTitle = __webpack_require__(240);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(246);
+	var _mixedMD = __webpack_require__(247);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -4528,7 +4560,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 246:
+/***/ 247:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4538,7 +4570,7 @@ webpackJsonp([0],{
 	});
 	exports.default = mixedMD5;
 
-	var _md = __webpack_require__(247);
+	var _md = __webpack_require__(248);
 
 	var _md2 = _interopRequireDefault(_md);
 
@@ -4550,13 +4582,13 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 247:
+/***/ 248:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(248));
+			module.exports = exports = factory(__webpack_require__(249));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -4824,7 +4856,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 248:
+/***/ 249:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -5590,7 +5622,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 249:
+/***/ 250:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5621,7 +5653,7 @@ webpackJsonp([0],{
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(246);
+	var _mixedMD = __webpack_require__(247);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -5661,22 +5693,16 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'signin',
-	        value: function signin() {
+	        value: function signin(event) {
 	            var _this2 = this;
+
+	            if (this.from.checkValidity() === true) {
+	                event.preventDefault();
+	            };
 
 	            var $from = $(this.from);
 	            var username = $from.find('[name=username]').val();
 	            var mixedPWD = $from.find('[name=mixedPWD]').val();
-
-	            if (!username) {
-	                this.signinErrorDialog('请输入用户名 ！');
-	                return;
-	            }
-
-	            if (!mixedPWD) {
-	                this.signinErrorDialog('请输入密码 ！');
-	                return;
-	            }
 
 	            this.setState({
 	                loading: true
@@ -5724,23 +5750,23 @@ webpackJsonp([0],{
 	                            'form',
 	                            { ref: function ref(dom) {
 	                                    _this3.from = dom;
-	                                } },
+	                                }, onSubmit: this.signin },
 	                            _react2.default.createElement(
 	                                'ul',
 	                                null,
 	                                _react2.default.createElement(
 	                                    'li',
 	                                    null,
-	                                    _react2.default.createElement('input', { name: 'username', type: 'text', placeholder: 'Enter your Email ...' })
+	                                    _react2.default.createElement('input', { name: 'username', type: 'text', placeholder: '\u8F93\u5165\u7528\u6237\u540D ...', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'li',
 	                                    null,
-	                                    _react2.default.createElement('input', { name: 'mixedPWD', type: 'password', placeholder: 'Enter your Password ...' })
+	                                    _react2.default.createElement('input', { name: 'mixedPWD', type: 'password', placeholder: '\u8F93\u5165\u5BC6\u7801 ...', required: 'required' })
 	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(_Button.LoginButton, { loading: this.state.loading, action: this.signin })
+	                            ),
+	                            _react2.default.createElement(_Button.LoginButton, { loading: this.state.loading })
+	                        )
 	                    )
 	                )
 	            );
@@ -5754,7 +5780,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 250:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5780,7 +5806,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 251:
+/***/ 252:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5811,14 +5837,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 252:
+/***/ 253:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 254:
+/***/ 255:
 /***/ function(module, exports) {
 
 	/*
@@ -5875,7 +5901,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 255:
+/***/ 256:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -6128,23 +6154,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 256:
+/***/ 257:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 259:
+/***/ 260:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(260);
+	var content = __webpack_require__(261);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(255)(content, {});
+	var update = __webpack_require__(256)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -6162,15 +6188,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 260:
+/***/ 261:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(254)();
+	exports = module.exports = __webpack_require__(255)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n  overflow: auto;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  margin: -50px 0 0 -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
 
 	// exports
 

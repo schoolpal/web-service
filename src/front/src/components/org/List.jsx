@@ -2,33 +2,52 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { CreateButton, EditorButton, DelButton } from '../public/Button';
 import { orgList, orgDel } from '../../utils/api';
+import DialogTips from '../../utils/DialogTips';
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true,
-            delLoading: false,
             list: [],
+            rootLevel: null,
+
             selected: null,
-            selectedLevel: null,
-            rootLevel: null
+
+            delLoading: false,
         };
 
         this.renderCommand = this.renderCommand.bind(this);
         this.renderTable = this.renderTable.bind(this);
         this.tableLine = this.tableLine.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
+        this.checkedOrg = this.checkedOrg.bind(this);
         this.handleEditor = this.handleEditor.bind(this);
         this.handleDel = this.handleDel.bind(this);
         this.handleNode = this.handleNode.bind(this);
+    }
+
+    componentDidMount() {
+        const dialogTips = DialogTips({ type: 'loading' })
+
+        dialogTips.open()
+
+        orgList()
+            .done((data, rootLevel) => {
+                this.setState({
+                    loading: false,
+                    list: data.tree,
+                    rootLevel: data.rootLevel
+                })
+            })
+            .always(() => {
+                dialogTips.close()
+            })
     }
 
     renderCommand() {
         let temp = [];
         let isDisabled;
 
-        if (this.state.selectedLevel && this.state.selectedLevel !== this.state.rootLevel) {
+        if (this.state.selected) {
             isDisabled = false;
         } else {
             isDisabled = true;
@@ -80,9 +99,21 @@ export default class List extends React.Component {
         const addr = area + ' ' + data.cAddress;
 
         return (
-            <tr key={data.cId} data-id={data.cId} data-level={data.level}>
+            <tr key={data.cId} data-id={data.cId}>
                 <th scope="row">
-                    <span onClick={this.handleSelect} className={selectedClass}></span>
+                    <div className="form-check">
+                        <label className="form-check-label">
+                            <input
+                                onChange={this.checkedOrg}
+                                className="form-check-input"
+                                type="radio"
+                                name="rank"
+                                disabled={data.level === 0 ? true : false}
+                                checked={data.cId.toString() === this.state.selected ? true : false}
+                                value={data.cId}
+                            />
+                        </label>
+                    </div>
                 </th>
                 <td>
                     <p onClick={this.handleNode} className={'tree-node ' + childrenClass} style={spacingStyle}>{data.cName}</p>
@@ -95,16 +126,10 @@ export default class List extends React.Component {
         );
     }
 
-    handleSelect(event) {
-        if ($(event.target).hasClass('selected')) {
+    checkedOrg(event) {
+        if (event.target.checked === true) {
             this.setState({
-                selected: null,
-                selectedLevel: null
-            })
-        } else {
-            this.setState({
-                selected: $(event.target).parents('tr').data('id'),
-                selectedLevel: $(event.target).parents('tr').data('level')
+                selected: event.target.value
             })
         }
     }
@@ -170,17 +195,6 @@ export default class List extends React.Component {
         $(event.target).toggleClass('closed');
     }
 
-    componentDidMount() {
-        orgList()
-            .done((data, rootLevel) => {
-                this.setState({
-                    loading: false,
-                    list: data.tree,
-                    rootLevel: data.rootLevel
-                })
-            })
-    }
-
     render() {
         return (
             <div className="org">
@@ -206,9 +220,6 @@ export default class List extends React.Component {
                             {this.renderTable(this.state.list)}
                         </tbody>
                     </table>
-
-                    {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
-
                 </div>
             </div>
         )

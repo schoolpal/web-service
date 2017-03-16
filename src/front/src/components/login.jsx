@@ -28,20 +28,14 @@ export default class Login extends React.Component {
         )
     }
 
-    signin() {
+    signin(event) {
+        if (this.from.checkValidity() === true) {
+            event.preventDefault()
+        };
+
         const $from = $(this.from);
         const username = $from.find('[name=username]').val();
         const mixedPWD = $from.find('[name=mixedPWD]').val();
-
-        if (!username) {
-            this.signinErrorDialog('请输入用户名 ！');
-            return;
-        }
-
-        if (!mixedPWD) {
-            this.signinErrorDialog('请输入密码 ！');
-            return;
-        }
 
         this.setState({
             loading: true
@@ -73,13 +67,13 @@ export default class Login extends React.Component {
                 <div className="login bg-faded">
                     <div className="login-form">
                         <h5 className="text-primary">LOGIN</h5>
-                        <form ref={(dom) => { this.from = dom }}>
+                        <form ref={(dom) => { this.from = dom }} onSubmit={this.signin}>
                             <ul>
-                                <li><input name="username" type="text" placeholder="Enter your Email ..." /></li>
-                                <li><input name="mixedPWD" type="password" placeholder="Enter your Password ..." /></li>
+                                <li><input name="username" type="text" placeholder="输入用户名 ..." required="required" /></li>
+                                <li><input name="mixedPWD" type="password" placeholder="输入密码 ..." required="required" /></li>
                             </ul>
+                            <LoginButton loading={this.state.loading} />
                         </form>
-                        <LoginButton loading={this.state.loading} action={this.signin} />
                     </div>
                 </div>
             </div>

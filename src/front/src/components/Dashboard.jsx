@@ -34,7 +34,7 @@ export default class Dashboard extends React.Component {
                     <NavBar router={this.props.router} isSignin={true} />
                     <AsideBar />
                     <div className="main">
-                        <div className="main-container">数据加载中 ...</div>
+                        <div className="main-container">权限初始化中 ...</div>
                     </div>
                 </div>
             )

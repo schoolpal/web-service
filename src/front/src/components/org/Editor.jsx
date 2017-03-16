@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
 import subTitle from '../../utils/subTitle';
-import Alerts from '../public/Alerts';
-import { SaveButton } from '../public/Button';
+import { SaveButton, BackButton } from '../public/Button';
 import { orgList, orgDetails, orgAdd, orgMod } from '../../utils/api';
+import DialogTips from '../../utils/DialogTips';
 
 require('../../utils/city');
 
@@ -13,28 +13,27 @@ export default class Editor extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true,
             orgList: [],
             selected: null,
-
-            saveLoading: false,
-            saveResult: null
         };
         this.selectOrg = this.selectOrg.bind(this);
         this.editorSubmit = this.editorSubmit.bind(this);
-        this.editorSubmitCallback = this.editorSubmitCallback.bind(this);
-        this.showAlert = this.showAlert.bind(this);
-        this.clearAlert = this.clearAlert.bind(this);
     }
 
     componentDidMount() {
+        const dialogTips = DialogTips({ type: 'loading' })
+
+        dialogTips.open()
+
         if (this.props.params.id === 'create') {
             orgList()
                 .done((data) => {
                     this.setState({
-                        loading: false,
                         orgList: data.tree
                     })
+                })
+                .always(() => {
+                    dialogTips.close()
                 })
 
             $('#citys').citys();
@@ -42,7 +41,6 @@ export default class Editor extends React.Component {
             orgDetails(this.props.params.id)
                 .done((data) => {
                     this.setState({
-                        loading: false,
                         editorId: data.cId,
                         selected: {
                             id: data.parentOrg.cId,
@@ -72,6 +70,9 @@ export default class Editor extends React.Component {
                         area: data.cCountyCode || null
                     });
                 })
+                .always(() => {
+                    dialogTips.close()
+                })
         }
     }
 
@@ -88,6 +89,10 @@ export default class Editor extends React.Component {
     }
 
     editorSubmit() {
+        const successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org';
+        const loading = DialogTips({ type: 'loading' })
+        const success = DialogTips({ type: 'success' })
+        const fail = DialogTips({ type: 'fail', autoClose: true })
         let param = {};
 
         $(this.editorDom).serializeArray().map((item) => {
@@ -99,91 +104,39 @@ export default class Editor extends React.Component {
         param.city = $('#citys').find('[name="cityCode"]').find("option:selected").text();
         param.county = $('#citys').find('[name="countyCode"]').find("option:selected").text();
 
-        this.setState({
-            saveLoading: true
-        })
+        loading.open()
 
         if (this.state.editorId) {
             param.id = this.state.editorId;
 
             orgMod(param)
                 .done(() => {
-                    this.setState({
-                        saveLoading: false,
-                        saveResult: {
-                            type: 'success',
-                            title: 'Well done!',
-                            text: '编辑成功 ！'
-                        }
-                    })
+                    loading.close()
+                    success.open()
+                    setTimeout(() => {
+                        success.close()
+                        this.props.router.push(successPath)
+                    }, 2000)
                 })
-                .fail((data) => { this.editorSubmitCallback(data); })
+                .fail((data) => {
+                    loading.close()
+                    fail.open()
+                })
         } else {
             orgAdd(param)
-                .done(() => { this.editorSubmitCallback(); })
-                .fail((data) => { this.editorSubmitCallback(data); })
-        }
-    }
-
-    editorSubmitCallback(data) {
-        if (data) {
-            this.setState({
-                saveLoading: false,
-                saveResult: {
-                    type: 'danger',
-                    'title': 'Oh snap!',
-                    'text': '[' + data.data.code + '] ' + data.data.detail
-                }
-            })
-        } else {
-            this.setState({
-                loading: true,
-                saveLoading: false,
-                selected: null,
-                saveResult: {
-                    type: 'success',
-                    title: 'Well done!',
-                    text: '添加成功 ！'
-                }
-            })
-
-            $(this.editorDom)
-                .find('input, textarea')
-                .val('');
-
-            $('#citys')
-                .find('[name="state"]')
-                .find('option')
-                .eq(0)
-                .attr('selected', true)
-                .trigger('change');
-
-            orgList()
-                .done((data) => {
-                    this.setState({
-                        loading: false,
-                        orgList: data.tree
-                    })
+                .done(() => {
+                    loading.close()
+                    success.open()
+                    setTimeout(() => {
+                        success.close()
+                        this.props.router.push(successPath)
+                    }, 2000)
+                })
+                .fail((data) => {
+                    loading.close()
+                    fail.open()
                 })
         }
-    }
-
-    showAlert() {
-        if (this.state.saveResult) {
-            return (
-                <Alerts type={this.state.saveResult.type} title={this.state.saveResult.title} text={this.state.saveResult.text}>
-                    <Link to={SCHOOLPAL_CONFIG.ROOTPATH + 'org'} className="alert-link">返回列表</Link>
-                </Alerts>
-            )
-        } else {
-            return '';
-        }
-    }
-
-    clearAlert() {
-        this.setState({
-            saveResult: null
-        })
     }
 
     render() {
@@ -192,17 +145,14 @@ export default class Editor extends React.Component {
                 <h5>
                     <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理&nbsp;&nbsp;|&nbsp;&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.id, '组织')}</p>
                     <div className="btn-group float-right" role="group">
-                        <SaveButton action={this.editorSubmit} text="保存" loading={this.state.saveLoading} />
+                        <BackButton router={this.props.router} />
+                        <SaveButton action={this.editorSubmit} text="保存" />
                     </div>
                 </h5>
-                {this.showAlert()}
-                <div onClick={this.clearAlert} className="main-container">
+
+                <div className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true || this.props.params.id !== 'create' ? 'hide' : 'w300'}>
-                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
-                        </div>
-                        <form ref={(dom) => { this.editorDom = dom }} className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
-                            <p className="h6 pb-3 b-b">父级组织：{this.state.selected ? this.state.selected.name : ''}</p>
+                        <form ref={(dom) => { this.editorDom = dom }} className="flex-cell">
                             <div className="w400">
                                 <div className="form-group">
                                     <label for="name"><em className="text-danger">*</em>组织名称</label>
@@ -211,6 +161,19 @@ export default class Editor extends React.Component {
                                 <div className="form-group">
                                     <label for="name"><em className="text-danger">*</em>组织代码</label>
                                     <input type="text" className="form-control" name="code" />
+                                </div>
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>父级组织：</label>
+                                    <div className="form-group">
+                                        <div className="btn-group">
+                                            <button type="button" className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span className="d-inline-block minw210 text-left">{this.state.selected ? this.state.selected.name : ''}</span>
+                                            </button>
+                                            <div className="dropdown-menu">
+                                                <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label for="name"><em className="text-danger">*</em>所在地区</label>
@@ -241,8 +204,6 @@ export default class Editor extends React.Component {
                             </div>
                         </form>
                     </div>
-
-                    {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
                 </div>
             </div>
         )

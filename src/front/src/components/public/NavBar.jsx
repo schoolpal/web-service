@@ -34,10 +34,9 @@ export default class NavBar extends React.Component {
             return (
                 <nav className="navbar navbar-inverse bg-primary">
                     <form>
-                        <Link to={SCHOOLPAL_CONFIG.ROOTPATH} className="btn btn-link text-white">校客</Link>
-                        <button type="button" className="btn btn-link text-white"><i className="fa fa-bars fa-lg" aria-hidden="true"></i></button>
-                        <button type="button" onClick={this.confrimSignout} className="btn btn-link text-white float-right">
-                            <i className="fa fa-sign-out fa-lg" aria-hidden="true"></i>
+                        <Link to={SCHOOLPAL_CONFIG.ROOTPATH} className="text-white">校客</Link>
+                        <button type="button" onClick={this.confrimSignout} className="btn btn-warning float-right">
+                            <i className="fa fa-sign-out fa-lg" aria-hidden="true"></i> 退出系统
                         </button>
                     </form>
                 </nav>
@@ -46,7 +45,7 @@ export default class NavBar extends React.Component {
             return (
                 <nav className="navbar navbar-inverse bg-primary">
                     <form>
-                        <a className="btn btn-link text-white">校客</a>
+                        <a className="text-white">校客</a>
                     </form>
                 </nav>
             )

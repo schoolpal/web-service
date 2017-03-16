@@ -10,10 +10,10 @@ export function LoginButton(props) {
         )
     } else {
         return (
-            <div onClick={props.action} className="login-submit text-primary">
+            <button type="submit" className="btn btn-link login-submit">
                 <i className="fa fa-sign-in fa-3x" aria-hidden="true"></i>
-                <span>SING IN</span>
-            </div>
+                <span>登陆</span>
+            </button>
         )
     }
 }
@@ -103,27 +103,17 @@ export function AuthButton(props) {
 }
 
 export function SaveButton(props) {
-    const text = props.loading === true ? '' : props.text;
-
     return (
-        <button onClick={action} type="button" className="btn btn-primary">
-            <Icon /> {text}
+        <button onClick={props.action} type="button" className="btn btn-primary">
+            {props.text}
         </button>
     )
+}
 
-    function action() {
-        if (props.loading === false) {
-            props.action();
-        };
-    }
-
-    function Icon() {
-        if (props.loading === true) {
-            return <i className="fa fa-circle-o-notch fa-spin fa-fw" aria-hidden="true"></i>;
-        } else {
-            return <i></i>;
-        }
-    }
+export function BackButton(props) {
+    return (
+        <button onClick={() => { props.router.goBack() }} type="button" className="btn btn-secondary">返回</button>
+    )
 }
 
 export function ToggleButton(props) {
