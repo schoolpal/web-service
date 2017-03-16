@@ -14,8 +14,6 @@ import com.google.gson.Gson;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
 import com.schoolpal.web.consts.*;
-import com.schoolpal.web.model.OrgForm;
-import com.schoolpal.web.model.UserForm;
 
 @Service
 public class UserService  {
@@ -149,7 +147,7 @@ public class UserService  {
 				ret = id;
 			}
 		}catch(Exception e){
-			logServ.log("", LogLevel.ERROR, "UserService.AddOrg()", "", e.getMessage());
+			logServ.log("", LogLevel.ERROR, "UserService.addUser()", "", e.getMessage());
 		}
 		return ret;
 	}
@@ -159,7 +157,7 @@ public class UserService  {
 		try{
 			ret = userDao.updateOneById(user) > 0;
 		}catch(Exception e){
-			logServ.log("", LogLevel.ERROR, "UserService.ModOrg()", "", e.getMessage());
+			logServ.log("", LogLevel.ERROR, "UserService.modUserById()", "", e.getMessage());
 		}
 		return ret;
 	}
@@ -169,7 +167,7 @@ public class UserService  {
 		try{
 			ret = userDao.deleteOneById(id) > 0;
 		}catch(Exception e){
-			logServ.log("", LogLevel.ERROR, "UserService.DelOrgById()", "", e.getMessage());
+			logServ.log("", LogLevel.ERROR, "UserService.delUserById()", "", e.getMessage());
 		}
 		return ret;
 	}
