@@ -16,7 +16,6 @@ package com.school.db;
 //import com.schoolpal.db.model.*;
 
 public class TestTUserMapper {
-	
 /*
 	private static TUserMapper userDao = null;
 	private static TOrgMapper orgDao = null;
