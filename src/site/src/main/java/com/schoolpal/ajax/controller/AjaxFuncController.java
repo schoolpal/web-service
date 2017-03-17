@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
@@ -17,14 +16,8 @@ import com.schoolpal.service.*;
 @RequestMapping("/ajax/func")
 public class AjaxFuncController {
 
-	// @Autowired
-	// private LogService logServ;
 	@Autowired
 	private UserService userServ;
-	// @Autowired
-	// private OrgService orgServ;
-	// @Autowired
-	// private RoleService roleServ;
 	@Autowired
 	private FunctionService funcServ;
 
