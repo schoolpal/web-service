@@ -21,43 +21,43 @@ webpackJsonp([0],{
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _List = __webpack_require__(235);
+	var _List = __webpack_require__(236);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(238);
+	var _Editor = __webpack_require__(239);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _List3 = __webpack_require__(242);
+	var _List3 = __webpack_require__(243);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(243);
+	var _Editor3 = __webpack_require__(244);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _List5 = __webpack_require__(244);
+	var _List5 = __webpack_require__(245);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _List7 = __webpack_require__(245);
+	var _List7 = __webpack_require__(246);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor5 = __webpack_require__(246);
+	var _Editor5 = __webpack_require__(247);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _login = __webpack_require__(250);
+	var _login = __webpack_require__(251);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _Error = __webpack_require__(251);
+	var _Error = __webpack_require__(252);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(252);
+	var _checkAuth = __webpack_require__(253);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -86,10 +86,10 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(253);
-	__webpack_require__(257);
-	__webpack_require__(260);
-	__webpack_require__(262);
+	__webpack_require__(254);
+	__webpack_require__(258);
+	__webpack_require__(261);
+	__webpack_require__(263);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -136,11 +136,11 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(233);
+	var _AsideBar = __webpack_require__(234);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Alerts = __webpack_require__(234);
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
@@ -247,7 +247,7 @@ webpackJsonp([0],{
 
 	var _api = __webpack_require__(231);
 
-	var _Dialog = __webpack_require__(232);
+	var _Dialog = __webpack_require__(233);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
@@ -338,7 +338,7 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 231:
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -371,7 +371,7 @@ webpackJsonp([0],{
 	exports.userDisable = userDisable;
 	exports.userDel = userDel;
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	var _conversion = __webpack_require__(232);
 
 	function io(options, callback) {
 	    if (!(this instanceof io)) {
@@ -416,90 +416,6 @@ webpackJsonp([0],{
 
 	function formatUrl(url) {
 	    return SCHOOLPAL_CONFIG.AJAXPATH + url;
-	}
-
-	function conversionOrg(data) {
-	    var tree = [];
-	    var rootLevel = [];
-
-	    if (data.length) {
-	        data.map(function (item) {
-	            rootLevel.push(item.level);
-
-	            if (item.cId === item.cParentId) {
-	                tree.push(item);
-	            } else {
-	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
-
-	                insertTree(tree[rootIndex], item);
-	            }
-	        });
-	    }
-
-	    rootLevel = _.uniq(rootLevel);
-
-	    return {
-	        tree: tree,
-	        rootLevel: rootLevel.length ? Math.min.apply(Math, _toConsumableArray(rootLevel)) : null
-	    };
-
-	    function insertTree(rootData, data) {
-	        if (rootData.cId === data.cParentId) {
-	            if (!rootData.children) {
-	                rootData.children = [];
-	            };
-
-	            rootData.children.push(data);
-	        } else {
-	            if (rootData.children && rootData.children.length) {
-	                rootData.children.map(function (item) {
-	                    insertTree(item, data);
-	                });
-	            };
-	        }
-	    }
-	}
-
-	function conversionFunc(data) {
-	    var tree = [];
-
-	    if (data.length) {
-	        data.map(function (item) {
-	            if (item.cId === item.cRootId) {
-	                tree.push(item);
-	            } else {
-	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
-
-	                insertTree(tree[rootIndex], item);
-	            };
-	        });
-	    }
-
-	    return tree;
-
-	    function insertTree(rootData, data) {
-	        if (rootData.cId === data.cParentId) {
-	            if (data.cCommandTypeId) {
-	                if (!rootData.action) {
-	                    rootData.action = [];
-	                };
-
-	                rootData.action.push(data);
-	            } else {
-	                if (!rootData.children) {
-	                    rootData.children = [];
-	                };
-
-	                rootData.children.push(data);
-	            }
-	        } else {
-	            if (rootData.children && rootData.children.length) {
-	                rootData.children.map(function (item) {
-	                    insertTree(item, data);
-	                });
-	            };
-	        }
-	    }
 	}
 
 	function salt() {
@@ -599,9 +515,7 @@ webpackJsonp([0],{
 
 	    io({ url: url }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-	            var conversionOrgData = conversionOrg(data.data);
-
-	            defer.resolve(conversionOrgData);
+	            defer.resolve((0, _conversion.conversionOrg)(data.data));
 	        } else {
 	            defer.reject(data);
 	        }
@@ -925,6 +839,109 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 232:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.conversionOrg = conversionOrg;
+	exports.conversionFunc = conversionFunc;
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function insertTree(rootData, data) {
+	    if (rootData.cId === data.cParentId) {
+	        if (!rootData.children) {
+	            rootData.children = [];
+	        };
+
+	        rootData.children.push(data);
+	    } else {
+	        if (rootData.children && rootData.children.length) {
+	            $.each(rootData.children, function (i, item) {
+	                insertTree(item, data);
+	            });
+	        };
+	    }
+	}
+
+	function conversionOrg(original) {
+	    var data = original.map(function (item) {
+	        return $.extend({}, item);
+	    });
+	    var tree = [];
+	    var rootLevel = [];
+
+	    if (data.length) {
+	        $.each(data, function (i, item) {
+	            rootLevel.push(item.level);
+
+	            if (item.cId === item.cParentId) {
+	                tree.push(item);
+	            } else {
+	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+	                insertTree(tree[rootIndex], item);
+	            }
+	        });
+	    }
+
+	    rootLevel = _.uniq(rootLevel);
+
+	    return {
+	        original: original,
+	        tree: tree,
+	        rootLevel: rootLevel.length ? Math.min.apply(Math, _toConsumableArray(rootLevel)) : null
+	    };
+	}
+
+	function conversionFunc(data) {
+	    var tree = [];
+
+	    if (data.length) {
+	        data.map(function (item) {
+	            if (item.cId === item.cRootId) {
+	                tree.push(item);
+	            } else {
+	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+	                insertTree(tree[rootIndex], item);
+	            };
+	        });
+	    }
+
+	    return tree;
+
+	    function insertTree(rootData, data) {
+	        if (rootData.cId === data.cParentId) {
+	            if (data.cCommandTypeId) {
+	                if (!rootData.action) {
+	                    rootData.action = [];
+	                };
+
+	                rootData.action.push(data);
+	            } else {
+	                if (!rootData.children) {
+	                    rootData.children = [];
+	                };
+
+	                rootData.children.push(data);
+	            }
+	        } else {
+	            if (rootData.children && rootData.children.length) {
+	                rootData.children.map(function (item) {
+	                    insertTree(item, data);
+	                });
+	            };
+	        }
+	    }
+	}
+
+/***/ },
+
+/***/ 233:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1059,7 +1076,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 233:
+/***/ 234:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1101,7 +1118,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 234:
+/***/ 235:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1135,7 +1152,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 235:
+/***/ 236:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1154,13 +1171,19 @@ webpackJsonp([0],{
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
+
+	var _Dialog = __webpack_require__(233);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(237);
+	var _DialogTips = __webpack_require__(238);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _conversion = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1180,20 +1203,21 @@ webpackJsonp([0],{
 
 	        _this.state = {
 	            list: [],
+	            treeList: [],
 	            rootLevel: null,
 
-	            selected: null,
-
-	            delLoading: false
+	            selected: null
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.renderTable = _this.renderTable.bind(_this);
 	        _this.tableLine = _this.tableLine.bind(_this);
 	        _this.checkedOrg = _this.checkedOrg.bind(_this);
+	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
 	        _this.handleNode = _this.handleNode.bind(_this);
+	        _this.confirmDel = _this.confirmDel.bind(_this);
 	        return _this;
 	    }
 
@@ -1206,10 +1230,10 @@ webpackJsonp([0],{
 
 	            dialogTips.open();
 
-	            (0, _api.orgList)().done(function (data, rootLevel) {
+	            (0, _api.orgList)().done(function (data) {
 	                _this2.setState({
-	                    loading: false,
-	                    list: data.tree,
+	                    list: data.original,
+	                    treeList: data.tree,
 	                    rootLevel: data.rootLevel
 	                });
 	            }).always(function () {
@@ -1224,7 +1248,7 @@ webpackJsonp([0],{
 	            var temp = [];
 	            var isDisabled = void 0;
 
-	            if (this.state.selected) {
+	            if (this.state.selected && this.state.selected.level) {
 	                isDisabled = false;
 	            } else {
 	                isDisabled = true;
@@ -1233,7 +1257,7 @@ webpackJsonp([0],{
 	            if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
 	                SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map(function (item, index) {
 	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create' }));
+	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
 	                    };
 
 	                    if (item === 'Mod') {
@@ -1241,7 +1265,7 @@ webpackJsonp([0],{
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, disabled: isDisabled, loading: _this3.state.delLoading }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: isDisabled }));
 	                    }
 	                });
 	            }
@@ -1256,7 +1280,7 @@ webpackJsonp([0],{
 	            var table = [];
 
 	            if (data.length) {
-	                data.map(function (item) {
+	                $.each(data, function (i, item) {
 	                    table.push(_this4.tableLine(item));
 
 	                    if (item.children && item.children.length) {
@@ -1281,7 +1305,7 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'tr',
-	                { key: data.cId, 'data-id': data.cId },
+	                { key: data.cId, 'data-id': data.cId, 'data-level': data.level },
 	                _react2.default.createElement(
 	                    'th',
 	                    { scope: 'row' },
@@ -1295,9 +1319,8 @@ webpackJsonp([0],{
 	                                onChange: this.checkedOrg,
 	                                className: 'form-check-input',
 	                                type: 'radio',
-	                                name: 'rank',
-	                                disabled: data.level === 0 ? true : false,
-	                                checked: data.cId.toString() === this.state.selected ? true : false,
+	                                name: 'org',
+	                                checked: this.state.selected && data.cId.toString() === this.state.selected.id ? true : false,
 	                                value: data.cId
 	                            })
 	                        )
@@ -1339,42 +1362,72 @@ webpackJsonp([0],{
 	        value: function checkedOrg(event) {
 	            if (event.target.checked === true) {
 	                this.setState({
-	                    selected: event.target.value
+	                    selected: {
+	                        id: event.target.value,
+	                        name: $(event.target).parents('tr').find('p').text(),
+	                        level: $(event.target).parents('tr').data('level')
+	                    }
 	                });
 	            }
 	        }
 	    }, {
+	        key: 'handleCreate',
+	        value: function handleCreate() {
+	            this.props.router.push({
+	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create',
+	                state: { selected: this.state.selected }
+	            });
+	        }
+	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected.id;
 
 	            this.props.router.push(editorPath);
+	        }
+	    }, {
+	        key: 'confirmDel',
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除 ' + this.state.selected.name + ' 组织 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
 	        }
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {
 	            var _this5 = this;
 
-	            this.setState({
-	                delLoading: true
-	            });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            (0, _api.orgDel)(this.state.selected).done(function () {
+	            loading.open();
+
+	            (0, _api.orgDel)(this.state.selected.id).done(function () {
+	                var tempList = _this5.state.list.filter(function (item) {
+	                    if (item.cId !== _this5.state.selected.id) {
+	                        return item;
+	                    }
+	                });
+	                var temp = (0, _conversion.conversionOrg)(tempList);
+
+	                loading.close();
+	                success.open();
+
 	                _this5.setState({
-	                    loading: true,
-	                    delLoading: false,
-	                    list: [],
-	                    selected: null,
-	                    selectedLevel: null,
-	                    rootLevel: null
+	                    list: temp.original,
+	                    treeList: temp.tree,
+	                    rootLevel: temp.rootLevel,
+
+	                    selected: null
 	                });
-	                (0, _api.orgList)().done(function (data) {
-	                    _this5.setState({
-	                        loading: false,
-	                        list: data.tree,
-	                        rootLevel: data.rootLevel
-	                    });
-	                });
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
 	            });
 	        }
 	    }, {
@@ -1388,7 +1441,7 @@ webpackJsonp([0],{
 	            var level = tr.data('level');
 
 	            tr.nextAll('tr').each(function (i, item) {
-	                if ($(item).data('level') === level) {
+	                if ($(item).data('level') <= level) {
 	                    return false;
 	                };
 
@@ -1467,7 +1520,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'tbody',
 	                            null,
-	                            this.renderTable(this.state.list)
+	                            this.renderTable(this.state.treeList)
 	                        )
 	                    )
 	                )
@@ -1482,7 +1535,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 236:
+/***/ 237:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1680,7 +1733,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 237:
+/***/ 238:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1737,7 +1790,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 238:
+/***/ 239:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1758,19 +1811,19 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _subTitle = __webpack_require__(240);
+	var _subTitle = __webpack_require__(241);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(237);
+	var _DialogTips = __webpack_require__(238);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -1782,7 +1835,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(241);
+	__webpack_require__(242);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -1812,30 +1865,41 @@ webpackJsonp([0],{
 
 	            if (this.props.params.id === 'create') {
 	                (0, _api.orgList)().done(function (data) {
-	                    _this2.setState({
-	                        orgList: data.tree
-	                    });
+	                    if (_this2.props.router.location.state && _this2.props.router.location.state.selected) {
+	                        _this2.setState({
+	                            orgList: data.tree,
+	                            selected: {
+	                                id: _this2.props.router.location.state.selected.id,
+	                                name: _this2.props.router.location.state.selected.name
+	                            }
+	                        });
+	                    } else {
+	                        _this2.setState({
+	                            orgList: data.tree
+	                        });
+	                    }
 	                }).always(function () {
 	                    dialogTips.close();
 	                });
 
 	                $('#citys').citys();
 	            } else {
-	                (0, _api.orgDetails)(this.props.params.id).done(function (data) {
+	                $.when((0, _api.orgList)(), (0, _api.orgDetails)(this.props.params.id)).done(function (list, details) {
 	                    _this2.setState({
-	                        editorId: data.cId,
+	                        editorId: details.cId,
+	                        orgList: list.tree,
 	                        selected: {
-	                            id: data.parentOrg.cId,
-	                            name: data.parentOrg.cName
+	                            id: details.parentOrg.cId,
+	                            name: details.parentOrg.cName
 	                        }
 	                    });
 
-	                    $(_this2.editorDom).find('[name=name]').val(data.cName).end().find('[name=code]').val(data.cCode).end().find('[name=address]').val(data.cAddress).end().find('[name=owner]').val(data.cOwner).end().find('[name=phone]').val(data.cOwnerPhone);
+	                    $(_this2.editorDom).find('[name=name]').val(details.cName).end().find('[name=code]').val(details.cCode).end().find('[name=address]').val(details.cAddress).end().find('[name=owner]').val(details.cOwner).end().find('[name=phone]').val(details.cOwnerPhone);
 
 	                    $('#citys').citys({
-	                        province: data.cStateCode,
-	                        city: data.cCityCode,
-	                        area: data.cCountyCode || null
+	                        province: details.cStateCode,
+	                        city: details.cCityCode,
+	                        area: details.cCountyCode || null
 	                    });
 	                }).always(function () {
 	                    dialogTips.close();
@@ -2103,7 +2167,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 239:
+/***/ 240:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2253,7 +2317,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 240:
+/***/ 241:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2272,7 +2336,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 241:
+/***/ 242:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2501,7 +2565,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 242:
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2522,11 +2586,11 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
 
@@ -2813,7 +2877,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 243:
+/***/ 244:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2834,17 +2898,17 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Alerts = __webpack_require__(234);
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
-	var _subTitle = __webpack_require__(240);
+	var _subTitle = __webpack_require__(241);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
@@ -3285,7 +3349,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 244:
+/***/ 245:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3306,15 +3370,15 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Alerts = __webpack_require__(234);
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
 
@@ -3761,7 +3825,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 245:
+/***/ 246:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3782,11 +3846,11 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
 
@@ -4181,7 +4245,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 246:
+/***/ 247:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4202,19 +4266,19 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
-	var _Alerts = __webpack_require__(234);
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _subTitle = __webpack_require__(240);
+	var _subTitle = __webpack_require__(241);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(247);
+	var _mixedMD = __webpack_require__(248);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -4560,7 +4624,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 247:
+/***/ 248:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4570,7 +4634,7 @@ webpackJsonp([0],{
 	});
 	exports.default = mixedMD5;
 
-	var _md = __webpack_require__(248);
+	var _md = __webpack_require__(249);
 
 	var _md2 = _interopRequireDefault(_md);
 
@@ -4582,13 +4646,13 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 248:
+/***/ 249:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(249));
+			module.exports = exports = factory(__webpack_require__(250));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -4856,7 +4920,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 249:
+/***/ 250:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -5622,7 +5686,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 250:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5645,15 +5709,15 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
-	var _Dialog = __webpack_require__(232);
+	var _Dialog = __webpack_require__(233);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(247);
+	var _mixedMD = __webpack_require__(248);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -5780,7 +5844,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 251:
+/***/ 252:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5806,7 +5870,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 252:
+/***/ 253:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5837,14 +5901,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 253:
+/***/ 254:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 255:
+/***/ 256:
 /***/ function(module, exports) {
 
 	/*
@@ -5901,7 +5965,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 256:
+/***/ 257:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -6154,23 +6218,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 257:
+/***/ 258:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 260:
+/***/ 261:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(261);
+	var content = __webpack_require__(262);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(256)(content, {});
+	var update = __webpack_require__(257)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -6188,15 +6252,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 261:
+/***/ 262:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(255)();
+	exports = module.exports = __webpack_require__(256)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  margin: -50px 0 0 -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
 
 	// exports
 

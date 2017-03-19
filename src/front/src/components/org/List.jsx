@@ -1,28 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { CreateButton, EditorButton, DelButton } from '../public/Button';
-import { orgList, orgDel } from '../../utils/api';
-import DialogTips from '../../utils/DialogTips';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { CreateButton, EditorButton, DelButton } from '../public/Button'
+import Dialog from '../public/Dialog'
+import { orgList, orgDel } from '../../utils/api'
+import DialogTips from '../../utils/DialogTips'
+import { conversionOrg } from '../../utils/conversion'
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             list: [],
+            treeList: [],
             rootLevel: null,
 
             selected: null,
+        }
 
-            delLoading: false,
-        };
-
-        this.renderCommand = this.renderCommand.bind(this);
-        this.renderTable = this.renderTable.bind(this);
-        this.tableLine = this.tableLine.bind(this);
-        this.checkedOrg = this.checkedOrg.bind(this);
-        this.handleEditor = this.handleEditor.bind(this);
-        this.handleDel = this.handleDel.bind(this);
-        this.handleNode = this.handleNode.bind(this);
+        this.renderCommand = this.renderCommand.bind(this)
+        this.renderTable = this.renderTable.bind(this)
+        this.tableLine = this.tableLine.bind(this)
+        this.checkedOrg = this.checkedOrg.bind(this)
+        this.handleCreate = this.handleCreate.bind(this)
+        this.handleEditor = this.handleEditor.bind(this)
+        this.handleDel = this.handleDel.bind(this)
+        this.handleNode = this.handleNode.bind(this)
+        this.confirmDel = this.confirmDel.bind(this)
     }
 
     componentDidMount() {
@@ -31,10 +34,10 @@ export default class List extends React.Component {
         dialogTips.open()
 
         orgList()
-            .done((data, rootLevel) => {
+            .done((data) => {
                 this.setState({
-                    loading: false,
-                    list: data.tree,
+                    list: data.original,
+                    treeList: data.tree,
                     rootLevel: data.rootLevel
                 })
             })
@@ -47,7 +50,7 @@ export default class List extends React.Component {
         let temp = [];
         let isDisabled;
 
-        if (this.state.selected) {
+        if (this.state.selected && this.state.selected.level) {
             isDisabled = false;
         } else {
             isDisabled = true;
@@ -56,7 +59,7 @@ export default class List extends React.Component {
         if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
             SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map((item, index) => {
                 if (item === 'Add') {
-                    temp.push(<CreateButton key={index} link={SCHOOLPAL_CONFIG.ROOTPATH + 'org/create'} />)
+                    temp.push(<CreateButton key={index} action={this.handleCreate} />)
                 };
 
                 if (item === 'Mod') {
@@ -64,7 +67,7 @@ export default class List extends React.Component {
                 }
 
                 if (item === 'Del') {
-                    temp.push(<DelButton key={index} action={this.handleDel} disabled={isDisabled} loading={this.state.delLoading} />)
+                    temp.push(<DelButton key={index} action={this.confirmDel} disabled={isDisabled} />)
                 }
             })
         }
@@ -73,10 +76,10 @@ export default class List extends React.Component {
     }
 
     renderTable(data) {
-        let table = [];
+        let table = []
 
         if (data.length) {
-            data.map((item) => {
+            $.each(data, (i, item) => {
                 table.push(this.tableLine(item));
 
                 if (item.children && item.children.length) {
@@ -99,7 +102,7 @@ export default class List extends React.Component {
         const addr = area + ' ' + data.cAddress;
 
         return (
-            <tr key={data.cId} data-id={data.cId}>
+            <tr key={data.cId} data-id={data.cId} data-level={data.level}>
                 <th scope="row">
                     <div className="form-check">
                         <label className="form-check-label">
@@ -107,9 +110,8 @@ export default class List extends React.Component {
                                 onChange={this.checkedOrg}
                                 className="form-check-input"
                                 type="radio"
-                                name="rank"
-                                disabled={data.level === 0 ? true : false}
-                                checked={data.cId.toString() === this.state.selected ? true : false}
+                                name="org"
+                                checked={(this.state.selected && data.cId.toString() === this.state.selected.id) ? true : false}
                                 value={data.cId}
                             />
                         </label>
@@ -129,42 +131,68 @@ export default class List extends React.Component {
     checkedOrg(event) {
         if (event.target.checked === true) {
             this.setState({
-                selected: event.target.value
+                selected: {
+                    id: event.target.value,
+                    name: $(event.target).parents('tr').find('p').text(),
+                    level: $(event.target).parents('tr').data('level')
+                }
             })
         }
     }
 
+    handleCreate() {
+        this.props.router.push({
+            pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create',
+            state: { selected: this.state.selected }
+        })
+    }
+
     handleEditor() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected;
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected.id;
 
         this.props.router.push(editorPath)
     }
 
+    confirmDel() {
+        const div = document.createElement('div');
+
+        ReactDOM.render(
+            <Dialog
+                container={div}
+                text={'是否确认删除 ' + this.state.selected.name + ' 组织 ？'}
+                action={this.handleDel}
+            />,
+            document.body.appendChild(div)
+        )
+    }
+
     handleDel() {
-        this.setState({
-            delLoading: true
-        })
+        const loading = DialogTips({ type: 'loading' })
+        const success = DialogTips({ type: 'success', autoClose: true })
+        const fail = DialogTips({ type: 'fail', autoClose: true })
 
-        orgDel(this.state.selected)
+        loading.open()
+
+        orgDel(this.state.selected.id)
             .done(() => {
-                this.setState({
-                    loading: true,
-                    delLoading: false,
-                    list: [],
-                    selected: null,
-                    selectedLevel: null,
-                    rootLevel: null
-                })
-                orgList()
-                    .done((data) => {
-                        this.setState({
-                            loading: false,
-                            list: data.tree,
-                            rootLevel: data.rootLevel
-                        })
-                    })
-            })
+                const tempList = this.state.list.filter((item) => { if (item.cId !== this.state.selected.id) { return item } });
+                const temp = conversionOrg(tempList);
 
+                loading.close()
+                success.open()
+
+                this.setState({
+                    list: temp.original,
+                    treeList: temp.tree,
+                    rootLevel: temp.rootLevel,
+
+                    selected: null,
+                })
+            })
+            .fail(() => {
+                loading.close()
+                fail.open()
+            })
     }
 
     handleNode(event) {
@@ -176,7 +204,7 @@ export default class List extends React.Component {
         const level = tr.data('level');
 
         tr.nextAll('tr').each((i, item) => {
-            if ($(item).data('level') === level) {
+            if ($(item).data('level') <= level) {
                 return false;
             };
 
@@ -217,7 +245,7 @@ export default class List extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.renderTable(this.state.list)}
+                            {this.renderTable(this.state.treeList)}
                         </tbody>
                     </table>
                 </div>

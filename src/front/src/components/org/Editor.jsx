@@ -28,9 +28,19 @@ export default class Editor extends React.Component {
         if (this.props.params.id === 'create') {
             orgList()
                 .done((data) => {
-                    this.setState({
-                        orgList: data.tree
-                    })
+                    if (this.props.router.location.state && this.props.router.location.state.selected) {
+                        this.setState({
+                            orgList: data.tree,
+                            selected: {
+                                id: this.props.router.location.state.selected.id,
+                                name: this.props.router.location.state.selected.name
+                            }
+                        })
+                    } else {
+                        this.setState({
+                            orgList: data.tree
+                        })
+                    }
                 })
                 .always(() => {
                     dialogTips.close()
@@ -38,41 +48,43 @@ export default class Editor extends React.Component {
 
             $('#citys').citys();
         } else {
-            orgDetails(this.props.params.id)
-                .done((data) => {
-                    this.setState({
-                        editorId: data.cId,
-                        selected: {
-                            id: data.parentOrg.cId,
-                            name: data.parentOrg.cName
-                        }
-                    })
-
-                    $(this.editorDom)
-                        .find('[name=name]')
-                        .val(data.cName)
-                        .end()
-                        .find('[name=code]')
-                        .val(data.cCode)
-                        .end()
-                        .find('[name=address]')
-                        .val(data.cAddress)
-                        .end()
-                        .find('[name=owner]')
-                        .val(data.cOwner)
-                        .end()
-                        .find('[name=phone]')
-                        .val(data.cOwnerPhone)
-
-                    $('#citys').citys({
-                        province: data.cStateCode,
-                        city: data.cCityCode,
-                        area: data.cCountyCode || null
-                    });
+            $.when(
+                orgList(),
+                orgDetails(this.props.params.id)
+            ).done((list, details) => {
+                this.setState({
+                    editorId: details.cId,
+                    orgList: list.tree,
+                    selected: {
+                        id: details.parentOrg.cId,
+                        name: details.parentOrg.cName
+                    }
                 })
-                .always(() => {
-                    dialogTips.close()
-                })
+
+                $(this.editorDom)
+                    .find('[name=name]')
+                    .val(details.cName)
+                    .end()
+                    .find('[name=code]')
+                    .val(details.cCode)
+                    .end()
+                    .find('[name=address]')
+                    .val(details.cAddress)
+                    .end()
+                    .find('[name=owner]')
+                    .val(details.cOwner)
+                    .end()
+                    .find('[name=phone]')
+                    .val(details.cOwnerPhone)
+
+                $('#citys').citys({
+                    province: details.cStateCode,
+                    city: details.cCityCode,
+                    area: details.cCountyCode || null
+                });
+            }).always(() => {
+                dialogTips.close()
+            })
         }
     }
 

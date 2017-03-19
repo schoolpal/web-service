@@ -1,3 +1,5 @@
+import { conversionOrg } from './conversion';
+
 function io(options, callback) {
     if (!(this instanceof io)) {
         return new io(options, callback);
@@ -41,91 +43,6 @@ function io(options, callback) {
 
 function formatUrl(url) {
     return SCHOOLPAL_CONFIG.AJAXPATH + url;
-}
-
-function conversionOrg(data) {
-    let tree = [];
-    let rootLevel = [];
-
-    if (data.length) {
-        data.map((item) => {
-            rootLevel.push(item.level);
-
-            if (item.cId === item.cParentId) {
-                tree.push(item)
-            } else {
-                const rootIndex = _.findIndex(tree, { cId: item.cRootId });
-
-                insertTree(tree[rootIndex], item);
-            }
-        })
-    }
-
-    rootLevel = _.uniq(rootLevel);
-
-    return {
-        tree: tree,
-        rootLevel: rootLevel.length ? Math.min(...rootLevel) : null
-    };
-
-    function insertTree(rootData, data) {
-        if (rootData.cId === data.cParentId) {
-            if (!rootData.children) {
-                rootData.children = [];
-            };
-
-            rootData.children.push(data);
-        } else {
-            if (rootData.children && rootData.children.length) {
-                rootData.children.map((item) => {
-                    insertTree(item, data);
-                })
-            };
-        }
-    }
-}
-
-
-function conversionFunc(data) {
-    let tree = [];
-
-    if (data.length) {
-        data.map((item) => {
-            if (item.cId === item.cRootId) {
-                tree.push(item);
-            } else {
-                const rootIndex = _.findIndex(tree, { cId: item.cRootId });
-
-                insertTree(tree[rootIndex], item);
-            };
-        })
-    }
-
-    return tree;
-
-    function insertTree(rootData, data) {
-        if (rootData.cId === data.cParentId) {
-            if (data.cCommandTypeId) {
-                if (!rootData.action) {
-                    rootData.action = [];
-                };
-
-                rootData.action.push(data);
-            } else {
-                if (!rootData.children) {
-                    rootData.children = [];
-                };
-
-                rootData.children.push(data);
-            }
-        } else {
-            if (rootData.children && rootData.children.length) {
-                rootData.children.map((item) => {
-                    insertTree(item, data);
-                })
-            };
-        }
-    }
 }
 
 export function salt() {
@@ -223,9 +140,7 @@ export function orgList() {
 
     io({ url: url }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-            const conversionOrgData = conversionOrg(data.data);
-
-            defer.resolve(conversionOrgData);
+            defer.resolve(conversionOrg(data.data));
         } else {
             defer.reject(data);
         }
