@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import OrgTree from '../public/OrgTree';
-import Alerts from '../public/Alerts';
-import { SaveButton } from '../public/Button';
+import { SaveButton, BackButton } from '../public/Button';
 import subTitle from '../../utils/subTitle';
-import { orgList, funcDic, rankDic, roleAdd, roleDetails, roleMod } from '../../utils/api';
+import { orgDetails, funcDic, rankDic, roleAdd, roleDetails, roleMod } from '../../utils/api';
+import DialogTips from '../../utils/DialogTips'
 
 const FUNC_ADMIN_ID = '7';
 const RANK_ADMIN_ID = '4';
@@ -27,9 +26,7 @@ export default class Editor extends React.Component {
         super(props)
 
         this.state = {
-            loading: true,
-            orgList: [],
-            selected: null,
+            org: null,
 
             rank: [],
             func: [],
@@ -37,81 +34,84 @@ export default class Editor extends React.Component {
             isAdmin: false,
             checkedFunc: {},
             checkedRank: null,
-
-            saveLoading: false,
-            saveResult: null
         }
 
-        this.selectOrg = this.selectOrg.bind(this);
-        this.showAlert = this.showAlert.bind(this);
-        this.clearAlert = this.clearAlert.bind(this);
         this.checkedFunc = this.checkedFunc.bind(this);
         this.checkedRank = this.checkedRank.bind(this);
         this.editorSubmit = this.editorSubmit.bind(this);
     }
 
     componentDidMount() {
-        $.when(orgList(), funcDic(), rankDic())
-            .done((org, func, rank) => {
+        const dialogTips = DialogTips({ type: 'loading' })
 
-                if (this.props.params.id === 'create') {
-                    this.setState({
-                        loading: false,
-                        orgList: org.tree,
-                        rank: rank,
-                        func: formatFuncData(func)
-                    })
-                } else {
-                    roleDetails(this.props.params.id).done((data) => {
-                        const selected = org.tree.find((item) => { return item.cId === data.cOrgId });
-                        let tempCheckedFunc = {};
+        dialogTips.open()
 
-                        data.rootFuncs.map((item) => {
-                            tempCheckedFunc[item.cId] = true;
-                        })
-
-                        this.setState({
-                            loading: false,
-                            orgList: org.tree,
-                            rank: rank,
-                            func: formatFuncData(func),
-
-                            selected: {
-                                id: selected.cId,
-                                name: selected.cName
-                            },
-                            checkedFunc: tempCheckedFunc,
-                            checkedRank: data.cRankId.toString()
-                        })
-
-                        $(this.editorDom)
-                            .find('[name=name]')
-                            .val(data.cName)
-                            .end()
-                            .find('[name=desc]')
-                            .val(data.cDesc)
-                    })
-                }
-
-            })
-    }
-
-    selectOrg(org) {
-        if (org) {
-            this.setState({
-                selected: org
+        if (this.props.params.rid === 'create') {
+            $.when(
+                orgDetails(this.props.params.oid),
+                funcDic(),
+                rankDic()
+            ).done((org, func, rank) => {
+                this.setState({
+                    org: {
+                        id: org.cId,
+                        name: org.cName
+                    },
+                    rank: rank,
+                    func: formatFuncData(func)
+                })
+            }).always(() => {
+                dialogTips.close()
             })
         } else {
-            this.setState({
-                selected: null
+            $.when(
+                orgDetails(this.props.params.oid),
+                funcDic(),
+                rankDic(),
+                roleDetails(this.props.params.rid)
+            ).done((org, func, rank, role) => {
+                let tempCheckedFunc = {};
+
+                role.rootFuncs.map((item) => {
+                    tempCheckedFunc[item.cId] = true;
+                })
+
+                this.setState({
+                    editorId: role.cId,
+                    org: {
+                        id: org.cId,
+                        name: org.cName
+                    },
+                    rank: rank,
+                    func: formatFuncData(func),
+
+                    checkedFunc: tempCheckedFunc,
+                    checkedRank: role.cRankId.toString()
+                })
+
+                $(this.editorDom)
+                    .find('[name=name]')
+                    .val(role.cName)
+                    .end()
+                    .find('[name=desc]')
+                    .val(role.cDesc)
+            }).always(() => {
+                dialogTips.close()
             })
-        };
+        }
     }
 
     checkedFunc(event) {
         const isAdmin = event.target.value === FUNC_ADMIN_ID ? true : false;
         let tempFunc = $.extend({}, this.state.checkedFunc);
         let tempRank = this.state.checkedRank;
+        let checkedFuncCount = 0;
+
+        for (const key in this.state.checkedFunc) {
+            if (this.state.checkedFunc[key] === true) {
+                checkedFuncCount++;
+            }
+        }
 
         if (isAdmin && event.target.checked === true) {
             tempFunc = {};
@@ -146,11 +146,14 @@ export default class Editor extends React.Component {
     }
 
     editorSubmit() {
+        const successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role';
+        const loading = DialogTips({ type: 'loading' })
+        const success = DialogTips({ type: 'success' })
+        const fail = DialogTips({ type: 'fail', autoClose: true })
         let param = {};
         let funcIds = [];
 
-        param.id = this.props.params.id === 'create' ? null : this.props.params.id;
-        param.orgId = this.state.selected.id;
+        param.orgId = this.state.org.id;
 
         for (const key in this.state.checkedFunc) {
             if (this.state.checkedFunc[key] === true) {
@@ -163,83 +166,38 @@ export default class Editor extends React.Component {
         param.name = $(this.editorDom).find('[name=name]').val()
         param.desc = $(this.editorDom).find('[name=desc]').val()
 
-        this.setState({
-            saveLoading: true
-        })
+        loading.open()
 
-        if (this.props.params.id === 'create') {
-            roleAdd(param)
-                .done(() => {
-                    this.setState({
-                        saveLoading: false,
-                        isAdmin: false,
-                        checkedFunc: {},
-                        checkedRank: null,
-                        saveResult: {
-                            type: 'success',
-                            title: 'Well done!',
-                            text: '添加成功 ！'
-                        }
-                    })
-
-                    $(this.editorDom)
-                        .find('[name=name]')
-                        .val('')
-                        .end()
-                        .find('[name=desc]')
-                        .val('');
-                })
-                .fail((data) => {
-                    this.setState({
-                        saveLoading: false,
-                        saveResult: {
-                            type: 'danger',
-                            'title': 'Oh snap!',
-                            'text': '[' + data.data.code + '] ' + data.data.detail
-                        }
-                    })
-                })
-        } else {
+        if (this.state.editorId) {
+            param.id = this.state.editorId;
             roleMod(param)
                 .done(() => {
-                    this.setState({
-                        saveLoading: false,
-                        saveResult: {
-                            type: 'success',
-                            title: 'Well done!',
-                            text: '添加成功 ！'
-                        }
-                    })
+                    loading.close()
+                    success.open()
+                    setTimeout(() => {
+                        success.close()
+                        this.props.router.push(successPath)
+                    }, 2000)
                 })
                 .fail((data) => {
-                    this.setState({
-                        saveLoading: false,
-                        saveResult: {
-                            type: 'danger',
-                            'title': 'Oh snap!',
-                            'text': '[' + data.data.code + '] ' + data.data.detail
-                        }
-                    })
+                    loading.close()
+                    fail.open()
+                })
+        } else {
+            roleAdd(param)
+                .done(() => {
+                    loading.close()
+                    success.open()
+                    setTimeout(() => {
+                        success.close()
+                        this.props.router.push(successPath)
+                    }, 2000)
+                })
+                .fail((data) => {
+                    loading.close()
+                    fail.open()
                 })
         }
-    }
-
-    showAlert() {
-        if (this.state.saveResult) {
-            return (
-                <Alerts type={this.state.saveResult.type} title={this.state.saveResult.title} text={this.state.saveResult.text}>
-                    <Link to={SCHOOLPAL_CONFIG.ROOTPATH + 'role'} className="alert-link">返回列表</Link>
-                </Alerts>
-            )
-        } else {
-            return '';
-        }
-    }
-
-    clearAlert() {
-        this.setState({
-            saveResult: null
-        })
     }
 
     render() {
@@ -248,103 +206,102 @@ export default class Editor extends React.Component {
                 <h5>
                     <i className='fa fa-glass'></i>&nbsp;角色管理&nbsp;|&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.id, '角色')}</p>
                     <div className="btn-group float-right" role="group">
-                        <SaveButton action={this.editorSubmit} text="保存" loading={this.state.saveLoading} />
+                        <BackButton router={this.props.router} />
+                        <SaveButton action={this.editorSubmit} text="保存" />
                     </div>
                 </h5>
 
-                {this.showAlert()}
-
-                <div onClick={this.clearAlert} className="main-container">
+                <div className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true ? 'hide' : 'w300'}>
-                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
-                        </div>
-                        <form ref={(dom) => { this.editorDom = dom }} className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
-                            <p className="h6 pb-3 b-b">所属组织：{this.state.selected ? this.state.selected.name : ''}</p>
-                            <div className="w500">
-                                <div className="form-group">
-                                    <label for="name"><em className="text-danger">*</em>角色职能</label>
-                                    <div>
-                                        {
-                                            this.state.func.map((item) => {
-                                                return (
-                                                    <div key={item.cId} className="form-check form-check-inline">
-                                                        <label className="form-check-label">
-                                                            <input
-                                                                onChange={this.checkedFunc}
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                value={item.cId}
-                                                                checked={this.state.checkedFunc[item.cId] ? this.state.checkedFunc[item.cId] : false}
-                                                                name="func"
-                                                            />
-                                                            {item.cNameShort}
-                                                        </label>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label for="name"><em className="text-danger">*</em>角色职级</label>
-                                    <div>
-                                        {
-                                            this.state.rank.map((item) => {
-                                                let isDisabled = false;
-                                                let checkedFuncCount = 0;
+                        <form ref={(dom) => { this.editorDom = dom }} className={this.state.org === null ? 'hide' : 'w500'}>
+                            <div className="form-group">
+                                <label for="name"><em className="text-danger">*</em>所属组织：</label>
+                                <input type="text" className="form-control d-inline-block" value={this.state.org ? this.state.org.name : ''} disabled="disabled" />
+                            </div>
+                            <div className="form-group">
+                                <label for="name"><em className="text-danger">*</em>角色职能</label>
+                                <div>
+                                    {
+                                        this.state.func.map((item) => {
+                                            const adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
 
-                                                for (const key in this.state.checkedFunc) {
-                                                    if (this.state.checkedFunc[key] === true) {
-                                                        checkedFuncCount++;
-                                                    }
+                                            return (
+                                                <div key={item.cId} className={adminClass}>
+                                                    <label className="form-check-label">
+                                                        <input
+                                                            onChange={this.checkedFunc}
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            value={item.cId}
+                                                            checked={this.state.checkedFunc[item.cId] ? this.state.checkedFunc[item.cId] : false}
+                                                            name="func"
+                                                        />
+                                                        <span className="align-middle">{item.cNameShort}</span>
+                                                    </label>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label for="name"><em className="text-danger">*</em>角色职级</label>
+                                <div>
+                                    {
+                                        this.state.rank.map((item) => {
+                                            const adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+                                            let isDisabled = false;
+                                            let isChecked = false;
+                                            let checkedFuncCount = 0;
+
+                                            for (const key in this.state.checkedFunc) {
+                                                if (this.state.checkedFunc[key] === true) {
+                                                    checkedFuncCount++;
+                                                }
+                                            }
+
+                                            if (this.state.isAdmin === true) {
+                                                isDisabled = item.cId.toString() !== RANK_ADMIN_ID ? true : false;
+                                            } else {
+                                                if (checkedFuncCount > 1) {
+                                                    isDisabled = item.cId === 1 ? false : true;
                                                 }
 
-                                                if (this.state.isAdmin === true) {
-                                                    isDisabled = item.cId.toString() !== RANK_ADMIN_ID ? true : false;
-                                                } else {
-                                                    if (checkedFuncCount > 1) {
-                                                        isDisabled = item.cId === 1 ? false : true;
-                                                    }
-
-                                                    if (checkedFuncCount === 1) {
-                                                        isDisabled = item.cId.toString() === RANK_ADMIN_ID ? true : false;
-                                                    }
+                                                if (checkedFuncCount === 1) {
+                                                    isDisabled = item.cId.toString() === RANK_ADMIN_ID ? true : false;
                                                 }
+                                            }
 
-                                                return (
-                                                    <div key={item.cId} className="form-check form-check-inline">
-                                                        <label className="form-check-label">
-                                                            <input
-                                                                onChange={this.checkedRank}
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="rank"
-                                                                disabled={isDisabled}
-                                                                checked={item.cId.toString() === this.state.checkedRank ? true : false}
-                                                                value={item.cId}
-                                                            />
-                                                            {item.cName}
-                                                        </label>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
+                                            return (
+                                                <div key={item.cId} className={adminClass}>
+                                                    <label className="form-check-label">
+                                                        <input
+                                                            onChange={this.checkedRank}
+                                                            className="form-check-input"
+                                                            type="radio"
+                                                            name="rank"
+                                                            disabled={isDisabled}
+                                                            checked={item.cId.toString() === this.state.checkedRank ? true : false}
+                                                            value={item.cId}
+                                                        />
+                                                        <span className="align-middle">{item.cName}</span>
+                                                    </label>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
-                                <div className="form-group">
-                                    <label for="name">负责人</label>
-                                    <input type="text" className="form-control" name="name" />
-                                </div>
-                                <div className="form-group">
-                                    <label for="name">角色描述</label>
-                                    <textarea name="desc" className="form-control" rows="3"></textarea>
-                                </div>
+                            </div>
+                            <div className="form-group">
+                                <label for="name">角色名称</label>
+                                <input type="text" className="form-control" name="name" />
+                            </div>
+                            <div className="form-group">
+                                <label for="name">角色描述</label>
+                                <textarea name="desc" className="form-control" rows="3"></textarea>
                             </div>
                         </form>
                     </div>
-
-                    {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
                 </div>
             </div>
         )

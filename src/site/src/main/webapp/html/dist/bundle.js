@@ -77,8 +77,8 @@ webpackJsonp([0],{
 	        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
 	        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
 	        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
-	        '7-2-1': { PATH_RULE: /^role\/create(\/)?$/ },
-	        '7-2-2': { PATH_RULE: /^role\/\w+(\/)?$/ },
+	        '7-2-1': { PATH_RULE: /^role\/\w+\/create(\/)?$/ },
+	        '7-2-2': { PATH_RULE: /^role\/\w+\/\w+(\/)?$/ },
 	        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
 	        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' },
 	        '7-4-1': { PATH_RULE: /^user\/\w+\/create(\/)?$/ },
@@ -101,7 +101,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List2.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor2.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List4.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:id', component: _Editor4.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:oid/:rid', component: _Editor4.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth', component: _List6.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List8.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:oid/:uid', component: _Editor6.default, onEnter: _checkAuth2.default }),
@@ -2283,13 +2283,13 @@ webpackJsonp([0],{
 	            var elem = $(event.target).data('o') ? $(event.target) : $(event.target).parent();
 
 	            if (elem.hasClass('selected')) {
-	                this.props.selected(null);
-	            } else {
-	                this.props.selected({
-	                    id: elem.data('o'),
-	                    name: elem.children('span').text()
-	                });
+	                return;
 	            }
+
+	            this.props.selected({
+	                id: elem.data('o'),
+	                name: elem.children('span').text()
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -2590,9 +2590,17 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _Dialog = __webpack_require__(233);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
 	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2621,23 +2629,20 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
-	            selected: null,
+	            org: null,
 
-	            roleLoading: false,
 	            roleList: [],
-
-	            selectedRole: null,
-
-	            delLoading: false
+	            selected: null
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.selectOrg = _this.selectOrg.bind(_this);
-	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.checkedRole = _this.checkedRole.bind(_this);
+	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
+	        _this.confirmDel = _this.confirmDel.bind(_this);
 	        return _this;
 	    }
 
@@ -2646,10 +2651,23 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data.tree
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (org) {
+	                (0, _api.roleList)(org.original[0].cId).done(function (role) {
+	                    _this2.setState({
+	                        orgList: org.tree,
+	                        org: {
+	                            id: org.original[0].cId,
+	                            name: org.original[0].cName
+	                        },
+
+	                        roleList: role
+	                    });
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
 	            });
 	        }
@@ -2663,15 +2681,15 @@ webpackJsonp([0],{
 	            if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
 	                SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map(function (item, index) {
 	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH + 'role/create' }));
+	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
 	                    };
 
 	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
+	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.selected === null ? true : false }));
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.selected === null ? true : false }));
 	                    }
 	                });
 	            }
@@ -2683,45 +2701,43 @@ webpackJsonp([0],{
 	        value: function selectOrg(org) {
 	            var _this4 = this;
 
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
 	            if (org) {
-	                this.setState({
-	                    selected: org,
-	                    roleLoading: true
-	                });
+	                this.setState({ org: org });
+
+	                dialogTips.open();
 
 	                (0, _api.roleList)(org.id).done(function (data) {
-	                    _this4.setState({
-	                        roleLoading: false,
-	                        roleList: data
-	                    });
+	                    _this4.setState({ roleList: data });
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
+	            }
 	        }
 	    }, {
-	        key: 'handleSelect',
-	        value: function handleSelect(event) {
-	            if (this.state.delLoading === true) {
-	                return;
+	        key: 'checkedRole',
+	        value: function checkedRole(event) {
+	            if (event.target.checked === true) {
+	                this.setState({
+	                    selected: {
+	                        id: event.target.value,
+	                        name: $(event.target).parents('tr').find('[data-name]').text()
+	                    }
+	                });
 	            }
+	        }
+	    }, {
+	        key: 'handleCreate',
+	        value: function handleCreate() {
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/create';
 
-	            if ($(event.target).hasClass('selected')) {
-	                this.setState({
-	                    selectedRole: null
-	                });
-	            } else {
-	                this.setState({
-	                    selectedRole: $(event.target).parents('tr').data('id')
-	                });
-	            }
+	            this.props.router.push(editorPath);
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/' + this.state.selected.id;
 
 	            this.props.router.push(editorPath);
 	        }
@@ -2730,23 +2746,41 @@ webpackJsonp([0],{
 	        value: function handleDel() {
 	            var _this5 = this;
 
-	            this.setState({
-	                delLoading: true
-	            });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            (0, _api.roleDel)(this.state.selectedRole).done(function () {
+	            loading.open();
+
+	            (0, _api.roleDel)(this.state.selected.id).done(function () {
+	                var tempList = _this5.state.roleList.filter(function (item) {
+	                    if (item.cId !== _this5.state.selected.id) {
+	                        return item;
+	                    }
+	                });
+
+	                loading.close();
+	                success.open();
+
 	                _this5.setState({
-	                    delLoading: false,
-	                    roleLoading: true
+	                    roleList: tempList,
+	                    selected: null
 	                });
-
-	                (0, _api.roleList)(_this5.state.selected.id).done(function (data) {
-	                    _this5.setState({
-	                        roleLoading: false,
-	                        roleList: data
-	                    });
-	                });
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
 	            });
+	        }
+	    }, {
+	        key: 'confirmDel',
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除 ' + this.state.selected.name + ' 角色 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
 	        }
 	    }, {
 	        key: 'render',
@@ -2775,15 +2809,15 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
-	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                            { className: this.state.org === null ? 'hide' : 'w300' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.org ? this.state.org.id : null })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                            { className: this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
 	                                'table',
-	                                { className: this.state.roleLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                { className: this.state.roleList === null ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
 	                                    'thead',
 	                                    null,
@@ -2823,11 +2857,26 @@ webpackJsonp([0],{
 	                                    this.state.roleList.map(function (item) {
 	                                        return _react2.default.createElement(
 	                                            'tr',
-	                                            { key: item.cId, 'data-id': item.cId },
+	                                            { key: item.cId },
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
-	                                                _react2.default.createElement('span', { onClick: _this6.handleSelect, className: _this6.state.selectedRole && _this6.state.selectedRole.toString() === item.cId ? 'select selected' : 'select' })
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'form-check' },
+	                                                    _react2.default.createElement(
+	                                                        'label',
+	                                                        { className: 'form-check-label' },
+	                                                        _react2.default.createElement('input', {
+	                                                            onChange: _this6.checkedRole,
+	                                                            className: 'form-check-input',
+	                                                            type: 'radio',
+	                                                            name: 'org',
+	                                                            checked: _this6.state.selected && item.cId === _this6.state.selected.id ? true : false,
+	                                                            value: item.cId
+	                                                        })
+	                                                    )
+	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
@@ -2841,7 +2890,7 @@ webpackJsonp([0],{
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
-	                                                null,
+	                                                { 'data-name': true },
 	                                                item.cName
 	                                            ),
 	                                            _react2.default.createElement(
@@ -2852,18 +2901,8 @@ webpackJsonp([0],{
 	                                        );
 	                                    })
 	                                )
-	                            ),
-	                            this.state.roleLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
-	                        ),
-	                        this.state.loading === true ? _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                        ) : ''
+	                            )
+	                        )
 	                    )
 	                )
 	            );
@@ -2898,14 +2937,6 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(240);
-
-	var _OrgTree2 = _interopRequireDefault(_OrgTree);
-
-	var _Alerts = __webpack_require__(235);
-
-	var _Alerts2 = _interopRequireDefault(_Alerts);
-
 	var _Button = __webpack_require__(237);
 
 	var _subTitle = __webpack_require__(241);
@@ -2913,6 +2944,10 @@ webpackJsonp([0],{
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2946,24 +2981,16 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
-	            orgList: [],
-	            selected: null,
+	            org: null,
 
 	            rank: [],
 	            func: [],
 
 	            isAdmin: false,
 	            checkedFunc: {},
-	            checkedRank: null,
-
-	            saveLoading: false,
-	            saveResult: null
+	            checkedRank: null
 	        };
 
-	        _this.selectOrg = _this.selectOrg.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        _this.checkedFunc = _this.checkedFunc.bind(_this);
 	        _this.checkedRank = _this.checkedRank.bind(_this);
 	        _this.editorSubmit = _this.editorSubmit.bind(_this);
@@ -2975,57 +3002,49 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            $.when((0, _api.orgList)(), (0, _api.funcDic)(), (0, _api.rankDic)()).done(function (org, func, rank) {
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
-	                if (_this2.props.params.id === 'create') {
+	            dialogTips.open();
+
+	            if (this.props.params.rid === 'create') {
+	                $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.funcDic)(), (0, _api.rankDic)()).done(function (org, func, rank) {
 	                    _this2.setState({
-	                        loading: false,
-	                        orgList: org.tree,
+	                        org: {
+	                            id: org.cId,
+	                            name: org.cName
+	                        },
 	                        rank: rank,
 	                        func: formatFuncData(func)
 	                    });
-	                } else {
-	                    (0, _api.roleDetails)(_this2.props.params.id).done(function (data) {
-	                        var selected = org.tree.find(function (item) {
-	                            return item.cId === data.cOrgId;
-	                        });
-	                        var tempCheckedFunc = {};
-
-	                        data.rootFuncs.map(function (item) {
-	                            tempCheckedFunc[item.cId] = true;
-	                        });
-
-	                        _this2.setState({
-	                            loading: false,
-	                            orgList: org.tree,
-	                            rank: rank,
-	                            func: formatFuncData(func),
-
-	                            selected: {
-	                                id: selected.cId,
-	                                name: selected.cName
-	                            },
-	                            checkedFunc: tempCheckedFunc,
-	                            checkedRank: data.cRankId.toString()
-	                        });
-
-	                        $(_this2.editorDom).find('[name=name]').val(data.cName).end().find('[name=desc]').val(data.cDesc);
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'selectOrg',
-	        value: function selectOrg(org) {
-	            if (org) {
-	                this.setState({
-	                    selected: org
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
 	            } else {
-	                this.setState({
-	                    selected: null
+	                $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.funcDic)(), (0, _api.rankDic)(), (0, _api.roleDetails)(this.props.params.rid)).done(function (org, func, rank, role) {
+	                    var tempCheckedFunc = {};
+
+	                    role.rootFuncs.map(function (item) {
+	                        tempCheckedFunc[item.cId] = true;
+	                    });
+
+	                    _this2.setState({
+	                        editorId: role.cId,
+	                        org: {
+	                            id: org.cId,
+	                            name: org.cName
+	                        },
+	                        rank: rank,
+	                        func: formatFuncData(func),
+
+	                        checkedFunc: tempCheckedFunc,
+	                        checkedRank: role.cRankId.toString()
+	                    });
+
+	                    $(_this2.editorDom).find('[name=name]').val(role.cName).end().find('[name=desc]').val(role.cDesc);
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
-	            };
+	            }
 	        }
 	    }, {
 	        key: 'checkedFunc',
@@ -3033,6 +3052,13 @@ webpackJsonp([0],{
 	            var isAdmin = event.target.value === FUNC_ADMIN_ID ? true : false;
 	            var tempFunc = $.extend({}, this.state.checkedFunc);
 	            var tempRank = this.state.checkedRank;
+	            var checkedFuncCount = 0;
+
+	            for (var key in this.state.checkedFunc) {
+	                if (this.state.checkedFunc[key] === true) {
+	                    checkedFuncCount++;
+	                }
+	            }
 
 	            if (isAdmin && event.target.checked === true) {
 	                tempFunc = {};
@@ -3071,11 +3097,14 @@ webpackJsonp([0],{
 	        value: function editorSubmit() {
 	            var _this3 = this;
 
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role';
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 	            var param = {};
 	            var funcIds = [];
 
-	            param.id = this.props.params.id === 'create' ? null : this.props.params.id;
-	            param.orgId = this.state.selected.id;
+	            param.orgId = this.state.org.id;
 
 	            for (var key in this.state.checkedFunc) {
 	                if (this.state.checkedFunc[key] === true) {
@@ -3088,80 +3117,34 @@ webpackJsonp([0],{
 	            param.name = $(this.editorDom).find('[name=name]').val();
 	            param.desc = $(this.editorDom).find('[name=desc]').val();
 
-	            this.setState({
-	                saveLoading: true
-	            });
+	            loading.open();
 
-	            if (this.props.params.id === 'create') {
-	                (0, _api.roleAdd)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        isAdmin: false,
-	                        checkedFunc: {},
-	                        checkedRank: null,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
-
-	                    $(_this3.editorDom).find('[name=name]').val('').end().find('[name=desc]').val('');
-	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
-	                });
-	            } else {
+	            if (this.state.editorId) {
+	                param.id = this.state.editorId;
 	                (0, _api.roleMod)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
+	                    loading.close();
+	                    fail.open();
+	                });
+	            } else {
+	                (0, _api.roleAdd)(param).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
 	                });
 	            }
-	        }
-	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.saveResult) {
-	                return _react2.default.createElement(
-	                    _Alerts2.default,
-	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'role', className: 'alert-link' },
-	                        '\u8FD4\u56DE\u5217\u8868'
-	                    )
-	                );
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                saveResult: null
-	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -3184,159 +3167,166 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
+	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
 	                    )
 	                ),
-	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
-	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                        ),
-	                        _react2.default.createElement(
 	                            'form',
 	                            { ref: function ref(dom) {
 	                                    _this4.editorDom = dom;
-	                                }, className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                                }, className: this.state.org === null ? 'hide' : 'w500' },
 	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'h6 pb-3 b-b' },
-	                                '\u6240\u5C5E\u7EC4\u7EC7\uFF1A',
-	                                this.state.selected ? this.state.selected.name : ''
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    _react2.default.createElement(
+	                                        'em',
+	                                        { className: 'text-danger' },
+	                                        '*'
+	                                    ),
+	                                    '\u6240\u5C5E\u7EC4\u7EC7\uFF1A'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control d-inline-block', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
 	                            ),
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'w500' },
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    _react2.default.createElement(
+	                                        'em',
+	                                        { className: 'text-danger' },
+	                                        '*'
+	                                    ),
+	                                    '\u89D2\u8272\u804C\u80FD'
+	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        _react2.default.createElement(
-	                                            'em',
-	                                            { className: 'text-danger' },
-	                                            '*'
-	                                        ),
-	                                        '\u89D2\u8272\u804C\u80FD'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        this.state.func.map(function (item) {
-	                                            return _react2.default.createElement(
-	                                                'div',
-	                                                { key: item.cId, className: 'form-check form-check-inline' },
+	                                    null,
+	                                    this.state.func.map(function (item) {
+	                                        var adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+
+	                                        return _react2.default.createElement(
+	                                            'div',
+	                                            { key: item.cId, className: adminClass },
+	                                            _react2.default.createElement(
+	                                                'label',
+	                                                { className: 'form-check-label' },
+	                                                _react2.default.createElement('input', {
+	                                                    onChange: _this4.checkedFunc,
+	                                                    className: 'form-check-input',
+	                                                    type: 'checkbox',
+	                                                    value: item.cId,
+	                                                    checked: _this4.state.checkedFunc[item.cId] ? _this4.state.checkedFunc[item.cId] : false,
+	                                                    name: 'func'
+	                                                }),
 	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        onChange: _this4.checkedFunc,
-	                                                        className: 'form-check-input',
-	                                                        type: 'checkbox',
-	                                                        value: item.cId,
-	                                                        checked: _this4.state.checkedFunc[item.cId] ? _this4.state.checkedFunc[item.cId] : false,
-	                                                        name: 'func'
-	                                                    }),
+	                                                    'span',
+	                                                    { className: 'align-middle' },
 	                                                    item.cNameShort
 	                                                )
-	                                            );
-	                                        })
-	                                    )
+	                                            )
+	                                        );
+	                                    })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    _react2.default.createElement(
+	                                        'em',
+	                                        { className: 'text-danger' },
+	                                        '*'
+	                                    ),
+	                                    '\u89D2\u8272\u804C\u7EA7'
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        _react2.default.createElement(
-	                                            'em',
-	                                            { className: 'text-danger' },
-	                                            '*'
-	                                        ),
-	                                        '\u89D2\u8272\u804C\u7EA7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        this.state.rank.map(function (item) {
-	                                            var isDisabled = false;
-	                                            var checkedFuncCount = 0;
+	                                    null,
+	                                    this.state.rank.map(function (item) {
+	                                        var adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+	                                        var isDisabled = false;
+	                                        var isChecked = false;
+	                                        var checkedFuncCount = 0;
 
-	                                            for (var key in _this4.state.checkedFunc) {
-	                                                if (_this4.state.checkedFunc[key] === true) {
-	                                                    checkedFuncCount++;
-	                                                }
+	                                        for (var key in _this4.state.checkedFunc) {
+	                                            if (_this4.state.checkedFunc[key] === true) {
+	                                                checkedFuncCount++;
+	                                            }
+	                                        }
+
+	                                        if (_this4.state.isAdmin === true) {
+	                                            isDisabled = item.cId.toString() !== RANK_ADMIN_ID ? true : false;
+	                                        } else {
+	                                            if (checkedFuncCount > 1) {
+	                                                isDisabled = item.cId === 1 ? false : true;
 	                                            }
 
-	                                            if (_this4.state.isAdmin === true) {
-	                                                isDisabled = item.cId.toString() !== RANK_ADMIN_ID ? true : false;
-	                                            } else {
-	                                                if (checkedFuncCount > 1) {
-	                                                    isDisabled = item.cId === 1 ? false : true;
-	                                                }
-
-	                                                if (checkedFuncCount === 1) {
-	                                                    isDisabled = item.cId.toString() === RANK_ADMIN_ID ? true : false;
-	                                                }
+	                                            if (checkedFuncCount === 1) {
+	                                                isDisabled = item.cId.toString() === RANK_ADMIN_ID ? true : false;
 	                                            }
+	                                        }
 
-	                                            return _react2.default.createElement(
-	                                                'div',
-	                                                { key: item.cId, className: 'form-check form-check-inline' },
+	                                        return _react2.default.createElement(
+	                                            'div',
+	                                            { key: item.cId, className: adminClass },
+	                                            _react2.default.createElement(
+	                                                'label',
+	                                                { className: 'form-check-label' },
+	                                                _react2.default.createElement('input', {
+	                                                    onChange: _this4.checkedRank,
+	                                                    className: 'form-check-input',
+	                                                    type: 'radio',
+	                                                    name: 'rank',
+	                                                    disabled: isDisabled,
+	                                                    checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
+	                                                    value: item.cId
+	                                                }),
 	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        onChange: _this4.checkedRank,
-	                                                        className: 'form-check-input',
-	                                                        type: 'radio',
-	                                                        name: 'rank',
-	                                                        disabled: isDisabled,
-	                                                        checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
-	                                                        value: item.cId
-	                                                    }),
+	                                                    'span',
+	                                                    { className: 'align-middle' },
 	                                                    item.cName
 	                                                )
-	                                            );
-	                                        })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        '\u8D1F\u8D23\u4EBA'
-	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        '\u89D2\u8272\u63CF\u8FF0'
-	                                    ),
-	                                    _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
+	                                            )
+	                                        );
+	                                    })
 	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u89D2\u8272\u540D\u79F0'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u89D2\u8272\u63CF\u8FF0'
+	                                ),
+	                                _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
 	                            )
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }

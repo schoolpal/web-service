@@ -1,9 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
-import OrgTree from '../public/OrgTree';
-import { CreateButton, EditorButton, DelButton } from '../public/Button';
-import { orgList, roleList, roleDel } from '../../utils/api';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Link } from 'react-router'
+import OrgTree from '../public/OrgTree'
+import Dialog from '../public/Dialog'
+import { CreateButton, EditorButton, DelButton } from '../public/Button'
+import { orgList, roleList, roleDel } from '../../utils/api'
+import DialogTips from '../../utils/DialogTips'
 
 function getFuncStr(data) {
     let funcArr = [];
@@ -19,32 +21,44 @@ export default class List extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true,
             orgList: [],
-            selected: null,
+            org: null,
 
-            roleLoading: false,
             roleList: [],
-
-            selectedRole: null,
-
-            delLoading: false
+            selected: null,
         };
 
-        this.renderCommand = this.renderCommand.bind(this);
-        this.selectOrg = this.selectOrg.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
-        this.handleEditor = this.handleEditor.bind(this);
-        this.handleDel = this.handleDel.bind(this);
+        this.renderCommand = this.renderCommand.bind(this)
+        this.selectOrg = this.selectOrg.bind(this)
+        this.checkedRole = this.checkedRole.bind(this)
+        this.handleCreate = this.handleCreate.bind(this)
+        this.handleEditor = this.handleEditor.bind(this)
+        this.handleDel = this.handleDel.bind(this)
+        this.confirmDel = this.confirmDel.bind(this)
     }
 
     componentDidMount() {
+        const dialogTips = DialogTips({ type: 'loading' })
+
+        dialogTips.open()
+
         orgList()
-            .done((data) => {
-                this.setState({
-                    loading: false,
-                    orgList: data.tree
-                })
+            .done((org) => {
+                roleList(org.original[0].cId)
+                    .done((role) => {
+                        this.setState({
+                            orgList: org.tree,
+                            org: {
+                                id: org.original[0].cId,
+                                name: org.original[0].cName
+                            },
+
+                            roleList: role
+                        })
+                    })
+                    .always(() => {
+                        dialogTips.close()
+                    })
             })
     }
 
@@ -54,15 +68,15 @@ export default class List extends React.Component {
         if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
             SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map((item, index) => {
                 if (item === 'Add') {
-                    temp.push(<CreateButton key={index} link={SCHOOLPAL_CONFIG.ROOTPATH + 'role/create'} />)
+                    temp.push(<CreateButton key={index} action={this.handleCreate} />)
                 };
 
                 if (item === 'Mod') {
-                    temp.push(<EditorButton key={index} action={this.handleEditor} />)
+                    temp.push(<EditorButton key={index} action={this.handleEditor} disabled={this.state.selected === null ? true : false} />)
                 }
 
                 if (item === 'Del') {
-                    temp.push(<DelButton key={index} action={this.handleDel} loading={this.state.delLoading} />)
+                    temp.push(<DelButton key={index} action={this.confirmDel} disabled={this.state.selected === null ? true : false} />)
                 }
             })
         }
@@ -71,68 +85,83 @@ export default class List extends React.Component {
     }
 
     selectOrg(org) {
+        const dialogTips = DialogTips({ type: 'loading' })
+
         if (org) {
-            this.setState({
-                selected: org,
-                roleLoading: true
-            })
+            this.setState({ org: org })
+
+            dialogTips.open()
 
             roleList(org.id)
                 .done((data) => {
-                    this.setState({
-                        roleLoading: false,
-                        roleList: data
-                    })
+                    this.setState({ roleList: data })
                 })
-        } else {
-            this.setState({
-                selected: null
-            })
-        };
+                .always(() => {
+                    dialogTips.close()
+                })
+        }
     }
 
-    handleSelect(event) {
-        if (this.state.delLoading === true) {
-            return;
+    checkedRole(event) {
+        if (event.target.checked === true) {
+            this.setState({
+                selected: {
+                    id: event.target.value,
+                    name: $(event.target).parents('tr').find('[data-name]').text()
+                }
+            })
         }
+    }
 
-        if ($(event.target).hasClass('selected')) {
-            this.setState({
-                selectedRole: null
-            })
-        } else {
-            this.setState({
-                selectedRole: $(event.target).parents('tr').data('id')
-            })
-        }
+    handleCreate() {
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/create';
+
+        this.props.router.push(editorPath)
     }
 
     handleEditor() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/' + this.state.selected.id;
 
         this.props.router.push(editorPath)
     }
 
     handleDel() {
-        this.setState({
-            delLoading: true
-        })
+        const loading = DialogTips({ type: 'loading' })
+        const success = DialogTips({ type: 'success', autoClose: true })
+        const fail = DialogTips({ type: 'fail', autoClose: true })
 
-        roleDel(this.state.selectedRole).done(() => {
-            this.setState({
-                delLoading: false,
-                roleLoading: true
-            })
+        loading.open()
 
-            roleList(this.state.selected.id)
-                .done((data) => {
-                    this.setState({
-                        roleLoading: false,
-                        roleList: data
-                    })
+        roleDel(this.state.selected.id)
+            .done(() => {
+                const tempList = this.state.roleList.filter((item) => { if (item.cId !== this.state.selected.id) { return item } });
+
+                loading.close()
+                success.open()
+
+                this.setState({
+                    roleList: tempList,
+                    selected: null
                 })
-        })
+            }).fail(() => {
+                loading.close()
+                fail.open()
+            })
     }
+
+    confirmDel() {
+        const div = document.createElement('div');
+
+        ReactDOM.render(
+            <Dialog
+                container={div}
+                text={'是否确认删除 ' + this.state.selected.name + ' 角色 ？'}
+                action={this.handleDel}
+            />,
+            document.body.appendChild(div)
+        )
+    }
+
 
     render() {
         return (
@@ -146,11 +175,11 @@ export default class List extends React.Component {
 
                 <div className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true ? 'hide' : 'w300'}>
-                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
+                        <div className={this.state.org === null ? 'hide' : 'w300'}>
+                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.org ? this.state.org.id : null} />
                         </div>
-                        <div className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
-                            <table className={this.state.roleLoading === true ? 'hide' : 'table table-bordered table-sm'}>
+                        <div className={this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l'}>
+                            <table className={this.state.roleList === null ? 'hide' : 'table table-bordered table-sm'}>
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -164,13 +193,24 @@ export default class List extends React.Component {
                                     {
                                         this.state.roleList.map((item) => {
                                             return (
-                                                <tr key={item.cId} data-id={item.cId}>
+                                                <tr key={item.cId}>
                                                     <td>
-                                                        <span onClick={this.handleSelect} className={this.state.selectedRole && this.state.selectedRole.toString() === item.cId ? 'select selected' : 'select'}></span>
+                                                        <div className="form-check">
+                                                            <label className="form-check-label">
+                                                                <input
+                                                                    onChange={this.checkedRole}
+                                                                    className="form-check-input"
+                                                                    type="radio"
+                                                                    name="org"
+                                                                    checked={(this.state.selected && item.cId === this.state.selected.id) ? true : false}
+                                                                    value={item.cId}
+                                                                />
+                                                            </label>
+                                                        </div>
                                                     </td>
                                                     <td>{getFuncStr(item.rootFuncs)}</td>
                                                     <td>{item.cRankName}</td>
-                                                    <td>{item.cName}</td>
+                                                    <td data-name>{item.cName}</td>
                                                     <td>{item.cDesc}</td>
                                                 </tr>
                                             )
@@ -178,11 +218,7 @@ export default class List extends React.Component {
                                     }
                                 </tbody>
                             </table>
-
-                            {this.state.roleLoading === true ? <p>数据加载中 ...</p> : ''}
                         </div>
-
-                        {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
                     </div>
                 </div>
             </div>
