@@ -1,4 +1,4 @@
-import { conversionOrg } from './conversion';
+import { conversionOrg, conversionFunc } from './conversion';
 
 function io(options, callback) {
     if (!(this instanceof io)) {

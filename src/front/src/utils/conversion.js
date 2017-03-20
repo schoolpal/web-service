@@ -42,7 +42,32 @@ export function conversionOrg(original) {
     };
 }
 
-export function conversionFunc(data) {
+function insertFunc(rootData, data) {
+    if (rootData.cId === data.cParentId) {
+        if (data.cCommandTypeId) {
+            if (!rootData.action) {
+                rootData.action = [];
+            };
+
+            rootData.action.push(data);
+        } else {
+            if (!rootData.children) {
+                rootData.children = [];
+            };
+
+            rootData.children.push(data);
+        }
+    } else {
+        if (rootData.children && rootData.children.length) {
+            rootData.children.map((item) => {
+                insertFunc(item, data);
+            })
+        };
+    }
+}
+
+export function conversionFunc(original) {
+    const data = original.map((item) => { return $.extend({}, item) });
     let tree = [];
 
     if (data.length) {
@@ -52,34 +77,10 @@ export function conversionFunc(data) {
             } else {
                 const rootIndex = _.findIndex(tree, { cId: item.cRootId });
 
-                insertTree(tree[rootIndex], item);
+                insertFunc(tree[rootIndex], item);
             };
         })
     }
 
     return tree;
-
-    function insertTree(rootData, data) {
-        if (rootData.cId === data.cParentId) {
-            if (data.cCommandTypeId) {
-                if (!rootData.action) {
-                    rootData.action = [];
-                };
-
-                rootData.action.push(data);
-            } else {
-                if (!rootData.children) {
-                    rootData.children = [];
-                };
-
-                rootData.children.push(data);
-            }
-        } else {
-            if (rootData.children && rootData.children.length) {
-                rootData.children.map((item) => {
-                    insertTree(item, data);
-                })
-            };
-        }
-    }
 }

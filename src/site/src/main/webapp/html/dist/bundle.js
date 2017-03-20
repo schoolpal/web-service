@@ -715,7 +715,7 @@ webpackJsonp([0],{
 
 	    io({ url: url, data: { ids: fids } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-	            var conversionFuncData = conversionFunc(data.data);
+	            var conversionFuncData = (0, _conversion.conversionFunc)(data.data);
 
 	            defer.resolve({
 	                tree: conversionFuncData,
@@ -897,7 +897,34 @@ webpackJsonp([0],{
 	    };
 	}
 
-	function conversionFunc(data) {
+	function insertFunc(rootData, data) {
+	    if (rootData.cId === data.cParentId) {
+	        if (data.cCommandTypeId) {
+	            if (!rootData.action) {
+	                rootData.action = [];
+	            };
+
+	            rootData.action.push(data);
+	        } else {
+	            if (!rootData.children) {
+	                rootData.children = [];
+	            };
+
+	            rootData.children.push(data);
+	        }
+	    } else {
+	        if (rootData.children && rootData.children.length) {
+	            rootData.children.map(function (item) {
+	                insertFunc(item, data);
+	            });
+	        };
+	    }
+	}
+
+	function conversionFunc(original) {
+	    var data = original.map(function (item) {
+	        return $.extend({}, item);
+	    });
 	    var tree = [];
 
 	    if (data.length) {
@@ -907,36 +934,12 @@ webpackJsonp([0],{
 	            } else {
 	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
 
-	                insertTree(tree[rootIndex], item);
+	                insertFunc(tree[rootIndex], item);
 	            };
 	        });
 	    }
 
 	    return tree;
-
-	    function insertTree(rootData, data) {
-	        if (rootData.cId === data.cParentId) {
-	            if (data.cCommandTypeId) {
-	                if (!rootData.action) {
-	                    rootData.action = [];
-	                };
-
-	                rootData.action.push(data);
-	            } else {
-	                if (!rootData.children) {
-	                    rootData.children = [];
-	                };
-
-	                rootData.children.push(data);
-	            }
-	        } else {
-	            if (rootData.children && rootData.children.length) {
-	                rootData.children.map(function (item) {
-	                    insertTree(item, data);
-	                });
-	            };
-	        }
-	    }
 	}
 
 /***/ },
@@ -3364,13 +3367,17 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _Button = __webpack_require__(237);
+
 	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _Button = __webpack_require__(237);
-
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3389,21 +3396,14 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
 	            selected: null,
 
-	            roleLoading: false,
 	            roleList: [],
 	            checkedRole: null,
-	            checkedRoleName: null,
 
-	            funcLoading: false,
 	            funcList: [],
-	            checkedFunc: {},
-
-	            authLoading: false,
-	            authResult: null
+	            checkedFunc: {}
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
@@ -3413,8 +3413,6 @@ webpackJsonp([0],{
 	        _this.checkedRole = _this.checkedRole.bind(_this);
 	        _this.checkedFunc = _this.checkedFunc.bind(_this);
 	        _this.handleAuth = _this.handleAuth.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -3423,11 +3421,63 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data.tree
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (org) {
+	                var selected = {
+	                    id: org.tree[0].cId,
+	                    name: org.tree[0].cName
+	                };
+
+	                (0, _api.roleList)(selected.id).done(function (role) {
+	                    var checkedRole = {
+	                        id: role[0].cId,
+	                        name: role[0].cName
+	                    };
+
+	                    (0, _api.roleDetails)(checkedRole.id).done(function (roleFunc) {
+	                        var fids = roleFunc.rootFuncs.map(function (item) {
+	                            return item.cId;
+	                        });
+
+	                        (0, _api.funcByIds)(fids.join(',')).done(function (func) {
+	                            var checked = {};
+
+	                            func.data.map(function (item) {
+	                                if (roleFunc.functions.findIndex(function (elem) {
+	                                    return elem.cId === item.cId;
+	                                }) < 0) {
+	                                    checked[item.cId] = false;
+	                                } else {
+	                                    checked[item.cId] = true;
+	                                }
+	                            });
+
+	                            dialogTips.close();
+
+	                            _this2.setState({
+	                                orgList: org.tree,
+	                                selected: selected,
+
+	                                roleList: role,
+	                                checkedRole: checkedRole,
+
+	                                funcList: func.tree,
+	                                checkedFunc: checked
+	                            });
+	                        }).fail(function () {
+	                            dialogTips.close();
+	                        });
+	                    }).fail(function () {
+	                        dialogTips.close();
+	                    });
+	                }).fail(function () {
+	                    dialogTips.close();
 	                });
+	            }).fail(function () {
+	                dialogTips.close();
 	            });
 	        }
 	    }, {
@@ -3444,8 +3494,7 @@ webpackJsonp([0],{
 	                        temp.push(_react2.default.createElement(_Button.AuthButton, {
 	                            key: index,
 	                            action: _this3.handleAuth,
-	                            disabled: isDisabled,
-	                            loading: _this3.state.authLoading
+	                            disabled: isDisabled
 	                        }));
 	                    };
 	                });
@@ -3459,66 +3508,116 @@ webpackJsonp([0],{
 	            var _this4 = this;
 
 	            if (org) {
-	                this.setState({
-	                    selected: org,
-	                    roleLoading: true
-	                });
-
-	                (0, _api.roleList)(org.id).done(function (data) {
+	                (function () {
 	                    _this4.setState({
-	                        roleLoading: false,
-	                        roleList: data
+	                        selected: org,
+
+	                        roleList: [],
+	                        checkedRole: null,
+
+	                        funcList: [],
+	                        checkedFunc: {}
 	                    });
-	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
+
+	                    var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	                    dialogTips.open();
+
+	                    (0, _api.roleList)(org.id).done(function (role) {
+	                        var checkedRole = {
+	                            id: role[0].cId,
+	                            name: role[0].cName
+	                        };
+
+	                        (0, _api.roleDetails)(checkedRole.id).done(function (roleFunc) {
+	                            var fids = roleFunc.rootFuncs.map(function (item) {
+	                                return item.cId;
+	                            });
+
+	                            (0, _api.funcByIds)(fids.join(',')).done(function (func) {
+	                                var checked = {};
+
+	                                func.data.map(function (item) {
+	                                    if (roleFunc.functions.findIndex(function (elem) {
+	                                        return elem.cId === item.cId;
+	                                    }) < 0) {
+	                                        checked[item.cId] = false;
+	                                    } else {
+	                                        checked[item.cId] = true;
+	                                    }
+	                                });
+
+	                                dialogTips.close();
+
+	                                _this4.setState({
+	                                    roleList: role,
+	                                    checkedRole: checkedRole,
+
+	                                    funcList: func.tree,
+	                                    checkedFunc: checked
+	                                });
+	                            }).fail(function () {
+	                                dialogTips.close();
+	                            });
+	                        }).fail(function () {
+	                            dialogTips.close();
+	                        });
+	                    }).fail(function () {
+	                        dialogTips.close();
+	                    });
+	                })();
+	            }
 	        }
 	    }, {
 	        key: 'checkedRole',
 	        value: function checkedRole(event) {
 	            var _this5 = this;
 
-	            if (event.target.checked === true) {
-	                this.setState({
-	                    checkedRole: event.target.value,
-	                    checkedRoleName: $(event.target).parent().text(),
-	                    funcLoading: true
-	                });
-
-	                (0, _api.roleDetails)(event.target.value).done(function (roleFunc) {
-	                    var fids = roleFunc.rootFuncs.map(function (item) {
-	                        return item.cId;
-	                    });
-
-	                    (0, _api.funcByIds)(fids.join(',')).done(function (func) {
-	                        var checked = {};
-
-	                        func.data.map(function (item) {
-	                            if (roleFunc.functions.findIndex(function (elem) {
-	                                return elem.cId === item.cId;
-	                            }) < 0) {
-	                                checked[item.cId] = false;
-	                            } else {
-	                                checked[item.cId] = true;
-	                            }
-	                        });
-
-	                        _this5.setState({
-	                            funcLoading: false,
-	                            funcList: func.tree,
-	                            checkedFunc: checked
-	                        });
-	                    });
-	                });
-	            } else {
-	                this.setState({
-	                    checkedRole: null,
-	                    checkedRoleName: null
-	                });
+	            if (event.target.value === this.state.checkedRole.id) {
+	                return;
 	            }
+
+	            this.setState({
+	                checkedRole: {
+	                    id: event.target.value,
+	                    name: $(event.target).parent().text()
+	                }
+	            });
+
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.roleDetails)(event.target.value).done(function (roleFunc) {
+	                var fids = roleFunc.rootFuncs.map(function (item) {
+	                    return item.cId;
+	                });
+
+	                (0, _api.funcByIds)(fids.join(',')).done(function (func) {
+	                    var checked = {};
+
+	                    func.data.map(function (item) {
+	                        if (roleFunc.functions.findIndex(function (elem) {
+	                            return elem.cId === item.cId;
+	                        }) < 0) {
+	                            checked[item.cId] = false;
+	                        } else {
+	                            checked[item.cId] = true;
+	                        }
+	                    });
+
+	                    dialogTips.close();
+
+	                    _this5.setState({
+	                        funcList: func.tree,
+	                        checkedFunc: checked
+	                    });
+	                }).fail(function () {
+	                    dialogTips.close();
+	                });
+	            }).fail(function () {
+	                dialogTips.close();
+	            });
 	        }
 	    }, {
 	        key: 'checkedFunc',
@@ -3542,11 +3641,9 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleAuth',
 	        value: function handleAuth() {
-	            var _this6 = this;
-
-	            this.setState({
-	                authLoading: true
-	            });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
 	            var funcIdArr = [];
 
@@ -3557,45 +3654,35 @@ webpackJsonp([0],{
 	            }
 
 	            var param = {
-	                id: this.state.checkedRole,
+	                id: this.state.checkedRole.id,
 	                funcIds: funcIdArr.join(',')
 	            };
 
+	            loading.open();
+
 	            (0, _api.roleAuth)(param).done(function () {
-	                _this6.setState({
-	                    authLoading: false,
-	                    authResult: {
-	                        type: 'success',
-	                        title: 'Well done!',
-	                        text: '授权成功 ！需要用户重新登陆后，才会更新权限信息 ！'
-	                    }
-	                });
+	                loading.close();
+	                success.open();
 	            }).fail(function (data) {
-	                _this6.setState({
-	                    authLoading: false,
-	                    authResult: {
-	                        type: 'danger',
-	                        'title': 'Oh snap!',
-	                        'text': '[' + data.data.code + '] ' + data.data.detail
-	                    }
-	                });
+	                loading.close();
+	                fail.open();
 	            });
 	        }
 	    }, {
 	        key: 'renderTable',
 	        value: function renderTable(data) {
-	            var _this7 = this;
+	            var _this6 = this;
 
 	            var table = [];
 
 	            if (data.length) {
 	                data.map(function (item) {
-	                    table.push(_this7.tableLine(item));
+	                    table.push(_this6.tableLine(item));
 
 	                    if (item.children && item.children.length) {
 	                        var children = [];
 
-	                        children.push(_this7.renderTable(item.children));
+	                        children.push(_this6.renderTable(item.children));
 	                        table.push(children);
 	                    }
 	                });
@@ -3606,7 +3693,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'tableLine',
 	        value: function tableLine(data) {
-	            var _this8 = this;
+	            var _this7 = this;
 
 	            var level = data.cId.split('-').length;
 	            var spacingStyle = { marginLeft: 40 * level + 'px' };
@@ -3622,12 +3709,12 @@ webpackJsonp([0],{
 	                            'label',
 	                            { className: 'form-check-label' },
 	                            _react2.default.createElement('input', {
-	                                onChange: _this8.checkedFunc,
+	                                onChange: _this7.checkedFunc,
 	                                className: 'form-check-input',
 	                                type: 'checkbox',
 	                                'data-parent': item.cParentId,
 	                                value: item.cId,
-	                                checked: _this8.state.checkedFunc[item.cId]
+	                                checked: _this7.state.checkedFunc[item.cId]
 	                            }),
 	                            item.cNameLong
 	                        )
@@ -3674,29 +3761,9 @@ webpackJsonp([0],{
 	            );
 	        }
 	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.authResult) {
-	                return _react2.default.createElement(_Alerts2.default, {
-	                    type: this.state.authResult.type,
-	                    title: this.state.authResult.title,
-	                    text: this.state.authResult.text
-	                });
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                authResult: null
-	            });
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this9 = this;
+	            var _this8 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -3712,16 +3779,16 @@ webpackJsonp([0],{
 	                        this.renderCommand()
 	                    )
 	                ),
-	                this.showAlert(),
+	                _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
+	                            { className: this.state.orgList === null ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
@@ -3735,21 +3802,17 @@ webpackJsonp([0],{
 	                                        'label',
 	                                        { className: 'form-check-label' },
 	                                        _react2.default.createElement('input', {
-	                                            onChange: _this9.checkedRole,
+	                                            onChange: _this8.checkedRole,
 	                                            className: 'form-check-input',
-	                                            type: 'checkbox',
+	                                            type: 'radio',
+	                                            name: 'role',
 	                                            value: item.cId,
-	                                            checked: _this9.state.checkedRole === item.cId ? true : false
+	                                            checked: _this8.state.checkedRole.id === item.cId ? true : false
 	                                        }),
-	                                        item.cRankName
+	                                        item.cName
 	                                    )
 	                                );
-	                            }),
-	                            this.state.roleLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
+	                            })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -3790,19 +3853,9 @@ webpackJsonp([0],{
 	                                    null,
 	                                    this.renderTable(this.state.funcList)
 	                                )
-	                            ),
-	                            this.state.funcLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
+	                            )
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
