@@ -216,7 +216,7 @@ export default class Editor extends React.Component {
                         <form ref={(dom) => { this.editorDom = dom }} className={this.state.org === null ? 'hide' : 'w500'}>
                             <div className="form-group">
                                 <label for="name"><em className="text-danger">*</em>所属组织：</label>
-                                <input type="text" className="form-control d-inline-block" value={this.state.org ? this.state.org.name : ''} disabled="disabled" />
+                                <input type="text" className="form-control" value={this.state.org ? this.state.org.name : ''} disabled="disabled" />
                             </div>
                             <div className="form-group">
                                 <label for="name"><em className="text-danger">*</em>角色职能</label>

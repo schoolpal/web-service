@@ -1140,7 +1140,7 @@ webpackJsonp([0],{
 	function Alerts(props) {
 	    return _react2.default.createElement(
 	        'div',
-	        { className: 'alert alert-' + props.type, role: 'alert' },
+	        { className: 'alert alert-' + props.type + ' border-right-0 border-left-0 rounded-0', role: 'alert' },
 	        _react2.default.createElement(
 	            'strong',
 	            null,
@@ -3198,7 +3198,7 @@ webpackJsonp([0],{
 	                                    ),
 	                                    '\u6240\u5C5E\u7EC4\u7EC7\uFF1A'
 	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control d-inline-block', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
 	                            ),
 	                            _react2.default.createElement(
 	                                'div',
@@ -3779,7 +3779,7 @@ webpackJsonp([0],{
 	                        this.renderCommand()
 	                    )
 	                ),
-	                _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
+	                _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u91CD\u8981\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'main-container' },
@@ -3893,9 +3893,17 @@ webpackJsonp([0],{
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
+	var _Dialog = __webpack_require__(233);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
 	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3914,18 +3922,15 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
 	            selected: null,
 
-	            userLoading: false,
 	            userList: [],
 
 	            enable: false,
 	            disable: false,
 
-	            checkedUser: null,
-	            delLoading: false
+	            checkedUser: null
 	        };
 
 	        _this.selectOrg = _this.selectOrg.bind(_this);
@@ -3933,8 +3938,10 @@ webpackJsonp([0],{
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
+	        _this.confirmDel = _this.confirmDel.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
 	        _this.handleToggle = _this.handleToggle.bind(_this);
+	        _this.toggleAvailable = _this.toggleAvailable.bind(_this);
 	        return _this;
 	    }
 
@@ -3942,6 +3949,8 @@ webpackJsonp([0],{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this2 = this;
+
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            var enable = false;
 	            var disable = false;
@@ -3963,11 +3972,28 @@ webpackJsonp([0],{
 	                disable: disable
 	            });
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data.tree
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (org) {
+	                var oid = org.tree[0].cId;
+	                var oname = org.tree[0].cName;
+
+	                (0, _api.userList)(oid).done(function (user) {
+	                    _this2.setState({
+	                        orgList: org.tree,
+	                        selected: {
+	                            id: oid,
+	                            name: oname
+	                        },
+	                        userList: user
+	                    });
+
+	                    dialogTips.close();
+	                }).fail(function () {
+	                    dialogTips.close();
 	                });
+	            }).fail(function () {
+	                dialogTips.close();
 	            });
 	        }
 	    }, {
@@ -3988,7 +4014,7 @@ webpackJsonp([0],{
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading, disabled: _this3.state.checkedUser === null ? true : false }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.checkedUser === null ? true : false }));
 	                    }
 	                });
 	            }
@@ -4001,34 +4027,36 @@ webpackJsonp([0],{
 	            var _this4 = this;
 
 	            if (org) {
-	                this.setState({
-	                    selected: org,
-	                    roleLoading: true,
-	                    userLoading: true
-	                });
+	                (function () {
+	                    var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
-	                (0, _api.userList)(org.id).done(function (data) {
 	                    _this4.setState({
-	                        userLoading: false,
-	                        userList: data
+	                        selected: org,
+	                        userList: [],
+	                        checkedUser: null
 	                    });
-	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
+
+	                    dialogTips.open();
+
+	                    (0, _api.userList)(org.id).done(function (data) {
+	                        _this4.setState({
+	                            userList: data
+	                        });
+	                    }).always(function () {
+	                        dialogTips.close();
+	                    });
+	                })();
+	            }
 	        }
 	    }, {
 	        key: 'checkedUser',
 	        value: function checkedUser(event) {
 	            if (event.target.checked === true) {
 	                this.setState({
-	                    checkedUser: event.target.value
-	                });
-	            } else {
-	                this.setState({
-	                    checkedUser: null
+	                    checkedUser: {
+	                        id: event.target.value,
+	                        name: $(event.target).parents('tr').find('[data-name]').text()
+	                    }
 	                });
 	            }
 	        }
@@ -4042,51 +4070,92 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser.id;
 
 	            this.props.router.push(editorPath);
+	        }
+	    }, {
+	        key: 'confirmDel',
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除 ' + this.state.checkedUser.name + ' ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
 	        }
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {
 	            var _this5 = this;
 
-	            this.setState({ delLoading: true });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            (0, _api.userDel)(this.state.checkedUser).done(function () {
-	                var temp = $.extend({}, _this5.state);
-	                var nextUserList = void 0;
+	            loading.open();
 
-	                nextUserList = temp.userList.filter(function (item) {
-	                    if (item.cId !== _this5.state.checkedUser) {
+	            (0, _api.userDel)(this.state.checkedUser.id).done(function () {
+	                var tempList = _this5.state.userList.filter(function (item) {
+	                    if (item.cId !== _this5.state.checkedUser.id) {
 	                        return item;
 	                    }
 	                });
 
+	                loading.close();
+	                success.open();
+
 	                _this5.setState({
-	                    delLoading: false,
-	                    userList: nextUserList
+	                    userList: tempList,
+	                    checkedUser: null
 	                });
 	            }).fail(function (data) {
-	                _this5.setState({
-	                    delLoading: false
-	                });
+	                loading.close();
+	                fail.open();
 	            });
 	        }
 	    }, {
 	        key: 'handleToggle',
 	        value: function handleToggle(param) {
-	            var temp = $.extend({}, this.state);
+	            var _this6 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 	            var nextAvailable = !param.available;
 
-	            if (param.available === true) {
-	                (0, _api.userDisable)(param.uid);
-	            } else {
-	                (0, _api.userEnable)(param.uid);
-	            }
+	            loading.open();
 
-	            temp.userList.map(function (item) {
-	                if (item.cId === param.uid) {
+	            this.toggleAvailable(param.uid, nextAvailable);
+
+	            if (param.available === true) {
+	                (0, _api.userDisable)(param.uid).done(function () {
+	                    loading.close();
+	                    success.open();
+	                }).fail(function () {
+	                    _this6.toggleAvailable(param.uid, param.available);
+	                    loading.close();
+	                    fail.open();
+	                });
+	            } else {
+	                (0, _api.userEnable)(param.uid).done(function () {
+	                    loading.close();
+	                    success.open();
+	                }).fail(function () {
+	                    _this6.toggleAvailable(param.uid, param.available);
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'toggleAvailable',
+	        value: function toggleAvailable(uid, nextAvailable) {
+	            var tempList = void 0;
+
+	            tempList = this.state.userList.filter(function (item) {
+	                if (item.cId === uid) {
 	                    item.cAvailable = nextAvailable;
 	                }
 
@@ -4094,13 +4163,13 @@ webpackJsonp([0],{
 	            });
 
 	            this.setState({
-	                userList: temp.userList
+	                userList: tempList
 	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -4124,15 +4193,20 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
+	                            { className: this.state.orgList === null ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
+	                                'p',
+	                                { className: this.state.selected === null ? 'hide' : 'h6 pb-3 b-b' },
+	                                this.state.selected ? this.state.selected.name : ''
+	                            ),
+	                            _react2.default.createElement(
 	                                'table',
-	                                { className: this.state.userLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                { className: this.state.userList === null ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
 	                                    'thead',
 	                                    null,
@@ -4204,10 +4278,11 @@ webpackJsonp([0],{
 	                                                        { className: 'form-check-label' },
 	                                                        _react2.default.createElement('input', {
 	                                                            className: 'form-check-input',
-	                                                            type: 'checkbox',
+	                                                            type: 'radio',
+	                                                            name: 'user',
 	                                                            value: item.cId,
-	                                                            onChange: _this6.checkedUser,
-	                                                            checked: _this6.state.checkedUser === item.cId ? true : false
+	                                                            onChange: _this7.checkedUser,
+	                                                            checked: _this7.state.checkedUser && _this7.state.checkedUser.id === item.cId ? true : false
 	                                                        })
 	                                                    )
 	                                                )
@@ -4217,10 +4292,10 @@ webpackJsonp([0],{
 	                                                null,
 	                                                _react2.default.createElement(_Button.ToggleButton, {
 	                                                    uid: item.cId,
-	                                                    enable: _this6.state.enable,
-	                                                    disable: _this6.state.disable,
+	                                                    enable: _this7.state.enable,
+	                                                    disable: _this7.state.disable,
 	                                                    available: item.cAvailable,
-	                                                    action: _this6.handleToggle
+	                                                    action: _this7.handleToggle
 	                                                })
 	                                            ),
 	                                            _react2.default.createElement(
@@ -4230,7 +4305,7 @@ webpackJsonp([0],{
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
-	                                                null,
+	                                                { 'data-name': true },
 	                                                item.cRealname
 	                                            ),
 	                                            _react2.default.createElement(
@@ -4263,19 +4338,9 @@ webpackJsonp([0],{
 	                                        );
 	                                    })
 	                                )
-	                            ),
-	                            this.state.userLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
+	                            )
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -4325,6 +4390,10 @@ webpackJsonp([0],{
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4342,19 +4411,13 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            org: null,
 	            roleList: [],
-	            checkedRole: {},
-
-	            saveLoading: false,
-	            saveResult: null
+	            checkedRole: {}
 	        };
 
 	        _this.checkedRole = _this.checkedRole.bind(_this);
 	        _this.editorSubmit = _this.editorSubmit.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -4363,39 +4426,40 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgDetails)(this.props.params.oid).done(function (data) {
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.roleList)(this.props.params.oid)).done(function (org, role) {
 	                _this2.setState({
 	                    org: {
-	                        id: data.cId,
-	                        name: data.cName
-	                    }
+	                        id: org.cId,
+	                        name: org.cName
+	                    },
+	                    roleList: role
 	                });
 
-	                (0, _api.roleList)(data.cId).done(function (role) {
+	                if (_this2.props.params.uid === 'create') {
+	                    dialogTips.close();
+	                } else {
+	                    (0, _api.userDetails)(_this2.props.params.uid).done(function (user) {
+	                        var checkedRole = {};
 
-	                    if (_this2.props.params.uid === 'create') {
+	                        user.roles.map(function (item) {
+	                            checkedRole[item.cId] = true;
+	                        });
+
 	                        _this2.setState({
-	                            loading: false,
-	                            roleList: role
+	                            checkedRole: checkedRole
 	                        });
-	                    } else {
-	                        (0, _api.userDetails)(_this2.props.params.uid).done(function (user) {
-	                            var checkedRole = {};
 
-	                            user.roles.map(function (item) {
-	                                checkedRole[item.cId] = true;
-	                            });
-
-	                            $(_this2.editorDom).find('[name=loginName]').val(user.cLoginname).end().find('[name=realName]').val(user.cRealname).end().find('[name=nickName]').val(user.cNickname).end().find('[name=phone]').val(user.cPhone).end().find('[name=email]').val(user.cEmail).end().find('[name=im]').val(user.cQq);
-
-	                            _this2.setState({
-	                                loading: false,
-	                                roleList: role,
-	                                checkedRole: checkedRole
-	                            });
-	                        });
-	                    }
-	                });
+	                        $(_this2.editorDom).find('[name=loginName]').val(user.cLoginname).end().find('[name=realName]').val(user.cRealname).end().find('[name=nickName]').val(user.cNickname).end().find('[name=phone]').val(user.cPhone).end().find('[name=email]').val(user.cEmail).end().find('[name=im]').val(user.cQq);
+	                    }).always(function () {
+	                        dialogTips.close();
+	                    });
+	                }
+	            }).fail(function () {
+	                dialogTips.close();
 	            });
 	        }
 	    }, {
@@ -4404,6 +4468,7 @@ webpackJsonp([0],{
 	            var tempRole = $.extend({}, this.state.checkedRole);
 
 	            tempRole[event.target.value] = event.target.checked;
+
 	            this.setState({
 	                checkedRole: tempRole
 	            });
@@ -4413,11 +4478,16 @@ webpackJsonp([0],{
 	        value: function editorSubmit() {
 	            var _this3 = this;
 
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user';
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
 	            var param = {};
 	            var temp = $(this.editorDom).serializeArray();
 	            var rolesArr = [];
 
-	            this.setState({ saveLoading: true });
+	            loading.open();
 
 	            for (var key in this.state.checkedRole) {
 	                if (this.state.checkedRole[key] === true) {
@@ -4440,74 +4510,33 @@ webpackJsonp([0],{
 	                }
 	            });
 
+	            delete temp['org'];
+
 	            if (this.props.params.uid === 'create') {
 	                (0, _api.userAdd)(param).done(function () {
-	                    $(_this3.editorDom).find('input').val('');
-
-	                    _this3.setState({
-	                        checkedRole: {},
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
+	                    loading.close();
+	                    fail.open();
 	                });
 	            } else {
 	                (0, _api.userMod)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
+	                    loading.close();
+	                    fail.open();
 	                });
 	            }
-	        }
-	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.saveResult) {
-	                return _react2.default.createElement(
-	                    _Alerts2.default,
-	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'user', className: 'alert-link' },
-	                        '\u8FD4\u56DE\u5217\u8868'
-	                    )
-	                );
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                saveResult: null
-	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -4530,27 +4559,31 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group float-right mr-4', role: 'group' },
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
+	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
 	                    )
 	                ),
-	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: this.state.loading === true ? 'hide' : 'h6 pb-3 b-b' },
-	                        '\u6240\u5C5E\u7EC4\u7EC7\uFF1A',
-	                        this.state.org ? this.state.org.name : ''
-	                    ),
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: this.state.loading === true ? 'hide' : 'd-flex align-items-stretch flex-nowrap' },
+	                        { className: this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide' },
 	                        _react2.default.createElement(
 	                            'form',
 	                            { ref: function ref(dom) {
 	                                    _this4.editorDom = dom;
 	                                }, className: 'w500 pr-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u6240\u5C5E\u7EC4\u7EC7'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'org', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
+	                            ),
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'form-group' },
@@ -4649,12 +4682,7 @@ webpackJsonp([0],{
 	                                );
 	                            })
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -6303,7 +6331,7 @@ webpackJsonp([0],{
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected {\n  color: #d9534f;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
 
 	// exports
 

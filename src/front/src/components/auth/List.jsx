@@ -316,7 +316,7 @@ export default class List extends React.Component {
                     </div>
                 </h5>
 
-                <Alerts type="danger" title="提示 !" text="权限修改成功后，需要重新登陆才能生效。"></Alerts>
+                <Alerts type="danger" title="重要提示 !" text="权限修改成功后，需要重新登陆才能生效。"></Alerts>
 
                 <div className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
