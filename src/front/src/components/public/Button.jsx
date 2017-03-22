@@ -104,7 +104,7 @@ export function AuthButton(props) {
 
 export function SaveButton(props) {
     return (
-        <button onClick={props.action} type="button" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
             {props.text}
         </button>
     )

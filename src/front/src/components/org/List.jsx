@@ -175,7 +175,7 @@ export default class List extends React.Component {
 
         orgDel(this.state.selected.id)
             .done(() => {
-                const tempList = this.state.list.filter((item) => { if (item.cId !== this.state.selected.id) { return item } });
+                const tempList = this.state.list.filter((item) => { return item.cId !== this.state.selected.id });
                 const temp = conversionOrg(tempList);
 
                 loading.close()

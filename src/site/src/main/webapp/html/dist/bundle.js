@@ -1412,9 +1412,7 @@ webpackJsonp([0],{
 
 	            (0, _api.orgDel)(this.state.selected.id).done(function () {
 	                var tempList = _this5.state.list.filter(function (item) {
-	                    if (item.cId !== _this5.state.selected.id) {
-	                        return item;
-	                    }
+	                    return item.cId !== _this5.state.selected.id;
 	                });
 	                var temp = (0, _conversion.conversionOrg)(tempList);
 
@@ -1688,7 +1686,7 @@ webpackJsonp([0],{
 	function SaveButton(props) {
 	    return _react2.default.createElement(
 	        'button',
-	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	        { type: 'submit', className: 'btn btn-primary' },
 	        props.text
 	    );
 	}
@@ -1878,7 +1876,11 @@ webpackJsonp([0],{
 	                        });
 	                    } else {
 	                        _this2.setState({
-	                            orgList: data.tree
+	                            orgList: data.tree,
+	                            selected: {
+	                                id: data.tree[0].cId,
+	                                name: data.tree[0].cName
+	                            }
 	                        });
 	                    }
 	                }).always(function () {
@@ -1924,8 +1926,12 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'editorSubmit',
-	        value: function editorSubmit() {
+	        value: function editorSubmit(event) {
 	            var _this3 = this;
+
+	            if (this.editorDom.checkValidity() === true) {
+	                event.preventDefault();
+	            };
 
 	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
@@ -1981,33 +1987,33 @@ webpackJsonp([0],{
 	                'div',
 	                { className: 'org' },
 	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
-	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
 	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'd-inline text-muted' },
-	                        (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
+	                        '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
+	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'd-flex align-items-stretch flex-nowrap' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this4.editorDom = dom;
-	                                }, className: 'flex-cell' },
+	                            'div',
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'w400' },
@@ -2024,7 +2030,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u7EC4\u7EC7\u540D\u79F0'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2039,7 +2045,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u7EC4\u7EC7\u4EE3\u7801'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2059,16 +2065,8 @@ webpackJsonp([0],{
 	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'div',
-	                                            { className: 'btn-group' },
-	                                            _react2.default.createElement(
-	                                                'button',
-	                                                { type: 'button', className: 'btn btn-secondary dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-	                                                _react2.default.createElement(
-	                                                    'span',
-	                                                    { className: 'd-inline-block minw210 text-left' },
-	                                                    this.state.selected ? this.state.selected.name : ''
-	                                                )
-	                                            ),
+	                                            { className: 'btn-group btn-block' },
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', 'data-toggle': 'dropdown', value: this.state.selected ? this.state.selected.name : '', readOnly: true }),
 	                                            _react2.default.createElement(
 	                                                'div',
 	                                                { className: 'dropdown-menu' },
@@ -2123,7 +2121,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8BE6\u7EC6\u5730\u5740'
 	                                    ),
-	                                    _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3' })
+	                                    _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2138,7 +2136,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8D1F\u8D23\u4EBA'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2153,7 +2151,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8054\u7CFB\u7535\u8BDD'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1(\\d{2})\\d{8}$', required: 'required' })
 	                                )
 	                            )
 	                        )
