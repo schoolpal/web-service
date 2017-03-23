@@ -12,7 +12,9 @@ public interface TUserMapper {
     int updateOneById(TUser record);
     int deleteOneById(String cId);
 
+    boolean ifExistsById(String cId);
     TUser selectOneById(String cId);
+    boolean ifExistsByName(String cName);
     TUser selectOneByLoginName(String cName);
     List<TUser> selectManyByOrgId(String cId);
     

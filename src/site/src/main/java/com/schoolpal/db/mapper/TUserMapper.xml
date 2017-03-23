@@ -33,11 +33,16 @@
         FROM t_user
         WHERE c_org_id = #{cId,jdbcType=VARCHAR}
     </select>
-	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
+	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Boolean">
 		SELECT count(*)
 		FROM t_user
 		WHERE c_id = #{cId,jdbcType=CHAR}
 	</select>
+    <select id="ifExistsByName" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT count(*)
+        FROM t_user
+        WHERE c_loginname = #{cName,jdbcType=CHAR}
+    </select>
 	<select id="selectPasswordByLoginName" parameterType="java.lang.String"
 		resultType="java.lang.String">
 		SELECT c_loginpass
