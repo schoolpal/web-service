@@ -218,7 +218,7 @@ export default class Editor extends React.Component {
                                 </div>
                                 <div className="form-group">
                                     <label for="name"><em className="text-danger">*</em>联系电话</label>
-                                    <input type="text" className="form-control" name="phone" pattern="^1(\d{2})\d{8}$" required="required" />
+                                    <input type="text" className="form-control" name="phone" pattern="^1\d{10}$" required="required" />
                                 </div>
                             </div>
                         </div>

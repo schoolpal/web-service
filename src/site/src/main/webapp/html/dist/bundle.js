@@ -479,7 +479,9 @@ webpackJsonp([0],{
 	                        if (item.WidgetType === 'MenuItem') {
 	                            var temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
 
-	                            auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
+	                            if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId] && SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH) {
+	                                auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
+	                            }
 	                        };
 
 	                        if (item.WidgetType === 'Command') {
@@ -1656,31 +1658,12 @@ webpackJsonp([0],{
 	}
 
 	function AuthButton(props) {
-	    var text = props.loading === true ? '' : '授权';
-
-	    if (props.disabled === true) {
-	        return _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-danger' },
-	            _react2.default.createElement(Icon, null),
-	            text
-	        );
-	    } else {
-	        return _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-danger', onClick: props.action },
-	            _react2.default.createElement(Icon, null),
-	            text
-	        );
-	    }
-
-	    function Icon() {
-	        if (props.loading === true) {
-	            return _react2.default.createElement('i', { className: 'fa fa-circle-o-notch fa-spin fa-fw', 'aria-hidden': 'true' });
-	        } else {
-	            return _react2.default.createElement('i', { className: 'fa fa-shield', 'aria-hidden': 'true' });
-	        }
-	    }
+	    return _react2.default.createElement(
+	        'button',
+	        { className: 'btn btn-danger', type: 'submit' },
+	        _react2.default.createElement('i', { className: 'fa fa-shield', 'aria-hidden': 'true' }),
+	        ' \u6388\u6743'
+	    );
 	}
 
 	function SaveButton(props) {
@@ -2151,7 +2134,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8054\u7CFB\u7535\u8BDD'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1(\\d{2})\\d{8}$', required: 'required' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1\\d{10}$', required: 'required' })
 	                                )
 	                            )
 	                        )
@@ -3435,6 +3418,7 @@ webpackJsonp([0],{
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.renderTable = _this.renderTable.bind(_this);
 	        _this.tableLine = _this.tableLine.bind(_this);
+	        _this.handleNode = _this.handleNode.bind(_this);
 	        _this.selectOrg = _this.selectOrg.bind(_this);
 	        _this.checkedRole = _this.checkedRole.bind(_this);
 	        _this.checkedFunc = _this.checkedFunc.bind(_this);
@@ -3666,7 +3650,11 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'handleAuth',
-	        value: function handleAuth() {
+	        value: function handleAuth(event) {
+	            if (this.editorDom.checkValidity() === true) {
+	                event.preventDefault();
+	            };
+
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -3742,7 +3730,11 @@ webpackJsonp([0],{
 	                                value: item.cId,
 	                                checked: _this7.state.checkedFunc[item.cId]
 	                            }),
-	                            item.cNameLong
+	                            _react2.default.createElement(
+	                                'span',
+	                                null,
+	                                item.cNameLong
+	                            )
 	                        )
 	                    );
 	                });
@@ -3756,7 +3748,7 @@ webpackJsonp([0],{
 	                    null,
 	                    _react2.default.createElement(
 	                        'p',
-	                        { className: 'tree-node ' + childrenClass, style: spacingStyle },
+	                        { onClick: this.handleNode, className: 'tree-node ' + childrenClass, style: spacingStyle },
 	                        data.cNameLong
 	                    )
 	                ),
@@ -3787,6 +3779,32 @@ webpackJsonp([0],{
 	            );
 	        }
 	    }, {
+	        key: 'handleNode',
+	        value: function handleNode(event) {
+	            if ($(event.target).hasClass('not-child')) {
+	                return;
+	            };
+
+	            var tr = $(event.target).parents('tr');
+	            var level = tr.data('level');
+
+	            tr.nextAll('tr').each(function (i, item) {
+	                if ($(item).data('level') <= level) {
+	                    return false;
+	                };
+
+	                if ($(event.target).hasClass('closed')) {
+	                    if ($(item).data('level') === level + 1) {
+	                        $(item).show();
+	                    }
+	                } else {
+	                    $(item).hide().find('.tree-node').addClass('closed');
+	                }
+	            });
+
+	            $(event.target).toggleClass('closed');
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this8 = this;
@@ -3795,89 +3813,99 @@ webpackJsonp([0],{
 	                'div',
 	                { className: 'auth' },
 	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-shield', 'aria-hidden': 'true' }),
-	                    '\xA0\u6743\u9650\u7BA1\u7406',
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this8.editorDom = dom;
+	                        }, onSubmit: this.handleAuth },
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-shield', 'aria-hidden': 'true' }),
+	                        '\xA0\u6743\u9650\u7BA1\u7406',
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            this.renderCommand()
+	                        )
+	                    ),
+	                    _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u91CD\u8981\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'btn-group float-right', role: 'group' },
-	                        this.renderCommand()
-	                    )
-	                ),
-	                _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u91CD\u8981\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'd-flex align-items-stretch flex-nowrap' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.orgList === null ? 'hide' : 'w300' },
-	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: this.state.selected === null ? 'hide' : 'w200 pl-3 b-l' },
-	                            this.state.roleList.map(function (item) {
-	                                return _react2.default.createElement(
-	                                    'div',
-	                                    { key: item.cId, className: 'form-check' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { className: 'form-check-label' },
-	                                        _react2.default.createElement('input', {
-	                                            onChange: _this8.checkedRole,
-	                                            className: 'form-check-input',
-	                                            type: 'radio',
-	                                            name: 'role',
-	                                            value: item.cId,
-	                                            checked: _this8.state.checkedRole.id === item.cId ? true : false
-	                                        }),
-	                                        item.cName
-	                                    )
-	                                );
-	                            })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
 	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'h6 pb-3 b-b' },
-	                                this.state.checkedRoleName ? this.state.checkedRoleName : ''
+	                                'div',
+	                                { className: this.state.orgList === null ? 'hide' : 'w300' },
+	                                _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                            ),
 	                            _react2.default.createElement(
-	                                'table',
-	                                { className: this.state.funcLoading === true ? 'hide' : 'table table-bordered table-sm' },
-	                                _react2.default.createElement(
-	                                    'thead',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'tr',
-	                                        null,
+	                                'div',
+	                                { className: this.state.selected === null ? 'hide' : 'w200 pl-3 b-l' },
+	                                this.state.roleList.map(function (item) {
+	                                    return _react2.default.createElement(
+	                                        'div',
+	                                        { key: item.cId, className: 'form-check' },
 	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u7CFB\u7EDF\u83DC\u5355'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u9009\u53D6'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u529F\u80FD\u6743\u9650'
+	                                            'label',
+	                                            { className: 'form-check-label' },
+	                                            _react2.default.createElement('input', {
+	                                                onChange: _this8.checkedRole,
+	                                                className: 'form-check-input',
+	                                                type: 'radio',
+	                                                name: 'role',
+	                                                value: item.cId,
+	                                                checked: _this8.state.checkedRole.id === item.cId ? true : false
+	                                            }),
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                item.cName
+	                                            )
 	                                        )
-	                                    )
+	                                    );
+	                                })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'h6 pb-3 b-b' },
+	                                    this.state.checkedRole ? this.state.checkedRole.name : ''
 	                                ),
 	                                _react2.default.createElement(
-	                                    'tbody',
-	                                    null,
-	                                    this.renderTable(this.state.funcList)
+	                                    'table',
+	                                    { className: this.state.funcLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                    _react2.default.createElement(
+	                                        'thead',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                null,
+	                                                '\u7CFB\u7EDF\u83DC\u5355'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                null,
+	                                                '\u9009\u53D6'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                null,
+	                                                '\u529F\u80FD\u6743\u9650'
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'tbody',
+	                                        null,
+	                                        this.renderTable(this.state.funcList)
+	                                    )
 	                                )
 	                            )
 	                        )
@@ -4124,9 +4152,7 @@ webpackJsonp([0],{
 
 	            (0, _api.userDel)(this.state.checkedUser.id).done(function () {
 	                var tempList = _this5.state.userList.filter(function (item) {
-	                    if (item.cId !== _this5.state.checkedUser.id) {
-	                        return item;
-	                    }
+	                    return item.cId !== _this5.state.checkedUser.id;
 	                });
 
 	                loading.close();
@@ -4439,7 +4465,7 @@ webpackJsonp([0],{
 	        _this.state = {
 	            org: null,
 	            roleList: [],
-	            checkedRole: {}
+	            checkedRole: []
 	        };
 
 	        _this.checkedRole = _this.checkedRole.bind(_this);
@@ -4469,10 +4495,10 @@ webpackJsonp([0],{
 	                    dialogTips.close();
 	                } else {
 	                    (0, _api.userDetails)(_this2.props.params.uid).done(function (user) {
-	                        var checkedRole = {};
+	                        var checkedRole = [];
 
 	                        user.roles.map(function (item) {
-	                            checkedRole[item.cId] = true;
+	                            checkedRole.push(item.cId);
 	                        });
 
 	                        _this2.setState({
@@ -4491,18 +4517,35 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'checkedRole',
 	        value: function checkedRole(event) {
-	            var tempRole = $.extend({}, this.state.checkedRole);
+	            var tempRole = [];
 
-	            tempRole[event.target.value] = event.target.checked;
+	            if (event.target.checked === true) {
+	                tempRole.push(event.target.value);
+	                tempRole = tempRole.concat(this.state.checkedRole);
+	            } else {
+	                tempRole = this.state.checkedRole.filter(function (id) {
+	                    return id !== event.target.value;
+	                });
+	            }
 
 	            this.setState({
 	                checkedRole: tempRole
 	            });
+
+	            if (tempRole.length) {
+	                $(this.editorDom).find('input[type=checkbox]').removeAttr('required');
+	            } else {
+	                $(this.editorDom).find('input[type=checkbox]').attr('required', 'required');
+	            }
 	        }
 	    }, {
 	        key: 'editorSubmit',
-	        value: function editorSubmit() {
+	        value: function editorSubmit(event) {
 	            var _this3 = this;
+
+	            if (this.editorDom.checkValidity() === true) {
+	                event.preventDefault();
+	            };
 
 	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
@@ -4511,26 +4554,21 @@ webpackJsonp([0],{
 
 	            var param = {};
 	            var temp = $(this.editorDom).serializeArray();
-	            var rolesArr = [];
 
 	            loading.open();
-
-	            for (var key in this.state.checkedRole) {
-	                if (this.state.checkedRole[key] === true) {
-	                    rolesArr.push(key);
-	                }
-	            }
 
 	            if (this.props.params.uid !== 'create') {
 	                param.userId = this.props.params.uid;
 	            }
 
 	            param.orgId = this.state.org.id;
-	            param.roles = rolesArr.join(',');
+	            param.roles = this.state.checkedRole.join(',');
 
 	            temp.map(function (item) {
 	                if (item.name === 'loginPass') {
-	                    param[item.name] = (0, _mixedMD2.default)((0, _mixedMD2.default)(item.value));
+	                    if (_this3.props.params.uid === 'create' || item.value) {
+	                        param[item.name] = (0, _mixedMD2.default)((0, _mixedMD2.default)(item.value));
+	                    }
 	                } else {
 	                    param[item.name] = item.value;
 	                }
@@ -4573,140 +4611,181 @@ webpackJsonp([0],{
 	                'div',
 	                { className: 'user' },
 	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
-	                    '\xA0\u7528\u6237\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
 	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'd-inline text-muted' },
-	                        (0, _subTitle2.default)(this.props.router.params.uid, '用户')
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'btn-group float-right mr-4', role: 'group' },
-	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide' },
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+	                        '\xA0\u7528\u6237\u7BA1\u7406\xA0\xA0|\xA0\xA0',
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this4.editorDom = dom;
-	                                }, className: 'w500 pr-3' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u6240\u5C5E\u7EC4\u7EC7'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'org', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u7528\u6237\u540D'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u767B\u9646\u5BC6\u7801'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'loginPass' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u59D3\u540D'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'realName' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u6635\u79F0'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'nickName' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u7535\u8BDD\u53F7\u7801'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    '\u7535\u5B50\u90AE\u7BB1'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email' })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'form-group' },
-	                                _react2.default.createElement(
-	                                    'label',
-	                                    { 'for': 'name' },
-	                                    'IM(QQ...)'
-	                                ),
-	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'im' })
-	                            )
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.uid, '用户')
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'flex-cell pl-3 b-l' },
+	                            { className: 'btn-group float-right mr-4', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'main-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide' },
 	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'ht pb-3 b-b' },
-	                                '\u7528\u6237\u89D2\u8272'
-	                            ),
-	                            this.state.roleList.map(function (item) {
-	                                return _react2.default.createElement(
+	                                'div',
+	                                { className: 'w500 pr-3' },
+	                                _react2.default.createElement(
 	                                    'div',
-	                                    { key: item.cId, className: 'form-check' },
+	                                    { className: 'form-group' },
 	                                    _react2.default.createElement(
 	                                        'label',
-	                                        { className: 'form-check-label' },
-	                                        _react2.default.createElement('input', {
-	                                            onChange: _this4.checkedRole,
-	                                            className: 'form-check-input',
-	                                            type: 'checkbox',
-	                                            value: item.cId,
-	                                            checked: _this4.state.checkedRole[item.cId] ? _this4.state.checkedRole[item.cId] : false
-	                                        }),
-	                                        item.cName
-	                                    )
-	                                );
-	                            })
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u6240\u5C5E\u7EC4\u7EC7'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'org', value: this.state.org ? this.state.org.name : '', readOnly: 'readOnly' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7528\u6237\u540D'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName', readOnly: this.props.params.uid === 'create' ? false : true, required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u767B\u9646\u5BC6\u7801'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'loginPass', required: this.props.params.uid === 'create' ? true : false })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u59D3\u540D'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'realName', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7535\u8BDD\u53F7\u7801'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1\\d{10}$', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7535\u5B50\u90AE\u7BB1'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        '\u6635\u79F0'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'nickName' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        'IM(QQ...)'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'im' })
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'flex-cell pl-3 b-l' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'ht pb-3 b-b' },
+	                                    '\u7528\u6237\u89D2\u8272'
+	                                ),
+	                                this.state.roleList.map(function (item) {
+	                                    return _react2.default.createElement(
+	                                        'div',
+	                                        { key: item.cId, className: 'form-check' },
+	                                        _react2.default.createElement(
+	                                            'label',
+	                                            { className: 'form-check-label' },
+	                                            _react2.default.createElement('input', {
+	                                                onChange: _this4.checkedRole,
+	                                                className: 'form-check-input',
+	                                                type: 'checkbox',
+	                                                value: item.cId,
+	                                                checked: _this4.state.checkedRole.findIndex(function (id) {
+	                                                    return id === item.cId;
+	                                                }) < 0 ? false : true,
+	                                                required: 'required'
+	                                            }),
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                item.cName
+	                                            )
+	                                        )
+	                                    );
+	                                })
+	                            )
 	                        )
 	                    )
 	                )

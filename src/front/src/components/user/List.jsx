@@ -165,7 +165,7 @@ export default class List extends React.Component {
         loading.open()
 
         userDel(this.state.checkedUser.id).done(() => {
-            const tempList = this.state.userList.filter((item) => { if (item.cId !== this.state.checkedUser.id) { return item } })
+            const tempList = this.state.userList.filter((item) => { return item.cId !== this.state.checkedUser.id })
 
             loading.close()
             success.open()

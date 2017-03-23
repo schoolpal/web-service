@@ -105,7 +105,9 @@ export function permissions() {
                     if (item.WidgetType === 'MenuItem') {
                         const temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
 
-                        auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
+                        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId] && SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH) {
+                            auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
+                        }
                     };
 
                     if (item.WidgetType === 'Command') {
