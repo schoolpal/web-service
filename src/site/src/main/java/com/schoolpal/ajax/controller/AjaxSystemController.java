@@ -450,7 +450,29 @@ public class AjaxSystemController {
 
 		return gson.toJson(res);
 	}
+	@RequestMapping(value = "user/checkName.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkLoginname(String loginName, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (loginName == null || loginName.isEmpty()) {
+				res.setCode(401);
+				res.setDetail("name cannot be empty");
+				break;
+			}
+			if (!AuthorizationHelper.CheckPermissionById("7-4")) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
 
+			boolean exists = userServ.checkLoginnameExists(loginName);
+			res.setData(exists);
+		} while (false);
+
+		return gson.toJson(res);
+	}
+	
 	@RequestMapping(value = "user/add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String addUser(UserForm form, HttpServletRequest request) {
@@ -502,7 +524,7 @@ public class AjaxSystemController {
 			String id = userServ.addUser(user, user.getcLoginname());
 			if (id == null) {
 				res.setCode(501);
-				res.setDetail("Failed to add role");
+				res.setDetail("Failed to add user");
 				break;
 			}
 
@@ -574,6 +596,8 @@ public class AjaxSystemController {
 			TUser user = this.userFormToTUser(form);
 			user.setcOrgId(org.getcId());
 			user.setcOrgRootId(org.getcRootId());
+			//user loginname cannot be modified
+			user.setcLoginname(null);
 			
 			if (!userServ.modUserById(user)) {
 				res.setCode(501);
@@ -734,7 +758,6 @@ public class AjaxSystemController {
 				res.setDetail("No permission");
 				break;
 			}
-
 
 			TUser currentUser = userServ.getCachedUser();
 			TUser targetUser = userServ.queryUserById(id);

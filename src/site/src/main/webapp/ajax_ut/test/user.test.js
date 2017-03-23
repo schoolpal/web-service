@@ -206,6 +206,24 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.data).to.not.empty;
 	});
 
+	it('checkName.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_path, 'checkName.do'),
+			dataType : 'json',
+			data : {
+				loginName: loginNameVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('checkName.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+	});
+
 	it('mod.do', function() {
 		xhr = $.ajax({
 			async : false,
@@ -214,7 +232,6 @@ describe('/ajax/user/ APIs', function() {
 			dataType : 'json',
 			data : {
 				userId: userIdVal,
-				loginName: loginNameVal + 'Mod',
 				loginPass: MD5(MD5(pass)),
 				realName: 'testRealNameMod',
 				nickName: 'testNickNameMod',
