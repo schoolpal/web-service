@@ -4,7 +4,7 @@ USE `schoolpal`;
 --
 -- Host: localhost    Database: schoolpal
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.20-MariaDB
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -48,15 +48,6 @@ CREATE TABLE `t_activity` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_activity`
---
-
-LOCK TABLES `t_activity` WRITE;
-/*!40000 ALTER TABLE `t_activity` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_activity` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_command_type`
 --
 
@@ -68,18 +59,8 @@ CREATE TABLE `t_command_type` (
   `c_code` varchar(50) DEFAULT NULL,
   `c_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_command_type`
---
-
-LOCK TABLES `t_command_type` WRITE;
-/*!40000 ALTER TABLE `t_command_type` DISABLE KEYS */;
-INSERT INTO `t_command_type` VALUES (1,'Add','Add'),(2,'Mod','Modify'),(3,'Del','Delete'),(4,'Auth','Authorize'),(5,'Enable','Enable'),(6,'Disable','Disable');
-/*!40000 ALTER TABLE `t_command_type` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_contact`
@@ -102,15 +83,6 @@ CREATE TABLE `t_contact` (
   CONSTRAINT `fk_t_contact_t_user1` FOREIGN KEY (`executive_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_contact`
---
-
-LOCK TABLES `t_contact` WRITE;
-/*!40000 ALTER TABLE `t_contact` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_contact` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_contract`
@@ -163,15 +135,6 @@ CREATE TABLE `t_contract` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_contract`
---
-
-LOCK TABLES `t_contract` WRITE;
-/*!40000 ALTER TABLE `t_contract` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_contract` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_contract_parent`
 --
 
@@ -198,15 +161,6 @@ CREATE TABLE `t_contract_parent` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_contract_parent`
---
-
-LOCK TABLES `t_contract_parent` WRITE;
-/*!40000 ALTER TABLE `t_contract_parent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_contract_parent` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_course_prototype`
 --
 
@@ -225,15 +179,6 @@ CREATE TABLE `t_course_prototype` (
   CONSTRAINT `fk_t_course_prototype_t_course_type1` FOREIGN KEY (`type`) REFERENCES `t_course_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_course_prototype`
---
-
-LOCK TABLES `t_course_prototype` WRITE;
-/*!40000 ALTER TABLE `t_course_prototype` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_course_prototype` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_course_session`
@@ -259,15 +204,6 @@ CREATE TABLE `t_course_session` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_course_session`
---
-
-LOCK TABLES `t_course_session` WRITE;
-/*!40000 ALTER TABLE `t_course_session` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_course_session` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_course_type`
 --
 
@@ -280,15 +216,6 @@ CREATE TABLE `t_course_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_course_type`
---
-
-LOCK TABLES `t_course_type` WRITE;
-/*!40000 ALTER TABLE `t_course_type` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_course_type` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_crm_audit`
@@ -309,15 +236,6 @@ CREATE TABLE `t_crm_audit` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_crm_audit`
---
-
-LOCK TABLES `t_crm_audit` WRITE;
-/*!40000 ALTER TABLE `t_crm_audit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_crm_audit` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_function`
@@ -350,47 +268,6 @@ CREATE TABLE `t_function` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_function`
---
-
-LOCK TABLES `t_function` WRITE;
-/*!40000 ALTER TABLE `t_function` DISABLE KEYS */;
-INSERT INTO `t_function` VALUES 
-('1','1','1','市场','市场管理','/ajax/mkt/',1,1,'',NULL),
-('1-1','1','1','','市场活动','/ajax/mkt/',2,1,'',NULL),
-('1-1-1','1','1-1','','新建','/ajax/mkt/activity/add.do',3,1,'',1),
-('1-1-2','1','1-1','','编辑','/ajax/mkt/activity/mod.do',3,2,'',2),
-('1-1-3','1','1-1','','删除','/ajax/mkt/activity/del.do',3,3,'',3),
-('1-2','1','1','','销售线索','/ajax/mkt/',2,1,'',NULL),
-('1-2-1','1','1-2','','新建','/ajax/mkt/leads/add.do',3,1,'',1),
-('1-2-2','1','1-2','','编辑','/ajax/mkt/leads/mod.do',3,2,'',2),
-('1-2-3','1','1-2','','删除','/ajax/mkt/leads/del.do',3,3,'',3),
-('2','2','2','销售','销售管理','/ajax/sales',1,2,'',NULL),
-('3','3','3','客服','客户服务','/ajax/service',1,3,'',NULL),
-('4','4','4','财务','财务管理','/ajax/finance',1,4,'',NULL),
-('5','5','5','教务','教务管理','/ajax/academy',1,5,'',NULL),
-('6','6','6','教学','教学管理','/ajax/education',1,6,'',NULL),
-('7','7','7','系统','系统管理','/ajax/sys/',1,7,'',NULL),
-('7-1','7','7','','组织管理','/ajax/sys/',2,1,'',NULL),
-('7-1-1','7','7-1','','新建','/ajax/sys/org/add.do',3,1,'',1),
-('7-1-2','7','7-1','','编辑','/ajax/sys/org/mod.do',3,2,'',2),
-('7-1-3','7','7-1','','删除','/ajax/sys/org/del.do',3,3,'',3),
-('7-2','7','7','','角色管理','/ajax/sys/role/',2,2,'',NULL),
-('7-2-1','7','7-2','','新建','/ajax/sys/role/add.do',3,1,'',1),
-('7-2-2','7','7-2','','编辑','/ajax/sys/role/mod.do',3,2,'',2),
-('7-2-3','7','7-2','','删除','/ajax/sys/role/del.do',3,3,'',3),
-('7-3','7','7','','权限管理','/ajax/sys/role/',2,3,'',NULL),
-('7-3-1','7','7-3','','授权','/ajax/sys/role/auth.do',3,1,'',4),
-('7-4','7','7','','用户管理','/ajax/sys/user/',2,4,'',NULL),
-('7-4-1','7','7-4','','新建','/ajax/sys/user/add.do',3,1,'',1),
-('7-4-2','7','7-4','','编辑','/ajax/sys/user/mod.do',3,2,'',2),
-('7-4-3','7','7-4','','删除','/ajax/sys/user/del.do',3,3,'',3),
-('7-4-4','7','7-4','','启用','/ajax/sys/user/enable.do',3,4,'',5),
-('7-4-5','7','7-4','','停用','/ajax/sys/user/disable.do',3,5,'',6);
-/*!40000 ALTER TABLE `t_function` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_id_type`
 --
 
@@ -403,15 +280,6 @@ CREATE TABLE `t_id_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_id_type`
---
-
-LOCK TABLES `t_id_type` WRITE;
-/*!40000 ALTER TABLE `t_id_type` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_id_type` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_index`
@@ -429,16 +297,6 @@ CREATE TABLE `t_index` (
   PRIMARY KEY (`c_table`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_index`
---
-
-LOCK TABLES `t_index` WRITE;
-/*!40000 ALTER TABLE `t_index` DISABLE KEYS */;
-INSERT INTO `t_index` VALUES ('t_log','161227',1209,1,15),('t_org','161227',2,1,8),('t_role','161227',2,1,8),('t_user','161227',3,1,8),('t_user_role','161227',7,1,8);
-/*!40000 ALTER TABLE `t_index` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_leads`
@@ -482,15 +340,6 @@ CREATE TABLE `t_leads` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_leads`
---
-
-LOCK TABLES `t_leads` WRITE;
-/*!40000 ALTER TABLE `t_leads` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_leads_parent`
 --
 
@@ -526,15 +375,6 @@ CREATE TABLE `t_leads_parent` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_leads_parent`
---
-
-LOCK TABLES `t_leads_parent` WRITE;
-/*!40000 ALTER TABLE `t_leads_parent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads_parent` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_leads_source`
 --
 
@@ -548,15 +388,6 @@ CREATE TABLE `t_leads_source` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_leads_source`
---
-
-LOCK TABLES `t_leads_source` WRITE;
-/*!40000 ALTER TABLE `t_leads_source` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads_source` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_leads_stage`
@@ -574,15 +405,6 @@ CREATE TABLE `t_leads_stage` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_leads_stage`
---
-
-LOCK TABLES `t_leads_stage` WRITE;
-/*!40000 ALTER TABLE `t_leads_stage` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads_stage` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_leads_status`
 --
 
@@ -596,15 +418,6 @@ CREATE TABLE `t_leads_status` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_leads_status`
---
-
-LOCK TABLES `t_leads_status` WRITE;
-/*!40000 ALTER TABLE `t_leads_status` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads_status` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_leads_student`
@@ -640,15 +453,6 @@ CREATE TABLE `t_leads_student` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_leads_student`
---
-
-LOCK TABLES `t_leads_student` WRITE;
-/*!40000 ALTER TABLE `t_leads_student` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads_student` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_leads_type`
 --
 
@@ -661,15 +465,6 @@ CREATE TABLE `t_leads_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_leads_type`
---
-
-LOCK TABLES `t_leads_type` WRITE;
-/*!40000 ALTER TABLE `t_leads_type` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_leads_type` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_log`
@@ -691,15 +486,6 @@ CREATE TABLE `t_log` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_log`
---
-
-LOCK TABLES `t_log` WRITE;
-/*!40000 ALTER TABLE `t_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_log` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_org`
@@ -743,16 +529,6 @@ CREATE TABLE `t_org` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_org`
---
-
-LOCK TABLES `t_org` WRITE;
-/*!40000 ALTER TABLE `t_org` DISABLE KEYS */;
-INSERT INTO `t_org` VALUES ('16010100000001','sp','校客科技','','上地软件园1号','北京市','海淀区','','110000','110108','','曹磊','13666666666','16010100000001','16010100000001','16010100000001','2016-12-27 14:03:44','sp-admin','2016-12-28 16:25:43',1,1);
-/*!40000 ALTER TABLE `t_org` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_parent`
 --
 
@@ -783,15 +559,6 @@ CREATE TABLE `t_parent` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_parent`
---
-
-LOCK TABLES `t_parent` WRITE;
-/*!40000 ALTER TABLE `t_parent` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_parent` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_rank`
 --
 
@@ -807,16 +574,6 @@ CREATE TABLE `t_rank` (
   KEY `c_order` (`c_order_num`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_rank`
---
-
-LOCK TABLES `t_rank` WRITE;
-/*!40000 ALTER TABLE `t_rank` DISABLE KEYS */;
-INSERT INTO `t_rank` VALUES (1,'经理',1),(2,'主管',2),(3,'专员',3),(4,'系统管理员',4);
-/*!40000 ALTER TABLE `t_rank` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_role`
@@ -847,16 +604,6 @@ CREATE TABLE `t_role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_role`
---
-
-LOCK TABLES `t_role` WRITE;
-/*!40000 ALTER TABLE `t_role` DISABLE KEYS */;
-INSERT INTO `t_role` VALUES ('16010100000001','16010100000001','系统管理员','系统超级管理员',1,1,4,'16010100000001','2016-12-27 14:03:58');
-/*!40000 ALTER TABLE `t_role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_role_function`
 --
 
@@ -877,16 +624,6 @@ CREATE TABLE `t_role_function` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_role_function`
---
-
-LOCK TABLES `t_role_function` WRITE;
-/*!40000 ALTER TABLE `t_role_function` DISABLE KEYS */;
-INSERT INTO `t_role_function` VALUES ('16010100000001','7',1),('16122700000001','7',1),('16122700000002','1',1);
-/*!40000 ALTER TABLE `t_role_function` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_role_function_exclude`
 --
 
@@ -894,26 +631,16 @@ DROP TABLE IF EXISTS `t_role_function_exclude`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_role_function_exclude` (
-  `c_role_id` char(50) DEFAULT NULL,
-  `c_function_id` char(50) DEFAULT NULL,
+  `c_role_id` char(50) NOT NULL,
+  `c_function_id` char(50) NOT NULL,
   `c_creator` char(50) DEFAULT NULL,
   `c_create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`c_role_id`,`c_function_id`),
-  KEY `c_role_id` (`c_role_id`),
   KEY `fk_t_role_function_exclude_t_function1_idx` (`c_function_id`),
   CONSTRAINT `fk_t_role_function_exclude_t_function1` FOREIGN KEY (`c_function_id`) REFERENCES `t_function` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_t_role_function_exclude_t_role1` FOREIGN KEY (`c_role_id`) REFERENCES `t_role` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_role_function_exclude`
---
-
-LOCK TABLES `t_role_function_exclude` WRITE;
-/*!40000 ALTER TABLE `t_role_function_exclude` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_role_function_exclude` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_stu_par_relation`
@@ -935,15 +662,6 @@ CREATE TABLE `t_stu_par_relation` (
   CONSTRAINT `fk_t_stu_cust_relation_t_student1` FOREIGN KEY (`student_id`) REFERENCES `t_student` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_stu_par_relation`
---
-
-LOCK TABLES `t_stu_par_relation` WRITE;
-/*!40000 ALTER TABLE `t_stu_par_relation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_stu_par_relation` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_student`
@@ -974,15 +692,6 @@ CREATE TABLE `t_student` (
   CONSTRAINT `fk_t_student_t_id_type1` FOREIGN KEY (`id_type`) REFERENCES `t_id_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_student`
---
-
-LOCK TABLES `t_student` WRITE;
-/*!40000 ALTER TABLE `t_student` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_student` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_user`
@@ -1021,16 +730,6 @@ CREATE TABLE `t_user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `t_user`
---
-
-LOCK TABLES `t_user` WRITE;
-/*!40000 ALTER TABLE `t_user` DISABLE KEYS */;
-INSERT INTO `t_user` VALUES ('16010100000001','sp-admin','14e1b600b1fd579f47433b88e8d85291','校客管理员','校客管理员','13600000000','sp-admin@schoolpal.com','6666666',1,'16010100000001','16010100000001','16010100000001','2016-12-27 14:03:38','2017-02-24 00:06:49','0:0:0:0:0:0:0:1');
-/*!40000 ALTER TABLE `t_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `t_user_role`
 --
 
@@ -1038,13 +737,12 @@ DROP TABLE IF EXISTS `t_user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_user_role` (
-  `c_user_id` char(50) DEFAULT NULL,
-  `c_role_id` char(50) DEFAULT NULL,
+  `c_user_id` char(50) NOT NULL,
+  `c_role_id` char(50) NOT NULL,
   `c_available` tinyint(1) DEFAULT NULL,
   `c_creator` char(50) DEFAULT NULL,
   `c_create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`c_user_id`,`c_role_id`),
-  KEY `c_user_id` (`c_user_id`),
   KEY `c_role_id` (`c_role_id`),
   KEY `fk_t_user_role_t_role1_idx` (`c_role_id`),
   KEY `fk_t_user_role_t_user1_idx` (`c_user_id`),
@@ -1052,16 +750,6 @@ CREATE TABLE `t_user_role` (
   CONSTRAINT `fk_t_user_role_t_user1` FOREIGN KEY (`c_user_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_user_role`
---
-
-LOCK TABLES `t_user_role` WRITE;
-/*!40000 ALTER TABLE `t_user_role` DISABLE KEYS */;
-INSERT INTO `t_user_role` VALUES ('16010100000001','16010100000001',1,'16010100000001','2016-12-27 14:04:05');
-/*!40000 ALTER TABLE `t_user_role` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `t_widget_type`
@@ -1076,16 +764,6 @@ CREATE TABLE `t_widget_type` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `t_widget_type`
---
-
-LOCK TABLES `t_widget_type` WRITE;
-/*!40000 ALTER TABLE `t_widget_type` DISABLE KEYS */;
-INSERT INTO `t_widget_type` VALUES (1,'Menu'),(2,'MenuItem'),(3,'Command');
-/*!40000 ALTER TABLE `t_widget_type` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping events for database 'schoolpal'
@@ -1160,4 +838,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-07 17:52:15
+-- Dump completed on 2017-03-23 21:11:54
