@@ -1,30 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
-import OrgTree from '../public/OrgTree';
-import Alerts from '../public/Alerts';
-import { AuthButton } from '../public/Button';
-import { orgList, roleList, funcByIds, roleDetails, roleAuth } from '../../utils/api';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Link } from 'react-router'
+import OrgTree from '../public/OrgTree'
+import { AuthButton } from '../public/Button'
+import Alerts from '../public/Alerts'
+import { orgList, roleList, funcByIds, roleDetails, roleAuth } from '../../utils/api'
+import DialogTips from '../../utils/DialogTips'
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading: true,
             orgList: [],
             selected: null,
 
-            roleLoading: false,
             roleList: [],
             checkedRole: null,
-            checkedRoleName: null,
 
-            funcLoading: false,
             funcList: [],
             checkedFunc: {},
-
-            authLoading: false,
-            authResult: null
         };
 
         this.renderCommand = this.renderCommand.bind(this)
@@ -34,18 +28,55 @@ export default class List extends React.Component {
         this.checkedRole = this.checkedRole.bind(this)
         this.checkedFunc = this.checkedFunc.bind(this)
         this.handleAuth = this.handleAuth.bind(this)
-        this.showAlert = this.showAlert.bind(this)
-        this.clearAlert = this.clearAlert.bind(this)
     }
 
     componentDidMount() {
-        orgList()
-            .done((data) => {
-                this.setState({
-                    loading: false,
-                    orgList: data.tree
-                })
-            })
+        const dialogTips = DialogTips({ type: 'loading' })
+
+        dialogTips.open()
+
+        orgList().done((org) => {
+            const selected = {
+                id: org.tree[0].cId,
+                name: org.tree[0].cName
+            }
+
+            roleList(selected.id).done((role) => {
+                const checkedRole = {
+                    id: role[0].cId,
+                    name: role[0].cName
+                }
+
+                roleDetails(checkedRole.id).done((roleFunc) => {
+                    const fids = roleFunc.rootFuncs.map((item) => { return item.cId });
+
+                    funcByIds(fids.join(',')).done((func) => {
+                        let checked = {};
+
+                        func.data.map((item) => {
+                            if (roleFunc.functions.findIndex((elem) => { return elem.cId === item.cId }) < 0) {
+                                checked[item.cId] = false;
+                            } else {
+                                checked[item.cId] = true;
+                            }
+                        })
+
+                        dialogTips.close()
+
+                        this.setState({
+                            orgList: org.tree,
+                            selected: selected,
+
+                            roleList: role,
+                            checkedRole: checkedRole,
+
+                            funcList: func.tree,
+                            checkedFunc: checked
+                        })
+                    }).fail(() => { dialogTips.close() })
+                }).fail(() => { dialogTips.close() })
+            }).fail(() => { dialogTips.close() })
+        }).fail(() => { dialogTips.close() })
     }
 
     renderCommand() {
@@ -60,7 +91,6 @@ export default class List extends React.Component {
                             key={index}
                             action={this.handleAuth}
                             disabled={isDisabled}
-                            loading={this.state.authLoading}
                         />
                     )
                 };
@@ -74,60 +104,91 @@ export default class List extends React.Component {
         if (org) {
             this.setState({
                 selected: org,
-                roleLoading: true
+
+                roleList: [],
+                checkedRole: null,
+
+                funcList: [],
+                checkedFunc: {},
             })
 
-            roleList(org.id)
-                .done((data) => {
-                    this.setState({
-                        roleLoading: false,
-                        roleList: data
-                    })
-                })
-        } else {
-            this.setState({
-                selected: null
-            })
-        };
+            const dialogTips = DialogTips({ type: 'loading' })
+
+            dialogTips.open()
+
+            roleList(org.id).done((role) => {
+                const checkedRole = {
+                    id: role[0].cId,
+                    name: role[0].cName
+                }
+
+                roleDetails(checkedRole.id).done((roleFunc) => {
+                    const fids = roleFunc.rootFuncs.map((item) => { return item.cId });
+
+                    funcByIds(fids.join(',')).done((func) => {
+                        let checked = {};
+
+                        func.data.map((item) => {
+                            if (roleFunc.functions.findIndex((elem) => { return elem.cId === item.cId }) < 0) {
+                                checked[item.cId] = false;
+                            } else {
+                                checked[item.cId] = true;
+                            }
+                        })
+
+                        dialogTips.close()
+
+                        this.setState({
+                            roleList: role,
+                            checkedRole: checkedRole,
+
+                            funcList: func.tree,
+                            checkedFunc: checked
+                        })
+                    }).fail(() => { dialogTips.close() })
+                }).fail(() => { dialogTips.close() })
+            }).fail(() => { dialogTips.close() })
+        }
     }
 
     checkedRole(event) {
-        if (event.target.checked === true) {
-            this.setState({
-                checkedRole: event.target.value,
-                checkedRoleName: $(event.target).parent().text(),
-                funcLoading: true
-            })
-
-            roleDetails(event.target.value)
-                .done((roleFunc) => {
-                    const fids = roleFunc.rootFuncs.map((item) => { return item.cId });
-
-                    funcByIds(fids.join(','))
-                        .done((func) => {
-                            let checked = {};
-
-                            func.data.map((item) => {
-                                if (roleFunc.functions.findIndex((elem) => { return elem.cId === item.cId }) < 0) {
-                                    checked[item.cId] = false;
-                                } else {
-                                    checked[item.cId] = true;
-                                }
-                            })
-
-                            this.setState({
-                                funcLoading: false,
-                                funcList: func.tree,
-                                checkedFunc: checked
-                            })
-                        })
-                })
-        } else {
-            this.setState({
-                checkedRole: null,
-                checkedRoleName: null
-            })
+        if (event.target.value === this.state.checkedRole.id) {
+            return;
         }
+
+        this.setState({
+            checkedRole: {
+                id: event.target.value,
+                name: $(event.target).parent().text()
+            }
+        })
+
+        const dialogTips = DialogTips({ type: 'loading' })
+
+        dialogTips.open()
+
+        roleDetails(event.target.value).done((roleFunc) => {
+            const fids = roleFunc.rootFuncs.map((item) => { return item.cId });
+
+            funcByIds(fids.join(',')).done((func) => {
+                let checked = {};
+
+                func.data.map((item) => {
+                    if (roleFunc.functions.findIndex((elem) => { return elem.cId === item.cId }) < 0) {
+                        checked[item.cId] = false;
+                    } else {
+                        checked[item.cId] = true;
+                    }
+                })
+
+                dialogTips.close()
+
+                this.setState({
+                    funcList: func.tree,
+                    checkedFunc: checked
+                })
+            }).fail(() => { dialogTips.close() })
+        }).fail(() => { dialogTips.close() })
     }
 
     checkedFunc(event) {
@@ -149,9 +210,9 @@ export default class List extends React.Component {
     }
 
     handleAuth() {
-        this.setState({
-            authLoading: true
-        })
+        const loading = DialogTips({ type: 'loading' })
+        const success = DialogTips({ type: 'success', autoClose: true })
+        const fail = DialogTips({ type: 'fail', autoClose: true })
 
         let funcIdArr = [];
 
@@ -162,31 +223,19 @@ export default class List extends React.Component {
         }
 
         const param = {
-            id: this.state.checkedRole,
+            id: this.state.checkedRole.id,
             funcIds: funcIdArr.join(',')
         }
 
-        roleAuth(param)
-            .done(() => {
-                this.setState({
-                    authLoading: false,
-                    authResult: {
-                        type: 'success',
-                        title: 'Well done!',
-                        text: '授权成功 ！需要用户重新登陆后，才会更新权限信息 ！'
-                    }
-                })
-            })
-            .fail((data) => {
-                this.setState({
-                    authLoading: false,
-                    authResult: {
-                        type: 'danger',
-                        'title': 'Oh snap!',
-                        'text': '[' + data.data.code + '] ' + data.data.detail
-                    }
-                })
-            })
+        loading.open()
+
+        roleAuth(param).done(() => {
+            loading.close()
+            success.open()
+        }).fail((data) => {
+            loading.close()
+            fail.open()
+        })
     }
 
     renderTable(data) {
@@ -257,26 +306,6 @@ export default class List extends React.Component {
         );
     }
 
-    showAlert() {
-        if (this.state.authResult) {
-            return (
-                <Alerts
-                    type={this.state.authResult.type}
-                    title={this.state.authResult.title}
-                    text={this.state.authResult.text}
-                />
-            )
-        } else {
-            return '';
-        }
-    }
-
-    clearAlert() {
-        this.setState({
-            authResult: null
-        })
-    }
-
     render() {
         return (
             <div className="auth">
@@ -287,11 +316,11 @@ export default class List extends React.Component {
                     </div>
                 </h5>
 
-                {this.showAlert()}
+                <Alerts type="danger" title="重要提示 !" text="权限修改成功后，需要重新登陆才能生效。"></Alerts>
 
-                <div onClick={this.clearAlert} className="main-container">
+                <div className="main-container">
                     <div className="d-flex align-items-stretch flex-nowrap">
-                        <div className={this.state.loading === true ? 'hide' : 'w300'}>
+                        <div className={this.state.orgList === null ? 'hide' : 'w300'}>
                             <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
                         </div>
 
@@ -304,18 +333,17 @@ export default class List extends React.Component {
                                                 <input
                                                     onChange={this.checkedRole}
                                                     className="form-check-input"
-                                                    type="checkbox"
+                                                    type="radio"
+                                                    name="role"
                                                     value={item.cId}
-                                                    checked={this.state.checkedRole === item.cId ? true : false}
+                                                    checked={this.state.checkedRole.id === item.cId ? true : false}
                                                 />
-                                                {item.cRankName}
+                                                {item.cName}
                                             </label>
                                         </div>
                                     )
                                 })
                             }
-
-                            {this.state.roleLoading === true ? <p>数据加载中 ...</p> : ''}
                         </div>
 
                         <div className={this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l'}>
@@ -332,12 +360,8 @@ export default class List extends React.Component {
                                     {this.renderTable(this.state.funcList)}
                                 </tbody>
                             </table>
-
-                            {this.state.funcLoading === true ? <p>数据加载中 ...</p> : ''}
                         </div>
                     </div>
-
-                    {this.state.loading === true ? <p>数据加载中 ...</p> : ''}
                 </div>
             </div>
         )

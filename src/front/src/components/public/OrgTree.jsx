@@ -78,13 +78,13 @@ export default class OrgTree extends React.Component {
         const elem = $(event.target).data('o') ? $(event.target) : $(event.target).parent();
 
         if (elem.hasClass('selected')) {
-            this.props.selected(null);
-        } else {
-            this.props.selected({
-                id: elem.data('o'),
-                name: elem.children('span').text()
-            })
+            return;
         }
+        
+        this.props.selected({
+            id: elem.data('o'),
+            name: elem.children('span').text()
+        })
     }
 
     render() {

@@ -21,43 +21,43 @@ webpackJsonp([0],{
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _List = __webpack_require__(235);
+	var _List = __webpack_require__(236);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(238);
+	var _Editor = __webpack_require__(239);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _List3 = __webpack_require__(242);
+	var _List3 = __webpack_require__(243);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(243);
+	var _Editor3 = __webpack_require__(244);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _List5 = __webpack_require__(244);
+	var _List5 = __webpack_require__(245);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _List7 = __webpack_require__(245);
+	var _List7 = __webpack_require__(246);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor5 = __webpack_require__(246);
+	var _Editor5 = __webpack_require__(247);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _login = __webpack_require__(250);
+	var _login = __webpack_require__(251);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _Error = __webpack_require__(251);
+	var _Error = __webpack_require__(252);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(252);
+	var _checkAuth = __webpack_require__(253);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -77,8 +77,8 @@ webpackJsonp([0],{
 	        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
 	        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
 	        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
-	        '7-2-1': { PATH_RULE: /^role\/create(\/)?$/ },
-	        '7-2-2': { PATH_RULE: /^role\/\w+(\/)?$/ },
+	        '7-2-1': { PATH_RULE: /^role\/\w+\/create(\/)?$/ },
+	        '7-2-2': { PATH_RULE: /^role\/\w+\/\w+(\/)?$/ },
 	        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
 	        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' },
 	        '7-4-1': { PATH_RULE: /^user\/\w+\/create(\/)?$/ },
@@ -86,10 +86,10 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(253);
-	__webpack_require__(257);
-	__webpack_require__(260);
-	__webpack_require__(262);
+	__webpack_require__(254);
+	__webpack_require__(258);
+	__webpack_require__(261);
+	__webpack_require__(263);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -101,7 +101,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List2.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor2.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List4.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:id', component: _Editor4.default, onEnter: _checkAuth2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:oid/:rid', component: _Editor4.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'auth', component: _List6.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List8.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:oid/:uid', component: _Editor6.default, onEnter: _checkAuth2.default }),
@@ -136,11 +136,11 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(233);
+	var _AsideBar = __webpack_require__(234);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Alerts = __webpack_require__(234);
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
@@ -247,7 +247,7 @@ webpackJsonp([0],{
 
 	var _api = __webpack_require__(231);
 
-	var _Dialog = __webpack_require__(232);
+	var _Dialog = __webpack_require__(233);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
@@ -338,7 +338,7 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 231:
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -371,7 +371,7 @@ webpackJsonp([0],{
 	exports.userDisable = userDisable;
 	exports.userDel = userDel;
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	var _conversion = __webpack_require__(232);
 
 	function io(options, callback) {
 	    if (!(this instanceof io)) {
@@ -416,90 +416,6 @@ webpackJsonp([0],{
 
 	function formatUrl(url) {
 	    return SCHOOLPAL_CONFIG.AJAXPATH + url;
-	}
-
-	function conversionOrg(data) {
-	    var tree = [];
-	    var rootLevel = [];
-
-	    if (data.length) {
-	        data.map(function (item) {
-	            rootLevel.push(item.level);
-
-	            if (item.cId === item.cParentId) {
-	                tree.push(item);
-	            } else {
-	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
-
-	                insertTree(tree[rootIndex], item);
-	            }
-	        });
-	    }
-
-	    rootLevel = _.uniq(rootLevel);
-
-	    return {
-	        tree: tree,
-	        rootLevel: rootLevel.length ? Math.min.apply(Math, _toConsumableArray(rootLevel)) : null
-	    };
-
-	    function insertTree(rootData, data) {
-	        if (rootData.cId === data.cParentId) {
-	            if (!rootData.children) {
-	                rootData.children = [];
-	            };
-
-	            rootData.children.push(data);
-	        } else {
-	            if (rootData.children && rootData.children.length) {
-	                rootData.children.map(function (item) {
-	                    insertTree(item, data);
-	                });
-	            };
-	        }
-	    }
-	}
-
-	function conversionFunc(data) {
-	    var tree = [];
-
-	    if (data.length) {
-	        data.map(function (item) {
-	            if (item.cId === item.cRootId) {
-	                tree.push(item);
-	            } else {
-	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
-
-	                insertTree(tree[rootIndex], item);
-	            };
-	        });
-	    }
-
-	    return tree;
-
-	    function insertTree(rootData, data) {
-	        if (rootData.cId === data.cParentId) {
-	            if (data.cCommandTypeId) {
-	                if (!rootData.action) {
-	                    rootData.action = [];
-	                };
-
-	                rootData.action.push(data);
-	            } else {
-	                if (!rootData.children) {
-	                    rootData.children = [];
-	                };
-
-	                rootData.children.push(data);
-	            }
-	        } else {
-	            if (rootData.children && rootData.children.length) {
-	                rootData.children.map(function (item) {
-	                    insertTree(item, data);
-	                });
-	            };
-	        }
-	    }
 	}
 
 	function salt() {
@@ -599,9 +515,7 @@ webpackJsonp([0],{
 
 	    io({ url: url }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-	            var conversionOrgData = conversionOrg(data.data);
-
-	            defer.resolve(conversionOrgData);
+	            defer.resolve((0, _conversion.conversionOrg)(data.data));
 	        } else {
 	            defer.reject(data);
 	        }
@@ -801,7 +715,7 @@ webpackJsonp([0],{
 
 	    io({ url: url, data: { ids: fids } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-	            var conversionFuncData = conversionFunc(data.data);
+	            var conversionFuncData = (0, _conversion.conversionFunc)(data.data);
 
 	            defer.resolve({
 	                tree: conversionFuncData,
@@ -925,6 +839,112 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 232:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.conversionOrg = conversionOrg;
+	exports.conversionFunc = conversionFunc;
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function insertTree(rootData, data) {
+	    if (rootData.cId === data.cParentId) {
+	        if (!rootData.children) {
+	            rootData.children = [];
+	        };
+
+	        rootData.children.push(data);
+	    } else {
+	        if (rootData.children && rootData.children.length) {
+	            $.each(rootData.children, function (i, item) {
+	                insertTree(item, data);
+	            });
+	        };
+	    }
+	}
+
+	function conversionOrg(original) {
+	    var data = original.map(function (item) {
+	        return $.extend({}, item);
+	    });
+	    var tree = [];
+	    var rootLevel = [];
+
+	    if (data.length) {
+	        $.each(data, function (i, item) {
+	            rootLevel.push(item.level);
+
+	            if (item.cId === item.cParentId) {
+	                tree.push(item);
+	            } else {
+	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+	                insertTree(tree[rootIndex], item);
+	            }
+	        });
+	    }
+
+	    rootLevel = _.uniq(rootLevel);
+
+	    return {
+	        original: original,
+	        tree: tree,
+	        rootLevel: rootLevel.length ? Math.min.apply(Math, _toConsumableArray(rootLevel)) : null
+	    };
+	}
+
+	function insertFunc(rootData, data) {
+	    if (rootData.cId === data.cParentId) {
+	        if (data.cCommandTypeId) {
+	            if (!rootData.action) {
+	                rootData.action = [];
+	            };
+
+	            rootData.action.push(data);
+	        } else {
+	            if (!rootData.children) {
+	                rootData.children = [];
+	            };
+
+	            rootData.children.push(data);
+	        }
+	    } else {
+	        if (rootData.children && rootData.children.length) {
+	            rootData.children.map(function (item) {
+	                insertFunc(item, data);
+	            });
+	        };
+	    }
+	}
+
+	function conversionFunc(original) {
+	    var data = original.map(function (item) {
+	        return $.extend({}, item);
+	    });
+	    var tree = [];
+
+	    if (data.length) {
+	        data.map(function (item) {
+	            if (item.cId === item.cRootId) {
+	                tree.push(item);
+	            } else {
+	                var rootIndex = _.findIndex(tree, { cId: item.cRootId });
+
+	                insertFunc(tree[rootIndex], item);
+	            };
+	        });
+	    }
+
+	    return tree;
+	}
+
+/***/ },
+
+/***/ 233:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1059,7 +1079,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 233:
+/***/ 234:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1101,7 +1121,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 234:
+/***/ 235:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1120,7 +1140,7 @@ webpackJsonp([0],{
 	function Alerts(props) {
 	    return _react2.default.createElement(
 	        'div',
-	        { className: 'alert alert-' + props.type, role: 'alert' },
+	        { className: 'alert alert-' + props.type + ' border-right-0 border-left-0 rounded-0', role: 'alert' },
 	        _react2.default.createElement(
 	            'strong',
 	            null,
@@ -1135,7 +1155,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 235:
+/***/ 236:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1154,13 +1174,19 @@ webpackJsonp([0],{
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
+
+	var _Dialog = __webpack_require__(233);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(237);
+	var _DialogTips = __webpack_require__(238);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _conversion = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1180,20 +1206,21 @@ webpackJsonp([0],{
 
 	        _this.state = {
 	            list: [],
+	            treeList: [],
 	            rootLevel: null,
 
-	            selected: null,
-
-	            delLoading: false
+	            selected: null
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.renderTable = _this.renderTable.bind(_this);
 	        _this.tableLine = _this.tableLine.bind(_this);
 	        _this.checkedOrg = _this.checkedOrg.bind(_this);
+	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
 	        _this.handleNode = _this.handleNode.bind(_this);
+	        _this.confirmDel = _this.confirmDel.bind(_this);
 	        return _this;
 	    }
 
@@ -1206,10 +1233,10 @@ webpackJsonp([0],{
 
 	            dialogTips.open();
 
-	            (0, _api.orgList)().done(function (data, rootLevel) {
+	            (0, _api.orgList)().done(function (data) {
 	                _this2.setState({
-	                    loading: false,
-	                    list: data.tree,
+	                    list: data.original,
+	                    treeList: data.tree,
 	                    rootLevel: data.rootLevel
 	                });
 	            }).always(function () {
@@ -1224,7 +1251,7 @@ webpackJsonp([0],{
 	            var temp = [];
 	            var isDisabled = void 0;
 
-	            if (this.state.selected) {
+	            if (this.state.selected && this.state.selected.level) {
 	                isDisabled = false;
 	            } else {
 	                isDisabled = true;
@@ -1233,7 +1260,7 @@ webpackJsonp([0],{
 	            if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
 	                SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map(function (item, index) {
 	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create' }));
+	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
 	                    };
 
 	                    if (item === 'Mod') {
@@ -1241,7 +1268,7 @@ webpackJsonp([0],{
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, disabled: isDisabled, loading: _this3.state.delLoading }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: isDisabled }));
 	                    }
 	                });
 	            }
@@ -1256,7 +1283,7 @@ webpackJsonp([0],{
 	            var table = [];
 
 	            if (data.length) {
-	                data.map(function (item) {
+	                $.each(data, function (i, item) {
 	                    table.push(_this4.tableLine(item));
 
 	                    if (item.children && item.children.length) {
@@ -1281,7 +1308,7 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'tr',
-	                { key: data.cId, 'data-id': data.cId },
+	                { key: data.cId, 'data-id': data.cId, 'data-level': data.level },
 	                _react2.default.createElement(
 	                    'th',
 	                    { scope: 'row' },
@@ -1295,9 +1322,8 @@ webpackJsonp([0],{
 	                                onChange: this.checkedOrg,
 	                                className: 'form-check-input',
 	                                type: 'radio',
-	                                name: 'rank',
-	                                disabled: data.level === 0 ? true : false,
-	                                checked: data.cId.toString() === this.state.selected ? true : false,
+	                                name: 'org',
+	                                checked: this.state.selected && data.cId.toString() === this.state.selected.id ? true : false,
 	                                value: data.cId
 	                            })
 	                        )
@@ -1339,42 +1365,70 @@ webpackJsonp([0],{
 	        value: function checkedOrg(event) {
 	            if (event.target.checked === true) {
 	                this.setState({
-	                    selected: event.target.value
+	                    selected: {
+	                        id: event.target.value,
+	                        name: $(event.target).parents('tr').find('p').text(),
+	                        level: $(event.target).parents('tr').data('level')
+	                    }
 	                });
 	            }
 	        }
 	    }, {
+	        key: 'handleCreate',
+	        value: function handleCreate() {
+	            this.props.router.push({
+	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create',
+	                state: { selected: this.state.selected }
+	            });
+	        }
+	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected.id;
 
 	            this.props.router.push(editorPath);
+	        }
+	    }, {
+	        key: 'confirmDel',
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除 ' + this.state.selected.name + ' 组织 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
 	        }
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {
 	            var _this5 = this;
 
-	            this.setState({
-	                delLoading: true
-	            });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            (0, _api.orgDel)(this.state.selected).done(function () {
+	            loading.open();
+
+	            (0, _api.orgDel)(this.state.selected.id).done(function () {
+	                var tempList = _this5.state.list.filter(function (item) {
+	                    return item.cId !== _this5.state.selected.id;
+	                });
+	                var temp = (0, _conversion.conversionOrg)(tempList);
+
+	                loading.close();
+	                success.open();
+
 	                _this5.setState({
-	                    loading: true,
-	                    delLoading: false,
-	                    list: [],
-	                    selected: null,
-	                    selectedLevel: null,
-	                    rootLevel: null
+	                    list: temp.original,
+	                    treeList: temp.tree,
+	                    rootLevel: temp.rootLevel,
+
+	                    selected: null
 	                });
-	                (0, _api.orgList)().done(function (data) {
-	                    _this5.setState({
-	                        loading: false,
-	                        list: data.tree,
-	                        rootLevel: data.rootLevel
-	                    });
-	                });
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
 	            });
 	        }
 	    }, {
@@ -1388,7 +1442,7 @@ webpackJsonp([0],{
 	            var level = tr.data('level');
 
 	            tr.nextAll('tr').each(function (i, item) {
-	                if ($(item).data('level') === level) {
+	                if ($(item).data('level') <= level) {
 	                    return false;
 	                };
 
@@ -1467,7 +1521,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'tbody',
 	                            null,
-	                            this.renderTable(this.state.list)
+	                            this.renderTable(this.state.treeList)
 	                        )
 	                    )
 	                )
@@ -1482,7 +1536,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 236:
+/***/ 237:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1632,7 +1686,7 @@ webpackJsonp([0],{
 	function SaveButton(props) {
 	    return _react2.default.createElement(
 	        'button',
-	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	        { type: 'submit', className: 'btn btn-primary' },
 	        props.text
 	    );
 	}
@@ -1680,7 +1734,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 237:
+/***/ 238:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1737,7 +1791,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 238:
+/***/ 239:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1758,19 +1812,19 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _subTitle = __webpack_require__(240);
+	var _subTitle = __webpack_require__(241);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(237);
+	var _DialogTips = __webpack_require__(238);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -1782,7 +1836,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(241);
+	__webpack_require__(242);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -1812,30 +1866,45 @@ webpackJsonp([0],{
 
 	            if (this.props.params.id === 'create') {
 	                (0, _api.orgList)().done(function (data) {
-	                    _this2.setState({
-	                        orgList: data.tree
-	                    });
+	                    if (_this2.props.router.location.state && _this2.props.router.location.state.selected) {
+	                        _this2.setState({
+	                            orgList: data.tree,
+	                            selected: {
+	                                id: _this2.props.router.location.state.selected.id,
+	                                name: _this2.props.router.location.state.selected.name
+	                            }
+	                        });
+	                    } else {
+	                        _this2.setState({
+	                            orgList: data.tree,
+	                            selected: {
+	                                id: data.tree[0].cId,
+	                                name: data.tree[0].cName
+	                            }
+	                        });
+	                    }
 	                }).always(function () {
 	                    dialogTips.close();
 	                });
 
 	                $('#citys').citys();
 	            } else {
-	                (0, _api.orgDetails)(this.props.params.id).done(function (data) {
+	                $.when((0, _api.orgList)(), (0, _api.orgDetails)(this.props.params.id)).done(function (list, details) {
 	                    _this2.setState({
-	                        editorId: data.cId,
+	                        editorId: details.cId,
+	                        orgList: list.tree,
 	                        selected: {
-	                            id: data.parentOrg.cId,
-	                            name: data.parentOrg.cName
+	                            id: details.parentOrg.cId,
+	                            name: details.parentOrg.cName
 	                        }
 	                    });
 
-	                    $(_this2.editorDom).find('[name=name]').val(data.cName).end().find('[name=code]').val(data.cCode).end().find('[name=address]').val(data.cAddress).end().find('[name=owner]').val(data.cOwner).end().find('[name=phone]').val(data.cOwnerPhone);
+	                    $(_this2.editorDom).find('[name=name]').val(details.cName).end().find('[name=code]').val(details.cCode).end().find('[name=address]').val(details.cAddress).end().find('[name=owner]').val(details.cOwner).end().find('[name=phone]').val(details.cOwnerPhone);
 
 	                    $('#citys').citys({
-	                        province: data.cStateCode,
-	                        city: data.cCityCode,
-	                        area: data.cCountyCode || null
+	                        province: details.cStateCode,
+	                        city: details.cCityCode,
+	                        area: details.cCountyCode || null
 	                    });
 	                }).always(function () {
 	                    dialogTips.close();
@@ -1857,8 +1926,12 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'editorSubmit',
-	        value: function editorSubmit() {
+	        value: function editorSubmit(event) {
 	            var _this3 = this;
+
+	            if (this.editorDom.checkValidity() === true) {
+	                event.preventDefault();
+	            };
 
 	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
@@ -1914,33 +1987,33 @@ webpackJsonp([0],{
 	                'div',
 	                { className: 'org' },
 	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
-	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
 	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'd-inline text-muted' },
-	                        (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
+	                        '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
+	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'd-flex align-items-stretch flex-nowrap' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this4.editorDom = dom;
-	                                }, className: 'flex-cell' },
+	                            'div',
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'w400' },
@@ -1957,7 +2030,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u7EC4\u7EC7\u540D\u79F0'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -1972,7 +2045,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u7EC4\u7EC7\u4EE3\u7801'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -1992,16 +2065,8 @@ webpackJsonp([0],{
 	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'div',
-	                                            { className: 'btn-group' },
-	                                            _react2.default.createElement(
-	                                                'button',
-	                                                { type: 'button', className: 'btn btn-secondary dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false' },
-	                                                _react2.default.createElement(
-	                                                    'span',
-	                                                    { className: 'd-inline-block minw210 text-left' },
-	                                                    this.state.selected ? this.state.selected.name : ''
-	                                                )
-	                                            ),
+	                                            { className: 'btn-group btn-block' },
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', 'data-toggle': 'dropdown', value: this.state.selected ? this.state.selected.name : '', readOnly: true }),
 	                                            _react2.default.createElement(
 	                                                'div',
 	                                                { className: 'dropdown-menu' },
@@ -2056,7 +2121,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8BE6\u7EC6\u5730\u5740'
 	                                    ),
-	                                    _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3' })
+	                                    _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2071,7 +2136,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8D1F\u8D23\u4EBA'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -2086,7 +2151,7 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u8054\u7CFB\u7535\u8BDD'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1(\\d{2})\\d{8}$', required: 'required' })
 	                                )
 	                            )
 	                        )
@@ -2103,7 +2168,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 239:
+/***/ 240:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2219,13 +2284,13 @@ webpackJsonp([0],{
 	            var elem = $(event.target).data('o') ? $(event.target) : $(event.target).parent();
 
 	            if (elem.hasClass('selected')) {
-	                this.props.selected(null);
-	            } else {
-	                this.props.selected({
-	                    id: elem.data('o'),
-	                    name: elem.children('span').text()
-	                });
+	                return;
 	            }
+
+	            this.props.selected({
+	                id: elem.data('o'),
+	                name: elem.children('span').text()
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -2253,7 +2318,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 240:
+/***/ 241:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2272,7 +2337,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 241:
+/***/ 242:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2501,7 +2566,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 242:
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2522,13 +2587,21 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(236);
+	var _Dialog = __webpack_require__(233);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2557,23 +2630,20 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
-	            selected: null,
+	            org: null,
 
-	            roleLoading: false,
 	            roleList: [],
-
-	            selectedRole: null,
-
-	            delLoading: false
+	            selected: null
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.selectOrg = _this.selectOrg.bind(_this);
-	        _this.handleSelect = _this.handleSelect.bind(_this);
+	        _this.checkedRole = _this.checkedRole.bind(_this);
+	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
+	        _this.confirmDel = _this.confirmDel.bind(_this);
 	        return _this;
 	    }
 
@@ -2582,10 +2652,23 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data.tree
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (org) {
+	                (0, _api.roleList)(org.original[0].cId).done(function (role) {
+	                    _this2.setState({
+	                        orgList: org.tree,
+	                        org: {
+	                            id: org.original[0].cId,
+	                            name: org.original[0].cName
+	                        },
+
+	                        roleList: role
+	                    });
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
 	            });
 	        }
@@ -2599,15 +2682,15 @@ webpackJsonp([0],{
 	            if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
 	                SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map(function (item, index) {
 	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH + 'role/create' }));
+	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
 	                    };
 
 	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
+	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.selected === null ? true : false }));
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.selected === null ? true : false }));
 	                    }
 	                });
 	            }
@@ -2619,45 +2702,43 @@ webpackJsonp([0],{
 	        value: function selectOrg(org) {
 	            var _this4 = this;
 
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
 	            if (org) {
-	                this.setState({
-	                    selected: org,
-	                    roleLoading: true
-	                });
+	                this.setState({ org: org });
+
+	                dialogTips.open();
 
 	                (0, _api.roleList)(org.id).done(function (data) {
-	                    _this4.setState({
-	                        roleLoading: false,
-	                        roleList: data
-	                    });
+	                    _this4.setState({ roleList: data });
+	                }).always(function () {
+	                    dialogTips.close();
 	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
+	            }
 	        }
 	    }, {
-	        key: 'handleSelect',
-	        value: function handleSelect(event) {
-	            if (this.state.delLoading === true) {
-	                return;
+	        key: 'checkedRole',
+	        value: function checkedRole(event) {
+	            if (event.target.checked === true) {
+	                this.setState({
+	                    selected: {
+	                        id: event.target.value,
+	                        name: $(event.target).parents('tr').find('[data-name]').text()
+	                    }
+	                });
 	            }
+	        }
+	    }, {
+	        key: 'handleCreate',
+	        value: function handleCreate() {
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/create';
 
-	            if ($(event.target).hasClass('selected')) {
-	                this.setState({
-	                    selectedRole: null
-	                });
-	            } else {
-	                this.setState({
-	                    selectedRole: $(event.target).parents('tr').data('id')
-	                });
-	            }
+	            this.props.router.push(editorPath);
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.selectedRole;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/' + this.state.selected.id;
 
 	            this.props.router.push(editorPath);
 	        }
@@ -2666,23 +2747,39 @@ webpackJsonp([0],{
 	        value: function handleDel() {
 	            var _this5 = this;
 
-	            this.setState({
-	                delLoading: true
-	            });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            (0, _api.roleDel)(this.state.selectedRole).done(function () {
+	            loading.open();
+
+	            (0, _api.roleDel)(this.state.selected.id).done(function () {
+	                var tempList = _this5.state.roleList.filter(function (item) {
+	                    return item.cId !== _this5.state.selected.id;
+	                });
+
+	                loading.close();
+	                success.open();
+
 	                _this5.setState({
-	                    delLoading: false,
-	                    roleLoading: true
+	                    roleList: tempList,
+	                    selected: null
 	                });
-
-	                (0, _api.roleList)(_this5.state.selected.id).done(function (data) {
-	                    _this5.setState({
-	                        roleLoading: false,
-	                        roleList: data
-	                    });
-	                });
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
 	            });
+	        }
+	    }, {
+	        key: 'confirmDel',
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除 ' + this.state.selected.name + ' 角色 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
 	        }
 	    }, {
 	        key: 'render',
@@ -2711,15 +2808,15 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
-	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                            { className: this.state.org === null ? 'hide' : 'w300' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.org ? this.state.org.id : null })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                            { className: this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
 	                                'table',
-	                                { className: this.state.roleLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                { className: this.state.roleList === null ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
 	                                    'thead',
 	                                    null,
@@ -2759,11 +2856,26 @@ webpackJsonp([0],{
 	                                    this.state.roleList.map(function (item) {
 	                                        return _react2.default.createElement(
 	                                            'tr',
-	                                            { key: item.cId, 'data-id': item.cId },
+	                                            { key: item.cId },
 	                                            _react2.default.createElement(
 	                                                'td',
 	                                                null,
-	                                                _react2.default.createElement('span', { onClick: _this6.handleSelect, className: _this6.state.selectedRole && _this6.state.selectedRole.toString() === item.cId ? 'select selected' : 'select' })
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'form-check' },
+	                                                    _react2.default.createElement(
+	                                                        'label',
+	                                                        { className: 'form-check-label' },
+	                                                        _react2.default.createElement('input', {
+	                                                            onChange: _this6.checkedRole,
+	                                                            className: 'form-check-input',
+	                                                            type: 'radio',
+	                                                            name: 'org',
+	                                                            checked: _this6.state.selected && item.cId === _this6.state.selected.id ? true : false,
+	                                                            value: item.cId
+	                                                        })
+	                                                    )
+	                                                )
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
@@ -2777,7 +2889,7 @@ webpackJsonp([0],{
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
-	                                                null,
+	                                                { 'data-name': true },
 	                                                item.cName
 	                                            ),
 	                                            _react2.default.createElement(
@@ -2788,18 +2900,8 @@ webpackJsonp([0],{
 	                                        );
 	                                    })
 	                                )
-	                            ),
-	                            this.state.roleLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
-	                        ),
-	                        this.state.loading === true ? _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                        ) : ''
+	                            )
+	                        )
 	                    )
 	                )
 	            );
@@ -2810,478 +2912,6 @@ webpackJsonp([0],{
 	}(_react2.default.Component);
 
 	exports.default = List;
-
-/***/ },
-
-/***/ 243:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(9);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(40);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _reactRouter = __webpack_require__(174);
-
-	var _OrgTree = __webpack_require__(239);
-
-	var _OrgTree2 = _interopRequireDefault(_OrgTree);
-
-	var _Alerts = __webpack_require__(234);
-
-	var _Alerts2 = _interopRequireDefault(_Alerts);
-
-	var _Button = __webpack_require__(236);
-
-	var _subTitle = __webpack_require__(240);
-
-	var _subTitle2 = _interopRequireDefault(_subTitle);
-
-	var _api = __webpack_require__(231);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var FUNC_ADMIN_ID = '7';
-	var RANK_ADMIN_ID = '4';
-
-	function formatFuncData(data) {
-	    var temp = [];
-
-	    data.map(function (item) {
-	        if (item.cId === item.cRootId) {
-	            temp.push(item);
-	        }
-	    });
-
-	    return temp;
-	}
-
-	var Editor = function (_React$Component) {
-	    _inherits(Editor, _React$Component);
-
-	    function Editor(props) {
-	        _classCallCheck(this, Editor);
-
-	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
-
-	        _this.state = {
-	            loading: true,
-	            orgList: [],
-	            selected: null,
-
-	            rank: [],
-	            func: [],
-
-	            isAdmin: false,
-	            checkedFunc: {},
-	            checkedRank: null,
-
-	            saveLoading: false,
-	            saveResult: null
-	        };
-
-	        _this.selectOrg = _this.selectOrg.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
-	        _this.checkedFunc = _this.checkedFunc.bind(_this);
-	        _this.checkedRank = _this.checkedRank.bind(_this);
-	        _this.editorSubmit = _this.editorSubmit.bind(_this);
-	        return _this;
-	    }
-
-	    _createClass(Editor, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var _this2 = this;
-
-	            $.when((0, _api.orgList)(), (0, _api.funcDic)(), (0, _api.rankDic)()).done(function (org, func, rank) {
-
-	                if (_this2.props.params.id === 'create') {
-	                    _this2.setState({
-	                        loading: false,
-	                        orgList: org.tree,
-	                        rank: rank,
-	                        func: formatFuncData(func)
-	                    });
-	                } else {
-	                    (0, _api.roleDetails)(_this2.props.params.id).done(function (data) {
-	                        var selected = org.tree.find(function (item) {
-	                            return item.cId === data.cOrgId;
-	                        });
-	                        var tempCheckedFunc = {};
-
-	                        data.rootFuncs.map(function (item) {
-	                            tempCheckedFunc[item.cId] = true;
-	                        });
-
-	                        _this2.setState({
-	                            loading: false,
-	                            orgList: org.tree,
-	                            rank: rank,
-	                            func: formatFuncData(func),
-
-	                            selected: {
-	                                id: selected.cId,
-	                                name: selected.cName
-	                            },
-	                            checkedFunc: tempCheckedFunc,
-	                            checkedRank: data.cRankId.toString()
-	                        });
-
-	                        $(_this2.editorDom).find('[name=name]').val(data.cName).end().find('[name=desc]').val(data.cDesc);
-	                    });
-	                }
-	            });
-	        }
-	    }, {
-	        key: 'selectOrg',
-	        value: function selectOrg(org) {
-	            if (org) {
-	                this.setState({
-	                    selected: org
-	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
-	        }
-	    }, {
-	        key: 'checkedFunc',
-	        value: function checkedFunc(event) {
-	            var isAdmin = event.target.value === FUNC_ADMIN_ID ? true : false;
-	            var tempFunc = $.extend({}, this.state.checkedFunc);
-	            var tempRank = this.state.checkedRank;
-
-	            if (isAdmin && event.target.checked === true) {
-	                tempFunc = {};
-	                tempRank = RANK_ADMIN_ID;
-	            } else {
-	                delete tempFunc[FUNC_ADMIN_ID];
-
-	                if (tempRank === RANK_ADMIN_ID) {
-	                    tempRank = null;
-	                }
-	            }
-
-	            tempFunc[event.target.value] = event.target.checked;
-
-	            this.setState({
-	                isAdmin: isAdmin === true && event.target.checked === true ? true : false,
-	                checkedFunc: tempFunc,
-	                checkedRank: tempRank
-	            });
-	        }
-	    }, {
-	        key: 'checkedRank',
-	        value: function checkedRank(event) {
-	            if (event.target.checked === true) {
-	                this.setState({
-	                    checkedRank: event.target.value
-	                });
-	            } else {
-	                this.setState({
-	                    checkedRank: null
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'editorSubmit',
-	        value: function editorSubmit() {
-	            var _this3 = this;
-
-	            var param = {};
-	            var funcIds = [];
-
-	            param.id = this.props.params.id === 'create' ? null : this.props.params.id;
-	            param.orgId = this.state.selected.id;
-
-	            for (var key in this.state.checkedFunc) {
-	                if (this.state.checkedFunc[key] === true) {
-	                    funcIds.push(key);
-	                };
-	            }
-
-	            param.strFuncIds = funcIds.join(',');
-	            param.rankId = this.state.checkedRank;
-	            param.name = $(this.editorDom).find('[name=name]').val();
-	            param.desc = $(this.editorDom).find('[name=desc]').val();
-
-	            this.setState({
-	                saveLoading: true
-	            });
-
-	            if (this.props.params.id === 'create') {
-	                (0, _api.roleAdd)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        isAdmin: false,
-	                        checkedFunc: {},
-	                        checkedRank: null,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
-
-	                    $(_this3.editorDom).find('[name=name]').val('').end().find('[name=desc]').val('');
-	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
-	                });
-	            } else {
-	                (0, _api.roleMod)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
-	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.saveResult) {
-	                return _react2.default.createElement(
-	                    _Alerts2.default,
-	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'role', className: 'alert-link' },
-	                        '\u8FD4\u56DE\u5217\u8868'
-	                    )
-	                );
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                saveResult: null
-	            });
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var _this4 = this;
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'org' },
-	                _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-glass' }),
-	                    '\xA0\u89D2\u8272\u7BA1\u7406\xA0|\xA0',
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: 'd-inline text-muted' },
-	                        (0, _subTitle2.default)(this.props.router.params.id, '角色')
-	                    ),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'btn-group float-right', role: 'group' },
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
-	                    )
-	                ),
-	                this.showAlert(),
-	                _react2.default.createElement(
-	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'd-flex align-items-stretch flex-nowrap' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
-	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                        ),
-	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this4.editorDom = dom;
-	                                }, className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'h6 pb-3 b-b' },
-	                                '\u6240\u5C5E\u7EC4\u7EC7\uFF1A',
-	                                this.state.selected ? this.state.selected.name : ''
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'w500' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        _react2.default.createElement(
-	                                            'em',
-	                                            { className: 'text-danger' },
-	                                            '*'
-	                                        ),
-	                                        '\u89D2\u8272\u804C\u80FD'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        this.state.func.map(function (item) {
-	                                            return _react2.default.createElement(
-	                                                'div',
-	                                                { key: item.cId, className: 'form-check form-check-inline' },
-	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        onChange: _this4.checkedFunc,
-	                                                        className: 'form-check-input',
-	                                                        type: 'checkbox',
-	                                                        value: item.cId,
-	                                                        checked: _this4.state.checkedFunc[item.cId] ? _this4.state.checkedFunc[item.cId] : false,
-	                                                        name: 'func'
-	                                                    }),
-	                                                    item.cNameShort
-	                                                )
-	                                            );
-	                                        })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        _react2.default.createElement(
-	                                            'em',
-	                                            { className: 'text-danger' },
-	                                            '*'
-	                                        ),
-	                                        '\u89D2\u8272\u804C\u7EA7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        null,
-	                                        this.state.rank.map(function (item) {
-	                                            var isDisabled = false;
-	                                            var checkedFuncCount = 0;
-
-	                                            for (var key in _this4.state.checkedFunc) {
-	                                                if (_this4.state.checkedFunc[key] === true) {
-	                                                    checkedFuncCount++;
-	                                                }
-	                                            }
-
-	                                            if (_this4.state.isAdmin === true) {
-	                                                isDisabled = item.cId.toString() !== RANK_ADMIN_ID ? true : false;
-	                                            } else {
-	                                                if (checkedFuncCount > 1) {
-	                                                    isDisabled = item.cId === 1 ? false : true;
-	                                                }
-
-	                                                if (checkedFuncCount === 1) {
-	                                                    isDisabled = item.cId.toString() === RANK_ADMIN_ID ? true : false;
-	                                                }
-	                                            }
-
-	                                            return _react2.default.createElement(
-	                                                'div',
-	                                                { key: item.cId, className: 'form-check form-check-inline' },
-	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        onChange: _this4.checkedRank,
-	                                                        className: 'form-check-input',
-	                                                        type: 'radio',
-	                                                        name: 'rank',
-	                                                        disabled: isDisabled,
-	                                                        checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
-	                                                        value: item.cId
-	                                                    }),
-	                                                    item.cName
-	                                                )
-	                                            );
-	                                        })
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        '\u8D1F\u8D23\u4EBA'
-	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name' })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'form-group' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'name' },
-	                                        '\u89D2\u8272\u63CF\u8FF0'
-	                                    ),
-	                                    _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Editor;
-	}(_react2.default.Component);
-
-	exports.default = Editor;
 
 /***/ },
 
@@ -3306,17 +2936,474 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _Button = __webpack_require__(237);
+
+	var _subTitle = __webpack_require__(241);
+
+	var _subTitle2 = _interopRequireDefault(_subTitle);
+
+	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FUNC_ADMIN_ID = '7';
+	var RANK_ADMIN_ID = '4';
+	var RANK_MANAGER_ID = '1';
+
+	function formatFuncData(data) {
+	    var temp = [];
+
+	    data.map(function (item) {
+	        if (item.cId === item.cRootId) {
+	            temp.push(item);
+	        }
+	    });
+
+	    return temp;
+	}
+
+	var Editor = function (_React$Component) {
+	    _inherits(Editor, _React$Component);
+
+	    function Editor(props) {
+	        _classCallCheck(this, Editor);
+
+	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
+
+	        _this.state = {
+	            org: null,
+
+	            rank: [],
+	            func: [],
+
+	            isAdmin: false,
+	            checkedFunc: [],
+	            checkedRank: null
+	        };
+
+	        _this.checkedFunc = _this.checkedFunc.bind(_this);
+	        _this.checkedRank = _this.checkedRank.bind(_this);
+	        _this.editorSubmit = _this.editorSubmit.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(Editor, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            if (this.props.params.rid === 'create') {
+	                $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.funcDic)(), (0, _api.rankDic)()).done(function (org, func, rank) {
+	                    _this2.setState({
+	                        org: {
+	                            id: org.cId,
+	                            name: org.cName
+	                        },
+	                        rank: rank,
+	                        func: formatFuncData(func)
+	                    });
+	                }).always(function () {
+	                    dialogTips.close();
+	                });
+	            } else {
+	                $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.funcDic)(), (0, _api.rankDic)(), (0, _api.roleDetails)(this.props.params.rid)).done(function (org, func, rank, role) {
+	                    var tempCheckedFunc = {};
+
+	                    role.rootFuncs.map(function (item) {
+	                        tempCheckedFunc[item.cId] = true;
+	                    });
+
+	                    _this2.setState({
+	                        editorId: role.cId,
+	                        org: {
+	                            id: org.cId,
+	                            name: org.cName
+	                        },
+	                        rank: rank,
+	                        func: formatFuncData(func),
+
+	                        checkedFunc: tempCheckedFunc,
+	                        checkedRank: role.cRankId.toString()
+	                    });
+
+	                    $(_this2.editorDom).find('[name=name]').val(role.cName).end().find('[name=desc]').val(role.cDesc);
+	                }).always(function () {
+	                    dialogTips.close();
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'checkedFunc',
+	        value: function checkedFunc(event) {
+	            var isAdmin = event.target.value === FUNC_ADMIN_ID ? true : false;
+	            var tempFunc = [];
+	            var tempRank = this.state.checkedRank;
+
+	            if (event.target.checked === true) {
+	                tempFunc.push(event.target.value);
+
+	                if (isAdmin !== true) {
+	                    tempFunc = tempFunc.concat(this.state.checkedFunc.filter(function (item) {
+	                        return item !== FUNC_ADMIN_ID;
+	                    }));
+	                }
+	            } else {
+	                tempFunc = this.state.checkedFunc.filter(function (item) {
+	                    return item !== event.target.value;
+	                });
+	            }
+
+	            if (tempFunc.findIndex(function (id) {
+	                return id === FUNC_ADMIN_ID;
+	            }) >= 0) {
+	                tempRank = RANK_ADMIN_ID;
+	            } else {
+	                if (tempRank === RANK_ADMIN_ID) {
+	                    tempRank = null;
+	                }
+
+	                if (tempFunc.length === 1 && this.state.checkedRank === RANK_MANAGER_ID) {
+	                    tempRank = null;
+	                }
+
+	                if (tempFunc.length > 1) {
+	                    tempRank = RANK_MANAGER_ID;
+	                }
+	            }
+
+	            if (tempFunc.length) {
+	                $(this.editorDom).find('input[type=checkbox]').removeAttr('required');
+	            } else {
+	                $(this.editorDom).find('input[type=checkbox]').attr('required', 'required');
+	            }
+
+	            this.setState({
+	                isAdmin: isAdmin === true && event.target.checked === true ? true : false,
+	                checkedFunc: tempFunc,
+	                checkedRank: tempRank
+	            });
+	        }
+	    }, {
+	        key: 'checkedRank',
+	        value: function checkedRank(event) {
+	            var tempFunc = [];
+	            var tempRank = this.state.checkedRank;
+
+	            if (event.target.value === RANK_ADMIN_ID) {
+	                tempFunc.push(FUNC_ADMIN_ID);
+	            } else if (event.target.value !== RANK_MANAGER_ID && this.state.checkedFunc.length > 1) {
+	                tempFunc = this.state.checkedFunc.filter(function (id, index) {
+	                    return index === 0;
+	                });
+	            } else {
+	                tempFunc = this.state.checkedFunc.filter(function (id) {
+	                    return id !== FUNC_ADMIN_ID;
+	                });
+	            }
+
+	            this.setState({
+	                checkedFunc: tempFunc,
+	                checkedRank: event.target.value
+	            });
+	        }
+	    }, {
+	        key: 'editorSubmit',
+	        value: function editorSubmit(event) {
+	            var _this3 = this;
+
+	            if (this.editorDom.checkValidity() === true) {
+	                event.preventDefault();
+	            };
+
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role';
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+	            var param = {};
+
+	            param.orgId = this.state.org.id;
+	            param.strFuncIds = this.state.checkedFunc.join(',');
+	            param.rankId = this.state.checkedRank;
+	            param.name = $(this.editorDom).find('[name=name]').val();
+	            param.desc = $(this.editorDom).find('[name=desc]').val();
+
+	            loading.open();
+
+	            if (this.state.editorId) {
+	                param.id = this.state.editorId;
+	                (0, _api.roleMod)(param).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            } else {
+	                (0, _api.roleAdd)(param).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this4 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'org' },
+	                _react2.default.createElement(
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-glass' }),
+	                        '\xA0\u89D2\u8272\u7BA1\u7406\xA0|\xA0',
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.id, '角色')
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'main-container' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: this.state.org === null ? 'hide' : 'w500' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u6240\u5C5E\u7EC4\u7EC7\uFF1A'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u804C\u80FD'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        null,
+	                                        this.state.func.map(function (item) {
+	                                            var adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+
+	                                            return _react2.default.createElement(
+	                                                'div',
+	                                                { key: item.cId, className: adminClass },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'form-check-label' },
+	                                                    _react2.default.createElement('input', {
+	                                                        onChange: _this4.checkedFunc,
+	                                                        className: 'form-check-input',
+	                                                        type: 'checkbox',
+	                                                        value: item.cId,
+	                                                        checked: _this4.state.checkedFunc.findIndex(function (id) {
+	                                                            return id === item.cId;
+	                                                        }) < 0 ? false : true,
+	                                                        name: 'func',
+	                                                        required: 'required'
+	                                                    }),
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        null,
+	                                                        item.cNameShort
+	                                                    )
+	                                                )
+	                                            );
+	                                        })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u804C\u7EA7'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        null,
+	                                        this.state.rank.map(function (item) {
+	                                            var adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+	                                            var isDisabled = false;
+
+	                                            if (_this4.state.isAdmin === true && item.cId.toString() !== RANK_ADMIN_ID) {
+	                                                isDisabled = true;
+	                                            }
+
+	                                            if (_this4.state.isAdmin === false && item.cId.toString() === RANK_ADMIN_ID) {
+	                                                isDisabled = true;
+	                                            }
+
+	                                            if (_this4.state.checkedFunc.length === 1 && item.cId.toString() === RANK_MANAGER_ID) {
+	                                                isDisabled = true;
+	                                            }
+
+	                                            return _react2.default.createElement(
+	                                                'div',
+	                                                { key: item.cId, className: adminClass },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'form-check-label' },
+	                                                    _react2.default.createElement('input', {
+	                                                        onChange: _this4.checkedRank,
+	                                                        className: 'form-check-input',
+	                                                        type: 'radio',
+	                                                        name: 'rank',
+	                                                        checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
+	                                                        value: item.cId,
+	                                                        disabled: isDisabled,
+	                                                        required: 'required'
+	                                                    }),
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        null,
+	                                                        item.cName
+	                                                    )
+	                                                )
+	                                            );
+	                                        })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u540D\u79F0'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        '\u89D2\u8272\u63CF\u8FF0'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Editor;
+	}(_react2.default.Component);
+
+	exports.default = Editor;
+
+/***/ },
+
+/***/ 245:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(174);
+
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Alerts = __webpack_require__(234);
+	var _Button = __webpack_require__(237);
+
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _Button = __webpack_require__(236);
-
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3335,21 +3422,14 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
 	            selected: null,
 
-	            roleLoading: false,
 	            roleList: [],
 	            checkedRole: null,
-	            checkedRoleName: null,
 
-	            funcLoading: false,
 	            funcList: [],
-	            checkedFunc: {},
-
-	            authLoading: false,
-	            authResult: null
+	            checkedFunc: {}
 	        };
 
 	        _this.renderCommand = _this.renderCommand.bind(_this);
@@ -3359,8 +3439,6 @@ webpackJsonp([0],{
 	        _this.checkedRole = _this.checkedRole.bind(_this);
 	        _this.checkedFunc = _this.checkedFunc.bind(_this);
 	        _this.handleAuth = _this.handleAuth.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -3369,11 +3447,63 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data.tree
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (org) {
+	                var selected = {
+	                    id: org.tree[0].cId,
+	                    name: org.tree[0].cName
+	                };
+
+	                (0, _api.roleList)(selected.id).done(function (role) {
+	                    var checkedRole = {
+	                        id: role[0].cId,
+	                        name: role[0].cName
+	                    };
+
+	                    (0, _api.roleDetails)(checkedRole.id).done(function (roleFunc) {
+	                        var fids = roleFunc.rootFuncs.map(function (item) {
+	                            return item.cId;
+	                        });
+
+	                        (0, _api.funcByIds)(fids.join(',')).done(function (func) {
+	                            var checked = {};
+
+	                            func.data.map(function (item) {
+	                                if (roleFunc.functions.findIndex(function (elem) {
+	                                    return elem.cId === item.cId;
+	                                }) < 0) {
+	                                    checked[item.cId] = false;
+	                                } else {
+	                                    checked[item.cId] = true;
+	                                }
+	                            });
+
+	                            dialogTips.close();
+
+	                            _this2.setState({
+	                                orgList: org.tree,
+	                                selected: selected,
+
+	                                roleList: role,
+	                                checkedRole: checkedRole,
+
+	                                funcList: func.tree,
+	                                checkedFunc: checked
+	                            });
+	                        }).fail(function () {
+	                            dialogTips.close();
+	                        });
+	                    }).fail(function () {
+	                        dialogTips.close();
+	                    });
+	                }).fail(function () {
+	                    dialogTips.close();
 	                });
+	            }).fail(function () {
+	                dialogTips.close();
 	            });
 	        }
 	    }, {
@@ -3390,8 +3520,7 @@ webpackJsonp([0],{
 	                        temp.push(_react2.default.createElement(_Button.AuthButton, {
 	                            key: index,
 	                            action: _this3.handleAuth,
-	                            disabled: isDisabled,
-	                            loading: _this3.state.authLoading
+	                            disabled: isDisabled
 	                        }));
 	                    };
 	                });
@@ -3405,66 +3534,116 @@ webpackJsonp([0],{
 	            var _this4 = this;
 
 	            if (org) {
-	                this.setState({
-	                    selected: org,
-	                    roleLoading: true
-	                });
-
-	                (0, _api.roleList)(org.id).done(function (data) {
+	                (function () {
 	                    _this4.setState({
-	                        roleLoading: false,
-	                        roleList: data
+	                        selected: org,
+
+	                        roleList: [],
+	                        checkedRole: null,
+
+	                        funcList: [],
+	                        checkedFunc: {}
 	                    });
-	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
+
+	                    var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	                    dialogTips.open();
+
+	                    (0, _api.roleList)(org.id).done(function (role) {
+	                        var checkedRole = {
+	                            id: role[0].cId,
+	                            name: role[0].cName
+	                        };
+
+	                        (0, _api.roleDetails)(checkedRole.id).done(function (roleFunc) {
+	                            var fids = roleFunc.rootFuncs.map(function (item) {
+	                                return item.cId;
+	                            });
+
+	                            (0, _api.funcByIds)(fids.join(',')).done(function (func) {
+	                                var checked = {};
+
+	                                func.data.map(function (item) {
+	                                    if (roleFunc.functions.findIndex(function (elem) {
+	                                        return elem.cId === item.cId;
+	                                    }) < 0) {
+	                                        checked[item.cId] = false;
+	                                    } else {
+	                                        checked[item.cId] = true;
+	                                    }
+	                                });
+
+	                                dialogTips.close();
+
+	                                _this4.setState({
+	                                    roleList: role,
+	                                    checkedRole: checkedRole,
+
+	                                    funcList: func.tree,
+	                                    checkedFunc: checked
+	                                });
+	                            }).fail(function () {
+	                                dialogTips.close();
+	                            });
+	                        }).fail(function () {
+	                            dialogTips.close();
+	                        });
+	                    }).fail(function () {
+	                        dialogTips.close();
+	                    });
+	                })();
+	            }
 	        }
 	    }, {
 	        key: 'checkedRole',
 	        value: function checkedRole(event) {
 	            var _this5 = this;
 
-	            if (event.target.checked === true) {
-	                this.setState({
-	                    checkedRole: event.target.value,
-	                    checkedRoleName: $(event.target).parent().text(),
-	                    funcLoading: true
-	                });
-
-	                (0, _api.roleDetails)(event.target.value).done(function (roleFunc) {
-	                    var fids = roleFunc.rootFuncs.map(function (item) {
-	                        return item.cId;
-	                    });
-
-	                    (0, _api.funcByIds)(fids.join(',')).done(function (func) {
-	                        var checked = {};
-
-	                        func.data.map(function (item) {
-	                            if (roleFunc.functions.findIndex(function (elem) {
-	                                return elem.cId === item.cId;
-	                            }) < 0) {
-	                                checked[item.cId] = false;
-	                            } else {
-	                                checked[item.cId] = true;
-	                            }
-	                        });
-
-	                        _this5.setState({
-	                            funcLoading: false,
-	                            funcList: func.tree,
-	                            checkedFunc: checked
-	                        });
-	                    });
-	                });
-	            } else {
-	                this.setState({
-	                    checkedRole: null,
-	                    checkedRoleName: null
-	                });
+	            if (event.target.value === this.state.checkedRole.id) {
+	                return;
 	            }
+
+	            this.setState({
+	                checkedRole: {
+	                    id: event.target.value,
+	                    name: $(event.target).parent().text()
+	                }
+	            });
+
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            (0, _api.roleDetails)(event.target.value).done(function (roleFunc) {
+	                var fids = roleFunc.rootFuncs.map(function (item) {
+	                    return item.cId;
+	                });
+
+	                (0, _api.funcByIds)(fids.join(',')).done(function (func) {
+	                    var checked = {};
+
+	                    func.data.map(function (item) {
+	                        if (roleFunc.functions.findIndex(function (elem) {
+	                            return elem.cId === item.cId;
+	                        }) < 0) {
+	                            checked[item.cId] = false;
+	                        } else {
+	                            checked[item.cId] = true;
+	                        }
+	                    });
+
+	                    dialogTips.close();
+
+	                    _this5.setState({
+	                        funcList: func.tree,
+	                        checkedFunc: checked
+	                    });
+	                }).fail(function () {
+	                    dialogTips.close();
+	                });
+	            }).fail(function () {
+	                dialogTips.close();
+	            });
 	        }
 	    }, {
 	        key: 'checkedFunc',
@@ -3488,11 +3667,9 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleAuth',
 	        value: function handleAuth() {
-	            var _this6 = this;
-
-	            this.setState({
-	                authLoading: true
-	            });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
 	            var funcIdArr = [];
 
@@ -3503,45 +3680,35 @@ webpackJsonp([0],{
 	            }
 
 	            var param = {
-	                id: this.state.checkedRole,
+	                id: this.state.checkedRole.id,
 	                funcIds: funcIdArr.join(',')
 	            };
 
+	            loading.open();
+
 	            (0, _api.roleAuth)(param).done(function () {
-	                _this6.setState({
-	                    authLoading: false,
-	                    authResult: {
-	                        type: 'success',
-	                        title: 'Well done!',
-	                        text: '授权成功 ！需要用户重新登陆后，才会更新权限信息 ！'
-	                    }
-	                });
+	                loading.close();
+	                success.open();
 	            }).fail(function (data) {
-	                _this6.setState({
-	                    authLoading: false,
-	                    authResult: {
-	                        type: 'danger',
-	                        'title': 'Oh snap!',
-	                        'text': '[' + data.data.code + '] ' + data.data.detail
-	                    }
-	                });
+	                loading.close();
+	                fail.open();
 	            });
 	        }
 	    }, {
 	        key: 'renderTable',
 	        value: function renderTable(data) {
-	            var _this7 = this;
+	            var _this6 = this;
 
 	            var table = [];
 
 	            if (data.length) {
 	                data.map(function (item) {
-	                    table.push(_this7.tableLine(item));
+	                    table.push(_this6.tableLine(item));
 
 	                    if (item.children && item.children.length) {
 	                        var children = [];
 
-	                        children.push(_this7.renderTable(item.children));
+	                        children.push(_this6.renderTable(item.children));
 	                        table.push(children);
 	                    }
 	                });
@@ -3552,7 +3719,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'tableLine',
 	        value: function tableLine(data) {
-	            var _this8 = this;
+	            var _this7 = this;
 
 	            var level = data.cId.split('-').length;
 	            var spacingStyle = { marginLeft: 40 * level + 'px' };
@@ -3568,12 +3735,12 @@ webpackJsonp([0],{
 	                            'label',
 	                            { className: 'form-check-label' },
 	                            _react2.default.createElement('input', {
-	                                onChange: _this8.checkedFunc,
+	                                onChange: _this7.checkedFunc,
 	                                className: 'form-check-input',
 	                                type: 'checkbox',
 	                                'data-parent': item.cParentId,
 	                                value: item.cId,
-	                                checked: _this8.state.checkedFunc[item.cId]
+	                                checked: _this7.state.checkedFunc[item.cId]
 	                            }),
 	                            item.cNameLong
 	                        )
@@ -3620,29 +3787,9 @@ webpackJsonp([0],{
 	            );
 	        }
 	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.authResult) {
-	                return _react2.default.createElement(_Alerts2.default, {
-	                    type: this.state.authResult.type,
-	                    title: this.state.authResult.title,
-	                    text: this.state.authResult.text
-	                });
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                authResult: null
-	            });
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this9 = this;
+	            var _this8 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -3658,16 +3805,16 @@ webpackJsonp([0],{
 	                        this.renderCommand()
 	                    )
 	                ),
-	                this.showAlert(),
+	                _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u91CD\u8981\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
+	                            { className: this.state.orgList === null ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
@@ -3681,21 +3828,17 @@ webpackJsonp([0],{
 	                                        'label',
 	                                        { className: 'form-check-label' },
 	                                        _react2.default.createElement('input', {
-	                                            onChange: _this9.checkedRole,
+	                                            onChange: _this8.checkedRole,
 	                                            className: 'form-check-input',
-	                                            type: 'checkbox',
+	                                            type: 'radio',
+	                                            name: 'role',
 	                                            value: item.cId,
-	                                            checked: _this9.state.checkedRole === item.cId ? true : false
+	                                            checked: _this8.state.checkedRole.id === item.cId ? true : false
 	                                        }),
-	                                        item.cRankName
+	                                        item.cName
 	                                    )
 	                                );
-	                            }),
-	                            this.state.roleLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
+	                            })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -3736,19 +3879,9 @@ webpackJsonp([0],{
 	                                    null,
 	                                    this.renderTable(this.state.funcList)
 	                                )
-	                            ),
-	                            this.state.funcLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
+	                            )
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -3761,7 +3894,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 245:
+/***/ 246:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3782,13 +3915,21 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _OrgTree = __webpack_require__(239);
+	var _OrgTree = __webpack_require__(240);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(236);
+	var _Dialog = __webpack_require__(233);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
+	var _Button = __webpack_require__(237);
 
 	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3807,18 +3948,15 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            orgList: [],
 	            selected: null,
 
-	            userLoading: false,
 	            userList: [],
 
 	            enable: false,
 	            disable: false,
 
-	            checkedUser: null,
-	            delLoading: false
+	            checkedUser: null
 	        };
 
 	        _this.selectOrg = _this.selectOrg.bind(_this);
@@ -3826,8 +3964,10 @@ webpackJsonp([0],{
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
+	        _this.confirmDel = _this.confirmDel.bind(_this);
 	        _this.handleDel = _this.handleDel.bind(_this);
 	        _this.handleToggle = _this.handleToggle.bind(_this);
+	        _this.toggleAvailable = _this.toggleAvailable.bind(_this);
 	        return _this;
 	    }
 
@@ -3835,6 +3975,8 @@ webpackJsonp([0],{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this2 = this;
+
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            var enable = false;
 	            var disable = false;
@@ -3856,11 +3998,28 @@ webpackJsonp([0],{
 	                disable: disable
 	            });
 
-	            (0, _api.orgList)().done(function (data) {
-	                _this2.setState({
-	                    loading: false,
-	                    orgList: data.tree
+	            dialogTips.open();
+
+	            (0, _api.orgList)().done(function (org) {
+	                var oid = org.tree[0].cId;
+	                var oname = org.tree[0].cName;
+
+	                (0, _api.userList)(oid).done(function (user) {
+	                    _this2.setState({
+	                        orgList: org.tree,
+	                        selected: {
+	                            id: oid,
+	                            name: oname
+	                        },
+	                        userList: user
+	                    });
+
+	                    dialogTips.close();
+	                }).fail(function () {
+	                    dialogTips.close();
 	                });
+	            }).fail(function () {
+	                dialogTips.close();
 	            });
 	        }
 	    }, {
@@ -3881,7 +4040,7 @@ webpackJsonp([0],{
 	                    }
 
 	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.handleDel, loading: _this3.state.delLoading, disabled: _this3.state.checkedUser === null ? true : false }));
+	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.checkedUser === null ? true : false }));
 	                    }
 	                });
 	            }
@@ -3894,34 +4053,36 @@ webpackJsonp([0],{
 	            var _this4 = this;
 
 	            if (org) {
-	                this.setState({
-	                    selected: org,
-	                    roleLoading: true,
-	                    userLoading: true
-	                });
+	                (function () {
+	                    var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
-	                (0, _api.userList)(org.id).done(function (data) {
 	                    _this4.setState({
-	                        userLoading: false,
-	                        userList: data
+	                        selected: org,
+	                        userList: [],
+	                        checkedUser: null
 	                    });
-	                });
-	            } else {
-	                this.setState({
-	                    selected: null
-	                });
-	            };
+
+	                    dialogTips.open();
+
+	                    (0, _api.userList)(org.id).done(function (data) {
+	                        _this4.setState({
+	                            userList: data
+	                        });
+	                    }).always(function () {
+	                        dialogTips.close();
+	                    });
+	                })();
+	            }
 	        }
 	    }, {
 	        key: 'checkedUser',
 	        value: function checkedUser(event) {
 	            if (event.target.checked === true) {
 	                this.setState({
-	                    checkedUser: event.target.value
-	                });
-	            } else {
-	                this.setState({
-	                    checkedUser: null
+	                    checkedUser: {
+	                        id: event.target.value,
+	                        name: $(event.target).parents('tr').find('[data-name]').text()
+	                    }
 	                });
 	            }
 	        }
@@ -3935,51 +4096,92 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser.id;
 
 	            this.props.router.push(editorPath);
+	        }
+	    }, {
+	        key: 'confirmDel',
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除 ' + this.state.checkedUser.name + ' ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
 	        }
 	    }, {
 	        key: 'handleDel',
 	        value: function handleDel() {
 	            var _this5 = this;
 
-	            this.setState({ delLoading: true });
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            (0, _api.userDel)(this.state.checkedUser).done(function () {
-	                var temp = $.extend({}, _this5.state);
-	                var nextUserList = void 0;
+	            loading.open();
 
-	                nextUserList = temp.userList.filter(function (item) {
-	                    if (item.cId !== _this5.state.checkedUser) {
+	            (0, _api.userDel)(this.state.checkedUser.id).done(function () {
+	                var tempList = _this5.state.userList.filter(function (item) {
+	                    if (item.cId !== _this5.state.checkedUser.id) {
 	                        return item;
 	                    }
 	                });
 
+	                loading.close();
+	                success.open();
+
 	                _this5.setState({
-	                    delLoading: false,
-	                    userList: nextUserList
+	                    userList: tempList,
+	                    checkedUser: null
 	                });
 	            }).fail(function (data) {
-	                _this5.setState({
-	                    delLoading: false
-	                });
+	                loading.close();
+	                fail.open();
 	            });
 	        }
 	    }, {
 	        key: 'handleToggle',
 	        value: function handleToggle(param) {
-	            var temp = $.extend({}, this.state);
+	            var _this6 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 	            var nextAvailable = !param.available;
 
-	            if (param.available === true) {
-	                (0, _api.userDisable)(param.uid);
-	            } else {
-	                (0, _api.userEnable)(param.uid);
-	            }
+	            loading.open();
 
-	            temp.userList.map(function (item) {
-	                if (item.cId === param.uid) {
+	            this.toggleAvailable(param.uid, nextAvailable);
+
+	            if (param.available === true) {
+	                (0, _api.userDisable)(param.uid).done(function () {
+	                    loading.close();
+	                    success.open();
+	                }).fail(function () {
+	                    _this6.toggleAvailable(param.uid, param.available);
+	                    loading.close();
+	                    fail.open();
+	                });
+	            } else {
+	                (0, _api.userEnable)(param.uid).done(function () {
+	                    loading.close();
+	                    success.open();
+	                }).fail(function () {
+	                    _this6.toggleAvailable(param.uid, param.available);
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'toggleAvailable',
+	        value: function toggleAvailable(uid, nextAvailable) {
+	            var tempList = void 0;
+
+	            tempList = this.state.userList.filter(function (item) {
+	                if (item.cId === uid) {
 	                    item.cAvailable = nextAvailable;
 	                }
 
@@ -3987,13 +4189,13 @@ webpackJsonp([0],{
 	            });
 
 	            this.setState({
-	                userList: temp.userList
+	                userList: tempList
 	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -4017,15 +4219,20 @@ webpackJsonp([0],{
 	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: this.state.loading === true ? 'hide' : 'w300' },
+	                            { className: this.state.orgList === null ? 'hide' : 'w300' },
 	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
+	                                'p',
+	                                { className: this.state.selected === null ? 'hide' : 'h6 pb-3 b-b' },
+	                                this.state.selected ? this.state.selected.name : ''
+	                            ),
+	                            _react2.default.createElement(
 	                                'table',
-	                                { className: this.state.userLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                { className: this.state.userList === null ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
 	                                    'thead',
 	                                    null,
@@ -4097,10 +4304,11 @@ webpackJsonp([0],{
 	                                                        { className: 'form-check-label' },
 	                                                        _react2.default.createElement('input', {
 	                                                            className: 'form-check-input',
-	                                                            type: 'checkbox',
+	                                                            type: 'radio',
+	                                                            name: 'user',
 	                                                            value: item.cId,
-	                                                            onChange: _this6.checkedUser,
-	                                                            checked: _this6.state.checkedUser === item.cId ? true : false
+	                                                            onChange: _this7.checkedUser,
+	                                                            checked: _this7.state.checkedUser && _this7.state.checkedUser.id === item.cId ? true : false
 	                                                        })
 	                                                    )
 	                                                )
@@ -4110,10 +4318,10 @@ webpackJsonp([0],{
 	                                                null,
 	                                                _react2.default.createElement(_Button.ToggleButton, {
 	                                                    uid: item.cId,
-	                                                    enable: _this6.state.enable,
-	                                                    disable: _this6.state.disable,
+	                                                    enable: _this7.state.enable,
+	                                                    disable: _this7.state.disable,
 	                                                    available: item.cAvailable,
-	                                                    action: _this6.handleToggle
+	                                                    action: _this7.handleToggle
 	                                                })
 	                                            ),
 	                                            _react2.default.createElement(
@@ -4123,7 +4331,7 @@ webpackJsonp([0],{
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'td',
-	                                                null,
+	                                                { 'data-name': true },
 	                                                item.cRealname
 	                                            ),
 	                                            _react2.default.createElement(
@@ -4156,19 +4364,9 @@ webpackJsonp([0],{
 	                                        );
 	                                    })
 	                                )
-	                            ),
-	                            this.state.userLoading === true ? _react2.default.createElement(
-	                                'p',
-	                                null,
-	                                '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                            ) : ''
+	                            )
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -4181,7 +4379,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 246:
+/***/ 247:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4202,21 +4400,25 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
-	var _Alerts = __webpack_require__(234);
+	var _Alerts = __webpack_require__(235);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _subTitle = __webpack_require__(240);
+	var _subTitle = __webpack_require__(241);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(247);
+	var _mixedMD = __webpack_require__(248);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
+
+	var _DialogTips = __webpack_require__(238);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4235,19 +4437,13 @@ webpackJsonp([0],{
 	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
 
 	        _this.state = {
-	            loading: true,
 	            org: null,
 	            roleList: [],
-	            checkedRole: {},
-
-	            saveLoading: false,
-	            saveResult: null
+	            checkedRole: {}
 	        };
 
 	        _this.checkedRole = _this.checkedRole.bind(_this);
 	        _this.editorSubmit = _this.editorSubmit.bind(_this);
-	        _this.showAlert = _this.showAlert.bind(_this);
-	        _this.clearAlert = _this.clearAlert.bind(_this);
 	        return _this;
 	    }
 
@@ -4256,39 +4452,40 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.orgDetails)(this.props.params.oid).done(function (data) {
+	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            dialogTips.open();
+
+	            $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.roleList)(this.props.params.oid)).done(function (org, role) {
 	                _this2.setState({
 	                    org: {
-	                        id: data.cId,
-	                        name: data.cName
-	                    }
+	                        id: org.cId,
+	                        name: org.cName
+	                    },
+	                    roleList: role
 	                });
 
-	                (0, _api.roleList)(data.cId).done(function (role) {
+	                if (_this2.props.params.uid === 'create') {
+	                    dialogTips.close();
+	                } else {
+	                    (0, _api.userDetails)(_this2.props.params.uid).done(function (user) {
+	                        var checkedRole = {};
 
-	                    if (_this2.props.params.uid === 'create') {
+	                        user.roles.map(function (item) {
+	                            checkedRole[item.cId] = true;
+	                        });
+
 	                        _this2.setState({
-	                            loading: false,
-	                            roleList: role
+	                            checkedRole: checkedRole
 	                        });
-	                    } else {
-	                        (0, _api.userDetails)(_this2.props.params.uid).done(function (user) {
-	                            var checkedRole = {};
 
-	                            user.roles.map(function (item) {
-	                                checkedRole[item.cId] = true;
-	                            });
-
-	                            $(_this2.editorDom).find('[name=loginName]').val(user.cLoginname).end().find('[name=realName]').val(user.cRealname).end().find('[name=nickName]').val(user.cNickname).end().find('[name=phone]').val(user.cPhone).end().find('[name=email]').val(user.cEmail).end().find('[name=im]').val(user.cQq);
-
-	                            _this2.setState({
-	                                loading: false,
-	                                roleList: role,
-	                                checkedRole: checkedRole
-	                            });
-	                        });
-	                    }
-	                });
+	                        $(_this2.editorDom).find('[name=loginName]').val(user.cLoginname).end().find('[name=realName]').val(user.cRealname).end().find('[name=nickName]').val(user.cNickname).end().find('[name=phone]').val(user.cPhone).end().find('[name=email]').val(user.cEmail).end().find('[name=im]').val(user.cQq);
+	                    }).always(function () {
+	                        dialogTips.close();
+	                    });
+	                }
+	            }).fail(function () {
+	                dialogTips.close();
 	            });
 	        }
 	    }, {
@@ -4297,6 +4494,7 @@ webpackJsonp([0],{
 	            var tempRole = $.extend({}, this.state.checkedRole);
 
 	            tempRole[event.target.value] = event.target.checked;
+
 	            this.setState({
 	                checkedRole: tempRole
 	            });
@@ -4306,11 +4504,16 @@ webpackJsonp([0],{
 	        value: function editorSubmit() {
 	            var _this3 = this;
 
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user';
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
 	            var param = {};
 	            var temp = $(this.editorDom).serializeArray();
 	            var rolesArr = [];
 
-	            this.setState({ saveLoading: true });
+	            loading.open();
 
 	            for (var key in this.state.checkedRole) {
 	                if (this.state.checkedRole[key] === true) {
@@ -4333,74 +4536,33 @@ webpackJsonp([0],{
 	                }
 	            });
 
+	            delete temp['org'];
+
 	            if (this.props.params.uid === 'create') {
 	                (0, _api.userAdd)(param).done(function () {
-	                    $(_this3.editorDom).find('input').val('');
-
-	                    _this3.setState({
-	                        checkedRole: {},
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
+	                    loading.close();
+	                    fail.open();
 	                });
 	            } else {
 	                (0, _api.userMod)(param).done(function () {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'success',
-	                            title: 'Well done!',
-	                            text: '添加成功 ！'
-	                        }
-	                    });
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath);
+	                    }, 2000);
 	                }).fail(function (data) {
-	                    _this3.setState({
-	                        saveLoading: false,
-	                        saveResult: {
-	                            type: 'danger',
-	                            'title': 'Oh snap!',
-	                            'text': '[' + data.data.code + '] ' + data.data.detail
-	                        }
-	                    });
+	                    loading.close();
+	                    fail.open();
 	                });
 	            }
-	        }
-	    }, {
-	        key: 'showAlert',
-	        value: function showAlert() {
-	            if (this.state.saveResult) {
-	                return _react2.default.createElement(
-	                    _Alerts2.default,
-	                    { type: this.state.saveResult.type, title: this.state.saveResult.title, text: this.state.saveResult.text },
-	                    _react2.default.createElement(
-	                        _reactRouter.Link,
-	                        { to: SCHOOLPAL_CONFIG.ROOTPATH + 'user', className: 'alert-link' },
-	                        '\u8FD4\u56DE\u5217\u8868'
-	                    )
-	                );
-	            } else {
-	                return '';
-	            }
-	        }
-	    }, {
-	        key: 'clearAlert',
-	        value: function clearAlert() {
-	            this.setState({
-	                saveResult: null
-	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -4423,27 +4585,31 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'btn-group float-right mr-4', role: 'group' },
-	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58', loading: this.state.saveLoading })
+	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                        _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
 	                    )
 	                ),
-	                this.showAlert(),
 	                _react2.default.createElement(
 	                    'div',
-	                    { onClick: this.clearAlert, className: 'main-container' },
-	                    _react2.default.createElement(
-	                        'p',
-	                        { className: this.state.loading === true ? 'hide' : 'h6 pb-3 b-b' },
-	                        '\u6240\u5C5E\u7EC4\u7EC7\uFF1A',
-	                        this.state.org ? this.state.org.name : ''
-	                    ),
+	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: this.state.loading === true ? 'hide' : 'd-flex align-items-stretch flex-nowrap' },
+	                        { className: this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide' },
 	                        _react2.default.createElement(
 	                            'form',
 	                            { ref: function ref(dom) {
 	                                    _this4.editorDom = dom;
 	                                }, className: 'w500 pr-3' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    '\u6240\u5C5E\u7EC4\u7EC7'
+	                                ),
+	                                _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'org', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
+	                            ),
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'form-group' },
@@ -4542,12 +4708,7 @@ webpackJsonp([0],{
 	                                );
 	                            })
 	                        )
-	                    ),
-	                    this.state.loading === true ? _react2.default.createElement(
-	                        'p',
-	                        null,
-	                        '\u6570\u636E\u52A0\u8F7D\u4E2D ...'
-	                    ) : ''
+	                    )
 	                )
 	            );
 	        }
@@ -4560,7 +4721,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 247:
+/***/ 248:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4570,7 +4731,7 @@ webpackJsonp([0],{
 	});
 	exports.default = mixedMD5;
 
-	var _md = __webpack_require__(248);
+	var _md = __webpack_require__(249);
 
 	var _md2 = _interopRequireDefault(_md);
 
@@ -4582,13 +4743,13 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 248:
+/***/ 249:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(249));
+			module.exports = exports = factory(__webpack_require__(250));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -4856,7 +5017,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 249:
+/***/ 250:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -5622,7 +5783,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 250:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5645,15 +5806,15 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _Button = __webpack_require__(236);
+	var _Button = __webpack_require__(237);
 
-	var _Dialog = __webpack_require__(232);
+	var _Dialog = __webpack_require__(233);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(247);
+	var _mixedMD = __webpack_require__(248);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -5780,7 +5941,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 251:
+/***/ 252:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5806,7 +5967,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 252:
+/***/ 253:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -5837,14 +5998,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 253:
+/***/ 254:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 255:
+/***/ 256:
 /***/ function(module, exports) {
 
 	/*
@@ -5901,7 +6062,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 256:
+/***/ 257:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -6154,23 +6315,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 257:
+/***/ 258:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 260:
+/***/ 261:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(261);
+	var content = __webpack_require__(262);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(256)(content, {});
+	var update = __webpack_require__(257)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -6188,15 +6349,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 261:
+/***/ 262:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(255)();
+	exports = module.exports = __webpack_require__(256)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  margin: -50px 0 0 -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  padding-top: 16px;\n  width: 60px;\n}\n.aside-bar a {\n  margin-bottom: 16px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected {\n  color: #d9534f;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
 
 	// exports
 

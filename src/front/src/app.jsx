@@ -12,8 +12,8 @@ window.SCHOOLPAL_CONFIG = {
         '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
         '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
         '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
-        '7-2-1': { PATH_RULE: /^role\/create(\/)?$/ },
-        '7-2-2': { PATH_RULE: /^role\/\w+(\/)?$/ },
+        '7-2-1': { PATH_RULE: /^role\/\w+\/create(\/)?$/ },
+        '7-2-2': { PATH_RULE: /^role\/\w+\/\w+(\/)?$/ },
         '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
         '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' },
         '7-4-1': { PATH_RULE: /^user\/\w+\/create(\/)?$/ },
@@ -50,7 +50,7 @@ ReactDOM.render((
             <Route path="org" component={OrgList} onEnter={checkAuth} />
             <Route path="org/:id" component={OrgEditor} onEnter={checkAuth} />
             <Route path="role" component={RoleList} onEnter={checkAuth} />
-            <Route path="role/:id" component={RoleEditor} onEnter={checkAuth} />
+            <Route path="role/:oid/:rid" component={RoleEditor} onEnter={checkAuth} />
             <Route path="auth" component={AuthList} onEnter={checkAuth} />
             <Route path="user" component={UserList} onEnter={checkAuth} />
             <Route path="user/:oid/:uid" component={UserEditor} onEnter={checkAuth} />
