@@ -134,7 +134,7 @@ export default class List extends React.Component {
 
         roleDel(this.state.selected.id)
             .done(() => {
-                const tempList = this.state.roleList.filter((item) => { if (item.cId !== this.state.selected.id) { return item } });
+                const tempList = this.state.roleList.filter((item) => { return item.cId !== this.state.selected.id });
 
                 loading.close()
                 success.open()
