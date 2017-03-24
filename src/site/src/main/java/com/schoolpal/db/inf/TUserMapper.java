@@ -22,4 +22,5 @@ public interface TUserMapper {
     
     int updateLastVisitByLoginName(@Param("cName")String cName, @Param("cLastVisitIp")String cLastVisitIp);
     int updateAvaiabilityById(@Param("cId")String cId, @Param("cAvailable")boolean cAvailable);
+    int updateLoginPassById(@Param("cId")String cId, @Param("cOriPass")String cOriPass, @Param("cNewPass")String cNewPass);
 }

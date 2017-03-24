@@ -79,6 +79,11 @@ public class UserService {
 		return gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
 	}
 
+	public TUser getCachedUser(Subject currentUser) {
+		Session session = currentUser.getSession(true);
+		return gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
+	}
+
 	public void clearUserCache(String username) {
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession();
@@ -107,6 +112,10 @@ public class UserService {
 
 	public boolean checkLoginnameExists(String loginname) {
 		return userDao.ifExistsByName(loginname);
+	}
+
+	public boolean changeLoginPassById(String id, String oriPass, String newPass) {
+		return userDao.updateLoginPassById(id, oriPass, newPass) > 0;
 	}
 
 	private TUser queryUserByLoginName(String username) {

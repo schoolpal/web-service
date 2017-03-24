@@ -450,6 +450,7 @@ public class AjaxSystemController {
 
 		return gson.toJson(res);
 	}
+	
 	@RequestMapping(value = "user/checkName.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkLoginname(String loginName, HttpServletRequest request) {

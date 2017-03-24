@@ -211,4 +211,10 @@
 		c_last_visit_ip = #{cLastVisitIp,jdbcType=VARCHAR}
 		WHERE c_loginname = #{cName,jdbcType=VARCHAR}
 	</update>
+    <update id="updateLoginPassById">
+        UPDATE
+        t_user
+        SET c_loginpass = #{cNewPass,jdbcType=VARCHAR}
+        WHERE c_id = #{cId,jdbcType=CHAR} and c_loginpass = #{cOriPass,jdbcType=VARCHAR}
+    </update>
 </mapper>

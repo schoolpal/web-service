@@ -2,6 +2,8 @@ package com.schoolpal.ajax.controller;
 
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
+import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
 import com.schoolpal.web.consts.*;
@@ -109,6 +112,44 @@ public class AjaxUserController {
 		return gson.toJson(res);
 	}
 
+	@RequestMapping(value = "changePassword.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String changePassword(String oriPass, String newPass, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (oriPass == null || oriPass.isEmpty()) {
+				res.setCode(402);
+				res.setDetail("Original password cannot be empty");
+				break;
+			}
+			if (newPass == null || newPass.isEmpty()) {
+				res.setCode(403);
+				res.setDetail("New password cannot be empty");
+				break;
+			}
+			if (oriPass == newPass) {
+				res.setCode(404);
+				res.setDetail("Original and new password cannot be same");
+				break;
+			}
+
+			Subject currentUser = SecurityUtils.getSubject();
+			if (currentUser == null || currentUser.getPrincipal() == null) {
+				// Since shiro filter will intercept if not login, this code should
+				// never be reached
+				res.setCode(401);
+				res.setDetail("Not login");
+			}
+			
+			TUser user = userServ.getCachedUser(currentUser);
+			
+			boolean result = userServ.changeLoginPassById(user.getcId(), oriPass, newPass);
+			res.setData(result);
+		} while (false);
+
+		return gson.toJson(res);
+	}
+	
 	@RequestMapping(value = "status.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String status() {
