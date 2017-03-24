@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { SaveButton, BackButton } from '../public/Button';
 import Alerts from '../public/Alerts';
 import subTitle from '../../utils/subTitle';
-import { orgDetails, roleList, userAdd, userDetails, userMod } from '../../utils/api';
+import { orgDetails, roleList, userAdd, userDetails, userMod, checkName } from '../../utils/api';
 import mixedMD5 from '../../utils/mixedMD5'
 import DialogTips from '../../utils/DialogTips';
 
@@ -118,59 +118,67 @@ export default class Editor extends React.Component {
         const success = DialogTips({ type: 'success' })
         const fail = DialogTips({ type: 'fail', autoClose: true })
 
-        let param = {};
-        let temp = $(this.editorDom).serializeArray();
-
         loading.open()
 
-        if (this.props.params.uid !== 'create') {
-            param.userId = this.props.params.uid;
-        }
+        checkName($(this.editorDom).find('[name=loginName]').val())
+            .done(() => {
+                let param = {};
+                let temp = $(this.editorDom).serializeArray();
 
-        param.orgId = this.state.org.id
-        param.roles = this.state.checkedRole.join(',')
-
-        temp.map((item) => {
-            if (item.name === 'loginPass') {
-                if (this.props.params.uid === 'create' || item.value) {
-                    param[item.name] = mixedMD5(mixedMD5(item.value))
+                if (this.props.params.uid !== 'create') {
+                    param.userId = this.props.params.uid;
                 }
-            } else {
-                param[item.name] = item.value;
-            }
-        })
 
-        delete temp['org']
+                param.orgId = this.state.org.id
+                param.roles = this.state.checkedRole.join(',')
 
-        if (this.props.params.uid === 'create') {
-            userAdd(param)
-                .done(() => {
-                    loading.close()
-                    success.open()
-                    setTimeout(() => {
-                        success.close()
-                        this.props.router.push(successPath)
-                    }, 2000)
+                temp.map((item) => {
+                    if (item.name === 'loginPass') {
+                        if (this.props.params.uid === 'create' || item.value) {
+                            param[item.name] = mixedMD5(mixedMD5(item.value))
+                        }
+                    } else {
+                        param[item.name] = item.value;
+                    }
                 })
-                .fail((data) => {
-                    loading.close()
-                    fail.open()
-                })
-        } else {
-            userMod(param)
-                .done(() => {
-                    loading.close()
-                    success.open()
-                    setTimeout(() => {
-                        success.close()
-                        this.props.router.push(successPath)
-                    }, 2000)
-                })
-                .fail((data) => {
-                    loading.close()
-                    fail.open()
-                })
-        }
+
+                delete temp['org']
+
+                if (this.props.params.uid === 'create') {
+                    userAdd(param)
+                        .done(() => {
+                            loading.close()
+                            success.open()
+                            setTimeout(() => {
+                                success.close()
+                                this.props.router.push(successPath)
+                            }, 2000)
+                        })
+                        .fail((data) => {
+                            loading.close()
+                            fail.open()
+                        })
+                } else {
+                    userMod(param)
+                        .done(() => {
+                            loading.close()
+                            success.open()
+                            setTimeout(() => {
+                                success.close()
+                                this.props.router.push(successPath)
+                            }, 2000)
+                        })
+                        .fail((data) => {
+                            loading.close()
+                            fail.open()
+                        })
+                }
+            })
+            .fail((data) => {
+                loading.close()
+                $(this.editorDom).find('[name=loginName]')[0].setCustomValidity('登陆名已存在 ！')
+                $(this.editorDom).find('[type=submit]').trigger('click')
+            })
     }
 
     render() {
@@ -197,7 +205,7 @@ export default class Editor extends React.Component {
 
                                 <div className="form-group">
                                     <label for="name"><em className="text-danger">*</em>用户名</label>
-                                    <input type="text" className="form-control" name="loginName" readOnly={this.props.params.uid === 'create' ? false : true} required="required" />
+                                    <input type="text" className="form-control" name="loginName" onChange={(event) => { event.target.setCustomValidity('') }} readOnly={this.props.params.uid === 'create' ? false : true} required="required" />
                                 </div>
 
                                 <div className="form-group">

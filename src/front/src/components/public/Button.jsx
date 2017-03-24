@@ -107,23 +107,23 @@ export function BackButton(props) {
 }
 
 export function ToggleButton(props) {
-    if (props.enable === true && props.available === false) {
-        return (
-            <button onClick={action} type="button" className="btn btn-link text-danger">
-                <i className="fa fa-toggle-off fa-2x" aria-hidden="true"></i>
-            </button>
-        )
+    if (props.enable === true) {
+        if (props.available === true) {
+            return (
+                <button onClick={action} type="button" className="btn btn-link text-success">
+                    <i className="fa fa-toggle-on fa-2x" aria-hidden="true"></i>
+                </button>
+            )
+        } else {
+            return (
+                <button onClick={action} type="button" className="btn btn-link text-danger">
+                    <i className="fa fa-toggle-off fa-2x" aria-hidden="true"></i>
+                </button>
+            )
+        }
+    } else {
+        return <span>{props.available === true ? '启用' : '禁用'}</span>
     }
-
-    if (props.disable === true && props.available === true) {
-        return (
-            <button onClick={action} type="button" className="btn btn-link text-success">
-                <i className="fa fa-toggle-on fa-2x" aria-hidden="true"></i>
-            </button>
-        )
-    }
-
-    return <span>{props.available === true ? '启用' : '禁用'}</span>
 
     function action() {
         props.action({

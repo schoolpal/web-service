@@ -368,8 +368,8 @@ webpackJsonp([0],{
 	exports.userDetails = userDetails;
 	exports.userMod = userMod;
 	exports.userEnable = userEnable;
-	exports.userDisable = userDisable;
 	exports.userDel = userDel;
+	exports.checkName = checkName;
 
 	var _conversion = __webpack_require__(232);
 
@@ -793,26 +793,11 @@ webpackJsonp([0],{
 	    return defer.promise();
 	}
 
-	function userEnable(uid) {
+	function userEnable(uid, enable) {
 	    var defer = $.Deferred();
 	    var url = 'sys/user/enable.do';
 
-	    io({ url: url, data: { id: uid } }, function (data) {
-	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-	            defer.resolve(data.data);
-	        } else {
-	            defer.reject(data);
-	        }
-	    });
-
-	    return defer.promise();
-	}
-
-	function userDisable(uid) {
-	    var defer = $.Deferred();
-	    var url = 'sys/user/disable.do';
-
-	    io({ url: url, data: { id: uid } }, function (data) {
+	    io({ url: url, data: { id: uid, enabled: enable } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -830,6 +815,26 @@ webpackJsonp([0],{
 	    io({ url: url, data: { id: uid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function checkName(name) {
+	    var defer = $.Deferred();
+	    var url = 'sys/user/checkName.do';
+
+	    io({ url: url, data: { loginName: name } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+
+	            if (data.data === true) {
+	                defer.reject(data);
+	            } else {
+	                defer.resolve(data.data);
+	            }
 	        } else {
 	            defer.reject(data);
 	        }
@@ -1685,27 +1690,27 @@ webpackJsonp([0],{
 	}
 
 	function ToggleButton(props) {
-	    if (props.enable === true && props.available === false) {
+	    if (props.enable === true) {
+	        if (props.available === true) {
+	            return _react2.default.createElement(
+	                'button',
+	                { onClick: action, type: 'button', className: 'btn btn-link text-success' },
+	                _react2.default.createElement('i', { className: 'fa fa-toggle-on fa-2x', 'aria-hidden': 'true' })
+	            );
+	        } else {
+	            return _react2.default.createElement(
+	                'button',
+	                { onClick: action, type: 'button', className: 'btn btn-link text-danger' },
+	                _react2.default.createElement('i', { className: 'fa fa-toggle-off fa-2x', 'aria-hidden': 'true' })
+	            );
+	        }
+	    } else {
 	        return _react2.default.createElement(
-	            'button',
-	            { onClick: action, type: 'button', className: 'btn btn-link text-danger' },
-	            _react2.default.createElement('i', { className: 'fa fa-toggle-off fa-2x', 'aria-hidden': 'true' })
+	            'span',
+	            null,
+	            props.available === true ? '启用' : '禁用'
 	        );
 	    }
-
-	    if (props.disable === true && props.available === true) {
-	        return _react2.default.createElement(
-	            'button',
-	            { onClick: action, type: 'button', className: 'btn btn-link text-success' },
-	            _react2.default.createElement('i', { className: 'fa fa-toggle-on fa-2x', 'aria-hidden': 'true' })
-	        );
-	    }
-
-	    return _react2.default.createElement(
-	        'span',
-	        null,
-	        props.available === true ? '启用' : '禁用'
-	    );
 
 	    function action() {
 	        props.action({
@@ -3982,7 +3987,6 @@ webpackJsonp([0],{
 	            userList: [],
 
 	            enable: false,
-	            disable: false,
 
 	            checkedUser: null
 	        };
@@ -4014,16 +4018,11 @@ webpackJsonp([0],{
 	                    if (item === 'Enable') {
 	                        enable = true;
 	                    }
-
-	                    if (item === 'Disable') {
-	                        disable = true;
-	                    }
 	                });
 	            }
 
 	            this.setState({
-	                enable: enable,
-	                disable: disable
+	                enable: enable
 	            });
 
 	            dialogTips.open();
@@ -4181,25 +4180,14 @@ webpackJsonp([0],{
 
 	            this.toggleAvailable(param.uid, nextAvailable);
 
-	            if (param.available === true) {
-	                (0, _api.userDisable)(param.uid).done(function () {
-	                    loading.close();
-	                    success.open();
-	                }).fail(function () {
-	                    _this6.toggleAvailable(param.uid, param.available);
-	                    loading.close();
-	                    fail.open();
-	                });
-	            } else {
-	                (0, _api.userEnable)(param.uid).done(function () {
-	                    loading.close();
-	                    success.open();
-	                }).fail(function () {
-	                    _this6.toggleAvailable(param.uid, param.available);
-	                    loading.close();
-	                    fail.open();
-	                });
-	            }
+	            (0, _api.userEnable)(param.uid, !param.available).done(function () {
+	                loading.close();
+	                success.open();
+	            }).fail(function () {
+	                _this6.toggleAvailable(param.uid, param.available);
+	                loading.close();
+	                fail.open();
+	            });
 	        }
 	    }, {
 	        key: 'toggleAvailable',
@@ -4345,7 +4333,6 @@ webpackJsonp([0],{
 	                                                _react2.default.createElement(_Button.ToggleButton, {
 	                                                    uid: item.cId,
 	                                                    enable: _this7.state.enable,
-	                                                    disable: _this7.state.disable,
 	                                                    available: item.cAvailable,
 	                                                    action: _this7.handleToggle
 	                                                })
@@ -4552,55 +4539,61 @@ webpackJsonp([0],{
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
-	            var param = {};
-	            var temp = $(this.editorDom).serializeArray();
-
 	            loading.open();
 
-	            if (this.props.params.uid !== 'create') {
-	                param.userId = this.props.params.uid;
-	            }
+	            (0, _api.checkName)($(this.editorDom).find('[name=loginName]').val()).done(function () {
+	                var param = {};
+	                var temp = $(_this3.editorDom).serializeArray();
 
-	            param.orgId = this.state.org.id;
-	            param.roles = this.state.checkedRole.join(',');
-
-	            temp.map(function (item) {
-	                if (item.name === 'loginPass') {
-	                    if (_this3.props.params.uid === 'create' || item.value) {
-	                        param[item.name] = (0, _mixedMD2.default)((0, _mixedMD2.default)(item.value));
-	                    }
-	                } else {
-	                    param[item.name] = item.value;
+	                if (_this3.props.params.uid !== 'create') {
+	                    param.userId = _this3.props.params.uid;
 	                }
+
+	                param.orgId = _this3.state.org.id;
+	                param.roles = _this3.state.checkedRole.join(',');
+
+	                temp.map(function (item) {
+	                    if (item.name === 'loginPass') {
+	                        if (_this3.props.params.uid === 'create' || item.value) {
+	                            param[item.name] = (0, _mixedMD2.default)((0, _mixedMD2.default)(item.value));
+	                        }
+	                    } else {
+	                        param[item.name] = item.value;
+	                    }
+	                });
+
+	                delete temp['org'];
+
+	                if (_this3.props.params.uid === 'create') {
+	                    (0, _api.userAdd)(param).done(function () {
+	                        loading.close();
+	                        success.open();
+	                        setTimeout(function () {
+	                            success.close();
+	                            _this3.props.router.push(successPath);
+	                        }, 2000);
+	                    }).fail(function (data) {
+	                        loading.close();
+	                        fail.open();
+	                    });
+	                } else {
+	                    (0, _api.userMod)(param).done(function () {
+	                        loading.close();
+	                        success.open();
+	                        setTimeout(function () {
+	                            success.close();
+	                            _this3.props.router.push(successPath);
+	                        }, 2000);
+	                    }).fail(function (data) {
+	                        loading.close();
+	                        fail.open();
+	                    });
+	                }
+	            }).fail(function (data) {
+	                loading.close();
+	                $(_this3.editorDom).find('[name=loginName]')[0].setCustomValidity('登陆名已存在 ！');
+	                $(_this3.editorDom).find('[type=submit]').trigger('click');
 	            });
-
-	            delete temp['org'];
-
-	            if (this.props.params.uid === 'create') {
-	                (0, _api.userAdd)(param).done(function () {
-	                    loading.close();
-	                    success.open();
-	                    setTimeout(function () {
-	                        success.close();
-	                        _this3.props.router.push(successPath);
-	                    }, 2000);
-	                }).fail(function (data) {
-	                    loading.close();
-	                    fail.open();
-	                });
-	            } else {
-	                (0, _api.userMod)(param).done(function () {
-	                    loading.close();
-	                    success.open();
-	                    setTimeout(function () {
-	                        success.close();
-	                        _this3.props.router.push(successPath);
-	                    }, 2000);
-	                }).fail(function (data) {
-	                    loading.close();
-	                    fail.open();
-	                });
-	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -4669,7 +4662,9 @@ webpackJsonp([0],{
 	                                        ),
 	                                        '\u7528\u6237\u540D'
 	                                    ),
-	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName', readOnly: this.props.params.uid === 'create' ? false : true, required: 'required' })
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName', onChange: function onChange(event) {
+	                                            event.target.setCustomValidity('');
+	                                        }, readOnly: this.props.params.uid === 'create' ? false : true, required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
