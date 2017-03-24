@@ -14,29 +14,42 @@
 	<select id="selectRolesByUserId" parameterType="java.lang.String" resultMap="RoleResultMap">
 		SELECT r.*
 		FROM t_user_role AS ur
-		INNER JOIN t_role AS r ON r.c_id = ur.c_role_id
+		INNER JOIN t_role AS r ON
+		r.c_id = ur.c_role_id
 		WHERE ur.c_available = 1
 		AND r.c_available = 1
-		AND ur.c_user_id = #{cId,jdbcType=CHAR}
+		AND
+		ur.c_user_id = #{cId,jdbcType=CHAR}
 	</select>
-	<select id="selectOneById" parameterType="java.lang.String"	resultMap="RoleResultMap">
+	<select id="selectOneById" parameterType="java.lang.String" resultMap="RoleResultMap">
 		SELECT *
 		FROM t_role
 		WHERE c_available = 1
-		AND c_id = #{cId,jdbcType=CHAR}
+		AND c_id =
+		#{cId,jdbcType=CHAR}
 	</select>
 	<select id="selectRolesByOrgId" parameterType="java.lang.String" resultMap="RoleResultMap">
 		SELECT ro.*, ra.c_name AS c_rank_name
 		FROM t_role AS ro
-		LEFT JOIN t_rank AS ra ON ro.c_rank_id = ra.c_id
+		LEFT
+		JOIN t_rank AS ra ON ro.c_rank_id = ra.c_id
 		WHERE c_available = 1
-		AND c_org_id = #{cId,jdbcType=CHAR}
+		AND
+		c_org_id = #{cId,jdbcType=CHAR}
 	</select>
-	  <select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
-	    select count(*)
-	    from t_role
-	    where c_id = #{cId,jdbcType=CHAR}
-	  </select>
+	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*)
+		from t_role
+		where c_id = #{cId,jdbcType=CHAR}
+	</select>
+	<select id="getCountByPrimaryIdsAndRankId" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT count(*) 
+		FROM t_role
+		WHERE 
+		    c_id in 
+		    <foreach collection="cIds" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+		    and c_rank_id = #{cRankId,jdbcType=INTEGER}
+	</select>
 	<insert id="insertOne" parameterType="com.schoolpal.db.model.TRole">
 		insert into t_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">

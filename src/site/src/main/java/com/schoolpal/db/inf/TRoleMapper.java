@@ -2,6 +2,8 @@ package com.schoolpal.db.inf;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.schoolpal.db.model.TRole;
 
 public interface TRoleMapper {
@@ -19,6 +21,8 @@ public interface TRoleMapper {
     int updateOneById(TRole record);
 
     int deleteOneById(String cId);
+    
+    int getCountByPrimaryIdsAndRankId(@Param("cIds")String[] cIds, @Param("cRankId")int cRankId);
     
     /*    long countByExample(TRoleExample example);
 

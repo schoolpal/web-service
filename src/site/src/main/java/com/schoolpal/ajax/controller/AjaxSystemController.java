@@ -235,13 +235,16 @@ public class AjaxSystemController {
 				break;
 			}
 
-			if (form.getStrFuncIds() != null && !form.getStrFuncIds().isEmpty()) {
-				String[] funcIds = StringUtils.delimitedListToStringArray(form.getStrFuncIds(), ",");
-				if (funcIds.length > 0) {
-					if (!roleServ.addRoleRootFuncs(id, funcIds)) {
-						res.setCode(502);
-						res.setDetail("Failed to add role functions");
-						break;
+			if (form.getStrFuncIds() != null) {
+				form.setStrFuncIds(form.getStrFuncIds().replaceAll(" ",  "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
+				if (!form.getStrFuncIds().isEmpty()){
+					String[] funcIds = form.getStrFuncIds().split(",");
+					if (funcIds.length > 0) {
+						if (!roleServ.addRoleRootFuncs(id, funcIds)) {
+							res.setCode(502);
+							res.setDetail("Failed to add role functions");
+							break;
+						}
 					}
 				}
 			}
@@ -305,16 +308,20 @@ public class AjaxSystemController {
 			}
 
 			roleServ.delRootFuncsByRoleId(form.getId());
-			if (form.getStrFuncIds() != null && !form.getStrFuncIds().isEmpty()) {
-				String[] funcIds = StringUtils.delimitedListToStringArray(form.getStrFuncIds(), ",");
-				if (funcIds.length > 0) {
-					if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)) {
-						res.setCode(502);
-						res.setDetail("Failed to mod role functions");
-						break;
+			if (form.getStrFuncIds() != null) {
+				form.setStrFuncIds(form.getStrFuncIds().replaceAll(" ",  "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
+				if (!form.getStrFuncIds().isEmpty()){
+					String[] funcIds = form.getStrFuncIds().split(",");
+					if (funcIds.length > 0) {
+						if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)) {
+							res.setCode(502);
+							res.setDetail("Failed to add role functions");
+							break;
+						}
 					}
 				}
 			}
+
 		} while (false);
 
 		return gson.toJson(res);
@@ -392,6 +399,12 @@ public class AjaxSystemController {
 				break;
 			}
 			if (funcIds == null) {
+				res.setCode(402);
+				res.setDetail("Func ids cannot be empty");
+				break;
+			}
+			funcIds = funcIds.replaceAll(" ",  "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", "");
+			if (funcIds.isEmpty()) {
 				res.setCode(402);
 				res.setDetail("Func ids cannot be empty");
 				break;
@@ -489,7 +502,7 @@ public class AjaxSystemController {
 				res.setDetail("Org id cannot be empty");
 				break;
 			}
-
+			form.setRoles(form.getRoles().replaceAll(" ",  "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
 			if (form.getRoles() == null && form.getRoles().isEmpty()) {
 				res.setCode(403);
 				res.setDetail("Role ids cannot be empty");
@@ -501,6 +514,13 @@ public class AjaxSystemController {
 				res.setDetail("No permission");
 				break;
 			}
+
+			String[] roleIds = form.getRoles().split(",");
+			if (roleIds.length > 1 && roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
+				res.setCode(405);
+				res.setDetail("System role cannot coexist with other roles");
+				break;
+			}			
 
 			TUser currentUser = userServ.getCachedUser();
 
@@ -529,7 +549,7 @@ public class AjaxSystemController {
 				break;
 			}
 
-			for (String roleId : form.getRoles().split(",")) {
+			for (String roleId : roleIds) {
 				if (roleServ.roleExists(roleId)) {
 					// Add user/role relation
 					if (!userServ.addUserRole(id, roleId)) {
@@ -566,17 +586,25 @@ public class AjaxSystemController {
 				res.setDetail("Org id cannot be empty");
 				break;
 			}
+			form.setRoles(form.getRoles().replaceAll(" ",  "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
 			if (form.getRoles() == null && form.getRoles().isEmpty()) {
 				res.setCode(404);
-				res.setDetail("Role ids cannot be empty");
+				res.setDetail("System role cannot coexist with other roles");
 				break;
-			}
+			}			
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
 					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
+			
+			String[] roleIds = form.getRoles().split(",");
+			if (roleIds.length > 1 && roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
+				res.setCode(405);
+				res.setDetail("Role ids cannot be empty");
+				break;
+			}			
 
 			TUser currentUser = userServ.getCachedUser();
 
@@ -593,7 +621,7 @@ public class AjaxSystemController {
 				res.setDetail("No permission to add user under parent orgnization");
 				break;
 			}
-
+				
 			TUser user = this.userFormToTUser(form);
 			user.setcOrgId(org.getcId());
 			user.setcOrgRootId(org.getcRootId());
@@ -607,7 +635,7 @@ public class AjaxSystemController {
 			}
 
 			userServ.delUserRolesByUserId(user.getcId());
-			for (String roleId : form.getRoles().split(",")) {
+			for (String roleId : roleIds) {
 				if (roleServ.roleExists(roleId)) {
 					// Add user/role relation
 					if (!userServ.addUserRole(form.getUserId(), roleId)) {

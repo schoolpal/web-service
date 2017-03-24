@@ -48,6 +48,10 @@ public class RoleService {
 		return roleDao.ifExistsById(id) > 0;
 	}
 	
+	public boolean systemRoleCoexistWithOtherRoles(String[] ids) {
+		return roleDao.getCountByPrimaryIdsAndRankId(ids, 4) > 0;
+	}
+
 	public String addRole(RoleForm form, String creatorId) {
 		String ret = null;
 
