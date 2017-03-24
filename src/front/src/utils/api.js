@@ -418,26 +418,11 @@ export function userMod(data) {
     return defer.promise();
 }
 
-export function userEnable(uid) {
+export function userEnable(uid, enable) {
     const defer = $.Deferred();
     const url = 'sys/user/enable.do';
 
-    io({ url: url, data: { id: uid } }, (data) => {
-        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-            defer.resolve(data.data);
-        } else {
-            defer.reject(data);
-        }
-    })
-
-    return defer.promise();
-}
-
-export function userDisable(uid) {
-    const defer = $.Deferred();
-    const url = 'sys/user/disable.do';
-
-    io({ url: url, data: { id: uid } }, (data) => {
+    io({ url: url, data: { id: uid, enabled: enable } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {
@@ -453,6 +438,21 @@ export function userDel(uid) {
     const url = 'sys/user/del.do';
 
     io({ url: url, data: { id: uid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function checkName(name) {
+    const defer = $.Deferred();
+    const url = 'sys/user/checkName.do';
+
+    io({ url: url, data: { loginName: name } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {

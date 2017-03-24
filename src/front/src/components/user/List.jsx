@@ -4,8 +4,9 @@ import { Link } from 'react-router';
 import OrgTree from '../public/OrgTree';
 import Dialog from '../public/Dialog'
 import { CreateButton, EditorButton, DelButton, ToggleButton } from '../public/Button';
-import { orgList, userList, userEnable, userDisable, userDel } from '../../utils/api';
+import { orgList, userList, userEnable, userDel } from '../../utils/api';
 import DialogTips from '../../utils/DialogTips'
+import errorHandle from '../../utils/errorHandle'
 
 export default class List extends React.Component {
     constructor(props) {
@@ -17,7 +18,6 @@ export default class List extends React.Component {
             userList: [],
 
             enable: false,
-            disable: false,
 
             checkedUser: null,
         }
@@ -44,16 +44,11 @@ export default class List extends React.Component {
                 if (item === 'Enable') {
                     enable = true;
                 }
-
-                if (item === 'Disable') {
-                    disable = true;
-                }
             })
         }
 
         this.setState({
             enable: enable,
-            disable: disable
         })
 
         dialogTips.open()
@@ -73,8 +68,14 @@ export default class List extends React.Component {
                 })
 
                 dialogTips.close()
-            }).fail(() => { dialogTips.close() })
-        }).fail(() => { dialogTips.close() })
+            }).fail((data) => {
+                dialogTips.close()
+                errorHandle({ data: data, router: this.props.router })
+            })
+        }).fail((data) => {
+            dialogTips.close()
+            errorHandle({ data: data, router: this.props.router })
+        })
     }
 
     renderCommand() {
@@ -111,13 +112,18 @@ export default class List extends React.Component {
 
             dialogTips.open()
 
-            userList(org.id).done((data) => {
-                this.setState({
-                    userList: data
+            userList(org.id)
+                .done((data) => {
+                    this.setState({
+                        userList: data
+                    })
                 })
-            }).always(() => {
-                dialogTips.close()
-            })
+                .fail((data) => {
+                    errorHandle({ data: data, router: this.props.router })
+                })
+                .always(() => {
+                    dialogTips.close()
+                })
         }
     }
 
@@ -190,25 +196,14 @@ export default class List extends React.Component {
 
         this.toggleAvailable(param.uid, nextAvailable)
 
-        if (param.available === true) {
-            userDisable(param.uid).done(() => {
-                loading.close()
-                success.open()
-            }).fail(() => {
-                this.toggleAvailable(param.uid, param.available)
-                loading.close()
-                fail.open()
-            })
-        } else {
-            userEnable(param.uid).done(() => {
-                loading.close()
-                success.open()
-            }).fail(() => {
-                this.toggleAvailable(param.uid, param.available)
-                loading.close()
-                fail.open()
-            })
-        }
+        userEnable(param.uid, !param.available).done(() => {
+            loading.close()
+            success.open()
+        }).fail(() => {
+            this.toggleAvailable(param.uid, param.available)
+            loading.close()
+            fail.open()
+        })
     }
 
     toggleAvailable(uid, nextAvailable) {
@@ -283,7 +278,6 @@ export default class List extends React.Component {
                                                         <ToggleButton
                                                             uid={item.cId}
                                                             enable={this.state.enable}
-                                                            disable={this.state.disable}
                                                             available={item.cAvailable}
                                                             action={this.handleToggle}
                                                         />
