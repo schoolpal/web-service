@@ -454,13 +454,7 @@ export function checkName(name) {
 
     io({ url: url, data: { loginName: name } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-
-            if (data.data === true) {
-                defer.reject(data);
-            } else {
-                defer.resolve(data.data);
-            }
-
+            defer.resolve(data.data);
         } else {
             defer.reject(data);
         }

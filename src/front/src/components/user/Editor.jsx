@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
-import { SaveButton, BackButton } from '../public/Button';
-import Alerts from '../public/Alerts';
-import subTitle from '../../utils/subTitle';
-import { orgDetails, roleList, userAdd, userDetails, userMod, checkName } from '../../utils/api';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Link } from 'react-router'
+import { SaveButton, BackButton } from '../public/Button'
+import Alerts from '../public/Alerts'
+import subTitle from '../../utils/subTitle'
+import { orgDetails, roleList, userAdd, userDetails, userMod, checkName } from '../../utils/api'
 import mixedMD5 from '../../utils/mixedMD5'
-import DialogTips from '../../utils/DialogTips';
+import DialogTips from '../../utils/DialogTips'
+import errorHandle from '../../utils/errorHandle'
+
+const RANK_ADMIN_ID = '4';
 
 export default class Editor extends React.Component {
     constructor(props) {
@@ -26,7 +29,6 @@ export default class Editor extends React.Component {
         const dialogTips = DialogTips({ type: 'loading' })
 
         dialogTips.open()
-
 
         $.when(
             orgDetails(this.props.params.oid),
@@ -74,12 +76,16 @@ export default class Editor extends React.Component {
                             .find('[name=im]')
                             .val(user.cQq)
                     })
+                    .fail((data) => {
+                        errorHandle({ data: data, router: this.props.router })
+                    })
                     .always(() => {
                         dialogTips.close()
                     })
             }
         }).fail(() => {
             dialogTips.close()
+            errorHandle({ data: data, router: this.props.router })
         })
     }
 
@@ -87,8 +93,15 @@ export default class Editor extends React.Component {
         let tempRole = [];
 
         if (event.target.checked === true) {
+            const isAdmin = $(event.target).data('rank').toString() === RANK_ADMIN_ID;
+            const adminId = $('[data-rank=' + RANK_ADMIN_ID + ']').val();
+            console.log($(event.target).data('rank').toString() + '/' + RANK_ADMIN_ID)
+            console.log(isAdmin)
             tempRole.push(event.target.value)
-            tempRole = tempRole.concat(this.state.checkedRole)
+
+            if (isAdmin === false) {
+                tempRole = tempRole.concat(this.state.checkedRole.filter((id) => { return id !== adminId }))
+            }
         } else {
             tempRole = this.state.checkedRole.filter((id) => { return id !== event.target.value })
         }
@@ -121,7 +134,15 @@ export default class Editor extends React.Component {
         loading.open()
 
         checkName($(this.editorDom).find('[name=loginName]').val())
-            .done(() => {
+            .done((data) => {
+                if (data === true) {
+                    loading.close()
+                    $(this.editorDom).find('[name=loginName]')[0].setCustomValidity('登陆名已存在 ！')
+                    $(this.editorDom).find('[type=submit]').trigger('click')
+
+                    return;
+                }
+
                 let param = {};
                 let temp = $(this.editorDom).serializeArray();
 
@@ -175,9 +196,7 @@ export default class Editor extends React.Component {
                 }
             })
             .fail((data) => {
-                loading.close()
-                $(this.editorDom).find('[name=loginName]')[0].setCustomValidity('登陆名已存在 ！')
-                $(this.editorDom).find('[type=submit]').trigger('click')
+                errorHandle({ data: data, router: this.props.router })
             })
     }
 
@@ -251,6 +270,7 @@ export default class Editor extends React.Component {
                                                         className="form-check-input"
                                                         type="checkbox"
                                                         value={item.cId}
+                                                        data-rank={item.cRankId}
                                                         checked={this.state.checkedRole.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
                                                         required="required"
                                                     />

@@ -6,6 +6,7 @@ import Dialog from '../public/Dialog'
 import { CreateButton, EditorButton, DelButton, ToggleButton } from '../public/Button';
 import { orgList, userList, userEnable, userDel } from '../../utils/api';
 import DialogTips from '../../utils/DialogTips'
+import errorHandle from '../../utils/errorHandle'
 
 export default class List extends React.Component {
     constructor(props) {
@@ -67,8 +68,14 @@ export default class List extends React.Component {
                 })
 
                 dialogTips.close()
-            }).fail(() => { dialogTips.close() })
-        }).fail(() => { dialogTips.close() })
+            }).fail((data) => {
+                dialogTips.close()
+                errorHandle({ data: data, router: this.props.router })
+            })
+        }).fail((data) => {
+            dialogTips.close()
+            errorHandle({ data: data, router: this.props.router })
+        })
     }
 
     renderCommand() {
@@ -105,13 +112,18 @@ export default class List extends React.Component {
 
             dialogTips.open()
 
-            userList(org.id).done((data) => {
-                this.setState({
-                    userList: data
+            userList(org.id)
+                .done((data) => {
+                    this.setState({
+                        userList: data
+                    })
                 })
-            }).always(() => {
-                dialogTips.close()
-            })
+                .fail((data) => {
+                    errorHandle({ data: data, router: this.props.router })
+                })
+                .always(() => {
+                    dialogTips.close()
+                })
         }
     }
 
