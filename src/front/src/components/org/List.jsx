@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import NavBar from '../public/NavBar'
+import AsideBar from '../public/AsideBar'
 import { CreateButton, EditorButton, DelButton } from '../public/Button'
 import Dialog from '../public/Dialog'
 import { orgList, orgDel } from '../../utils/api'
@@ -47,6 +49,8 @@ export default class List extends React.Component {
     }
 
     renderCommand() {
+        const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
+        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
         let temp = [];
         let isDisabled;
 
@@ -56,8 +60,8 @@ export default class List extends React.Component {
             isDisabled = true;
         };
 
-        if (SCHOOLPAL_CONFIG.auth[this.props.route.path] && SCHOOLPAL_CONFIG.auth[this.props.route.path].command.length) {
-            SCHOOLPAL_CONFIG.auth[this.props.route.path].command.map((item, index) => {
+        if (auth) {
+            auth.command.map((item, index) => {
                 if (item === 'Add') {
                     temp.push(<CreateButton key={index} action={this.handleCreate} />)
                 };
@@ -225,29 +229,35 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <div className="org">
-                <h5>
-                    <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理
-                    <div className="btn-group float-right" role="group">
-                        {this.renderCommand()}
+            <div>
+                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
+                <AsideBar router={this.props.router} />
+                <div className="main">
+                    <div className="org">
+                        <h5>
+                            <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理
+                        <div className="btn-group float-right" role="group">
+                                {this.renderCommand()}
+                            </div>
+                        </h5>
+                        <div className="main-container">
+                            <table className="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>组织名称</th>
+                                        <th>所在地区</th>
+                                        <th>详细地址</th>
+                                        <th>负责人</th>
+                                        <th>联系电话</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.renderTable(this.state.treeList)}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </h5>
-                <div className="main-container">
-                    <table className="table table-bordered table-sm">
-                        <thead>
-                            <tr>
-                                <th>&nbsp;</th>
-                                <th>组织名称</th>
-                                <th>所在地区</th>
-                                <th>详细地址</th>
-                                <th>负责人</th>
-                                <th>联系电话</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderTable(this.state.treeList)}
-                        </tbody>
-                    </table>
                 </div>
             </div>
         )

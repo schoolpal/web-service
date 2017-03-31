@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import NavBar from './public/NavBar';
 import { LoginButton } from './public/Button';
 import Dialog from './public/Dialog';
-import { salt, login, permissions } from '../utils/api';
+import { salt, login } from '../utils/api';
 import mixedMD5 from '../utils/mixedMD5'
 
 export default class Login extends React.Component {

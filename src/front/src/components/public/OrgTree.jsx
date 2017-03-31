@@ -46,12 +46,17 @@ export default class OrgTree extends React.Component {
                 let children = [];
 
                 children.push(this.renderTree(item.children));
-                tree.push(
-                    <li key={item.cId}>
-                        {this.renderTreeItem(item)}
-                        <ul>{children}</ul>
-                    </li>
-                );
+
+                if (item.cName) {
+                    tree.push(
+                        <li key={item.cId}>
+                            {this.renderTreeItem(item)}
+                            <ul>{children}</ul>
+                        </li>
+                    );
+                } else {
+                    tree.push(children);
+                }
             } else {
                 tree.push(
                     <li key={item.cId}>{this.renderTreeItem(item)}</li>
@@ -80,7 +85,7 @@ export default class OrgTree extends React.Component {
         if (elem.hasClass('selected')) {
             return;
         }
-        
+
         this.props.selected({
             id: elem.data('o'),
             name: elem.children('span').text()
@@ -91,7 +96,7 @@ export default class OrgTree extends React.Component {
         return (
             <div ref={(dom) => { this.treeDom = dom }} className="tree">
                 <ul>
-                    {this.renderTree(this.props.data)}
+                    {(this.props.data && this.props.data.length) ? this.renderTree(this.props.data) : ''}
                 </ul>
             </div>
         )

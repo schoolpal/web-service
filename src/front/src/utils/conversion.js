@@ -23,8 +23,15 @@ export function conversionOrg(original) {
         $.each(data, function (i, item) {
             rootLevel.push(item.level);
 
-            if (item.cId === item.cParentId) {
-                tree.push(item)
+            if (i === 0) {
+                if (item.cId === item.cParentId) {
+                    tree.push(item)
+                } else {
+                    const temp = { cId: item.cRootId, children: [] }
+
+                    temp.children.push(item)
+                    tree.push(temp)
+                }
             } else {
                 const rootIndex = _.findIndex(tree, { cId: item.cRootId });
 

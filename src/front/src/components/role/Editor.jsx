@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
+import NavBar from '../public/NavBar'
+import AsideBar from '../public/AsideBar'
 import { SaveButton, BackButton } from '../public/Button';
 import subTitle from '../../utils/subTitle';
 import { orgDetails, funcDic, rankDic, roleAdd, roleDetails, roleMod } from '../../utils/api';
@@ -221,105 +222,111 @@ export default class Editor extends React.Component {
 
     render() {
         return (
-            <div className="org">
-                <form ref={(dom) => { this.editorDom = dom }} onSubmit={this.editorSubmit}>
+            <div>
+                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
+                <AsideBar router={this.props.router} />
+                <div className="main">
+                    <div className="org">
+                        <form ref={(dom) => { this.editorDom = dom }} onSubmit={this.editorSubmit}>
 
-                    <h5>
-                        <i className='fa fa-glass'></i>&nbsp;角色管理&nbsp;|&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.id, '角色')}</p>
-                        <div className="btn-group float-right" role="group">
-                            <BackButton router={this.props.router} />
-                            <SaveButton action={this.editorSubmit} text="保存" />
-                        </div>
-                    </h5>
-
-                    <div className="main-container">
-                        <div className="d-flex align-items-stretch flex-nowrap">
-                            <div className={this.state.org === null ? 'hide' : 'w500'}>
-                                <div className="form-group">
-                                    <label for="name"><em className="text-danger">*</em>所属组织：</label>
-                                    <input type="text" className="form-control" value={this.state.org ? this.state.org.name : ''} disabled="disabled" />
+                            <h5>
+                                <i className='fa fa-glass'></i>&nbsp;角色管理&nbsp;|&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.id, '角色')}</p>
+                                <div className="btn-group float-right" role="group">
+                                    <BackButton router={this.props.router} />
+                                    <SaveButton action={this.editorSubmit} text="保存" />
                                 </div>
-                                <div className="form-group">
-                                    <label for="name"><em className="text-danger">*</em>角色职能</label>
-                                    <div>
-                                        {
-                                            this.state.func.map((item) => {
-                                                const adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+                            </h5>
 
-                                                return (
-                                                    <div key={item.cId} className={adminClass}>
-                                                        <label className="form-check-label">
-                                                            <input
-                                                                onChange={this.checkedFunc}
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                value={item.cId}
-                                                                checked={this.state.checkedFunc.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
-                                                                name="func"
-                                                                required="required"
-                                                            />
-                                                            <span>{item.cNameShort}</span>
-                                                        </label>
-                                                    </div>
-                                                )
-                                            })
-                                        }
+                            <div className="main-container">
+                                <div className="d-flex align-items-stretch flex-nowrap">
+                                    <div className={this.state.org === null ? 'hide' : 'w500'}>
+                                        <div className="form-group">
+                                            <label for="name"><em className="text-danger">*</em>所属组织：</label>
+                                            <input type="text" className="form-control" value={this.state.org ? this.state.org.name : ''} disabled="disabled" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label for="name"><em className="text-danger">*</em>角色职能</label>
+                                            <div>
+                                                {
+                                                    this.state.func.map((item) => {
+                                                        const adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+
+                                                        return (
+                                                            <div key={item.cId} className={adminClass}>
+                                                                <label className="form-check-label">
+                                                                    <input
+                                                                        onChange={this.checkedFunc}
+                                                                        className="form-check-input"
+                                                                        type="checkbox"
+                                                                        value={item.cId}
+                                                                        checked={this.state.checkedFunc.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
+                                                                        name="func"
+                                                                        required="required"
+                                                                    />
+                                                                    <span>{item.cNameShort}</span>
+                                                                </label>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label for="name"><em className="text-danger">*</em>角色职级</label>
+                                            <div>
+                                                {
+                                                    this.state.rank.map((item) => {
+                                                        const adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+                                                        let isDisabled = false;
+
+                                                        if (this.state.isAdmin === true && item.cId.toString() !== RANK_ADMIN_ID) {
+                                                            isDisabled = true;
+                                                        }
+
+                                                        if (this.state.isAdmin === false && item.cId.toString() === RANK_ADMIN_ID) {
+                                                            isDisabled = true;
+                                                        }
+
+                                                        if (this.state.checkedFunc.length === 1 && item.cId.toString() === RANK_MANAGER_ID) {
+                                                            isDisabled = true;
+                                                        }
+
+                                                        return (
+                                                            <div key={item.cId} className={adminClass}>
+                                                                <label className="form-check-label">
+                                                                    <input
+                                                                        onChange={this.checkedRank}
+                                                                        className="form-check-input"
+                                                                        type="radio"
+                                                                        name="rank"
+                                                                        checked={item.cId.toString() === this.state.checkedRank ? true : false}
+                                                                        value={item.cId}
+                                                                        disabled={isDisabled}
+                                                                        required="required"
+                                                                    />
+                                                                    <span>{item.cName}</span>
+                                                                </label>
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label for="name"><em className="text-danger">*</em>角色名称</label>
+                                            <input type="text" className="form-control" name="name" required="required" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label for="name">角色描述</label>
+                                            <textarea name="desc" className="form-control" rows="3"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <label for="name"><em className="text-danger">*</em>角色职级</label>
-                                    <div>
-                                        {
-                                            this.state.rank.map((item) => {
-                                                const adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
-                                                let isDisabled = false;
-
-                                                if (this.state.isAdmin === true && item.cId.toString() !== RANK_ADMIN_ID) {
-                                                    isDisabled = true;
-                                                }
-
-                                                if (this.state.isAdmin === false && item.cId.toString() === RANK_ADMIN_ID) {
-                                                    isDisabled = true;
-                                                }
-
-                                                if (this.state.checkedFunc.length === 1 && item.cId.toString() === RANK_MANAGER_ID) {
-                                                    isDisabled = true;
-                                                }
-
-                                                return (
-                                                    <div key={item.cId} className={adminClass}>
-                                                        <label className="form-check-label">
-                                                            <input
-                                                                onChange={this.checkedRank}
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="rank"
-                                                                checked={item.cId.toString() === this.state.checkedRank ? true : false}
-                                                                value={item.cId}
-                                                                disabled={isDisabled}
-                                                                required="required"
-                                                            />
-                                                            <span>{item.cName}</span>
-                                                        </label>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <label for="name"><em className="text-danger">*</em>角色名称</label>
-                                    <input type="text" className="form-control" name="name" required="required" />
-                                </div>
-                                <div className="form-group">
-                                    <label for="name">角色描述</label>
-                                    <textarea name="desc" className="form-control" rows="3"></textarea>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                </form>
+                        </form>
+                    </div>
+                </div>
             </div>
         )
     }

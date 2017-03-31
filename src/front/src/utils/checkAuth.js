@@ -1,19 +1,21 @@
 export default function checkAuth(nextState, replace) {
-    let hasMatch = 0;
+    const temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
+    let hasMatch = false;
 
-    if (SCHOOLPAL_CONFIG.authPath) {
-        SCHOOLPAL_CONFIG.authPath.map((rule) => {
-            const temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-            
-            if (rule.test(temp) === true) {
-                hasMatch++
+    console.log('======== check auth ========')
+
+    if (SCHOOLPAL_CONFIG.accessRules) {
+        for (let i = 0; i < SCHOOLPAL_CONFIG.accessRules.length; i++) {
+            if (SCHOOLPAL_CONFIG.accessRules[i].test(temp) === true) {
+                hasMatch = true;
+                break;
             }
-        })
+        }
 
-        if (!hasMatch) {
+        if (hasMatch === false) {
             replace({
                 pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'error'
             })
         }
-    };
+    }
 }

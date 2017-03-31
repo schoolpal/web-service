@@ -8,6 +8,12 @@ window.SCHOOLPAL_CONFIG = {
     NOT_SIGNIN: 'NOT_SIGNIN',
 
     AUTH_DIC: {
+        '1-1': { PATH: 'crm/market/activity', PATH_RULE: /^crm\/market\/activity(\/\w+)?(\/)?$/, ICON: 'fa-pie-chart' },
+        '1-1-1': { PATH_RULE: /^crm\/market\/activity\/edit\/create(\/)?$/ },
+        '1-1-2': { PATH_RULE: /^crm\/market\/activity\/edit\/\w+(\/)?$/ },
+
+        '1-2': { PATH_RULE: /^crm\/market\/sales(\/)?$/, ICON: 'fa-bar-chart' },
+
         '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
         '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
@@ -28,10 +34,18 @@ require('./font/css/font-awesome.css');
 require('./less/bundle.less');
 require('bootstrap/dist/js/bootstrap');
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route, browserHistory } from 'react-router';
-import Dashboard from './components/Dashboard';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Router, Route, browserHistory } from 'react-router'
+import Dashboard from './components/Dashboard'
+
+import Crm from './components/Crm'
+
+import MarketActivityList from './components/market/activity/List'
+import MarketActivityEditor from './components/market/activity/editor'
+import MarketActivityView from './components/market/activity/View'
+import MarketSalesList from './components/market/sales/List'
+
 import OrgList from './components/org/List';
 import OrgEditor from './components/org/Editor';
 import RoleList from './components/role/List';
@@ -46,7 +60,14 @@ import checkAuth from './utils/checkAuth';
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'login'} component={Login} />
+
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={Dashboard}>
+            <Route path={'crm'} component={Crm}>
+                <Route path="market/activity" component={MarketActivityList} onEnter={checkAuth} />
+                <Route path="market/activity/:id" component={MarketActivityView} onEnter={checkAuth} />
+                <Route path="market/activity/edit/:id" component={MarketActivityEditor} onEnter={checkAuth} />
+            </Route>
+
             <Route path="org" component={OrgList} onEnter={checkAuth} />
             <Route path="org/:id" component={OrgEditor} onEnter={checkAuth} />
             <Route path="role" component={RoleList} onEnter={checkAuth} />

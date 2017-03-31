@@ -97,35 +97,33 @@ export function permissions() {
 
     io({ url: url }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
-            let auth = {};
-            let authPath = [];
+            let commandRules = [];
+            let accessRules = [];
 
             if (data.data.length) {
                 $.each(data.data, (i, item) => {
                     if (item.WidgetType === 'MenuItem') {
                         const temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
 
-                        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId] && SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH) {
-                            auth[SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH] = temp;
-                        }
-                    };
+                        commandRules.push(temp);
+                    }
 
                     if (item.WidgetType === 'Command') {
-                        $.each(auth, (k, v) => {
-                            if (v.id === item.cParentId) {
-                                v.command.push(item.CommandCode)
-                            };
-                        })
-                    };
+                        const index = commandRules.findIndex((value) => { return value.id === item.cParentId });
+
+                        if (index >= 0) {
+                            commandRules[index].command.push(item.CommandCode);
+                        }
+                    }
 
                     if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]) {
-                        authPath.push(SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH_RULE)
-                    };
+                        accessRules.push(SCHOOLPAL_CONFIG.AUTH_DIC[item.cId].PATH_RULE)
+                    }
                 })
             };
 
-            SCHOOLPAL_CONFIG.auth = auth;
-            SCHOOLPAL_CONFIG.authPath = authPath;
+            SCHOOLPAL_CONFIG.accessRules = accessRules;
+            SCHOOLPAL_CONFIG.commandRules = commandRules;
 
             defer.resolve();
         } else {

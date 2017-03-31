@@ -3,34 +3,36 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router'
 import NavBar from './public/NavBar'
 import AsideBar from './public/AsideBar'
-import Alerts from './public/Alerts'
 import { permissions } from '../utils/api'
 import errorHandle from '../utils/errorHandle'
 
 export default class Dashboard extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { isLoading: true }
+
+        this.state = {
+            isLaoding: true
+        }
     }
 
     componentWillMount() {
-        permissions()
-            .done(() => {
-                this.setState({ isLoading: false })
+        permissions().done(() => {
+            this.setState({
+                isLaoding: false
             })
-            .fail((data) => {
-                errorHandle({ data: data, router: this.props.router })
-            });
+        }).fail((data) => {
+            errorHandle({ data: data, router: this.props.router })
+        })
     }
 
     render() {
-        if (this.state.isLoading === true) {
+        if (this.state.isLaoding === true) {
             return (
                 <div className="view">
                     <NavBar />
-                    <AsideBar />
+                    <AsideBar router={this.props.router} />
                     <div className="main">
-                        <div className="p-3">权限初始化中 ...</div>
+                        <p className="p3">权限初始化中...</p>
                     </div>
                 </div>
             )
@@ -38,24 +40,20 @@ export default class Dashboard extends React.Component {
             if (this.props.children) {
                 return (
                     <div className="view">
-                        <NavBar router={this.props.router} isSignin={true} />
-                        <AsideBar />
-                        <div className="main">
-                            {this.props.children}
-                        </div>
+                        {this.props.children}
                     </div>
                 )
             } else {
                 return (
                     <div className="view">
                         <NavBar router={this.props.router} isSignin={true} />
-                        <AsideBar />
+                        <AsideBar router={this.props.router} />
                         <div className="main">
-                            <p className="h6 pb-3 b-b">控制台</p>
+                            <h5>控制台</h5>
                         </div>
                     </div>
                 )
             }
-        };
+        }
     }
 }
