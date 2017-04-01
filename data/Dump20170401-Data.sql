@@ -1,3 +1,5 @@
+USE `schoolpal`;
+
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: schoolpal.dinner3000.com    Database: schoolpal
@@ -28,7 +30,8 @@ INSERT INTO `t_command_type` VALUES
 (4,'Auth','Authorize'),
 (5,'Enable','Enable'),
 (6,'Import','Import'),
-(7,'Assign','Assign')
+(7,'Assign','Assign'),
+(8,'Convert','Convert')
 ;
 /*!40000 ALTER TABLE `t_command_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -48,6 +51,7 @@ INSERT INTO `t_function` VALUES ('1','1','1','市场','市场管理','/ajax/mkt/
 ('1-2-3','1','1-2','','删除','/ajax/mkt/leads/del.do',3,3,'',3),
 ('1-2-4','1','1-2','','导入','/ajax/mkt/leads/import.do',3,3,'',6),
 ('1-2-5','1','1-2','','分配','/ajax/mkt/leads/assign.do',3,3,'',7),
+('1-2-6','1','1-2','','转化','/ajax/mkt/leads/convert.do',3,3,'',8),
 ('2','2','2','销售','销售管理','/ajax/sales',1,2,'',NULL),
 ('3','3','3','客服','客户服务','/ajax/service',1,3,'',NULL),('4','4','4','财务','财务管理','/ajax/finance',1,4,'',NULL),
 ('5','5','5','教务','教务管理','/ajax/academy',1,5,'',NULL),('6','6','6','教学','教学管理','/ajax/education',1,6,'',NULL),
