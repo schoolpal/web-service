@@ -98,11 +98,7 @@ export default class Editor extends React.Component {
             this.setState({
                 selected: org
             })
-        } else {
-            this.setState({
-                selected: null
-            })
-        };
+        }
     }
 
     editorSubmit(event) {

@@ -12,7 +12,9 @@ window.SCHOOLPAL_CONFIG = {
         '1-1-1': { PATH_RULE: /^crm\/market\/activity\/edit\/create(\/)?$/ },
         '1-1-2': { PATH_RULE: /^crm\/market\/activity\/edit\/\w+(\/)?$/ },
 
-        '1-2': { PATH_RULE: /^crm\/market\/sales(\/)?$/, ICON: 'fa-bar-chart' },
+        '1-2': { PATH: 'crm/market/sales', PATH_RULE: /^crm\/market\/sales(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
+        '1-2-1': { PATH_RULE: /^crm\/market\/sales\/edit\/create(\/)?$/ },
+        '1-2-2': { PATH_RULE: /^crm\/market\/sales\/edit\/\w+(\/)?$/ },
 
         '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
@@ -42,9 +44,11 @@ import Dashboard from './components/Dashboard'
 import Crm from './components/Crm'
 
 import MarketActivityList from './components/market/activity/List'
-import MarketActivityEditor from './components/market/activity/editor'
+import MarketActivityEditor from './components/market/activity/Editor'
 import MarketActivityView from './components/market/activity/View'
 import MarketSalesList from './components/market/sales/List'
+import MarketSalesEditor from './components/market/sales/Editor'
+import MarketSalesView from './components/market/sales/View'
 
 import OrgList from './components/org/List';
 import OrgEditor from './components/org/Editor';
@@ -66,6 +70,10 @@ ReactDOM.render((
                 <Route path="market/activity" component={MarketActivityList} onEnter={checkAuth} />
                 <Route path="market/activity/:id" component={MarketActivityView} onEnter={checkAuth} />
                 <Route path="market/activity/edit/:id" component={MarketActivityEditor} onEnter={checkAuth} />
+
+                <Route path="market/sales" component={MarketSalesList} onEnter={checkAuth} />
+                <Route path="market/sales/:id" component={MarketSalesView} onEnter={checkAuth} />
+                <Route path="market/sales/edit/:id" component={MarketSalesEditor} onEnter={checkAuth} />
             </Route>
 
             <Route path="org" component={OrgList} onEnter={checkAuth} />

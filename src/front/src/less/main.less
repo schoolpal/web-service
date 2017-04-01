@@ -25,6 +25,7 @@
 
     .btn {
         height: 54px;
+        border-radius: 0;
     }
 }
 
@@ -56,6 +57,20 @@
         right: 0;
         bottom: 0;
         width: 1px;
+        background: #eceeef;
+    }
+}
+
+.b-t {
+    position: relative;
+
+    &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 1px;
         background: #eceeef;
     }
 }
@@ -100,6 +115,10 @@
 
 .hide {
     display: none;
+}
+
+.w100 {
+    width: 100px;
 }
 
 .w200 {
@@ -283,6 +302,17 @@
     dd {
         margin-left: 150px;
         padding-left: 10px;
+    }
+
+    li,
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        margin-bottom: 1rem;
     }
 }
 
