@@ -782,7 +782,7 @@ CREATE TABLE `t_widget_type` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`schoolpal`@`localhost` FUNCTION `f_current_id`(tableName VARCHAR(50)) RETURNS varchar(50) CHARSET utf8
+CREATE DEFINER=`schoolpal`@`%` FUNCTION `f_current_id`(tableName VARCHAR(50)) RETURNS varchar(50) CHARSET utf8
 BEGIN
     DECLARE cPrefix VARCHAR(50);
     DECLARE cCurrent INT;
@@ -814,7 +814,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`schoolpal`@`localhost` FUNCTION `f_next_id`(tableName VARCHAR(50)) RETURNS varchar(50) CHARSET utf8
+CREATE DEFINER=`schoolpal`@`%` FUNCTION `f_next_id`(tableName VARCHAR(50)) RETURNS varchar(50) CHARSET utf8
 BEGIN
     UPDATE t_index
     SET c_current = c_current + c_step
