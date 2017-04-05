@@ -34,22 +34,26 @@
     <include refid="Base_Column_List" />
     from t_function
     where c_id = c_root_id
+    ORDER BY c_id
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_function
+    ORDER BY c_id
   </select>
   <select id="selectManyByRootId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_function
     where c_root_id = #{cId,jdbcType=CHAR}
+    ORDER BY c_id
   </select>
   <select id="selectIdsByRootId" parameterType="java.lang.String" resultType="java.lang.String">
     select c_id
     from t_function
     where c_root_id = #{cId,jdbcType=CHAR}
+    ORDER BY c_id
   </select>
   <select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(*)
