@@ -29,7 +29,7 @@ window.SCHOOLPAL_CONFIG = {
     }
 };
 
-import { _, $ } from './utils/vendor';
+import { $ } from './utils/vendor';
 
 require('bootstrap/dist/css/bootstrap.min.css');
 require('./font/css/font-awesome.css');

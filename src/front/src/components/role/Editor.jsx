@@ -259,7 +259,7 @@ export default class Editor extends React.Component {
                                                                         className="form-check-input"
                                                                         type="checkbox"
                                                                         value={item.cId}
-                                                                        checked={this.state.checkedFunc.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
+                                                                        checked={this.state.checkedFunc && this.state.checkedFunc.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
                                                                         name="func"
                                                                         required="required"
                                                                     />

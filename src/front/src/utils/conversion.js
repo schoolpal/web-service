@@ -1,3 +1,15 @@
+function uniq(arr) {
+    let temp = [];
+
+    if (arr.length) {
+        arr.map((item) => {
+            temp.includes(item) === false && temp.push(item);
+        })
+    }
+
+    return temp;
+}
+
 function insertTree(rootData, data) {
     if (rootData.cId === data.cParentId) {
         if (!rootData.children) {
@@ -33,14 +45,14 @@ export function conversionOrg(original) {
                     tree.push(temp)
                 }
             } else {
-                const rootIndex = _.findIndex(tree, { cId: item.cRootId });
+                const rootIndex = tree.findIndex((treeItem) => { return treeItem.cId === item.cRootId });
 
                 insertTree(tree[rootIndex], item);
             }
         })
     }
 
-    rootLevel = _.uniq(rootLevel);
+    rootLevel = uniq(rootLevel);
 
     return {
         original,
@@ -82,7 +94,7 @@ export function conversionFunc(original) {
             if (item.cId === item.cRootId) {
                 tree.push(item);
             } else {
-                const rootIndex = _.findIndex(tree, { cId: item.cRootId });
+                const rootIndex = tree.findIndex((treeItem) => { return treeItem.cId === item.cRootId });
 
                 insertFunc(tree[rootIndex], item);
             };

@@ -176,7 +176,7 @@ export default class List extends React.Component {
                     <div className="role">
                         <h5>
                             <i className='fa fa-glass'></i>&nbsp;角色管理
-                    <div className="btn-group float-right" role="group">
+                            <div className="btn-group float-right" role="group">
                                 {this.renderCommand()}
                             </div>
                         </h5>
