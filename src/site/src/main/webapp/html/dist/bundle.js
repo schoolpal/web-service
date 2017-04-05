@@ -7600,10 +7600,10 @@ webpackJsonp([0],{
 	                });
 	            } else {
 	                $.when((0, _api.orgDetails)(this.props.params.oid), (0, _api.funcDic)(), (0, _api.rankDic)(), (0, _api.roleDetails)(this.props.params.rid)).done(function (org, func, rank, role) {
-	                    var tempCheckedFunc = {};
+	                    var tempCheckedFunc = [];
 
-	                    role.rootFuncs.map(function (item) {
-	                        tempCheckedFunc[item.cId] = true;
+	                    tempCheckedFunc = role.rootFuncs.map(function (item) {
+	                        return item.cId;
 	                    });
 
 	                    _this2.setState({

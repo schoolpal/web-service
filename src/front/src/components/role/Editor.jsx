@@ -72,11 +72,9 @@ export default class Editor extends React.Component {
                 rankDic(),
                 roleDetails(this.props.params.rid)
             ).done((org, func, rank, role) => {
-                let tempCheckedFunc = {};
+                let tempCheckedFunc = [];
 
-                role.rootFuncs.map((item) => {
-                    tempCheckedFunc[item.cId] = true;
-                })
+                tempCheckedFunc = role.rootFuncs.map((item) => { return item.cId });
 
                 this.setState({
                     editorId: role.cId,
