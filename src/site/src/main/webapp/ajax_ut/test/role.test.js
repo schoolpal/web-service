@@ -54,6 +54,25 @@ describe('/ajax/role/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
+	it('list.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_role_path, 'list.do'),
+			dataType : 'json',
+			data : {
+				id: orgIdVal
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		//expect(jsonData.data).to.be.empty;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
 	it('add.do', function() {
 		xhr = $.ajax({
 			async : false,
@@ -114,7 +133,6 @@ describe('/ajax/role/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data.cId).to.be.equal(roleId);
-		expect(jsonData.data.cRankId).to.be.equal(1);
 		expect(jsonData.data.cName).to.be.equal("testName");
 		expect(jsonData.data.cDesc).to.be.equal("testDesc");
 	});
@@ -160,7 +178,6 @@ describe('/ajax/role/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data.cId).to.be.equal(roleId);
-		expect(jsonData.data.cRankId).to.be.equal(4);
 		expect(jsonData.data.cName).to.be.equal("testNameMod");
 		expect(jsonData.data.cDesc).to.be.equal("testDescMod");
 	});

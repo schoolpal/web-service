@@ -50,7 +50,7 @@ public class AjaxOrgController {
 
 			List<TRole> roles = null;
 			try {
-				roles = roleServ.queryRoleListByOrgId(id);
+				roles = roleServ.queryRoleListByOrgIdLite(id);
 				if (roles == null) {
 					res.setCode(403);
 					res.setDetail("Cannot find orgnization");

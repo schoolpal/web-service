@@ -6,9 +6,9 @@
 		<result column="c_org_id" jdbcType="CHAR" property="cOrgId" />
 		<result column="c_name" jdbcType="VARCHAR" property="cName" />
 		<result column="c_desc" jdbcType="VARCHAR" property="cDesc" />
-		<result column="c_available" jdbcType="BIT" property="cAvailable" />
+<!-- 		<result column="c_available" jdbcType="BIT" property="cAvailable" />
 		<result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
-		<result column="c_rank_id" jdbcType="INTEGER" property="cRankId" />
+		<result column="c_rank_id" jdbcType="INTEGER" property="cRankId" /> -->
 		<result column="c_rank_name" jdbcType="VARCHAR" property="cRankName" />
 	</resultMap>
 	<select id="selectRolesByUserId" parameterType="java.lang.String" resultMap="RoleResultMap">
@@ -29,14 +29,20 @@
 		#{cId,jdbcType=CHAR}
 	</select>
 	<select id="selectRolesByOrgId" parameterType="java.lang.String" resultMap="RoleResultMap">
-		SELECT ro.*, ra.c_name AS c_rank_name
+		SELECT ro.c_id, ro.c_name, ro.c_desc, ra.c_name AS c_rank_name
 		FROM t_role AS ro
-		LEFT
-		JOIN t_rank AS ra ON ro.c_rank_id = ra.c_id
-		WHERE c_available = 1
-		AND
-		c_org_id = #{cId,jdbcType=CHAR}
+			LEFT JOIN t_rank AS ra ON ro.c_rank_id = ra.c_id
+		WHERE c_available = 1 AND c_org_id = #{cId,jdbcType=CHAR}
 	</select>
+    <resultMap id="RoleLiteResultMap" type="com.schoolpal.db.model.TRole">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    </resultMap>
+    <select id="selectRolesByOrgIdLite" parameterType="java.lang.String" resultMap="RoleResultMap">
+        SELECT c_id, c_name
+        FROM t_role
+        WHERE c_available = 1 AND c_org_id = #{cId,jdbcType=CHAR}
+    </select>
 	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
 		select count(*)
 		from t_role

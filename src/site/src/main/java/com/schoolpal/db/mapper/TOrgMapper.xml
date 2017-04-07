@@ -36,32 +36,49 @@
 			<result column="ro_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
 		</association>
 	</resultMap>
-	<select id="selectOneById" parameterType="java.lang.String" resultMap="OrgResultMap">
-		SELECT o.*,
-		po.c_id AS po_id, po.c_code AS po_code, po.c_name
-		AS po_name, po.c_name_abbr
-		AS po_name_abbr,
-		ro.c_id AS ro_id, ro.c_code
-		AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
-		AS ro_name_abbr
-		FROM
-		t_org AS o
-		LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
-		LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
+    <resultMap id="selectOneResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_code" jdbcType="VARCHAR" property="cCode" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+        <result column="c_address" jdbcType="VARCHAR" property="cAddress" />
+        <result column="c_state" jdbcType="VARCHAR" property="cState" />
+        <result column="c_city" jdbcType="VARCHAR" property="cCity" />
+        <result column="c_county" jdbcType="VARCHAR" property="cCounty" />
+        <result column="c_state_code" jdbcType="VARCHAR" property="cStateCode" />
+        <result column="c_city_code" jdbcType="VARCHAR" property="cCityCode" />
+        <result column="c_county_code" jdbcType="VARCHAR" property="cCountyCode" />
+        <result column="c_owner" jdbcType="VARCHAR" property="cOwner" />
+        <result column="c_owner_phone" jdbcType="VARCHAR" property="cOwnerPhone" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+    </resultMap>
+	<select id="selectOneById" parameterType="java.lang.String" resultMap="selectOneResultMap">
+        SELECT o.c_id, o.c_name, o.c_code, o.c_state, o.c_city, o.c_county, 
+            o.c_state_code, o.c_city_code, o.c_county_code, o.c_address, 
+            o.c_owner, o.c_owner_phone, o.c_parent_id,
+            po.c_id AS po_id, po.c_code AS po_code, 
+            po.c_name AS po_name, po.c_name_abbr AS po_name_abbr,
+            ro.c_id AS ro_id, ro.c_code
+            AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
+            AS ro_name_abbr
+        FROM
+            t_org AS o
+            LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
+            LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
 		WHERE o.c_id = #{cId,jdbcType=VARCHAR}
 	</select>
-	<select id="selectOneByCode" parameterType="java.lang.String" resultMap="OrgResultMap">
-        SELECT o.*,
-        po.c_id AS po_id, po.c_code AS po_code, po.c_name
-        AS po_name, po.c_name_abbr
-        AS po_name_abbr,
-        ro.c_id AS ro_id, ro.c_code
-        AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
-        AS ro_name_abbr
+	<select id="selectOneByCode" parameterType="java.lang.String" resultMap="selectOneResultMap">
+        SELECT o.c_id, o.c_name, o.c_code, o.c_state, o.c_city, o.c_county, 
+            o.c_state_code, o.c_city_code, o.c_county_code, o.c_address, 
+            o.c_owner, o.c_owner_phone, o.c_parent_id,
+	        po.c_id AS po_id, po.c_code AS po_code, 
+	        po.c_name AS po_name, po.c_name_abbr AS po_name_abbr,
+	        ro.c_id AS ro_id, ro.c_code
+	        AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
+	        AS ro_name_abbr
         FROM
-        t_org AS o
-        LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
-        LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
+            t_org AS o
+	        LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
+	        LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
 		WHERE o.c_code = #{cCode,jdbcType=VARCHAR}
 	</select>
     <select id="selectOneByCodeWithExcludeId" parameterType="String" resultMap="OrgResultMap">

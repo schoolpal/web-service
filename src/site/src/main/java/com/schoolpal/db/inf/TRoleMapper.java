@@ -11,6 +11,7 @@ public interface TRoleMapper {
     List<TRole> selectRolesByUserId(String cId);
     
     List<TRole> selectRolesByOrgId(String cId);
+    List<TRole> selectRolesByOrgIdLite(String cId);
     
     TRole selectOneById(String cid);
     
