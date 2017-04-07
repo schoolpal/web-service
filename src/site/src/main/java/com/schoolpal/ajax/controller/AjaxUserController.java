@@ -191,7 +191,7 @@ public class AjaxUserController {
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
-			List<TOrg> orgList = orgServ.queryOrgListByRootId(user.getcOrgId());
+			List<TOrg> orgList = orgServ.queryOrgListByRootIdLite(user.getcOrgId());
 			res.setData(orgList);
 		}
 		return gson.toJson(res);

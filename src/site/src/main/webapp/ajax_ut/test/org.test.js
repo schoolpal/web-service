@@ -94,6 +94,22 @@ describe('/ajax/org/ APIs', function() {
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
+	it('list.do', function() {
+		xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, sys_org_path, 'list.do'),
+			dataType : 'json'
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		jsonData = xhr.responseJSON;
+		resDump('list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		// expect(jsonData.detail).to.be.equal('Ok');
+	});
+
 	it('add.do', function() {
 		xhr = $.ajax({
 			async : false,

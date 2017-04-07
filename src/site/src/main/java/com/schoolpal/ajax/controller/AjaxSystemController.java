@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -32,6 +31,28 @@ public class AjaxSystemController {
 	private FunctionService funcServ;
 
 	private Gson gson = new Gson();
+
+	@RequestMapping(value = "org/list.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listOrgs() {
+		
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (!AuthorizationHelper.CheckPermissionById("7-1")) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+
+			TUser user = userServ.getCachedUser();
+
+			List<TOrg> orgList = orgServ.queryOrgListByRootId(user.getcOrgId());
+			res.setData(orgList);
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
 
 	@RequestMapping(value = "org/add.do", method = RequestMethod.POST)
 	@ResponseBody

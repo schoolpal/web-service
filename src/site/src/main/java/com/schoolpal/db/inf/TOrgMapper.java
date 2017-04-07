@@ -23,6 +23,7 @@ public interface TOrgMapper {
     int deleteOneByCode(String cCode);
 
     List<TOrg> selectAll();
+    List<TOrg> selectAllLite();
     
 //    List<TOrg> selectAllIds();
 //    

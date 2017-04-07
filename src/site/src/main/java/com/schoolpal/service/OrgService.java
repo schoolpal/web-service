@@ -54,6 +54,38 @@ public class OrgService {
 		return results;
 	}
 
+	public List<TOrg> queryOrgListByRootIdLite(String id){
+		List<TOrg> orgRows = orgDao.selectAllLite();
+		List<TOrg> results = new ArrayList<TOrg>();
+
+		for (TOrg row : orgRows) {
+			if (row.getcId().equals(id)) {
+				row.setLevel(0);
+				results.add(row);
+				break;
+			}
+		}
+
+		int ind = 0;
+		while (ind < results.size()) {
+			int offset = 0;
+			TOrg currRow = results.get(ind);
+
+			for (TOrg row : orgRows) {
+				if (row.getcParentId().equals(currRow.getcId()) && !results.contains(row)) {
+					row.setLevel(currRow.getLevel() + 1);
+					results.add(ind + (++offset), row);
+					currRow.setParent(true);
+				}
+			}
+
+			if (ind < results.size()) {
+				ind++;
+			}
+		}
+		return results;
+	}
+
 	public List<String> queryOrgIdListByRootId(String id){
 		List<TOrg> orgRows = orgDao.selectAll();
 		List<String> results = new ArrayList<String>();
