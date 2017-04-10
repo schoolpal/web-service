@@ -36,7 +36,7 @@ export function conversionOrg(original) {
             rootLevel.push(item.level);
 
             if (i === 0) {
-                if (item.cId === item.cParentId) {
+                if (item.cId === item.cRootId) {
                     tree.push(item)
                 } else {
                     const temp = { cId: item.cRootId, children: [] }

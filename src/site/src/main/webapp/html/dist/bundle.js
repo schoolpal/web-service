@@ -1002,7 +1002,7 @@ webpackJsonp([0],{
 	            rootLevel.push(item.level);
 
 	            if (i === 0) {
-	                if (item.cId === item.cParentId) {
+	                if (item.cId === item.cRootId) {
 	                    tree.push(item);
 	                } else {
 	                    var temp = { cId: item.cRootId, children: [] };
