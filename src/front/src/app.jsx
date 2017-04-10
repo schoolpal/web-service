@@ -54,6 +54,10 @@ import SalesChanceList from './components/sales/chance/List'
 import SalesChanceEditor from './components/sales/chance/Editor'
 import SalesChanceView from './components/sales/chance/View'
 import SalesContractList from './components/sales/contract/List'
+import SalesContractEditor from './components/sales/contract/Editor'
+import SalesContractView from './components/sales/contract/View'
+import SalesStudentList from './components/sales/student/List'
+import SalesStudentView from './components/sales/student/View'
 
 import OrgList from './components/org/List';
 import OrgEditor from './components/org/Editor';
@@ -85,6 +89,11 @@ ReactDOM.render((
                 <Route path="sales/chance/edit/:id" component={SalesChanceEditor} />
 
                 <Route path="sales/contract" component={SalesContractList} />
+                <Route path="sales/contract/:id" component={SalesContractView} />
+                <Route path="sales/contract/edit/:id" component={SalesContractEditor} />
+
+                <Route path="sales/student" component={SalesStudentList} />
+                <Route path="sales/student/:id" component={SalesStudentView} />
             </Route>
 
             <Route path="org" component={OrgList} onEnter={checkAuth} />
