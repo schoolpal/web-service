@@ -12,9 +12,9 @@ window.SCHOOLPAL_CONFIG = {
         '1-1-1': { PATH_RULE: /^crm\/market\/activity\/edit\/create(\/)?$/ },
         '1-1-2': { PATH_RULE: /^crm\/market\/activity\/edit\/\w+(\/)?$/ },
 
-        '1-2': { PATH: 'crm/market/sales', PATH_RULE: /^crm\/market\/sales(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
-        '1-2-1': { PATH_RULE: /^crm\/market\/sales\/edit\/create(\/)?$/ },
-        '1-2-2': { PATH_RULE: /^crm\/market\/sales\/edit\/\w+(\/)?$/ },
+        '1-2': { PATH: 'crm/market/chance', PATH_RULE: /^crm\/market\/chance(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
+        '1-2-1': { PATH_RULE: /^crm\/market\/chance\/edit\/create(\/)?$/ },
+        '1-2-2': { PATH_RULE: /^crm\/market\/chance\/edit\/\w+(\/)?$/ },
 
         '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
@@ -46,9 +46,14 @@ import Crm from './components/Crm'
 import MarketActivityList from './components/market/activity/List'
 import MarketActivityEditor from './components/market/activity/Editor'
 import MarketActivityView from './components/market/activity/View'
-import MarketSalesList from './components/market/sales/List'
-import MarketSalesEditor from './components/market/sales/Editor'
-import MarketSalesView from './components/market/sales/View'
+import MarketChanceList from './components/market/chance/List'
+import MarketChanceEditor from './components/market/chance/Editor'
+import MarketChanceView from './components/market/chance/View'
+
+import SalesChanceList from './components/sales/chance/List'
+import SalesChanceEditor from './components/sales/chance/Editor'
+import SalesChanceView from './components/sales/chance/View'
+import SalesContractList from './components/sales/contract/List'
 
 import OrgList from './components/org/List';
 import OrgEditor from './components/org/Editor';
@@ -71,9 +76,15 @@ ReactDOM.render((
                 <Route path="market/activity/:id" component={MarketActivityView} onEnter={checkAuth} />
                 <Route path="market/activity/edit/:id" component={MarketActivityEditor} onEnter={checkAuth} />
 
-                <Route path="market/sales" component={MarketSalesList} onEnter={checkAuth} />
-                <Route path="market/sales/:id" component={MarketSalesView} onEnter={checkAuth} />
-                <Route path="market/sales/edit/:id" component={MarketSalesEditor} onEnter={checkAuth} />
+                <Route path="market/chance" component={MarketChanceList} onEnter={checkAuth} />
+                <Route path="market/chance/:id" component={MarketChanceView} onEnter={checkAuth} />
+                <Route path="market/chance/edit/:id" component={MarketChanceEditor} onEnter={checkAuth} />
+
+                <Route path="sales/chance" component={SalesChanceList} />
+                <Route path="sales/chance/:id" component={SalesChanceView} />
+                <Route path="sales/chance/edit/:id" component={SalesChanceEditor} />
+
+                <Route path="sales/contract" component={SalesContractList} />
             </Route>
 
             <Route path="org" component={OrgList} onEnter={checkAuth} />

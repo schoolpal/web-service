@@ -96,7 +96,7 @@ export default class List extends React.Component {
 
             dialogTips.open()
 
-            roleList(org.id)
+            sysRoleList(org.id)
                 .done((data) => {
                     this.setState({ roleList: data })
                 })
