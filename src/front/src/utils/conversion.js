@@ -45,9 +45,11 @@ export function conversionOrg(original) {
                     tree.push(temp)
                 }
             } else {
-                const rootIndex = tree.findIndex((treeItem) => { return treeItem.cId === item.cRootId });
+                const rootItem = tree.find((treeItem) => { return item.cRootId === treeItem.cId })
 
-                insertTree(tree[rootIndex], item);
+                if (rootItem) {
+                    insertTree(rootItem, item);
+                }
             }
         })
     }
@@ -94,9 +96,11 @@ export function conversionFunc(original) {
             if (item.cId === item.cRootId) {
                 tree.push(item);
             } else {
-                const rootIndex = tree.findIndex((treeItem) => { return treeItem.cId === item.cRootId });
+                const rootItem = tree.find((treeItem) => { return item.cRootId === treeItem.cId })
 
-                insertFunc(tree[rootIndex], item);
+                if (rootItem) {
+                    insertFunc(rootItem, item);
+                }
             };
         })
     }

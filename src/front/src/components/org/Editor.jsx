@@ -57,12 +57,14 @@ export default class Editor extends React.Component {
                 orgList(),
                 orgDetails(this.props.params.id)
             ).done((list, details) => {
+                const curOrg = list.original.find((item) => { return item.cId === details.cParentId });
+
                 this.setState({
                     editorId: details.cId,
                     orgList: list.tree,
                     selected: {
-                        id: details.parentOrg.cId,
-                        name: details.parentOrg.cName
+                        id: curOrg.cId,
+                        name: curOrg.cName
                     }
                 })
 

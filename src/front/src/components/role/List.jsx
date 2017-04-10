@@ -6,7 +6,7 @@ import AsideBar from '../public/AsideBar'
 import OrgTree from '../public/OrgTree'
 import Dialog from '../public/Dialog'
 import { CreateButton, EditorButton, DelButton } from '../public/Button'
-import { orgList, roleList, roleDel } from '../../utils/api'
+import { orgList, sysRoleList, roleDel } from '../../utils/api'
 import DialogTips from '../../utils/DialogTips'
 
 function getFuncStr(data) {
@@ -46,7 +46,7 @@ export default class List extends React.Component {
 
         orgList()
             .done((org) => {
-                roleList(org.original[0].cId)
+                sysRoleList(org.original[0].cId)
                     .done((role) => {
                         this.setState({
                             orgList: org.tree,

@@ -407,11 +407,13 @@ webpackJsonp([0],{
 	exports.logout = logout;
 	exports.permissions = permissions;
 	exports.orgList = orgList;
+	exports.roleList = roleList;
+	exports.sysOrgList = sysOrgList;
 	exports.orgDetails = orgDetails;
 	exports.orgAdd = orgAdd;
 	exports.orgMod = orgMod;
 	exports.orgDel = orgDel;
-	exports.roleList = roleList;
+	exports.sysRoleList = sysRoleList;
 	exports.rankDic = rankDic;
 	exports.funcDic = funcDic;
 	exports.roleAdd = roleAdd;
@@ -583,6 +585,36 @@ webpackJsonp([0],{
 	    return defer.promise();
 	}
 
+	function roleList(oid) {
+	    var defer = $.Deferred();
+	    var url = 'org/listRoles.do';
+
+	    io({ url: url, data: { id: oid } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function sysOrgList() {
+	    var defer = $.Deferred();
+	    var url = 'sys/org/list.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve((0, _conversion.conversionOrg)(data.data));
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
 	function orgDetails(oid) {
 	    var defer = $.Deferred();
 	    var url = 'org/query.do';
@@ -645,9 +677,9 @@ webpackJsonp([0],{
 	    return defer.promise();
 	}
 
-	function roleList(oid) {
+	function sysRoleList(oid) {
 	    var defer = $.Deferred();
-	    var url = 'org/listRoles.do';
+	    var url = 'sys/role/list.do';
 
 	    io({ url: url, data: { id: oid } }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -959,11 +991,13 @@ webpackJsonp([0],{
 	                    tree.push(temp);
 	                }
 	            } else {
-	                var rootIndex = tree.findIndex(function (treeItem) {
-	                    return treeItem.cId === item.cRootId;
+	                var rootItem = tree.find(function (treeItem) {
+	                    return item.cRootId === treeItem.cId;
 	                });
 
-	                insertTree(tree[rootIndex], item);
+	                if (rootItem) {
+	                    insertTree(rootItem, item);
+	                }
 	            }
 	        });
 	    }
@@ -1012,11 +1046,13 @@ webpackJsonp([0],{
 	            if (item.cId === item.cRootId) {
 	                tree.push(item);
 	            } else {
-	                var rootIndex = tree.findIndex(function (treeItem) {
-	                    return treeItem.cId === item.cRootId;
+	                var rootItem = tree.find(function (treeItem) {
+	                    return item.cRootId === treeItem.cId;
 	                });
 
-	                insertFunc(tree[rootIndex], item);
+	                if (rootItem) {
+	                    insertFunc(rootItem, item);
+	                }
 	            };
 	        });
 	    }
@@ -6186,7 +6222,7 @@ webpackJsonp([0],{
 
 	            dialogTips.open();
 
-	            (0, _api.orgList)().done(function (data) {
+	            (0, _api.sysOrgList)().done(function (data) {
 	                _this2.setState({
 	                    list: data.original,
 	                    treeList: data.tree,
@@ -6606,12 +6642,16 @@ webpackJsonp([0],{
 	                $('#citys').citys();
 	            } else {
 	                $.when((0, _api.orgList)(), (0, _api.orgDetails)(this.props.params.id)).done(function (list, details) {
+	                    var curOrg = list.original.find(function (item) {
+	                        return item.cId === details.cParentId;
+	                    });
+
 	                    _this2.setState({
 	                        editorId: details.cId,
 	                        orgList: list.tree,
 	                        selected: {
-	                            id: details.parentOrg.cId,
-	                            name: details.parentOrg.cName
+	                            id: curOrg.cId,
+	                            name: curOrg.cName
 	                        }
 	                    });
 
@@ -7218,7 +7258,7 @@ webpackJsonp([0],{
 	            dialogTips.open();
 
 	            (0, _api.orgList)().done(function (org) {
-	                (0, _api.roleList)(org.original[0].cId).done(function (role) {
+	                (0, _api.sysRoleList)(org.original[0].cId).done(function (role) {
 	                    _this2.setState({
 	                        orgList: org.tree,
 	                        org: {
@@ -7274,7 +7314,7 @@ webpackJsonp([0],{
 
 	                dialogTips.open();
 
-	                (0, _api.roleList)(org.id).done(function (data) {
+	                roleList(org.id).done(function (data) {
 	                    _this4.setState({ roleList: data });
 	                }).always(function () {
 	                    dialogTips.close();

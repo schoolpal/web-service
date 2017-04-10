@@ -149,6 +149,36 @@ export function orgList() {
     return defer.promise();
 }
 
+export function roleList(oid) {
+    const defer = $.Deferred();
+    const url = 'org/listRoles.do';
+
+    io({ url: url, data: { id: oid } }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function sysOrgList() {
+    const defer = $.Deferred();
+    const url = 'sys/org/list.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(conversionOrg(data.data));
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
 export function orgDetails(oid) {
     const defer = $.Deferred();
     const url = 'org/query.do';
@@ -211,9 +241,9 @@ export function orgDel(oid) {
     return defer.promise();
 }
 
-export function roleList(oid) {
+export function sysRoleList(oid) {
     const defer = $.Deferred();
-    const url = 'org/listRoles.do';
+    const url = 'sys/role/list.do';
 
     io({ url: url, data: { id: oid } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {

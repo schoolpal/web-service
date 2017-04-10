@@ -4,7 +4,7 @@ import NavBar from '../public/NavBar'
 import AsideBar from '../public/AsideBar'
 import { CreateButton, EditorButton, DelButton } from '../public/Button'
 import Dialog from '../public/Dialog'
-import { orgList, orgDel } from '../../utils/api'
+import { sysOrgList, orgDel } from '../../utils/api'
 import DialogTips from '../../utils/DialogTips'
 import { conversionOrg } from '../../utils/conversion'
 
@@ -35,7 +35,7 @@ export default class List extends React.Component {
 
         dialogTips.open()
 
-        orgList()
+        sysOrgList()
             .done((data) => {
                 this.setState({
                     list: data.original,
