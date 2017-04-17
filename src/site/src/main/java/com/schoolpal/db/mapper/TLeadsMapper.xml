@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TLeadsMapper">
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="channel" jdbcType="INTEGER" property="channel" />
+    <result column="stage" jdbcType="INTEGER" property="stage" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, course_type, course_name, type, source, channel, stage, status, orgnization_id, 
+    executive_id, creator_id, create_time, note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_leads
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_leads
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TLeads">
+    insert into t_leads (id, course_type, course_name, 
+      type, source, channel, 
+      stage, status, orgnization_id, 
+      executive_id, creator_id, create_time, 
+      note)
+    values (#{id,jdbcType=CHAR}, #{courseType,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, #{channel,jdbcType=INTEGER}, 
+      #{stage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{orgnizationId,jdbcType=CHAR}, 
+      #{executiveId,jdbcType=CHAR}, #{creatorId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TLeads">
+    insert into t_leads
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="courseType != null">
+        course_type,
+      </if>
+      <if test="courseName != null">
+        course_name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="stage != null">
+        stage,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="orgnizationId != null">
+        orgnization_id,
+      </if>
+      <if test="executiveId != null">
+        executive_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="courseType != null">
+        #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=INTEGER},
+      </if>
+      <if test="stage != null">
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="orgnizationId != null">
+        #{orgnizationId,jdbcType=CHAR},
+      </if>
+      <if test="executiveId != null">
+        #{executiveId,jdbcType=CHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TLeads">
+    update t_leads
+    <set>
+      <if test="courseType != null">
+        course_type = #{courseType,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=INTEGER},
+      </if>
+      <if test="stage != null">
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="orgnizationId != null">
+        orgnization_id = #{orgnizationId,jdbcType=CHAR},
+      </if>
+      <if test="executiveId != null">
+        executive_id = #{executiveId,jdbcType=CHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TLeads">
+    update t_leads
+    set course_type = #{courseType,jdbcType=VARCHAR},
+      course_name = #{courseName,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      channel = #{channel,jdbcType=INTEGER},
+      stage = #{stage,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      orgnization_id = #{orgnizationId,jdbcType=CHAR},
+      executive_id = #{executiveId,jdbcType=CHAR},
+      creator_id = #{creatorId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      note = #{note,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

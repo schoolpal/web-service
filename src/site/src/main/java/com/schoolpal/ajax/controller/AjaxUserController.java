@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
 import com.schoolpal.web.consts.*;

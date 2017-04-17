@@ -5,10 +5,10 @@
 
 	<properties resource="config.properties" />
 
-	<classPathEntry
-		location="C:\Users\Gary\.m2\repository\mysql\mysql-connector-java\5.1.37\mysql-connector-java-5.1.37.jar" />
-<!--     <classPathEntry
-        location="/Users/Gary/.m2/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar" /> -->
+<!--	<classPathEntry
+		location="C:\Users\Gary\.m2\repository\mysql\mysql-connector-java\5.1.37\mysql-connector-java-5.1.37.jar" /> -->
+     <classPathEntry
+        location="/Users/Gary/.m2/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar" />
 
 	<context id="schoolpalContext">
 		<commentGenerator>
@@ -28,7 +28,7 @@
 		</sqlMapGenerator>
 		<javaClientGenerator targetPackage="com.schoolpal.db.inf"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		<table schema="schoolpal" tableName="t_role_function_exclude"
+		<table schema="schoolpal" tableName="t_leads%"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

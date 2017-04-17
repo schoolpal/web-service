@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TContactMapper">
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TContact">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="leads_id" jdbcType="CHAR" property="leadsId" />
+    <result column="approach" jdbcType="VARCHAR" property="approach" />
+    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, leads_id, approach, datetime, executive_id, summary
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_contact
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_contact
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TContact">
+    insert into t_contact (id, leads_id, approach, 
+      datetime, executive_id, summary
+      )
+    values (#{id,jdbcType=CHAR}, #{leadsId,jdbcType=CHAR}, #{approach,jdbcType=VARCHAR}, 
+      #{datetime,jdbcType=TIMESTAMP}, #{executiveId,jdbcType=CHAR}, #{summary,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TContact">
+    insert into t_contact
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="leadsId != null">
+        leads_id,
+      </if>
+      <if test="approach != null">
+        approach,
+      </if>
+      <if test="datetime != null">
+        datetime,
+      </if>
+      <if test="executiveId != null">
+        executive_id,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="leadsId != null">
+        #{leadsId,jdbcType=CHAR},
+      </if>
+      <if test="approach != null">
+        #{approach,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executiveId != null">
+        #{executiveId,jdbcType=CHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TContact">
+    update t_contact
+    <set>
+      <if test="leadsId != null">
+        leads_id = #{leadsId,jdbcType=CHAR},
+      </if>
+      <if test="approach != null">
+        approach = #{approach,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executiveId != null">
+        executive_id = #{executiveId,jdbcType=CHAR},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TContact">
+    update t_contact
+    set leads_id = #{leadsId,jdbcType=CHAR},
+      approach = #{approach,jdbcType=VARCHAR},
+      datetime = #{datetime,jdbcType=TIMESTAMP},
+      executive_id = #{executiveId,jdbcType=CHAR},
+      summary = #{summary,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
