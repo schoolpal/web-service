@@ -21,103 +21,111 @@ webpackJsonp([0],{
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _Crm = __webpack_require__(236);
+	var _App = __webpack_require__(237);
+
+	var _App2 = _interopRequireDefault(_App);
+
+	var _Sys = __webpack_require__(243);
+
+	var _Sys2 = _interopRequireDefault(_Sys);
+
+	var _Crm = __webpack_require__(244);
 
 	var _Crm2 = _interopRequireDefault(_Crm);
 
-	var _List = __webpack_require__(239);
+	var _List = __webpack_require__(246);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(241);
+	var _Editor = __webpack_require__(248);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _View = __webpack_require__(244);
+	var _View = __webpack_require__(251);
 
 	var _View2 = _interopRequireDefault(_View);
 
-	var _List3 = __webpack_require__(245);
+	var _List3 = __webpack_require__(252);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(246);
+	var _Editor3 = __webpack_require__(253);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _View3 = __webpack_require__(247);
+	var _View3 = __webpack_require__(254);
 
 	var _View4 = _interopRequireDefault(_View3);
 
-	var _List5 = __webpack_require__(248);
+	var _List5 = __webpack_require__(255);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _Editor5 = __webpack_require__(249);
+	var _Editor5 = __webpack_require__(256);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _View5 = __webpack_require__(250);
+	var _View5 = __webpack_require__(257);
 
 	var _View6 = _interopRequireDefault(_View5);
 
-	var _List7 = __webpack_require__(251);
+	var _List7 = __webpack_require__(258);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor7 = __webpack_require__(252);
+	var _Editor7 = __webpack_require__(259);
 
 	var _Editor8 = _interopRequireDefault(_Editor7);
 
-	var _View7 = __webpack_require__(253);
+	var _View7 = __webpack_require__(260);
 
 	var _View8 = _interopRequireDefault(_View7);
 
-	var _List9 = __webpack_require__(254);
+	var _List9 = __webpack_require__(261);
 
 	var _List10 = _interopRequireDefault(_List9);
 
-	var _View9 = __webpack_require__(255);
+	var _View9 = __webpack_require__(262);
 
 	var _View10 = _interopRequireDefault(_View9);
 
-	var _List11 = __webpack_require__(256);
+	var _List11 = __webpack_require__(263);
 
 	var _List12 = _interopRequireDefault(_List11);
 
-	var _Editor9 = __webpack_require__(257);
+	var _Editor9 = __webpack_require__(265);
 
 	var _Editor10 = _interopRequireDefault(_Editor9);
 
-	var _List13 = __webpack_require__(259);
+	var _List13 = __webpack_require__(267);
 
 	var _List14 = _interopRequireDefault(_List13);
 
-	var _Editor11 = __webpack_require__(260);
+	var _Editor11 = __webpack_require__(268);
 
 	var _Editor12 = _interopRequireDefault(_Editor11);
 
-	var _List15 = __webpack_require__(261);
+	var _List15 = __webpack_require__(269);
 
 	var _List16 = _interopRequireDefault(_List15);
 
-	var _List17 = __webpack_require__(263);
+	var _List17 = __webpack_require__(271);
 
 	var _List18 = _interopRequireDefault(_List17);
 
-	var _Editor13 = __webpack_require__(264);
+	var _Editor13 = __webpack_require__(272);
 
 	var _Editor14 = _interopRequireDefault(_Editor13);
 
-	var _login = __webpack_require__(268);
+	var _login = __webpack_require__(273);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _Error = __webpack_require__(269);
+	var _Error = __webpack_require__(274);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(270);
+	var _checkAuth = __webpack_require__(275);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -127,10 +135,11 @@ webpackJsonp([0],{
 	    ROOTPATH: '/web/html/',
 	    AJAXPATH: '/web/ajax/',
 
+	    SESSION_STORAGE_KYENAME: 'user',
+
 	    XHR_DONE: 'XHR_DONE',
 	    XHR_BUSINESS_ERROR: 'XHR_BUSINESS_ERROR',
 	    XHR_ERROR: 'XHR_ERROR',
-	    NOT_SIGNIN: 'NOT_SIGNIN',
 
 	    AUTH_DIC: {
 	        '1-1': { PATH: 'crm/market/activity', PATH_RULE: /^crm\/market\/activity(\/\w+)?(\/)?$/, ICON: 'fa-pie-chart' },
@@ -141,23 +150,23 @@ webpackJsonp([0],{
 	        '1-2-1': { PATH_RULE: /^crm\/market\/chance\/edit\/create(\/)?$/ },
 	        '1-2-2': { PATH_RULE: /^crm\/market\/chance\/edit\/\w+(\/)?$/ },
 
-	        '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
-	        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
-	        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
-	        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
-	        '7-2-1': { PATH_RULE: /^role\/\w+\/create(\/)?$/ },
-	        '7-2-2': { PATH_RULE: /^role\/\w+\/\w+(\/)?$/ },
-	        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
-	        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' },
-	        '7-4-1': { PATH_RULE: /^user\/\w+\/create(\/)?$/ },
-	        '7-4-2': { PATH_RULE: /^user\/\w+\/\w+(\/)?$/ }
+	        '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
+	        '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
+	        '7-1-2': { PATH_RULE: /^sys\/org\/\w+(\/)?$/ },
+	        '7-2': { PATH: 'sys/role', PATH_RULE: /^sys\/role(\/)?$/, ICON: 'fa-users' },
+	        '7-2-1': { PATH_RULE: /^sys\/role\/\w+\/create(\/)?$/ },
+	        '7-2-2': { PATH_RULE: /^sys\/role\/\w+\/\w+(\/)?$/ },
+	        '7-3': { PATH: 'sys/auth', PATH_RULE: /^sys\/auth(\/)?$/, ICON: 'fa-shield' },
+	        '7-4': { PATH: 'sys/user', PATH_RULE: /^sys\/user(\/)?$/, ICON: 'fa-user' },
+	        '7-4-1': { PATH_RULE: /^sys\/user\/\w+\/create(\/)?$/ },
+	        '7-4-2': { PATH_RULE: /^sys\/user\/\w+\/\w+(\/)?$/ }
 	    }
 	};
 
-	__webpack_require__(271);
-	__webpack_require__(275);
-	__webpack_require__(278);
+	__webpack_require__(276);
 	__webpack_require__(280);
+	__webpack_require__(283);
+	__webpack_require__(285);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -165,32 +174,18 @@ webpackJsonp([0],{
 	    _react2.default.createElement(_reactRouter.Route, { path: SCHOOLPAL_CONFIG.ROOTPATH + 'login', component: _login2.default }),
 	    _react2.default.createElement(
 	        _reactRouter.Route,
-	        { path: SCHOOLPAL_CONFIG.ROOTPATH, component: _Dashboard2.default },
+	        { path: SCHOOLPAL_CONFIG.ROOTPATH, component: _App2.default },
 	        _react2.default.createElement(
 	            _reactRouter.Route,
-	            { path: 'crm', component: _Crm2.default },
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity', component: _List2.default, onEnter: _checkAuth2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity/:id', component: _View2.default, onEnter: _checkAuth2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity/edit/:id', component: _Editor2.default, onEnter: _checkAuth2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance', component: _List4.default, onEnter: _checkAuth2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance/:id', component: _View4.default, onEnter: _checkAuth2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance/edit/:id', component: _Editor4.default, onEnter: _checkAuth2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance', component: _List6.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance/:id', component: _View6.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance/edit/:id', component: _Editor6.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/contract', component: _List8.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/contract/:id', component: _View8.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/contract/edit/:id', component: _Editor8.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/student', component: _List10.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/student/:id', component: _View10.default })
+	            { path: 'sys', component: _Sys2.default, onEnter: _checkAuth2.default, onChange: _checkAuth2.default },
+	            _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List12.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor10.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List14.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'role/:oid/:rid', component: _Editor12.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'auth', component: _List16.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List18.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'user/:oid/:uid', component: _Editor14.default })
 	        ),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List12.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor10.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List14.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'role/:oid/:rid', component: _Editor12.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'auth', component: _List16.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List18.default, onEnter: _checkAuth2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:oid/:uid', component: _Editor14.default, onEnter: _checkAuth2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { path: '*', component: _Error2.default })
 	    )
 	), document.querySelector('#app'));
@@ -222,13 +217,13 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
 	var _api = __webpack_require__(231);
 
-	var _errorHandle = __webpack_require__(235);
+	var _errorHandle = __webpack_require__(236);
 
 	var _errorHandle2 = _interopRequireDefault(_errorHandle);
 
@@ -348,6 +343,8 @@ webpackJsonp([0],{
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
+	var _userProfile = __webpack_require__(234);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -384,7 +381,8 @@ webpackJsonp([0],{
 	        key: 'signout',
 	        value: function signout() {
 	            (0, _api.logout)();
-	            this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'login');
+	            (0, _userProfile.clearProfile)();
+	            _reactRouter.browserHistory.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'login');
 	        }
 	    }, {
 	        key: 'render',
@@ -445,7 +443,9 @@ webpackJsonp([0],{
 	exports.salt = salt;
 	exports.login = login;
 	exports.logout = logout;
+	exports.profile = profile;
 	exports.permissions = permissions;
+	exports.changePwd = changePwd;
 	exports.orgList = orgList;
 	exports.roleList = roleList;
 	exports.sysOrgList = sysOrgList;
@@ -470,6 +470,8 @@ webpackJsonp([0],{
 	exports.userDel = userDel;
 	exports.checkName = checkName;
 
+	var _reactRouter = __webpack_require__(174);
+
 	var _conversion = __webpack_require__(232);
 
 	function io(options, callback) {
@@ -490,8 +492,6 @@ webpackJsonp([0],{
 	    });
 
 	    jqxhr.done(function (data, textStatus, jqXHR) {
-	        console.log(data, textStatus, jqXHR.status);
-
 	        if (data.code === 200) {
 	            callback({
 	                type: SCHOOLPAL_CONFIG.XHR_DONE,
@@ -507,9 +507,17 @@ webpackJsonp([0],{
 
 	    jqxhr.fail(function (jqXHR, textStatus, errorThrown) {
 	        console.log(jqXHR.status, textStatus, errorThrown);
-	        callback({
-	            type: jqXHR.status === 401 ? SCHOOLPAL_CONFIG.NOT_SIGNIN : SCHOOLPAL_CONFIG.XHR_ERROR
-	        });
+
+	        if (jqXHR.status === 401) {
+	            _reactRouter.browserHistory.replace({
+	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+	                state: { nextPathname: _reactRouter.browserHistory.getCurrentLocation().pathname }
+	            });
+	        } else {
+	            callback({
+	                type: SCHOOLPAL_CONFIG.XHR_ERROR
+	            });
+	        }
 	    });
 	}
 
@@ -563,6 +571,21 @@ webpackJsonp([0],{
 	    return defer.promise();
 	}
 
+	function profile() {
+	    var defer = $.Deferred();
+	    var url = 'user/profile.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
 	function permissions() {
 	    var defer = $.Deferred();
 	    var url = 'user/listFuncs.do';
@@ -602,6 +625,22 @@ webpackJsonp([0],{
 
 	                defer.resolve();
 	            })();
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function changePwd(data) {
+	    var defer = $.Deferred();
+	    var url = 'user/changePassword.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
 	        } else {
 	            defer.reject(data);
 	        }
@@ -1238,6 +1277,37 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 234:
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.setProfile = setProfile;
+	exports.getProfile = getProfile;
+	exports.clearProfile = clearProfile;
+	function setProfile(profile) {
+	    console.log(profile);
+	    console.log(JSON.stringify(profile));
+	    sessionStorage.setItem(SCHOOLPAL_CONFIG.SESSION_STORAGE_KYENAME, JSON.stringify(profile));
+	}
+
+	function getProfile() {
+	    if (sessionStorage.getItem(SCHOOLPAL_CONFIG.SESSION_STORAGE_KYENAME)) {
+	        return JSON.parse(sessionStorage.getItem(SCHOOLPAL_CONFIG.SESSION_STORAGE_KYENAME));
+	    } else {
+	        return null;
+	    }
+	}
+
+	function clearProfile() {
+	    sessionStorage.removeItem(SCHOOLPAL_CONFIG.SESSION_STORAGE_KYENAME);
+	}
+
+/***/ },
+
+/***/ 235:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1253,6 +1323,8 @@ webpackJsonp([0],{
 	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRouter = __webpack_require__(174);
+
+	var _userProfile = __webpack_require__(234);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1274,6 +1346,7 @@ webpackJsonp([0],{
 	    _createClass(AsideBar, [{
 	        key: 'render',
 	        value: function render() {
+	            var profile = (0, _userProfile.getProfile)();
 	            var listItems = [];
 
 	            if (this.props.hasChangeTree && this.props.hasChangeTree === true) {
@@ -1284,7 +1357,7 @@ webpackJsonp([0],{
 	                ));
 	            }
 
-	            $.each(SCHOOLPAL_CONFIG.commandRules, function (k, v) {
+	            $.each(profile.roles, function (k, v) {
 	                listItems.push(_react2.default.createElement(
 	                    _reactRouter.Link,
 	                    { key: v.id, to: SCHOOLPAL_CONFIG.ROOTPATH + v.PATH, className: 'btn btn-block btn-link' },
@@ -1307,7 +1380,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 235:
+/***/ 236:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1327,7 +1400,1386 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 236:
+/***/ 237:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(40);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(174);
+
+	var _NavBar = __webpack_require__(230);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _AsideBar = __webpack_require__(235);
+
+	var _AsideBar2 = _interopRequireDefault(_AsideBar);
+
+	var _ChangePwd = __webpack_require__(238);
+
+	var _ChangePwd2 = _interopRequireDefault(_ChangePwd);
+
+	var _userProfile = __webpack_require__(234);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var App = function (_React$Component) {
+	    _inherits(App, _React$Component);
+
+	    function App(props) {
+	        _classCallCheck(this, App);
+
+	        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	    }
+
+	    _createClass(App, [{
+	        key: 'render',
+	        value: function render() {
+	            var profile = (0, _userProfile.getProfile)();
+
+	            if (!profile) {
+	                return null;
+	            }
+
+	            if (this.props.children) {
+	                return this.props.children;
+	            } else {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'view' },
+	                    _react2.default.createElement(_NavBar2.default, { isSignin: true }),
+	                    _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'main' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'h6 p-3 b-b' },
+	                            '\u5F53\u524D\u767B\u9646\u7528\u6237\uFF1A',
+	                            (0, _userProfile.getProfile)().name
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'main-container' },
+	                            _react2.default.createElement(_ChangePwd2.default, null)
+	                        )
+	                    )
+	                );
+	            }
+	        }
+	    }]);
+
+	    return App;
+	}(_react2.default.Component);
+
+	exports.default = App;
+
+/***/ },
+
+/***/ 238:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(174);
+
+	var _userProfile = __webpack_require__(234);
+
+	var _mixedMD = __webpack_require__(239);
+
+	var _mixedMD2 = _interopRequireDefault(_mixedMD);
+
+	var _api = __webpack_require__(231);
+
+	var _DialogTips = __webpack_require__(242);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ChangePwd = function (_React$Component) {
+	    _inherits(ChangePwd, _React$Component);
+
+	    function ChangePwd(props) {
+	        _classCallCheck(this, ChangePwd);
+
+	        var _this = _possibleConstructorReturn(this, (ChangePwd.__proto__ || Object.getPrototypeOf(ChangePwd)).call(this, props));
+
+	        _this.editorSubmit = _this.editorSubmit.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(ChangePwd, [{
+	        key: 'editorSubmit',
+	        value: function editorSubmit(event) {
+	            var _this2 = this;
+
+	            if (this.editorPwd.checkValidity() === true) {
+	                event.preventDefault();
+	            };
+
+	            var oriPass = (0, _mixedMD2.default)((0, _mixedMD2.default)($(this.editorPwd).find('[name=oriPass]').val()));
+	            var newPass = (0, _mixedMD2.default)((0, _mixedMD2.default)($(this.editorPwd).find('[name=newPass]').val()));
+	            var newPassRepeat = (0, _mixedMD2.default)((0, _mixedMD2.default)($(this.editorPwd).find('[name=newPassRepeat]').val()));
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
+	            var query = {};
+
+	            setTimeout(function () {
+	                if (newPass !== newPassRepeat) {
+	                    $(_this2.editorPwd).find('[name=newPassRepeat]')[0].setCustomValidity('两次输入不一致 ！');
+	                    $(_this2.editorPwd).find('[type=submit]').trigger('click');
+
+	                    return;
+	                }
+
+	                query.oriPass = oriPass;
+	                query.newPass = newPass;
+
+	                loading.open();
+
+	                (0, _api.changePwd)(query).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    (0, _userProfile.clearProfile)();
+	                    (0, _api.logout)();
+
+	                    setTimeout(function () {
+	                        success.close();
+	                        _reactRouter.browserHistory.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'login');
+	                    }, 2000);
+	                }).fail(function (data) {}).always(function () {
+	                    loading.close();
+	                });
+	            }, 100);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this3 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    '\u4FEE\u6539\u5BC6\u7801'
+	                ),
+	                _react2.default.createElement(
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this3.editorPwd = dom;
+	                        }, onSubmit: this.editorSubmit, className: 'w400' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            '\u5F53\u524D\u5BC6\u7801'
+	                        ),
+	                        _react2.default.createElement('input', { name: 'oriPass', type: 'password', className: 'form-control', onChange: function onChange(event) {
+	                                event.target.setCustomValidity('');
+	                            }, required: true })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            '\u65B0\u5BC6\u7801'
+	                        ),
+	                        _react2.default.createElement('input', { name: 'newPass', type: 'password', className: 'form-control', required: true })
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            '\u91CD\u590D\u65B0\u5BC6\u7801'
+	                        ),
+	                        _react2.default.createElement('input', { name: 'newPassRepeat', type: 'password', className: 'form-control', onChange: function onChange(event) {
+	                                event.target.setCustomValidity('');
+	                            }, required: true })
+	                    ),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { type: 'submit', className: 'btn btn-danger' },
+	                        '\u4FEE\u6539\u5BC6\u7801'
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return ChangePwd;
+	}(_react2.default.Component);
+
+	exports.default = ChangePwd;
+
+/***/ },
+
+/***/ 239:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = mixedMD5;
+
+	var _md = __webpack_require__(240);
+
+	var _md2 = _interopRequireDefault(_md);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function mixedMD5(string) {
+	    return (0, _md2.default)(string).toString();
+	}
+
+/***/ },
+
+/***/ 240:
+/***/ function(module, exports, __webpack_require__) {
+
+	;(function (root, factory) {
+		if (true) {
+			// CommonJS
+			module.exports = exports = factory(__webpack_require__(241));
+		}
+		else if (typeof define === "function" && define.amd) {
+			// AMD
+			define(["./core"], factory);
+		}
+		else {
+			// Global (browser)
+			factory(root.CryptoJS);
+		}
+	}(this, function (CryptoJS) {
+
+		(function (Math) {
+		    // Shortcuts
+		    var C = CryptoJS;
+		    var C_lib = C.lib;
+		    var WordArray = C_lib.WordArray;
+		    var Hasher = C_lib.Hasher;
+		    var C_algo = C.algo;
+
+		    // Constants table
+		    var T = [];
+
+		    // Compute constants
+		    (function () {
+		        for (var i = 0; i < 64; i++) {
+		            T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
+		        }
+		    }());
+
+		    /**
+		     * MD5 hash algorithm.
+		     */
+		    var MD5 = C_algo.MD5 = Hasher.extend({
+		        _doReset: function () {
+		            this._hash = new WordArray.init([
+		                0x67452301, 0xefcdab89,
+		                0x98badcfe, 0x10325476
+		            ]);
+		        },
+
+		        _doProcessBlock: function (M, offset) {
+		            // Swap endian
+		            for (var i = 0; i < 16; i++) {
+		                // Shortcuts
+		                var offset_i = offset + i;
+		                var M_offset_i = M[offset_i];
+
+		                M[offset_i] = (
+		                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
+		                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+		                );
+		            }
+
+		            // Shortcuts
+		            var H = this._hash.words;
+
+		            var M_offset_0  = M[offset + 0];
+		            var M_offset_1  = M[offset + 1];
+		            var M_offset_2  = M[offset + 2];
+		            var M_offset_3  = M[offset + 3];
+		            var M_offset_4  = M[offset + 4];
+		            var M_offset_5  = M[offset + 5];
+		            var M_offset_6  = M[offset + 6];
+		            var M_offset_7  = M[offset + 7];
+		            var M_offset_8  = M[offset + 8];
+		            var M_offset_9  = M[offset + 9];
+		            var M_offset_10 = M[offset + 10];
+		            var M_offset_11 = M[offset + 11];
+		            var M_offset_12 = M[offset + 12];
+		            var M_offset_13 = M[offset + 13];
+		            var M_offset_14 = M[offset + 14];
+		            var M_offset_15 = M[offset + 15];
+
+		            // Working varialbes
+		            var a = H[0];
+		            var b = H[1];
+		            var c = H[2];
+		            var d = H[3];
+
+		            // Computation
+		            a = FF(a, b, c, d, M_offset_0,  7,  T[0]);
+		            d = FF(d, a, b, c, M_offset_1,  12, T[1]);
+		            c = FF(c, d, a, b, M_offset_2,  17, T[2]);
+		            b = FF(b, c, d, a, M_offset_3,  22, T[3]);
+		            a = FF(a, b, c, d, M_offset_4,  7,  T[4]);
+		            d = FF(d, a, b, c, M_offset_5,  12, T[5]);
+		            c = FF(c, d, a, b, M_offset_6,  17, T[6]);
+		            b = FF(b, c, d, a, M_offset_7,  22, T[7]);
+		            a = FF(a, b, c, d, M_offset_8,  7,  T[8]);
+		            d = FF(d, a, b, c, M_offset_9,  12, T[9]);
+		            c = FF(c, d, a, b, M_offset_10, 17, T[10]);
+		            b = FF(b, c, d, a, M_offset_11, 22, T[11]);
+		            a = FF(a, b, c, d, M_offset_12, 7,  T[12]);
+		            d = FF(d, a, b, c, M_offset_13, 12, T[13]);
+		            c = FF(c, d, a, b, M_offset_14, 17, T[14]);
+		            b = FF(b, c, d, a, M_offset_15, 22, T[15]);
+
+		            a = GG(a, b, c, d, M_offset_1,  5,  T[16]);
+		            d = GG(d, a, b, c, M_offset_6,  9,  T[17]);
+		            c = GG(c, d, a, b, M_offset_11, 14, T[18]);
+		            b = GG(b, c, d, a, M_offset_0,  20, T[19]);
+		            a = GG(a, b, c, d, M_offset_5,  5,  T[20]);
+		            d = GG(d, a, b, c, M_offset_10, 9,  T[21]);
+		            c = GG(c, d, a, b, M_offset_15, 14, T[22]);
+		            b = GG(b, c, d, a, M_offset_4,  20, T[23]);
+		            a = GG(a, b, c, d, M_offset_9,  5,  T[24]);
+		            d = GG(d, a, b, c, M_offset_14, 9,  T[25]);
+		            c = GG(c, d, a, b, M_offset_3,  14, T[26]);
+		            b = GG(b, c, d, a, M_offset_8,  20, T[27]);
+		            a = GG(a, b, c, d, M_offset_13, 5,  T[28]);
+		            d = GG(d, a, b, c, M_offset_2,  9,  T[29]);
+		            c = GG(c, d, a, b, M_offset_7,  14, T[30]);
+		            b = GG(b, c, d, a, M_offset_12, 20, T[31]);
+
+		            a = HH(a, b, c, d, M_offset_5,  4,  T[32]);
+		            d = HH(d, a, b, c, M_offset_8,  11, T[33]);
+		            c = HH(c, d, a, b, M_offset_11, 16, T[34]);
+		            b = HH(b, c, d, a, M_offset_14, 23, T[35]);
+		            a = HH(a, b, c, d, M_offset_1,  4,  T[36]);
+		            d = HH(d, a, b, c, M_offset_4,  11, T[37]);
+		            c = HH(c, d, a, b, M_offset_7,  16, T[38]);
+		            b = HH(b, c, d, a, M_offset_10, 23, T[39]);
+		            a = HH(a, b, c, d, M_offset_13, 4,  T[40]);
+		            d = HH(d, a, b, c, M_offset_0,  11, T[41]);
+		            c = HH(c, d, a, b, M_offset_3,  16, T[42]);
+		            b = HH(b, c, d, a, M_offset_6,  23, T[43]);
+		            a = HH(a, b, c, d, M_offset_9,  4,  T[44]);
+		            d = HH(d, a, b, c, M_offset_12, 11, T[45]);
+		            c = HH(c, d, a, b, M_offset_15, 16, T[46]);
+		            b = HH(b, c, d, a, M_offset_2,  23, T[47]);
+
+		            a = II(a, b, c, d, M_offset_0,  6,  T[48]);
+		            d = II(d, a, b, c, M_offset_7,  10, T[49]);
+		            c = II(c, d, a, b, M_offset_14, 15, T[50]);
+		            b = II(b, c, d, a, M_offset_5,  21, T[51]);
+		            a = II(a, b, c, d, M_offset_12, 6,  T[52]);
+		            d = II(d, a, b, c, M_offset_3,  10, T[53]);
+		            c = II(c, d, a, b, M_offset_10, 15, T[54]);
+		            b = II(b, c, d, a, M_offset_1,  21, T[55]);
+		            a = II(a, b, c, d, M_offset_8,  6,  T[56]);
+		            d = II(d, a, b, c, M_offset_15, 10, T[57]);
+		            c = II(c, d, a, b, M_offset_6,  15, T[58]);
+		            b = II(b, c, d, a, M_offset_13, 21, T[59]);
+		            a = II(a, b, c, d, M_offset_4,  6,  T[60]);
+		            d = II(d, a, b, c, M_offset_11, 10, T[61]);
+		            c = II(c, d, a, b, M_offset_2,  15, T[62]);
+		            b = II(b, c, d, a, M_offset_9,  21, T[63]);
+
+		            // Intermediate hash value
+		            H[0] = (H[0] + a) | 0;
+		            H[1] = (H[1] + b) | 0;
+		            H[2] = (H[2] + c) | 0;
+		            H[3] = (H[3] + d) | 0;
+		        },
+
+		        _doFinalize: function () {
+		            // Shortcuts
+		            var data = this._data;
+		            var dataWords = data.words;
+
+		            var nBitsTotal = this._nDataBytes * 8;
+		            var nBitsLeft = data.sigBytes * 8;
+
+		            // Add padding
+		            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+
+		            var nBitsTotalH = Math.floor(nBitsTotal / 0x100000000);
+		            var nBitsTotalL = nBitsTotal;
+		            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
+		                (((nBitsTotalH << 8)  | (nBitsTotalH >>> 24)) & 0x00ff00ff) |
+		                (((nBitsTotalH << 24) | (nBitsTotalH >>> 8))  & 0xff00ff00)
+		            );
+		            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+		                (((nBitsTotalL << 8)  | (nBitsTotalL >>> 24)) & 0x00ff00ff) |
+		                (((nBitsTotalL << 24) | (nBitsTotalL >>> 8))  & 0xff00ff00)
+		            );
+
+		            data.sigBytes = (dataWords.length + 1) * 4;
+
+		            // Hash final blocks
+		            this._process();
+
+		            // Shortcuts
+		            var hash = this._hash;
+		            var H = hash.words;
+
+		            // Swap endian
+		            for (var i = 0; i < 4; i++) {
+		                // Shortcut
+		                var H_i = H[i];
+
+		                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
+		                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+		            }
+
+		            // Return final computed hash
+		            return hash;
+		        },
+
+		        clone: function () {
+		            var clone = Hasher.clone.call(this);
+		            clone._hash = this._hash.clone();
+
+		            return clone;
+		        }
+		    });
+
+		    function FF(a, b, c, d, x, s, t) {
+		        var n = a + ((b & c) | (~b & d)) + x + t;
+		        return ((n << s) | (n >>> (32 - s))) + b;
+		    }
+
+		    function GG(a, b, c, d, x, s, t) {
+		        var n = a + ((b & d) | (c & ~d)) + x + t;
+		        return ((n << s) | (n >>> (32 - s))) + b;
+		    }
+
+		    function HH(a, b, c, d, x, s, t) {
+		        var n = a + (b ^ c ^ d) + x + t;
+		        return ((n << s) | (n >>> (32 - s))) + b;
+		    }
+
+		    function II(a, b, c, d, x, s, t) {
+		        var n = a + (c ^ (b | ~d)) + x + t;
+		        return ((n << s) | (n >>> (32 - s))) + b;
+		    }
+
+		    /**
+		     * Shortcut function to the hasher's object interface.
+		     *
+		     * @param {WordArray|string} message The message to hash.
+		     *
+		     * @return {WordArray} The hash.
+		     *
+		     * @static
+		     *
+		     * @example
+		     *
+		     *     var hash = CryptoJS.MD5('message');
+		     *     var hash = CryptoJS.MD5(wordArray);
+		     */
+		    C.MD5 = Hasher._createHelper(MD5);
+
+		    /**
+		     * Shortcut function to the HMAC's object interface.
+		     *
+		     * @param {WordArray|string} message The message to hash.
+		     * @param {WordArray|string} key The secret key.
+		     *
+		     * @return {WordArray} The HMAC.
+		     *
+		     * @static
+		     *
+		     * @example
+		     *
+		     *     var hmac = CryptoJS.HmacMD5(message, key);
+		     */
+		    C.HmacMD5 = Hasher._createHmacHelper(MD5);
+		}(Math));
+
+
+		return CryptoJS.MD5;
+
+	}));
+
+/***/ },
+
+/***/ 241:
+/***/ function(module, exports, __webpack_require__) {
+
+	;(function (root, factory) {
+		if (true) {
+			// CommonJS
+			module.exports = exports = factory();
+		}
+		else if (typeof define === "function" && define.amd) {
+			// AMD
+			define([], factory);
+		}
+		else {
+			// Global (browser)
+			root.CryptoJS = factory();
+		}
+	}(this, function () {
+
+		/**
+		 * CryptoJS core components.
+		 */
+		var CryptoJS = CryptoJS || (function (Math, undefined) {
+		    /*
+		     * Local polyfil of Object.create
+		     */
+		    var create = Object.create || (function () {
+		        function F() {};
+
+		        return function (obj) {
+		            var subtype;
+
+		            F.prototype = obj;
+
+		            subtype = new F();
+
+		            F.prototype = null;
+
+		            return subtype;
+		        };
+		    }())
+
+		    /**
+		     * CryptoJS namespace.
+		     */
+		    var C = {};
+
+		    /**
+		     * Library namespace.
+		     */
+		    var C_lib = C.lib = {};
+
+		    /**
+		     * Base object for prototypal inheritance.
+		     */
+		    var Base = C_lib.Base = (function () {
+
+
+		        return {
+		            /**
+		             * Creates a new object that inherits from this object.
+		             *
+		             * @param {Object} overrides Properties to copy into the new object.
+		             *
+		             * @return {Object} The new object.
+		             *
+		             * @static
+		             *
+		             * @example
+		             *
+		             *     var MyType = CryptoJS.lib.Base.extend({
+		             *         field: 'value',
+		             *
+		             *         method: function () {
+		             *         }
+		             *     });
+		             */
+		            extend: function (overrides) {
+		                // Spawn
+		                var subtype = create(this);
+
+		                // Augment
+		                if (overrides) {
+		                    subtype.mixIn(overrides);
+		                }
+
+		                // Create default initializer
+		                if (!subtype.hasOwnProperty('init') || this.init === subtype.init) {
+		                    subtype.init = function () {
+		                        subtype.$super.init.apply(this, arguments);
+		                    };
+		                }
+
+		                // Initializer's prototype is the subtype object
+		                subtype.init.prototype = subtype;
+
+		                // Reference supertype
+		                subtype.$super = this;
+
+		                return subtype;
+		            },
+
+		            /**
+		             * Extends this object and runs the init method.
+		             * Arguments to create() will be passed to init().
+		             *
+		             * @return {Object} The new object.
+		             *
+		             * @static
+		             *
+		             * @example
+		             *
+		             *     var instance = MyType.create();
+		             */
+		            create: function () {
+		                var instance = this.extend();
+		                instance.init.apply(instance, arguments);
+
+		                return instance;
+		            },
+
+		            /**
+		             * Initializes a newly created object.
+		             * Override this method to add some logic when your objects are created.
+		             *
+		             * @example
+		             *
+		             *     var MyType = CryptoJS.lib.Base.extend({
+		             *         init: function () {
+		             *             // ...
+		             *         }
+		             *     });
+		             */
+		            init: function () {
+		            },
+
+		            /**
+		             * Copies properties into this object.
+		             *
+		             * @param {Object} properties The properties to mix in.
+		             *
+		             * @example
+		             *
+		             *     MyType.mixIn({
+		             *         field: 'value'
+		             *     });
+		             */
+		            mixIn: function (properties) {
+		                for (var propertyName in properties) {
+		                    if (properties.hasOwnProperty(propertyName)) {
+		                        this[propertyName] = properties[propertyName];
+		                    }
+		                }
+
+		                // IE won't copy toString using the loop above
+		                if (properties.hasOwnProperty('toString')) {
+		                    this.toString = properties.toString;
+		                }
+		            },
+
+		            /**
+		             * Creates a copy of this object.
+		             *
+		             * @return {Object} The clone.
+		             *
+		             * @example
+		             *
+		             *     var clone = instance.clone();
+		             */
+		            clone: function () {
+		                return this.init.prototype.extend(this);
+		            }
+		        };
+		    }());
+
+		    /**
+		     * An array of 32-bit words.
+		     *
+		     * @property {Array} words The array of 32-bit words.
+		     * @property {number} sigBytes The number of significant bytes in this word array.
+		     */
+		    var WordArray = C_lib.WordArray = Base.extend({
+		        /**
+		         * Initializes a newly created word array.
+		         *
+		         * @param {Array} words (Optional) An array of 32-bit words.
+		         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+		         *
+		         * @example
+		         *
+		         *     var wordArray = CryptoJS.lib.WordArray.create();
+		         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
+		         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
+		         */
+		        init: function (words, sigBytes) {
+		            words = this.words = words || [];
+
+		            if (sigBytes != undefined) {
+		                this.sigBytes = sigBytes;
+		            } else {
+		                this.sigBytes = words.length * 4;
+		            }
+		        },
+
+		        /**
+		         * Converts this word array to a string.
+		         *
+		         * @param {Encoder} encoder (Optional) The encoding strategy to use. Default: CryptoJS.enc.Hex
+		         *
+		         * @return {string} The stringified word array.
+		         *
+		         * @example
+		         *
+		         *     var string = wordArray + '';
+		         *     var string = wordArray.toString();
+		         *     var string = wordArray.toString(CryptoJS.enc.Utf8);
+		         */
+		        toString: function (encoder) {
+		            return (encoder || Hex).stringify(this);
+		        },
+
+		        /**
+		         * Concatenates a word array to this word array.
+		         *
+		         * @param {WordArray} wordArray The word array to append.
+		         *
+		         * @return {WordArray} This word array.
+		         *
+		         * @example
+		         *
+		         *     wordArray1.concat(wordArray2);
+		         */
+		        concat: function (wordArray) {
+		            // Shortcuts
+		            var thisWords = this.words;
+		            var thatWords = wordArray.words;
+		            var thisSigBytes = this.sigBytes;
+		            var thatSigBytes = wordArray.sigBytes;
+
+		            // Clamp excess bits
+		            this.clamp();
+
+		            // Concat
+		            if (thisSigBytes % 4) {
+		                // Copy one byte at a time
+		                for (var i = 0; i < thatSigBytes; i++) {
+		                    var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+		                    thisWords[(thisSigBytes + i) >>> 2] |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
+		                }
+		            } else {
+		                // Copy one word at a time
+		                for (var i = 0; i < thatSigBytes; i += 4) {
+		                    thisWords[(thisSigBytes + i) >>> 2] = thatWords[i >>> 2];
+		                }
+		            }
+		            this.sigBytes += thatSigBytes;
+
+		            // Chainable
+		            return this;
+		        },
+
+		        /**
+		         * Removes insignificant bits.
+		         *
+		         * @example
+		         *
+		         *     wordArray.clamp();
+		         */
+		        clamp: function () {
+		            // Shortcuts
+		            var words = this.words;
+		            var sigBytes = this.sigBytes;
+
+		            // Clamp
+		            words[sigBytes >>> 2] &= 0xffffffff << (32 - (sigBytes % 4) * 8);
+		            words.length = Math.ceil(sigBytes / 4);
+		        },
+
+		        /**
+		         * Creates a copy of this word array.
+		         *
+		         * @return {WordArray} The clone.
+		         *
+		         * @example
+		         *
+		         *     var clone = wordArray.clone();
+		         */
+		        clone: function () {
+		            var clone = Base.clone.call(this);
+		            clone.words = this.words.slice(0);
+
+		            return clone;
+		        },
+
+		        /**
+		         * Creates a word array filled with random bytes.
+		         *
+		         * @param {number} nBytes The number of random bytes to generate.
+		         *
+		         * @return {WordArray} The random word array.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var wordArray = CryptoJS.lib.WordArray.random(16);
+		         */
+		        random: function (nBytes) {
+		            var words = [];
+
+		            var r = (function (m_w) {
+		                var m_w = m_w;
+		                var m_z = 0x3ade68b1;
+		                var mask = 0xffffffff;
+
+		                return function () {
+		                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
+		                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
+		                    var result = ((m_z << 0x10) + m_w) & mask;
+		                    result /= 0x100000000;
+		                    result += 0.5;
+		                    return result * (Math.random() > .5 ? 1 : -1);
+		                }
+		            });
+
+		            for (var i = 0, rcache; i < nBytes; i += 4) {
+		                var _r = r((rcache || Math.random()) * 0x100000000);
+
+		                rcache = _r() * 0x3ade67b7;
+		                words.push((_r() * 0x100000000) | 0);
+		            }
+
+		            return new WordArray.init(words, nBytes);
+		        }
+		    });
+
+		    /**
+		     * Encoder namespace.
+		     */
+		    var C_enc = C.enc = {};
+
+		    /**
+		     * Hex encoding strategy.
+		     */
+		    var Hex = C_enc.Hex = {
+		        /**
+		         * Converts a word array to a hex string.
+		         *
+		         * @param {WordArray} wordArray The word array.
+		         *
+		         * @return {string} The hex string.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var hexString = CryptoJS.enc.Hex.stringify(wordArray);
+		         */
+		        stringify: function (wordArray) {
+		            // Shortcuts
+		            var words = wordArray.words;
+		            var sigBytes = wordArray.sigBytes;
+
+		            // Convert
+		            var hexChars = [];
+		            for (var i = 0; i < sigBytes; i++) {
+		                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+		                hexChars.push((bite >>> 4).toString(16));
+		                hexChars.push((bite & 0x0f).toString(16));
+		            }
+
+		            return hexChars.join('');
+		        },
+
+		        /**
+		         * Converts a hex string to a word array.
+		         *
+		         * @param {string} hexStr The hex string.
+		         *
+		         * @return {WordArray} The word array.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var wordArray = CryptoJS.enc.Hex.parse(hexString);
+		         */
+		        parse: function (hexStr) {
+		            // Shortcut
+		            var hexStrLength = hexStr.length;
+
+		            // Convert
+		            var words = [];
+		            for (var i = 0; i < hexStrLength; i += 2) {
+		                words[i >>> 3] |= parseInt(hexStr.substr(i, 2), 16) << (24 - (i % 8) * 4);
+		            }
+
+		            return new WordArray.init(words, hexStrLength / 2);
+		        }
+		    };
+
+		    /**
+		     * Latin1 encoding strategy.
+		     */
+		    var Latin1 = C_enc.Latin1 = {
+		        /**
+		         * Converts a word array to a Latin1 string.
+		         *
+		         * @param {WordArray} wordArray The word array.
+		         *
+		         * @return {string} The Latin1 string.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
+		         */
+		        stringify: function (wordArray) {
+		            // Shortcuts
+		            var words = wordArray.words;
+		            var sigBytes = wordArray.sigBytes;
+
+		            // Convert
+		            var latin1Chars = [];
+		            for (var i = 0; i < sigBytes; i++) {
+		                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+		                latin1Chars.push(String.fromCharCode(bite));
+		            }
+
+		            return latin1Chars.join('');
+		        },
+
+		        /**
+		         * Converts a Latin1 string to a word array.
+		         *
+		         * @param {string} latin1Str The Latin1 string.
+		         *
+		         * @return {WordArray} The word array.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var wordArray = CryptoJS.enc.Latin1.parse(latin1String);
+		         */
+		        parse: function (latin1Str) {
+		            // Shortcut
+		            var latin1StrLength = latin1Str.length;
+
+		            // Convert
+		            var words = [];
+		            for (var i = 0; i < latin1StrLength; i++) {
+		                words[i >>> 2] |= (latin1Str.charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
+		            }
+
+		            return new WordArray.init(words, latin1StrLength);
+		        }
+		    };
+
+		    /**
+		     * UTF-8 encoding strategy.
+		     */
+		    var Utf8 = C_enc.Utf8 = {
+		        /**
+		         * Converts a word array to a UTF-8 string.
+		         *
+		         * @param {WordArray} wordArray The word array.
+		         *
+		         * @return {string} The UTF-8 string.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
+		         */
+		        stringify: function (wordArray) {
+		            try {
+		                return decodeURIComponent(escape(Latin1.stringify(wordArray)));
+		            } catch (e) {
+		                throw new Error('Malformed UTF-8 data');
+		            }
+		        },
+
+		        /**
+		         * Converts a UTF-8 string to a word array.
+		         *
+		         * @param {string} utf8Str The UTF-8 string.
+		         *
+		         * @return {WordArray} The word array.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
+		         */
+		        parse: function (utf8Str) {
+		            return Latin1.parse(unescape(encodeURIComponent(utf8Str)));
+		        }
+		    };
+
+		    /**
+		     * Abstract buffered block algorithm template.
+		     *
+		     * The property blockSize must be implemented in a concrete subtype.
+		     *
+		     * @property {number} _minBufferSize The number of blocks that should be kept unprocessed in the buffer. Default: 0
+		     */
+		    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm = Base.extend({
+		        /**
+		         * Resets this block algorithm's data buffer to its initial state.
+		         *
+		         * @example
+		         *
+		         *     bufferedBlockAlgorithm.reset();
+		         */
+		        reset: function () {
+		            // Initial values
+		            this._data = new WordArray.init();
+		            this._nDataBytes = 0;
+		        },
+
+		        /**
+		         * Adds new data to this block algorithm's buffer.
+		         *
+		         * @param {WordArray|string} data The data to append. Strings are converted to a WordArray using UTF-8.
+		         *
+		         * @example
+		         *
+		         *     bufferedBlockAlgorithm._append('data');
+		         *     bufferedBlockAlgorithm._append(wordArray);
+		         */
+		        _append: function (data) {
+		            // Convert string to WordArray, else assume WordArray already
+		            if (typeof data == 'string') {
+		                data = Utf8.parse(data);
+		            }
+
+		            // Append
+		            this._data.concat(data);
+		            this._nDataBytes += data.sigBytes;
+		        },
+
+		        /**
+		         * Processes available data blocks.
+		         *
+		         * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
+		         *
+		         * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
+		         *
+		         * @return {WordArray} The processed data.
+		         *
+		         * @example
+		         *
+		         *     var processedData = bufferedBlockAlgorithm._process();
+		         *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
+		         */
+		        _process: function (doFlush) {
+		            // Shortcuts
+		            var data = this._data;
+		            var dataWords = data.words;
+		            var dataSigBytes = data.sigBytes;
+		            var blockSize = this.blockSize;
+		            var blockSizeBytes = blockSize * 4;
+
+		            // Count blocks ready
+		            var nBlocksReady = dataSigBytes / blockSizeBytes;
+		            if (doFlush) {
+		                // Round up to include partial blocks
+		                nBlocksReady = Math.ceil(nBlocksReady);
+		            } else {
+		                // Round down to include only full blocks,
+		                // less the number of blocks that must remain in the buffer
+		                nBlocksReady = Math.max((nBlocksReady | 0) - this._minBufferSize, 0);
+		            }
+
+		            // Count words ready
+		            var nWordsReady = nBlocksReady * blockSize;
+
+		            // Count bytes ready
+		            var nBytesReady = Math.min(nWordsReady * 4, dataSigBytes);
+
+		            // Process blocks
+		            if (nWordsReady) {
+		                for (var offset = 0; offset < nWordsReady; offset += blockSize) {
+		                    // Perform concrete-algorithm logic
+		                    this._doProcessBlock(dataWords, offset);
+		                }
+
+		                // Remove processed words
+		                var processedWords = dataWords.splice(0, nWordsReady);
+		                data.sigBytes -= nBytesReady;
+		            }
+
+		            // Return processed words
+		            return new WordArray.init(processedWords, nBytesReady);
+		        },
+
+		        /**
+		         * Creates a copy of this object.
+		         *
+		         * @return {Object} The clone.
+		         *
+		         * @example
+		         *
+		         *     var clone = bufferedBlockAlgorithm.clone();
+		         */
+		        clone: function () {
+		            var clone = Base.clone.call(this);
+		            clone._data = this._data.clone();
+
+		            return clone;
+		        },
+
+		        _minBufferSize: 0
+		    });
+
+		    /**
+		     * Abstract hasher template.
+		     *
+		     * @property {number} blockSize The number of 32-bit words this hasher operates on. Default: 16 (512 bits)
+		     */
+		    var Hasher = C_lib.Hasher = BufferedBlockAlgorithm.extend({
+		        /**
+		         * Configuration options.
+		         */
+		        cfg: Base.extend(),
+
+		        /**
+		         * Initializes a newly created hasher.
+		         *
+		         * @param {Object} cfg (Optional) The configuration options to use for this hash computation.
+		         *
+		         * @example
+		         *
+		         *     var hasher = CryptoJS.algo.SHA256.create();
+		         */
+		        init: function (cfg) {
+		            // Apply config defaults
+		            this.cfg = this.cfg.extend(cfg);
+
+		            // Set initial values
+		            this.reset();
+		        },
+
+		        /**
+		         * Resets this hasher to its initial state.
+		         *
+		         * @example
+		         *
+		         *     hasher.reset();
+		         */
+		        reset: function () {
+		            // Reset data buffer
+		            BufferedBlockAlgorithm.reset.call(this);
+
+		            // Perform concrete-hasher logic
+		            this._doReset();
+		        },
+
+		        /**
+		         * Updates this hasher with a message.
+		         *
+		         * @param {WordArray|string} messageUpdate The message to append.
+		         *
+		         * @return {Hasher} This hasher.
+		         *
+		         * @example
+		         *
+		         *     hasher.update('message');
+		         *     hasher.update(wordArray);
+		         */
+		        update: function (messageUpdate) {
+		            // Append
+		            this._append(messageUpdate);
+
+		            // Update the hash
+		            this._process();
+
+		            // Chainable
+		            return this;
+		        },
+
+		        /**
+		         * Finalizes the hash computation.
+		         * Note that the finalize operation is effectively a destructive, read-once operation.
+		         *
+		         * @param {WordArray|string} messageUpdate (Optional) A final message update.
+		         *
+		         * @return {WordArray} The hash.
+		         *
+		         * @example
+		         *
+		         *     var hash = hasher.finalize();
+		         *     var hash = hasher.finalize('message');
+		         *     var hash = hasher.finalize(wordArray);
+		         */
+		        finalize: function (messageUpdate) {
+		            // Final message update
+		            if (messageUpdate) {
+		                this._append(messageUpdate);
+		            }
+
+		            // Perform concrete-hasher logic
+		            var hash = this._doFinalize();
+
+		            return hash;
+		        },
+
+		        blockSize: 512/32,
+
+		        /**
+		         * Creates a shortcut function to a hasher's object interface.
+		         *
+		         * @param {Hasher} hasher The hasher to create a helper for.
+		         *
+		         * @return {Function} The shortcut function.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
+		         */
+		        _createHelper: function (hasher) {
+		            return function (message, cfg) {
+		                return new hasher.init(cfg).finalize(message);
+		            };
+		        },
+
+		        /**
+		         * Creates a shortcut function to the HMAC's object interface.
+		         *
+		         * @param {Hasher} hasher The hasher to use in this HMAC helper.
+		         *
+		         * @return {Function} The shortcut function.
+		         *
+		         * @static
+		         *
+		         * @example
+		         *
+		         *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
+		         */
+		        _createHmacHelper: function (hasher) {
+		            return function (message, key) {
+		                return new C_algo.HMAC.init(hasher, key).finalize(message);
+		            };
+		        }
+		    });
+
+		    /**
+		     * Algorithm namespace.
+		     */
+		    var C_algo = C.algo = {};
+
+		    return C;
+		}(Math));
+
+
+		return CryptoJS;
+
+	}));
+
+/***/ },
+
+/***/ 242:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = DialogTips;
+	var ICON_LOADING = '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" aria-hidden="true"></i>';
+	var ICON_SUCCESS = '<i class="fa fa-hand-peace-o fa-3x" aria-hidden="true"></i>';
+	var ICON_FAIL = '<i class="fa fa-close fa-3x" aria-hidden="true"></i>';
+	var AUTO_CLOSED = 2000;
+
+	function DialogTips(options) {
+	    if (!(this instanceof DialogTips)) {
+	        return new DialogTips(options);
+	    }
+
+	    var $elem = $(getTipsHtml());
+
+	    function getTipsHtml() {
+	        if (options.type === 'loading') {
+	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_LOADING + '\n                        <span>\u52A0\u8F7D\u4E2D</span>\n                    </div>\n                </div>\n            ';
+	        };
+
+	        if (options.type === 'success') {
+	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_SUCCESS + '\n                        <span>\u64CD\u4F5C\u6210\u529F</span>\n                    </div>\n                </div>\n            ';
+	        };
+
+	        if (options.type === 'fail') {
+	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_FAIL + '\n                        <span>\u64CD\u4F5C\u5931\u8D25</span>\n                    </div>\n                </div>\n            ';
+	        };
+	    }
+
+	    function open() {
+	        $elem.appendTo('#app');
+
+	        if (options.autoClose && options.autoClose === true) {
+	            setTimeout(function () {
+	                $elem.detach();
+	            }, AUTO_CLOSED);
+	        }
+	    }
+
+	    function close() {
+	        $elem.detach();
+	    }
+
+	    return {
+	        open: open,
+	        close: close
+	    };
+	}
+
+/***/ },
+
+/***/ 243:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1346,21 +2798,85 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(237);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Sys = function (_React$Component) {
+	    _inherits(Sys, _React$Component);
+
+	    function Sys(props) {
+	        _classCallCheck(this, Sys);
+
+	        return _possibleConstructorReturn(this, (Sys.__proto__ || Object.getPrototypeOf(Sys)).call(this, props));
+	    }
+
+	    _createClass(Sys, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'view' },
+	                _react2.default.createElement(_NavBar2.default, { isSignin: true }),
+	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main' },
+	                    this.props.children
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Sys;
+	}(_react2.default.Component);
+
+	exports.default = Sys;
+
+/***/ },
+
+/***/ 244:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(9);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _NavBar = __webpack_require__(230);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _AsideBar = __webpack_require__(235);
+
+	var _AsideBar2 = _interopRequireDefault(_AsideBar);
+
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	var _api = __webpack_require__(231);
 
-	var _errorHandle = __webpack_require__(235);
+	var _errorHandle = __webpack_require__(236);
 
 	var _errorHandle2 = _interopRequireDefault(_errorHandle);
 
@@ -1466,7 +2982,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 237:
+/***/ 245:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1621,64 +3137,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 238:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = DialogTips;
-	var ICON_LOADING = '<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" aria-hidden="true"></i>';
-	var ICON_SUCCESS = '<i class="fa fa-hand-peace-o fa-3x" aria-hidden="true"></i>';
-	var ICON_FAIL = '<i class="fa fa-close fa-3x" aria-hidden="true"></i>';
-	var AUTO_CLOSED = 2000;
-
-	function DialogTips(options) {
-	    if (!(this instanceof DialogTips)) {
-	        return new DialogTips(options);
-	    }
-
-	    var $elem = $(getTipsHtml());
-
-	    function getTipsHtml() {
-	        if (options.type === 'loading') {
-	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_LOADING + '\n                        <span>\u52A0\u8F7D\u4E2D</span>\n                    </div>\n                </div>\n            ';
-	        };
-
-	        if (options.type === 'success') {
-	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_SUCCESS + '\n                        <span>\u64CD\u4F5C\u6210\u529F</span>\n                    </div>\n                </div>\n            ';
-	        };
-
-	        if (options.type === 'fail') {
-	            return '\n                <div class="dialog-tips">\n                    <div class="content">\n                        ' + ICON_FAIL + '\n                        <span>\u64CD\u4F5C\u5931\u8D25</span>\n                    </div>\n                </div>\n            ';
-	        };
-	    }
-
-	    function open() {
-	        $elem.appendTo('#app');
-
-	        if (options.autoClose && options.autoClose === true) {
-	            setTimeout(function () {
-	                $elem.detach();
-	            }, AUTO_CLOSED);
-	        }
-	    }
-
-	    function close() {
-	        $elem.detach();
-	    }
-
-	    return {
-	        open: open,
-	        close: close
-	    };
-	}
-
-/***/ },
-
-/***/ 239:
+/***/ 246:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1695,7 +3154,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1925,7 +3384,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 240:
+/***/ 247:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2104,7 +3563,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 241:
+/***/ 248:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2119,11 +3578,11 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2133,7 +3592,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(243);
+	__webpack_require__(250);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -2317,7 +3776,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 242:
+/***/ 249:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2336,7 +3795,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 243:
+/***/ 250:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -3969,7 +5428,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 244:
+/***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3984,11 +5443,11 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3998,7 +5457,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(243);
+	__webpack_require__(250);
 
 	var View = function (_React$Component) {
 	    _inherits(View, _React$Component);
@@ -4183,7 +5642,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 245:
+/***/ 252:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4200,7 +5659,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4529,7 +5988,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 246:
+/***/ 253:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4544,19 +6003,19 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -5312,7 +6771,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 247:
+/***/ 254:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5327,19 +6786,19 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -6176,7 +7635,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 248:
+/***/ 255:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6193,7 +7652,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6554,7 +8013,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 249:
+/***/ 256:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6569,19 +8028,19 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -7359,7 +8818,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 250:
+/***/ 257:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7374,19 +8833,19 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -8241,7 +9700,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 251:
+/***/ 258:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8404,7 +9863,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 252:
+/***/ 259:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8419,19 +9878,19 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -8443,7 +9902,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(243);
+	__webpack_require__(250);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -9283,7 +10742,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 253:
+/***/ 260:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9298,11 +10757,11 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10096,7 +11555,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 254:
+/***/ 261:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10113,7 +11572,7 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(174);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10245,7 +11704,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 255:
+/***/ 262:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10260,11 +11719,11 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10957,7 +12416,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 256:
+/***/ 263:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10980,11 +12439,11 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _Dialog = __webpack_require__(233);
 
@@ -10992,11 +12451,15 @@ webpackJsonp([0],{
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	var _conversion = __webpack_require__(232);
+
+	var _command = __webpack_require__(264);
+
+	var _command2 = _interopRequireDefault(_command);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11059,9 +12522,8 @@ webpackJsonp([0],{
 	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
+
 	            var temp = [];
 	            var isDisabled = void 0;
 
@@ -11071,21 +12533,19 @@ webpackJsonp([0],{
 	                isDisabled = true;
 	            };
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
-	                    };
+	            commands.map(function (item, index) {
+	                if (item === 'Add') {
+	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
+	                };
 
-	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: isDisabled }));
-	                    }
+	                if (item === 'Mod') {
+	                    temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: isDisabled }));
+	                }
 
-	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: isDisabled }));
-	                    }
-	                });
-	            }
+	                if (item === 'Del') {
+	                    temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: isDisabled }));
+	                }
+	            });
 
 	            return temp;
 	        }
@@ -11191,14 +12651,14 @@ webpackJsonp([0],{
 	        key: 'handleCreate',
 	        value: function handleCreate() {
 	            this.props.router.push({
-	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create',
+	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'sys/org/create',
 	                state: { selected: this.state.selected }
 	            });
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected.id;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/org/' + this.state.selected.id;
 
 	            this.props.router.push(editorPath);
 	        }
@@ -11276,76 +12736,66 @@ webpackJsonp([0],{
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'org' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
+	                    '\xA0\u7EC4\u7EC7\u7BA1\u7406',
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'org' },
+	                        { className: 'btn-group float-right', role: 'group' },
+	                        this.renderCommand()
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'table',
+	                        { className: 'table table-bordered table-sm' },
 	                        _react2.default.createElement(
-	                            'h5',
+	                            'thead',
 	                            null,
-	                            _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
-	                            '\xA0\u7EC4\u7EC7\u7BA1\u7406',
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'btn-group float-right', role: 'group' },
-	                                this.renderCommand()
+	                                'tr',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\xA0'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u7EC4\u7EC7\u540D\u79F0'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u6240\u5728\u5730\u533A'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u8BE6\u7EC6\u5730\u5740'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u8D1F\u8D23\u4EBA'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'th',
+	                                    null,
+	                                    '\u8054\u7CFB\u7535\u8BDD'
+	                                )
 	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'main-container' },
-	                            _react2.default.createElement(
-	                                'table',
-	                                { className: 'table table-bordered table-sm' },
-	                                _react2.default.createElement(
-	                                    'thead',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'tr',
-	                                        null,
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\xA0'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u7EC4\u7EC7\u540D\u79F0'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u6240\u5728\u5730\u533A'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u8BE6\u7EC6\u5730\u5740'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u8D1F\u8D23\u4EBA'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'th',
-	                                            null,
-	                                            '\u8054\u7CFB\u7535\u8BDD'
-	                                        )
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'tbody',
-	                                    null,
-	                                    this.renderTable(this.state.treeList)
-	                                )
-	                            )
+	                            'tbody',
+	                            null,
+	                            this.renderTable(this.state.treeList)
 	                        )
 	                    )
 	                )
@@ -11360,7 +12810,36 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 257:
+/***/ 264:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = command;
+
+	var _userProfile = __webpack_require__(234);
+
+	function command(path) {
+	    var profile = (0, _userProfile.getProfile)();
+	    var command = profile.roles.find(function (item) {
+	        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.id].PATH_RULE.test(path) === true) {
+	            return item;
+	        }
+	    });
+
+	    if (command && command.command.length) {
+	        return command.command;
+	    }
+
+	    return [];
+	}
+
+/***/ },
+
+/***/ 265:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11381,23 +12860,23 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -11409,7 +12888,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(258);
+	//require('../../utils/city');
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -11437,56 +12916,60 @@ webpackJsonp([0],{
 
 	            dialogTips.open();
 
-	            if (this.props.params.id === 'create') {
-	                (0, _api.orgList)().done(function (data) {
-	                    if (_this2.props.router.location.state && _this2.props.router.location.state.selected) {
-	                        _this2.setState({
-	                            orgList: data.tree,
-	                            selected: {
-	                                id: _this2.props.router.location.state.selected.id,
-	                                name: _this2.props.router.location.state.selected.name
-	                            }
-	                        });
-	                    } else {
-	                        _this2.setState({
-	                            orgList: data.tree,
-	                            selected: {
-	                                id: data.tree[0].cId,
-	                                name: data.tree[0].cName
-	                            }
-	                        });
-	                    }
-	                }).always(function () {
-	                    dialogTips.close();
-	                });
+	            __webpack_require__.e/* nsure */(1, function (require) {
+	                __webpack_require__(266);
 
-	                $('#citys').citys();
-	            } else {
-	                $.when((0, _api.orgList)(), (0, _api.orgDetails)(this.props.params.id)).done(function (list, details) {
-	                    var curOrg = list.original.find(function (item) {
-	                        return item.cId === details.cParentId;
-	                    });
-
-	                    _this2.setState({
-	                        editorId: details.cId,
-	                        orgList: list.tree,
-	                        selected: {
-	                            id: curOrg.cId,
-	                            name: curOrg.cName
+	                if (_this2.props.params.id === 'create') {
+	                    (0, _api.orgList)().done(function (data) {
+	                        if (_this2.props.router.location.state && _this2.props.router.location.state.selected) {
+	                            _this2.setState({
+	                                orgList: data.tree,
+	                                selected: {
+	                                    id: _this2.props.router.location.state.selected.id,
+	                                    name: _this2.props.router.location.state.selected.name
+	                                }
+	                            });
+	                        } else {
+	                            _this2.setState({
+	                                orgList: data.tree,
+	                                selected: {
+	                                    id: data.tree[0].cId,
+	                                    name: data.tree[0].cName
+	                                }
+	                            });
 	                        }
+	                    }).always(function () {
+	                        dialogTips.close();
 	                    });
 
-	                    $(_this2.editorDom).find('[name=name]').val(details.cName).end().find('[name=code]').val(details.cCode).end().find('[name=address]').val(details.cAddress).end().find('[name=owner]').val(details.cOwner).end().find('[name=phone]').val(details.cOwnerPhone);
+	                    $('#citys').citys();
+	                } else {
+	                    $.when((0, _api.orgList)(), (0, _api.orgDetails)(_this2.props.params.id)).done(function (list, details) {
+	                        var curOrg = list.original.find(function (item) {
+	                            return item.cId === details.cParentId;
+	                        });
 
-	                    $('#citys').citys({
-	                        province: details.cStateCode,
-	                        city: details.cCityCode,
-	                        area: details.cCountyCode || null
+	                        _this2.setState({
+	                            editorId: details.cId,
+	                            orgList: list.tree,
+	                            selected: {
+	                                id: curOrg.cId,
+	                                name: curOrg.cName
+	                            }
+	                        });
+
+	                        $(_this2.editorDom).find('[name=name]').val(details.cName).end().find('[name=code]').val(details.cCode).end().find('[name=address]').val(details.cAddress).end().find('[name=owner]').val(details.cOwner).end().find('[name=phone]').val(details.cOwnerPhone);
+
+	                        $('#citys').citys({
+	                            province: details.cStateCode,
+	                            city: details.cCityCode,
+	                            area: details.cCountyCode || null
+	                        });
+	                    }).always(function () {
+	                        dialogTips.close();
 	                    });
-	                }).always(function () {
-	                    dialogTips.close();
-	                });
-	            }
+	                }
+	            });
 	        }
 	    }, {
 	        key: 'selectOrg',
@@ -11558,183 +13041,173 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'org' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
+	                        '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
+	                        )
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'org' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this4.editorDom = dom;
-	                                }, onSubmit: this.editorSubmit },
+	                            'div',
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
 	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                _react2.default.createElement('i', { className: 'fa fa-sitemap', 'aria-hidden': 'true' }),
-	                                '\xA0\u7EC4\u7EC7\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                                'div',
+	                                { className: 'w400' },
 	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'd-inline text-muted' },
-	                                    (0, _subTitle2.default)(this.props.router.params.id, '组织')
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7EC4\u7EC7\u540D\u79F0'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'btn-group float-right', role: 'group' },
-	                                    _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
-	                                    _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'main-container' },
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7EC4\u7EC7\u4EE3\u7801'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code', required: 'required' })
+	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'd-flex align-items-stretch flex-nowrap' },
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7236\u7EA7\u7EC4\u7EC7\uFF1A'
+	                                    ),
 	                                    _react2.default.createElement(
 	                                        'div',
-	                                        { className: 'w400' },
+	                                        { className: 'form-group' },
 	                                        _react2.default.createElement(
 	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u7EC4\u7EC7\u540D\u79F0'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u7EC4\u7EC7\u4EE3\u7801'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'code', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u7236\u7EA7\u7EC4\u7EC7\uFF1A'
-	                                            ),
+	                                            { className: 'btn-group btn-block' },
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', 'data-toggle': 'dropdown', value: this.state.selected ? this.state.selected.name : '', readOnly: true }),
 	                                            _react2.default.createElement(
 	                                                'div',
-	                                                { className: 'form-group' },
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'btn-group btn-block' },
-	                                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', 'data-toggle': 'dropdown', value: this.state.selected ? this.state.selected.name : '', readOnly: true }),
-	                                                    _react2.default.createElement(
-	                                                        'div',
-	                                                        { className: 'dropdown-menu' },
-	                                                        _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                                                    )
-	                                                )
+	                                                { className: 'dropdown-menu' },
+	                                                _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u6240\u5728\u5730\u533A'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { id: 'citys', className: 'row' },
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'col' },
-	                                                    _react2.default.createElement('select', { name: 'stateCode', className: 'form-control' })
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'col' },
-	                                                    _react2.default.createElement('select', { name: 'cityCode', className: 'form-control' })
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'col' },
-	                                                    _react2.default.createElement('select', { name: 'countyCode', className: 'form-control' })
-	                                                )
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u8BE6\u7EC6\u5730\u5740'
-	                                            ),
-	                                            _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u8D1F\u8D23\u4EBA'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u8054\u7CFB\u7535\u8BDD'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1\\d{10}$', required: 'required' })
 	                                        )
 	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u6240\u5728\u5730\u533A'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { id: 'citys', className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col' },
+	                                            _react2.default.createElement('select', { name: 'stateCode', className: 'form-control' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col' },
+	                                            _react2.default.createElement('select', { name: 'cityCode', className: 'form-control' })
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col' },
+	                                            _react2.default.createElement('select', { name: 'countyCode', className: 'form-control' })
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u8BE6\u7EC6\u5730\u5740'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { name: 'address', className: 'form-control', rows: '3', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u8D1F\u8D23\u4EBA'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'owner', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u8054\u7CFB\u7535\u8BDD'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1\\d{10}$', required: 'required' })
 	                                )
 	                            )
 	                        )
@@ -11751,236 +13224,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 258:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	/**
-	 * jquery.citys.js 1.0
-	 * http://jquerywidget.com
-	 */
-
-	$.fn.citys = function (parameter, getApi) {
-	    if (typeof parameter == 'function') {
-	        //重载
-	        getApi = parameter;
-	        parameter = {};
-	    } else {
-	        parameter = parameter || {};
-	        getApi = getApi || function () {};
-	    }
-	    var defaults = {
-	        dataUrl: 'http://passer-by.com/data_location/list.json', //数据库地址
-	        dataType: 'json', //数据库类型:'json'或'jsonp'
-	        provinceField: 'stateCode', //省份字段名
-	        cityField: 'cityCode', //城市字段名
-	        areaField: 'countyCode', //地区字段名
-	        code: 0, //地区编码
-	        province: 0, //省份,可以为地区编码或者名称
-	        city: 0, //城市,可以为地区编码或者名称
-	        area: 0, //地区,可以为地区编码或者名称
-	        required: true, //是否必须选一个
-	        nodata: 'hidden', //当无数据时的表现形式:'hidden'隐藏,'disabled'禁用,为空不做任何处理
-	        onChange: function onChange() {} //地区切换时触发,回调函数传入地区数据
-	    };
-	    var options = $.extend({}, defaults, parameter);
-	    return this.each(function () {
-	        //对象定义
-	        var _api = {};
-	        var $this = $(this);
-	        var $province = $this.find('select[name="' + options.provinceField + '"]'),
-	            $city = $this.find('select[name="' + options.cityField + '"]'),
-	            $area = $this.find('select[name="' + options.areaField + '"]');
-	        $.ajax({
-	            url: options.dataUrl,
-	            type: 'GET',
-	            crossDomain: true,
-	            dataType: options.dataType,
-	            jsonpCallback: 'jsonp_location',
-	            success: function success(data) {
-	                var _province, _city, _area, hasCity;
-	                if (options.code) {
-	                    //如果设置地区编码，则忽略单独设置的信息
-	                    var c = options.code - options.code % 1e4;
-	                    if (data[c]) {
-	                        options.province = c;
-	                    }
-	                    c = options.code - (options.code % 1e4 ? options.code % 1e2 : options.code);
-	                    if (data[c]) {
-	                        options.city = c;
-	                    }
-	                    c = options.code % 1e2 ? options.code : 0;
-	                    if (data[c]) {
-	                        options.area = c;
-	                    }
-	                }
-	                var updateData = function updateData() {
-	                    _province = {}, _city = {}, _area = {};
-	                    hasCity = false; //判断是非有地级城市
-	                    for (var code in data) {
-	                        if (!(code % 1e4)) {
-	                            //获取所有的省级行政单位
-	                            _province[code] = data[code];
-	                            if (options.required && !options.province) {
-	                                if (options.city && !(options.city % 1e4)) {
-	                                    //省未填，并判断为直辖市
-	                                    options.province = options.city;
-	                                } else {
-	                                    options.province = code;
-	                                }
-	                            } else if (data[code].indexOf(options.province) > -1) {
-	                                options.province = isNaN(options.province) ? code : options.province;
-	                            }
-	                        } else {
-	                            var p = code - options.province;
-	                            if (options.province && p > 0 && p < 1e4) {
-	                                //同省的城市或地区
-	                                if (!(code % 100)) {
-	                                    hasCity = true;
-	                                    _city[code] = data[code];
-	                                    if (options.required && !options.city) {
-	                                        options.city = code;
-	                                    } else if (data[code].indexOf(options.city) > -1) {
-	                                        options.city = isNaN(options.city) ? code : options.city;
-	                                    }
-	                                } else if (p > 9000) {
-	                                    //省直辖县级行政单位
-	                                    _city[code] = data[code];
-	                                    if (options.required && !options.city) {
-	                                        options.city = code;
-	                                    } else if (data[code].indexOf(options.city) > -1) {
-	                                        options.city = isNaN(options.city) ? code : options.city;
-	                                    }
-	                                } else if (hasCity) {
-	                                    //非直辖市
-	                                    var c = code - options.city;
-	                                    if (options.city && c > 0 && c < 100) {
-	                                        //同个城市的地区
-	                                        _area[code] = data[code];
-	                                        if (options.required && !options.area) {
-	                                            options.area = code;
-	                                        } else if (data[code].indexOf(options.area) > -1) {
-	                                            options.area = isNaN(options.area) ? code : options.area;
-	                                        }
-	                                    }
-	                                } else {
-	                                    _city[code] = data[code]; //直辖市
-	                                    if (options.area) {
-	                                        options.city = options.area;
-	                                        options.area = '';
-	                                    }
-	                                    if (options.required && !options.city) {
-	                                        options.city = code;
-	                                    } else if (data[code].indexOf(options.city) > -1) {
-	                                        options.city = isNaN(options.city) ? code : options.city;
-	                                    }
-	                                }
-	                            }
-	                        }
-	                    }
-	                };
-	                var format = {
-	                    province: function province() {
-	                        $province.empty();
-	                        if (!options.required) {
-	                            $province.append('<option value=""> - 请选择 - </option>');
-	                        }
-	                        for (var i in _province) {
-	                            $province.append('<option value="' + i + '">' + _province[i] + '</option>');
-	                        }
-	                        if (options.province) {
-	                            $province.val(options.province);
-	                        }
-	                        this.city();
-	                    },
-	                    city: function city() {
-	                        $city.empty();
-	                        if (!options.required) {
-	                            $city.append('<option value=""> - 请选择 - </option>');
-	                        }
-	                        if (options.nodata == 'disabled') {
-	                            $city.prop('disabled', $.isEmptyObject(_city));
-	                        } else if (options.nodata == 'hidden') {
-	                            $city.css('display', $.isEmptyObject(_city) ? 'none' : '');
-	                        }
-	                        for (var i in _city) {
-	                            $city.append('<option value="' + i + '">' + _city[i] + '</option>');
-	                        }
-	                        if (options.city) {
-	                            $city.val(options.city);
-	                        }
-	                        this.area();
-	                    },
-	                    area: function area() {
-	                        $area.empty();
-	                        if (!hasCity) {
-	                            $area.css('display', 'none');
-	                        } else {
-	                            $area.css('display', '');
-	                            if (!options.required) {
-	                                $area.append('<option value=""> - 请选择 - </option>');
-	                            }
-	                            if (options.nodata == 'disabled') {
-	                                $area.prop('disabled', $.isEmptyObject(_area));
-	                            } else if (options.nodata == 'hidden') {
-	                                $area.css('display', $.isEmptyObject(_area) ? 'none' : '');
-	                            }
-	                            for (var i in _area) {
-	                                $area.append('<option value="' + i + '">' + _area[i] + '</option>');
-	                            }
-	                            if (options.area) {
-	                                $area.val(options.area);
-	                            }
-	                        }
-	                    }
-	                };
-	                //获取当前地理信息
-	                _api.getInfo = function () {
-	                    var status = {
-	                        direct: !hasCity,
-	                        province: data[options.province] || '',
-	                        city: data[options.city] || '',
-	                        area: data[options.area] || '',
-	                        code: options.area || options.city || options.province
-	                    };
-	                    return status;
-	                };
-	                //事件绑定
-	                $province.on('change', function () {
-	                    options.province = $(this).val();
-	                    options.city = 0;
-	                    options.area = 0;
-	                    updateData();
-	                    format.city();
-	                    options.onChange(_api.getInfo());
-	                });
-	                $city.on('change', function () {
-	                    options.city = $(this).val();
-	                    options.area = 0;
-	                    updateData();
-	                    format.area();
-	                    options.onChange(_api.getInfo());
-	                });
-	                $area.on('change', function () {
-	                    options.area = $(this).val();
-	                    options.onChange(_api.getInfo());
-	                });
-	                //初始化
-	                updateData();
-	                format.province();
-	                if (options.code) {
-	                    options.onChange(_api.getInfo());
-	                }
-	                getApi(_api);
-	            }
-	        });
-	    });
-	};
-
-/***/ },
-
-/***/ 259:
+/***/ 267:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12005,11 +13249,11 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -12017,13 +13261,17 @@ webpackJsonp([0],{
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _command = __webpack_require__(264);
+
+	var _command2 = _interopRequireDefault(_command);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12100,26 +13348,23 @@ webpackJsonp([0],{
 	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
+
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
-	                    };
+	            commands.map(function (item, index) {
+	                if (item === 'Add') {
+	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
+	                };
 
-	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.selected === null ? true : false }));
-	                    }
+	                if (item === 'Mod') {
+	                    temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.selected === null ? true : false }));
+	                }
 
-	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.selected === null ? true : false }));
-	                    }
-	                });
-	            }
+	                if (item === 'Del') {
+	                    temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.selected === null ? true : false }));
+	                }
+	            });
 
 	            return temp;
 	        }
@@ -12157,14 +13402,14 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleCreate',
 	        value: function handleCreate() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/create';
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/role/' + this.state.org.id + '/create';
 
 	            this.props.router.push(editorPath);
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/' + this.state.selected.id;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/role/' + this.state.org.id + '/' + this.state.selected.id;
 
 	            this.props.router.push(editorPath);
 	        }
@@ -12214,127 +13459,117 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'role' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-glass' }),
+	                    '\xA0\u89D2\u8272\u7BA1\u7406',
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'role' },
+	                        { className: 'btn-group float-right', role: 'group' },
+	                        this.renderCommand()
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
-	                            'h5',
-	                            null,
-	                            _react2.default.createElement('i', { className: 'fa fa-glass' }),
-	                            '\xA0\u89D2\u8272\u7BA1\u7406',
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'btn-group float-right', role: 'group' },
-	                                this.renderCommand()
-	                            )
+	                            'div',
+	                            { className: this.state.org === null ? 'hide' : 'w300' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.org ? this.state.org.id : null })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'main-container' },
+	                            { className: this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'd-flex align-items-stretch flex-nowrap' },
+	                                'table',
+	                                { className: this.state.roleList === null ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: this.state.org === null ? 'hide' : 'w300' },
-	                                    _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.org ? this.state.org.id : null })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                                    'thead',
+	                                    null,
 	                                    _react2.default.createElement(
-	                                        'table',
-	                                        { className: this.state.roleList === null ? 'hide' : 'table table-bordered table-sm' },
+	                                        'tr',
+	                                        null,
 	                                        _react2.default.createElement(
-	                                            'thead',
+	                                            'th',
 	                                            null,
-	                                            _react2.default.createElement(
-	                                                'tr',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '#'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u89D2\u8272\u804C\u80FD'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u89D2\u8272\u804C\u7EA7'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u89D2\u8272\u540D\u79F0'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u89D2\u8272\u63CF\u8FF0'
-	                                                )
-	                                            )
+	                                            '#'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'tbody',
+	                                            'th',
 	                                            null,
-	                                            this.state.roleList.map(function (item) {
-	                                                return _react2.default.createElement(
-	                                                    'tr',
-	                                                    { key: item.cId },
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'form-check' },
-	                                                            _react2.default.createElement(
-	                                                                'label',
-	                                                                { className: 'form-check-label' },
-	                                                                _react2.default.createElement('input', {
-	                                                                    onChange: _this6.checkedRole,
-	                                                                    className: 'form-check-input',
-	                                                                    type: 'radio',
-	                                                                    name: 'org',
-	                                                                    checked: _this6.state.selected && item.cId === _this6.state.selected.id ? true : false,
-	                                                                    value: item.cId
-	                                                                })
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        getFuncStr(item.rootFuncs)
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cRankName
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        { 'data-name': true },
-	                                                        item.cName
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cDesc
-	                                                    )
-	                                                );
-	                                            })
+	                                            '\u89D2\u8272\u804C\u80FD'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u804C\u7EA7'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u540D\u79F0'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u89D2\u8272\u63CF\u8FF0'
 	                                        )
 	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'tbody',
+	                                    null,
+	                                    this.state.roleList.map(function (item) {
+	                                        return _react2.default.createElement(
+	                                            'tr',
+	                                            { key: item.cId },
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'form-check' },
+	                                                    _react2.default.createElement(
+	                                                        'label',
+	                                                        { className: 'form-check-label' },
+	                                                        _react2.default.createElement('input', {
+	                                                            onChange: _this6.checkedRole,
+	                                                            className: 'form-check-input',
+	                                                            type: 'radio',
+	                                                            name: 'org',
+	                                                            checked: _this6.state.selected && item.cId === _this6.state.selected.id ? true : false,
+	                                                            value: item.cId
+	                                                        })
+	                                                    )
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                getFuncStr(item.rootFuncs)
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cRankName
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { 'data-name': true },
+	                                                item.cName
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cDesc
+	                                            )
+	                                        );
+	                                    })
 	                                )
 	                            )
 	                        )
@@ -12351,7 +13586,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 260:
+/***/ 268:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12372,19 +13607,19 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -12617,191 +13852,181 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'org' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-glass' }),
+	                        '\xA0\u89D2\u8272\u7BA1\u7406\xA0|\xA0',
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.id, '角色')
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
+	                        )
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'org' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this4.editorDom = dom;
-	                                }, onSubmit: this.editorSubmit },
+	                            'div',
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
 	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                _react2.default.createElement('i', { className: 'fa fa-glass' }),
-	                                '\xA0\u89D2\u8272\u7BA1\u7406\xA0|\xA0',
+	                                'div',
+	                                { className: this.state.org === null ? 'hide' : 'w500' },
 	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'd-inline text-muted' },
-	                                    (0, _subTitle2.default)(this.props.router.params.id, '角色')
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u6240\u5C5E\u7EC4\u7EC7\uFF1A'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'btn-group float-right', role: 'group' },
-	                                    _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
-	                                    _react2.default.createElement(_Button.SaveButton, { action: this.editorSubmit, text: '\u4FDD\u5B58' })
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'main-container' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'd-flex align-items-stretch flex-nowrap' },
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u804C\u80FD'
+	                                    ),
 	                                    _react2.default.createElement(
 	                                        'div',
-	                                        { className: this.state.org === null ? 'hide' : 'w500' },
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u6240\u5C5E\u7EC4\u7EC7\uFF1A'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.org ? this.state.org.name : '', disabled: 'disabled' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u89D2\u8272\u804C\u80FD'
-	                                            ),
-	                                            _react2.default.createElement(
+	                                        null,
+	                                        this.state.func.map(function (item) {
+	                                            var adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+
+	                                            return _react2.default.createElement(
 	                                                'div',
-	                                                null,
-	                                                this.state.func.map(function (item) {
-	                                                    var adminClass = item.cId === FUNC_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
-
-	                                                    return _react2.default.createElement(
-	                                                        'div',
-	                                                        { key: item.cId, className: adminClass },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'form-check-label' },
-	                                                            _react2.default.createElement('input', {
-	                                                                onChange: _this4.checkedFunc,
-	                                                                className: 'form-check-input',
-	                                                                type: 'checkbox',
-	                                                                value: item.cId,
-	                                                                checked: _this4.state.checkedFunc && _this4.state.checkedFunc.findIndex(function (id) {
-	                                                                    return id === item.cId;
-	                                                                }) < 0 ? false : true,
-	                                                                name: 'func',
-	                                                                required: 'required'
-	                                                            }),
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                null,
-	                                                                item.cNameShort
-	                                                            )
-	                                                        )
-	                                                    );
-	                                                })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
+	                                                { key: item.cId, className: adminClass },
 	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u89D2\u8272\u804C\u7EA7'
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                null,
-	                                                this.state.rank.map(function (item) {
-	                                                    var adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
-	                                                    var isDisabled = false;
-
-	                                                    if (_this4.state.isAdmin === true && item.cId.toString() !== RANK_ADMIN_ID) {
-	                                                        isDisabled = true;
-	                                                    }
-
-	                                                    if (_this4.state.isAdmin === false && item.cId.toString() === RANK_ADMIN_ID) {
-	                                                        isDisabled = true;
-	                                                    }
-
-	                                                    if (_this4.state.checkedFunc.length === 1 && item.cId.toString() === RANK_MANAGER_ID) {
-	                                                        isDisabled = true;
-	                                                    }
-
-	                                                    return _react2.default.createElement(
-	                                                        'div',
-	                                                        { key: item.cId, className: adminClass },
-	                                                        _react2.default.createElement(
-	                                                            'label',
-	                                                            { className: 'form-check-label' },
-	                                                            _react2.default.createElement('input', {
-	                                                                onChange: _this4.checkedRank,
-	                                                                className: 'form-check-input',
-	                                                                type: 'radio',
-	                                                                name: 'rank',
-	                                                                checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
-	                                                                value: item.cId,
-	                                                                disabled: isDisabled,
-	                                                                required: 'required'
-	                                                            }),
-	                                                            _react2.default.createElement(
-	                                                                'span',
-	                                                                null,
-	                                                                item.cName
-	                                                            )
-	                                                        )
-	                                                    );
-	                                                })
-	                                            )
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u89D2\u8272\u540D\u79F0'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                '\u89D2\u8272\u63CF\u8FF0'
-	                                            ),
-	                                            _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
-	                                        )
+	                                                    'label',
+	                                                    { className: 'form-check-label' },
+	                                                    _react2.default.createElement('input', {
+	                                                        onChange: _this4.checkedFunc,
+	                                                        className: 'form-check-input',
+	                                                        type: 'checkbox',
+	                                                        value: item.cId,
+	                                                        checked: _this4.state.checkedFunc && _this4.state.checkedFunc.findIndex(function (id) {
+	                                                            return id === item.cId;
+	                                                        }) < 0 ? false : true,
+	                                                        name: 'func',
+	                                                        required: 'required'
+	                                                    }),
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        null,
+	                                                        item.cNameShort
+	                                                    )
+	                                                )
+	                                            );
+	                                        })
 	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u804C\u7EA7'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        null,
+	                                        this.state.rank.map(function (item) {
+	                                            var adminClass = item.cId.toString() === RANK_ADMIN_ID ? 'form-check form-check-inline b-l pl-3' : 'form-check form-check-inline';
+	                                            var isDisabled = false;
+
+	                                            if (_this4.state.isAdmin === true && item.cId.toString() !== RANK_ADMIN_ID) {
+	                                                isDisabled = true;
+	                                            }
+
+	                                            if (_this4.state.isAdmin === false && item.cId.toString() === RANK_ADMIN_ID) {
+	                                                isDisabled = true;
+	                                            }
+
+	                                            if (_this4.state.checkedFunc.length === 1 && item.cId.toString() === RANK_MANAGER_ID) {
+	                                                isDisabled = true;
+	                                            }
+
+	                                            return _react2.default.createElement(
+	                                                'div',
+	                                                { key: item.cId, className: adminClass },
+	                                                _react2.default.createElement(
+	                                                    'label',
+	                                                    { className: 'form-check-label' },
+	                                                    _react2.default.createElement('input', {
+	                                                        onChange: _this4.checkedRank,
+	                                                        className: 'form-check-input',
+	                                                        type: 'radio',
+	                                                        name: 'rank',
+	                                                        checked: item.cId.toString() === _this4.state.checkedRank ? true : false,
+	                                                        value: item.cId,
+	                                                        disabled: isDisabled,
+	                                                        required: 'required'
+	                                                    }),
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        null,
+	                                                        item.cName
+	                                                    )
+	                                                )
+	                                            );
+	                                        })
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u89D2\u8272\u540D\u79F0'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        '\u89D2\u8272\u63CF\u8FF0'
+	                                    ),
+	                                    _react2.default.createElement('textarea', { name: 'desc', className: 'form-control', rows: '3' })
 	                                )
 	                            )
 	                        )
@@ -12818,7 +14043,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 261:
+/***/ 269:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12843,25 +14068,29 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
-	var _Alerts = __webpack_require__(262);
+	var _Alerts = __webpack_require__(270);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _command = __webpack_require__(264);
+
+	var _command2 = _interopRequireDefault(_command);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12971,23 +14200,20 @@ webpackJsonp([0],{
 	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
 	            var isDisabled = $.isEmptyObject(this.state.checkedFunc);
+
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Auth') {
-	                        temp.push(_react2.default.createElement(_Button.AuthButton, {
-	                            key: index,
-	                            action: _this3.handleAuth,
-	                            disabled: isDisabled
-	                        }));
-	                    };
-	                });
-	            }
+	            commands.map(function (item, index) {
+	                if (item === 'Auth') {
+	                    temp.push(_react2.default.createElement(_Button.AuthButton, {
+	                        key: index,
+	                        action: _this3.handleAuth,
+	                        disabled: isDisabled
+	                    }));
+	                };
+	            });
 
 	            return temp;
 	        }
@@ -13290,110 +14516,100 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'auth' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this8.editorDom = dom;
+	                        }, onSubmit: this.handleAuth },
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-shield', 'aria-hidden': 'true' }),
+	                        '\xA0\u6743\u9650\u7BA1\u7406',
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right', role: 'group' },
+	                            this.renderCommand()
+	                        )
+	                    ),
+	                    _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u91CD\u8981\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'auth' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this8.editorDom = dom;
-	                                }, onSubmit: this.handleAuth },
-	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                _react2.default.createElement('i', { className: 'fa fa-shield', 'aria-hidden': 'true' }),
-	                                '\xA0\u6743\u9650\u7BA1\u7406',
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'btn-group float-right', role: 'group' },
-	                                    this.renderCommand()
-	                                )
-	                            ),
-	                            _react2.default.createElement(_Alerts2.default, { type: 'danger', title: '\u91CD\u8981\u63D0\u793A !', text: '\u6743\u9650\u4FEE\u6539\u6210\u529F\u540E\uFF0C\u9700\u8981\u91CD\u65B0\u767B\u9646\u624D\u80FD\u751F\u6548\u3002' }),
+	                            'div',
+	                            { className: 'd-flex align-items-stretch flex-nowrap' },
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'main-container' },
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: 'd-flex align-items-stretch flex-nowrap' },
-	                                    _react2.default.createElement(
+	                                { className: this.state.orgList === null ? 'hide' : 'w300' },
+	                                _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: this.state.selected === null ? 'hide' : 'w200 pl-3 b-l' },
+	                                this.state.roleList.map(function (item) {
+	                                    return _react2.default.createElement(
 	                                        'div',
-	                                        { className: this.state.orgList === null ? 'hide' : 'w300' },
-	                                        _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: this.state.selected === null ? 'hide' : 'w200 pl-3 b-l' },
-	                                        this.state.roleList.map(function (item) {
-	                                            return _react2.default.createElement(
-	                                                'div',
-	                                                { key: item.cId, className: 'form-check' },
-	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        onChange: _this8.checkedRole,
-	                                                        className: 'form-check-input',
-	                                                        type: 'radio',
-	                                                        name: 'role',
-	                                                        value: item.cId,
-	                                                        checked: _this8.state.checkedRole.id === item.cId ? true : false
-	                                                    }),
-	                                                    _react2.default.createElement(
-	                                                        'span',
-	                                                        null,
-	                                                        item.cName
-	                                                    )
-	                                                )
-	                                            );
-	                                        })
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                                        { key: item.cId, className: 'form-check' },
 	                                        _react2.default.createElement(
-	                                            'p',
-	                                            { className: 'h6 pb-3 b-b' },
-	                                            this.state.checkedRole ? this.state.checkedRole.name : ''
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'table',
-	                                            { className: this.state.funcLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                            'label',
+	                                            { className: 'form-check-label' },
+	                                            _react2.default.createElement('input', {
+	                                                onChange: _this8.checkedRole,
+	                                                className: 'form-check-input',
+	                                                type: 'radio',
+	                                                name: 'role',
+	                                                value: item.cId,
+	                                                checked: _this8.state.checkedRole.id === item.cId ? true : false
+	                                            }),
 	                                            _react2.default.createElement(
-	                                                'thead',
+	                                                'span',
 	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'tr',
-	                                                    null,
-	                                                    _react2.default.createElement(
-	                                                        'th',
-	                                                        null,
-	                                                        '\u7CFB\u7EDF\u83DC\u5355'
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'th',
-	                                                        null,
-	                                                        '\u9009\u53D6'
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'th',
-	                                                        null,
-	                                                        '\u529F\u80FD\u6743\u9650'
-	                                                    )
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'tbody',
-	                                                null,
-	                                                this.renderTable(this.state.funcList)
+	                                                item.cName
 	                                            )
 	                                        )
+	                                    );
+	                                })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'h6 pb-3 b-b' },
+	                                    this.state.checkedRole ? this.state.checkedRole.name : ''
+	                                ),
+	                                _react2.default.createElement(
+	                                    'table',
+	                                    { className: this.state.funcLoading === true ? 'hide' : 'table table-bordered table-sm' },
+	                                    _react2.default.createElement(
+	                                        'thead',
+	                                        null,
+	                                        _react2.default.createElement(
+	                                            'tr',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                null,
+	                                                '\u7CFB\u7EDF\u83DC\u5355'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                null,
+	                                                '\u9009\u53D6'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'th',
+	                                                null,
+	                                                '\u529F\u80FD\u6743\u9650'
+	                                            )
+	                                        )
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'tbody',
+	                                        null,
+	                                        this.renderTable(this.state.funcList)
 	                                    )
 	                                )
 	                            )
@@ -13411,7 +14627,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 262:
+/***/ 270:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13445,7 +14661,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 263:
+/***/ 271:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13470,11 +14686,11 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(237);
+	var _OrgTree = __webpack_require__(245);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
@@ -13482,17 +14698,21 @@ webpackJsonp([0],{
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _api = __webpack_require__(231);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _errorHandle = __webpack_require__(235);
+	var _errorHandle = __webpack_require__(236);
 
 	var _errorHandle2 = _interopRequireDefault(_errorHandle);
+
+	var _command = __webpack_require__(264);
+
+	var _command2 = _interopRequireDefault(_command);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13539,21 +14759,16 @@ webpackJsonp([0],{
 	            var _this2 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
 	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            var enable = false;
-	            var disable = false;
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Enable') {
-	                        enable = true;
-	                    }
-	                });
-	            }
+	            commands.map(function (item, index) {
+	                if (item === 'Enable') {
+	                    enable = true;
+	                }
+	            });
 
 	            this.setState({
 	                enable: enable
@@ -13591,26 +14806,23 @@ webpackJsonp([0],{
 	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
+
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate, disabled: _this3.state.selected === null ? true : false }));
-	                    };
+	            commands.map(function (item, index) {
+	                if (item === 'Add') {
+	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate, disabled: _this3.state.selected === null ? true : false }));
+	                };
 
-	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.checkedUser === null ? true : false }));
-	                    }
+	                if (item === 'Mod') {
+	                    temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor, disabled: _this3.state.checkedUser === null ? true : false }));
+	                }
 
-	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.checkedUser === null ? true : false }));
-	                    }
-	                });
-	            }
+	                if (item === 'Del') {
+	                    temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel, disabled: _this3.state.checkedUser === null ? true : false }));
+	                }
+	            });
 
 	            return temp;
 	        }
@@ -13658,14 +14870,14 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'handleCreate',
 	        value: function handleCreate() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/create';
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user/' + this.state.selected.id + '/create';
 
 	            this.props.router.push(editorPath);
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser.id;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user/' + this.state.selected.id + '/' + this.state.checkedUser.id;
 
 	            this.props.router.push(editorPath);
 	        }
@@ -13755,179 +14967,169 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'user' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+	                    '\xA0\u7528\u6237\u7BA1\u7406',
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'user' },
+	                        { className: 'btn-group float-right mr-4', role: 'group' },
+	                        this.renderCommand()
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main-container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
-	                            'h5',
-	                            null,
-	                            _react2.default.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
-	                            '\xA0\u7528\u6237\u7BA1\u7406',
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'btn-group float-right mr-4', role: 'group' },
-	                                this.renderCommand()
-	                            )
+	                            'div',
+	                            { className: this.state.orgList === null ? 'hide' : 'w300' },
+	                            _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
-	                            { className: 'main-container' },
+	                            { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
 	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'd-flex align-items-stretch flex-nowrap' },
+	                                'p',
+	                                { className: this.state.selected === null ? 'hide' : 'h6 pb-3 b-b' },
+	                                this.state.selected ? this.state.selected.name : ''
+	                            ),
+	                            _react2.default.createElement(
+	                                'table',
+	                                { className: this.state.userList === null ? 'hide' : 'table table-bordered table-sm' },
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: this.state.orgList === null ? 'hide' : 'w300' },
-	                                    _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                                ),
-	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l' },
+	                                    'thead',
+	                                    null,
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: this.state.selected === null ? 'hide' : 'h6 pb-3 b-b' },
-	                                        this.state.selected ? this.state.selected.name : ''
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'table',
-	                                        { className: this.state.userList === null ? 'hide' : 'table table-bordered table-sm' },
+	                                        'tr',
+	                                        null,
 	                                        _react2.default.createElement(
-	                                            'thead',
+	                                            'th',
 	                                            null,
-	                                            _react2.default.createElement(
-	                                                'tr',
-	                                                null,
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\xA0'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u72B6\u6001'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u7528\u6237\u540D'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u59D3\u540D'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u6635\u79F0'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u7535\u8BDD\u53F7\u7801'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u7535\u5B50\u90AE\u4EF6'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    'IM(QQ)'
-	                                                ),
-	                                                _react2.default.createElement(
-	                                                    'th',
-	                                                    null,
-	                                                    '\u7528\u6237\u89D2\u8272'
-	                                                )
-	                                            )
+	                                            '\xA0'
 	                                        ),
 	                                        _react2.default.createElement(
-	                                            'tbody',
+	                                            'th',
 	                                            null,
-	                                            this.state.userList.map(function (item) {
-	                                                return _react2.default.createElement(
-	                                                    'tr',
-	                                                    { key: item.cId, 'data-uid': item.cId },
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        _react2.default.createElement(
-	                                                            'div',
-	                                                            { className: 'form-check form-check' },
-	                                                            _react2.default.createElement(
-	                                                                'label',
-	                                                                { className: 'form-check-label' },
-	                                                                _react2.default.createElement('input', {
-	                                                                    className: 'form-check-input',
-	                                                                    type: 'radio',
-	                                                                    name: 'user',
-	                                                                    value: item.cId,
-	                                                                    onChange: _this7.checkedUser,
-	                                                                    checked: _this7.state.checkedUser && _this7.state.checkedUser.id === item.cId ? true : false
-	                                                                })
-	                                                            )
-	                                                        )
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        _react2.default.createElement(_Button.ToggleButton, {
-	                                                            uid: item.cId,
-	                                                            enable: _this7.state.enable,
-	                                                            available: item.cAvailable,
-	                                                            action: _this7.handleToggle
-	                                                        })
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cLoginname
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        { 'data-name': true },
-	                                                        item.cRealname
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cNickname
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cPhone
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cEmail
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.cQq
-	                                                    ),
-	                                                    _react2.default.createElement(
-	                                                        'td',
-	                                                        null,
-	                                                        item.roles.map(function (role) {
-	                                                            return role.cName;
-	                                                        }).join(',')
-	                                                    )
-	                                                );
-	                                            })
+	                                            '\u72B6\u6001'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u7528\u6237\u540D'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u59D3\u540D'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u6635\u79F0'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u7535\u8BDD\u53F7\u7801'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u7535\u5B50\u90AE\u4EF6'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            'IM(QQ)'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'th',
+	                                            null,
+	                                            '\u7528\u6237\u89D2\u8272'
 	                                        )
 	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'tbody',
+	                                    null,
+	                                    this.state.userList.map(function (item) {
+	                                        return _react2.default.createElement(
+	                                            'tr',
+	                                            { key: item.cId, 'data-uid': item.cId },
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                _react2.default.createElement(
+	                                                    'div',
+	                                                    { className: 'form-check form-check' },
+	                                                    _react2.default.createElement(
+	                                                        'label',
+	                                                        { className: 'form-check-label' },
+	                                                        _react2.default.createElement('input', {
+	                                                            className: 'form-check-input',
+	                                                            type: 'radio',
+	                                                            name: 'user',
+	                                                            value: item.cId,
+	                                                            onChange: _this7.checkedUser,
+	                                                            checked: _this7.state.checkedUser && _this7.state.checkedUser.id === item.cId ? true : false
+	                                                        })
+	                                                    )
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                _react2.default.createElement(_Button.ToggleButton, {
+	                                                    uid: item.cId,
+	                                                    enable: _this7.state.enable,
+	                                                    available: item.cAvailable,
+	                                                    action: _this7.handleToggle
+	                                                })
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cLoginname
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                { 'data-name': true },
+	                                                item.cRealname
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cNickname
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cPhone
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cEmail
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.cQq
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'td',
+	                                                null,
+	                                                item.roles.map(function (role) {
+	                                                    return role.cName;
+	                                                }).join(',')
+	                                            )
+	                                        );
+	                                    })
 	                                )
 	                            )
 	                        )
@@ -13944,7 +15146,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 264:
+/***/ 272:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13965,33 +15167,29 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(234);
+	var _AsideBar = __webpack_require__(235);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
-	var _Alerts = __webpack_require__(262);
+	var _Alerts = __webpack_require__(270);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _subTitle = __webpack_require__(242);
+	var _subTitle = __webpack_require__(249);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(265);
+	var _mixedMD = __webpack_require__(239);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
-	var _DialogTips = __webpack_require__(238);
+	var _DialogTips = __webpack_require__(242);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
-
-	var _errorHandle = __webpack_require__(235);
-
-	var _errorHandle2 = _interopRequireDefault(_errorHandle);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14055,15 +15253,12 @@ webpackJsonp([0],{
 	                        });
 
 	                        $(_this2.editorDom).find('[name=loginName]').val(user.cLoginname).end().find('[name=realName]').val(user.cRealname).end().find('[name=nickName]').val(user.cNickname).end().find('[name=phone]').val(user.cPhone).end().find('[name=email]').val(user.cEmail).end().find('[name=im]').val(user.cQq);
-	                    }).fail(function (data) {
-	                        (0, _errorHandle2.default)({ data: data, router: _this2.props.router });
 	                    }).always(function () {
 	                        dialogTips.close();
 	                    });
 	                }
 	            }).fail(function () {
 	                dialogTips.close();
-	                (0, _errorHandle2.default)({ data: data, router: _this2.props.router });
 	            });
 	        }
 	    }, {
@@ -14077,8 +15272,7 @@ webpackJsonp([0],{
 	                (function () {
 	                    var isAdmin = $(event.target).data('rank').toString() === RANK_ADMIN_ID;
 	                    var adminId = $('[data-rank=' + RANK_ADMIN_ID + ']').val();
-	                    console.log($(event.target).data('rank').toString() + '/' + RANK_ADMIN_ID);
-	                    console.log(isAdmin);
+
 	                    tempRole.push(event.target.value);
 
 	                    if (isAdmin === false) {
@@ -14175,8 +15369,6 @@ webpackJsonp([0],{
 	                        fail.open();
 	                    });
 	                }
-	            }).fail(function (data) {
-	                (0, _errorHandle2.default)({ data: data, router: _this4.props.router });
 	            });
 	        }
 	    }, {
@@ -14186,195 +15378,185 @@ webpackJsonp([0],{
 
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
-	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                { className: 'user' },
 	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'main' },
+	                    'form',
+	                    { ref: function ref(dom) {
+	                            _this5.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
+	                    _react2.default.createElement(
+	                        'h5',
+	                        null,
+	                        _react2.default.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
+	                        '\xA0\u7528\u6237\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'd-inline text-muted' },
+	                            (0, _subTitle2.default)(this.props.router.params.uid, '用户')
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'btn-group float-right mr-4', role: 'group' },
+	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
+	                            _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
+	                        )
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'user' },
+	                        { className: 'main-container' },
 	                        _react2.default.createElement(
-	                            'form',
-	                            { ref: function ref(dom) {
-	                                    _this5.editorDom = dom;
-	                                }, onSubmit: this.editorSubmit },
+	                            'div',
+	                            { className: this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide' },
 	                            _react2.default.createElement(
-	                                'h5',
-	                                null,
-	                                _react2.default.createElement('i', { className: 'fa fa-user', 'aria-hidden': 'true' }),
-	                                '\xA0\u7528\u6237\u7BA1\u7406\xA0\xA0|\xA0\xA0',
+	                                'div',
+	                                { className: 'w500 pr-3' },
 	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'd-inline text-muted' },
-	                                    (0, _subTitle2.default)(this.props.router.params.uid, '用户')
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u6240\u5C5E\u7EC4\u7EC7'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'org', value: this.state.org ? this.state.org.name : '', readOnly: 'readOnly' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'btn-group float-right mr-4', role: 'group' },
-	                                    _react2.default.createElement(_Button.BackButton, { router: this.props.router }),
-	                                    _react2.default.createElement(_Button.SaveButton, { text: '\u4FDD\u5B58' })
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7528\u6237\u540D'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName', onChange: function onChange(event) {
+	                                            event.target.setCustomValidity('');
+	                                        }, readOnly: this.props.params.uid === 'create' ? false : true, required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u767B\u9646\u5BC6\u7801'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'loginPass', required: this.props.params.uid === 'create' ? true : false })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u59D3\u540D'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'realName', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7535\u8BDD\u53F7\u7801'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1\\d{10}$', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        _react2.default.createElement(
+	                                            'em',
+	                                            { className: 'text-danger' },
+	                                            '*'
+	                                        ),
+	                                        '\u7535\u5B50\u90AE\u7BB1'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', required: 'required' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        '\u6635\u79F0'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'nickName' })
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'form-group' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name' },
+	                                        'IM(QQ...)'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'im' })
 	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'main-container' },
+	                                { className: 'flex-cell pl-3 b-l' },
 	                                _react2.default.createElement(
-	                                    'div',
-	                                    { className: this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide' },
-	                                    _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'ht pb-3 b-b' },
+	                                    '\u7528\u6237\u89D2\u8272'
+	                                ),
+	                                this.state.roleList.map(function (item) {
+	                                    return _react2.default.createElement(
 	                                        'div',
-	                                        { className: 'w500 pr-3' },
+	                                        { key: item.cId, className: 'form-check' },
 	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
+	                                            'label',
+	                                            { className: 'form-check-label' },
+	                                            _react2.default.createElement('input', {
+	                                                onChange: _this5.checkedRole,
+	                                                className: 'form-check-input',
+	                                                type: 'checkbox',
+	                                                value: item.cId,
+	                                                'data-rank': item.cRankId,
+	                                                checked: _this5.state.checkedRole.findIndex(function (id) {
+	                                                    return id === item.cId;
+	                                                }) < 0 ? false : true,
+	                                                required: 'required'
+	                                            }),
 	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u6240\u5C5E\u7EC4\u7EC7'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'org', value: this.state.org ? this.state.org.name : '', readOnly: 'readOnly' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u7528\u6237\u540D'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'loginName', onChange: function onChange(event) {
-	                                                    event.target.setCustomValidity('');
-	                                                }, readOnly: this.props.params.uid === 'create' ? false : true, required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u767B\u9646\u5BC6\u7801'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'loginPass', required: this.props.params.uid === 'create' ? true : false })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u59D3\u540D'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'realName', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u7535\u8BDD\u53F7\u7801'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'phone', pattern: '^1\\d{10}$', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                _react2.default.createElement(
-	                                                    'em',
-	                                                    { className: 'text-danger' },
-	                                                    '*'
-	                                                ),
-	                                                '\u7535\u5B50\u90AE\u7BB1'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', required: 'required' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                '\u6635\u79F0'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'nickName' })
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'form-group' },
-	                                            _react2.default.createElement(
-	                                                'label',
-	                                                { 'for': 'name' },
-	                                                'IM(QQ...)'
-	                                            ),
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'im' })
+	                                                'span',
+	                                                null,
+	                                                item.cName
+	                                            )
 	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'div',
-	                                        { className: 'flex-cell pl-3 b-l' },
-	                                        _react2.default.createElement(
-	                                            'p',
-	                                            { className: 'ht pb-3 b-b' },
-	                                            '\u7528\u6237\u89D2\u8272'
-	                                        ),
-	                                        this.state.roleList.map(function (item) {
-	                                            return _react2.default.createElement(
-	                                                'div',
-	                                                { key: item.cId, className: 'form-check' },
-	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        onChange: _this5.checkedRole,
-	                                                        className: 'form-check-input',
-	                                                        type: 'checkbox',
-	                                                        value: item.cId,
-	                                                        'data-rank': item.cRankId,
-	                                                        checked: _this5.state.checkedRole.findIndex(function (id) {
-	                                                            return id === item.cId;
-	                                                        }) < 0 ? false : true,
-	                                                        required: 'required'
-	                                                    }),
-	                                                    _react2.default.createElement(
-	                                                        'span',
-	                                                        null,
-	                                                        item.cName
-	                                                    )
-	                                                )
-	                                            );
-	                                        })
-	                                    )
-	                                )
+	                                    );
+	                                })
 	                            )
 	                        )
 	                    )
@@ -14390,1069 +15572,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 265:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = mixedMD5;
-
-	var _md = __webpack_require__(266);
-
-	var _md2 = _interopRequireDefault(_md);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function mixedMD5(string) {
-	    return (0, _md2.default)(string).toString();
-	}
-
-/***/ },
-
-/***/ 266:
-/***/ function(module, exports, __webpack_require__) {
-
-	;(function (root, factory) {
-		if (true) {
-			// CommonJS
-			module.exports = exports = factory(__webpack_require__(267));
-		}
-		else if (typeof define === "function" && define.amd) {
-			// AMD
-			define(["./core"], factory);
-		}
-		else {
-			// Global (browser)
-			factory(root.CryptoJS);
-		}
-	}(this, function (CryptoJS) {
-
-		(function (Math) {
-		    // Shortcuts
-		    var C = CryptoJS;
-		    var C_lib = C.lib;
-		    var WordArray = C_lib.WordArray;
-		    var Hasher = C_lib.Hasher;
-		    var C_algo = C.algo;
-
-		    // Constants table
-		    var T = [];
-
-		    // Compute constants
-		    (function () {
-		        for (var i = 0; i < 64; i++) {
-		            T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
-		        }
-		    }());
-
-		    /**
-		     * MD5 hash algorithm.
-		     */
-		    var MD5 = C_algo.MD5 = Hasher.extend({
-		        _doReset: function () {
-		            this._hash = new WordArray.init([
-		                0x67452301, 0xefcdab89,
-		                0x98badcfe, 0x10325476
-		            ]);
-		        },
-
-		        _doProcessBlock: function (M, offset) {
-		            // Swap endian
-		            for (var i = 0; i < 16; i++) {
-		                // Shortcuts
-		                var offset_i = offset + i;
-		                var M_offset_i = M[offset_i];
-
-		                M[offset_i] = (
-		                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
-		                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
-		                );
-		            }
-
-		            // Shortcuts
-		            var H = this._hash.words;
-
-		            var M_offset_0  = M[offset + 0];
-		            var M_offset_1  = M[offset + 1];
-		            var M_offset_2  = M[offset + 2];
-		            var M_offset_3  = M[offset + 3];
-		            var M_offset_4  = M[offset + 4];
-		            var M_offset_5  = M[offset + 5];
-		            var M_offset_6  = M[offset + 6];
-		            var M_offset_7  = M[offset + 7];
-		            var M_offset_8  = M[offset + 8];
-		            var M_offset_9  = M[offset + 9];
-		            var M_offset_10 = M[offset + 10];
-		            var M_offset_11 = M[offset + 11];
-		            var M_offset_12 = M[offset + 12];
-		            var M_offset_13 = M[offset + 13];
-		            var M_offset_14 = M[offset + 14];
-		            var M_offset_15 = M[offset + 15];
-
-		            // Working varialbes
-		            var a = H[0];
-		            var b = H[1];
-		            var c = H[2];
-		            var d = H[3];
-
-		            // Computation
-		            a = FF(a, b, c, d, M_offset_0,  7,  T[0]);
-		            d = FF(d, a, b, c, M_offset_1,  12, T[1]);
-		            c = FF(c, d, a, b, M_offset_2,  17, T[2]);
-		            b = FF(b, c, d, a, M_offset_3,  22, T[3]);
-		            a = FF(a, b, c, d, M_offset_4,  7,  T[4]);
-		            d = FF(d, a, b, c, M_offset_5,  12, T[5]);
-		            c = FF(c, d, a, b, M_offset_6,  17, T[6]);
-		            b = FF(b, c, d, a, M_offset_7,  22, T[7]);
-		            a = FF(a, b, c, d, M_offset_8,  7,  T[8]);
-		            d = FF(d, a, b, c, M_offset_9,  12, T[9]);
-		            c = FF(c, d, a, b, M_offset_10, 17, T[10]);
-		            b = FF(b, c, d, a, M_offset_11, 22, T[11]);
-		            a = FF(a, b, c, d, M_offset_12, 7,  T[12]);
-		            d = FF(d, a, b, c, M_offset_13, 12, T[13]);
-		            c = FF(c, d, a, b, M_offset_14, 17, T[14]);
-		            b = FF(b, c, d, a, M_offset_15, 22, T[15]);
-
-		            a = GG(a, b, c, d, M_offset_1,  5,  T[16]);
-		            d = GG(d, a, b, c, M_offset_6,  9,  T[17]);
-		            c = GG(c, d, a, b, M_offset_11, 14, T[18]);
-		            b = GG(b, c, d, a, M_offset_0,  20, T[19]);
-		            a = GG(a, b, c, d, M_offset_5,  5,  T[20]);
-		            d = GG(d, a, b, c, M_offset_10, 9,  T[21]);
-		            c = GG(c, d, a, b, M_offset_15, 14, T[22]);
-		            b = GG(b, c, d, a, M_offset_4,  20, T[23]);
-		            a = GG(a, b, c, d, M_offset_9,  5,  T[24]);
-		            d = GG(d, a, b, c, M_offset_14, 9,  T[25]);
-		            c = GG(c, d, a, b, M_offset_3,  14, T[26]);
-		            b = GG(b, c, d, a, M_offset_8,  20, T[27]);
-		            a = GG(a, b, c, d, M_offset_13, 5,  T[28]);
-		            d = GG(d, a, b, c, M_offset_2,  9,  T[29]);
-		            c = GG(c, d, a, b, M_offset_7,  14, T[30]);
-		            b = GG(b, c, d, a, M_offset_12, 20, T[31]);
-
-		            a = HH(a, b, c, d, M_offset_5,  4,  T[32]);
-		            d = HH(d, a, b, c, M_offset_8,  11, T[33]);
-		            c = HH(c, d, a, b, M_offset_11, 16, T[34]);
-		            b = HH(b, c, d, a, M_offset_14, 23, T[35]);
-		            a = HH(a, b, c, d, M_offset_1,  4,  T[36]);
-		            d = HH(d, a, b, c, M_offset_4,  11, T[37]);
-		            c = HH(c, d, a, b, M_offset_7,  16, T[38]);
-		            b = HH(b, c, d, a, M_offset_10, 23, T[39]);
-		            a = HH(a, b, c, d, M_offset_13, 4,  T[40]);
-		            d = HH(d, a, b, c, M_offset_0,  11, T[41]);
-		            c = HH(c, d, a, b, M_offset_3,  16, T[42]);
-		            b = HH(b, c, d, a, M_offset_6,  23, T[43]);
-		            a = HH(a, b, c, d, M_offset_9,  4,  T[44]);
-		            d = HH(d, a, b, c, M_offset_12, 11, T[45]);
-		            c = HH(c, d, a, b, M_offset_15, 16, T[46]);
-		            b = HH(b, c, d, a, M_offset_2,  23, T[47]);
-
-		            a = II(a, b, c, d, M_offset_0,  6,  T[48]);
-		            d = II(d, a, b, c, M_offset_7,  10, T[49]);
-		            c = II(c, d, a, b, M_offset_14, 15, T[50]);
-		            b = II(b, c, d, a, M_offset_5,  21, T[51]);
-		            a = II(a, b, c, d, M_offset_12, 6,  T[52]);
-		            d = II(d, a, b, c, M_offset_3,  10, T[53]);
-		            c = II(c, d, a, b, M_offset_10, 15, T[54]);
-		            b = II(b, c, d, a, M_offset_1,  21, T[55]);
-		            a = II(a, b, c, d, M_offset_8,  6,  T[56]);
-		            d = II(d, a, b, c, M_offset_15, 10, T[57]);
-		            c = II(c, d, a, b, M_offset_6,  15, T[58]);
-		            b = II(b, c, d, a, M_offset_13, 21, T[59]);
-		            a = II(a, b, c, d, M_offset_4,  6,  T[60]);
-		            d = II(d, a, b, c, M_offset_11, 10, T[61]);
-		            c = II(c, d, a, b, M_offset_2,  15, T[62]);
-		            b = II(b, c, d, a, M_offset_9,  21, T[63]);
-
-		            // Intermediate hash value
-		            H[0] = (H[0] + a) | 0;
-		            H[1] = (H[1] + b) | 0;
-		            H[2] = (H[2] + c) | 0;
-		            H[3] = (H[3] + d) | 0;
-		        },
-
-		        _doFinalize: function () {
-		            // Shortcuts
-		            var data = this._data;
-		            var dataWords = data.words;
-
-		            var nBitsTotal = this._nDataBytes * 8;
-		            var nBitsLeft = data.sigBytes * 8;
-
-		            // Add padding
-		            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
-
-		            var nBitsTotalH = Math.floor(nBitsTotal / 0x100000000);
-		            var nBitsTotalL = nBitsTotal;
-		            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
-		                (((nBitsTotalH << 8)  | (nBitsTotalH >>> 24)) & 0x00ff00ff) |
-		                (((nBitsTotalH << 24) | (nBitsTotalH >>> 8))  & 0xff00ff00)
-		            );
-		            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
-		                (((nBitsTotalL << 8)  | (nBitsTotalL >>> 24)) & 0x00ff00ff) |
-		                (((nBitsTotalL << 24) | (nBitsTotalL >>> 8))  & 0xff00ff00)
-		            );
-
-		            data.sigBytes = (dataWords.length + 1) * 4;
-
-		            // Hash final blocks
-		            this._process();
-
-		            // Shortcuts
-		            var hash = this._hash;
-		            var H = hash.words;
-
-		            // Swap endian
-		            for (var i = 0; i < 4; i++) {
-		                // Shortcut
-		                var H_i = H[i];
-
-		                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
-		                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
-		            }
-
-		            // Return final computed hash
-		            return hash;
-		        },
-
-		        clone: function () {
-		            var clone = Hasher.clone.call(this);
-		            clone._hash = this._hash.clone();
-
-		            return clone;
-		        }
-		    });
-
-		    function FF(a, b, c, d, x, s, t) {
-		        var n = a + ((b & c) | (~b & d)) + x + t;
-		        return ((n << s) | (n >>> (32 - s))) + b;
-		    }
-
-		    function GG(a, b, c, d, x, s, t) {
-		        var n = a + ((b & d) | (c & ~d)) + x + t;
-		        return ((n << s) | (n >>> (32 - s))) + b;
-		    }
-
-		    function HH(a, b, c, d, x, s, t) {
-		        var n = a + (b ^ c ^ d) + x + t;
-		        return ((n << s) | (n >>> (32 - s))) + b;
-		    }
-
-		    function II(a, b, c, d, x, s, t) {
-		        var n = a + (c ^ (b | ~d)) + x + t;
-		        return ((n << s) | (n >>> (32 - s))) + b;
-		    }
-
-		    /**
-		     * Shortcut function to the hasher's object interface.
-		     *
-		     * @param {WordArray|string} message The message to hash.
-		     *
-		     * @return {WordArray} The hash.
-		     *
-		     * @static
-		     *
-		     * @example
-		     *
-		     *     var hash = CryptoJS.MD5('message');
-		     *     var hash = CryptoJS.MD5(wordArray);
-		     */
-		    C.MD5 = Hasher._createHelper(MD5);
-
-		    /**
-		     * Shortcut function to the HMAC's object interface.
-		     *
-		     * @param {WordArray|string} message The message to hash.
-		     * @param {WordArray|string} key The secret key.
-		     *
-		     * @return {WordArray} The HMAC.
-		     *
-		     * @static
-		     *
-		     * @example
-		     *
-		     *     var hmac = CryptoJS.HmacMD5(message, key);
-		     */
-		    C.HmacMD5 = Hasher._createHmacHelper(MD5);
-		}(Math));
-
-
-		return CryptoJS.MD5;
-
-	}));
-
-/***/ },
-
-/***/ 267:
-/***/ function(module, exports, __webpack_require__) {
-
-	;(function (root, factory) {
-		if (true) {
-			// CommonJS
-			module.exports = exports = factory();
-		}
-		else if (typeof define === "function" && define.amd) {
-			// AMD
-			define([], factory);
-		}
-		else {
-			// Global (browser)
-			root.CryptoJS = factory();
-		}
-	}(this, function () {
-
-		/**
-		 * CryptoJS core components.
-		 */
-		var CryptoJS = CryptoJS || (function (Math, undefined) {
-		    /*
-		     * Local polyfil of Object.create
-		     */
-		    var create = Object.create || (function () {
-		        function F() {};
-
-		        return function (obj) {
-		            var subtype;
-
-		            F.prototype = obj;
-
-		            subtype = new F();
-
-		            F.prototype = null;
-
-		            return subtype;
-		        };
-		    }())
-
-		    /**
-		     * CryptoJS namespace.
-		     */
-		    var C = {};
-
-		    /**
-		     * Library namespace.
-		     */
-		    var C_lib = C.lib = {};
-
-		    /**
-		     * Base object for prototypal inheritance.
-		     */
-		    var Base = C_lib.Base = (function () {
-
-
-		        return {
-		            /**
-		             * Creates a new object that inherits from this object.
-		             *
-		             * @param {Object} overrides Properties to copy into the new object.
-		             *
-		             * @return {Object} The new object.
-		             *
-		             * @static
-		             *
-		             * @example
-		             *
-		             *     var MyType = CryptoJS.lib.Base.extend({
-		             *         field: 'value',
-		             *
-		             *         method: function () {
-		             *         }
-		             *     });
-		             */
-		            extend: function (overrides) {
-		                // Spawn
-		                var subtype = create(this);
-
-		                // Augment
-		                if (overrides) {
-		                    subtype.mixIn(overrides);
-		                }
-
-		                // Create default initializer
-		                if (!subtype.hasOwnProperty('init') || this.init === subtype.init) {
-		                    subtype.init = function () {
-		                        subtype.$super.init.apply(this, arguments);
-		                    };
-		                }
-
-		                // Initializer's prototype is the subtype object
-		                subtype.init.prototype = subtype;
-
-		                // Reference supertype
-		                subtype.$super = this;
-
-		                return subtype;
-		            },
-
-		            /**
-		             * Extends this object and runs the init method.
-		             * Arguments to create() will be passed to init().
-		             *
-		             * @return {Object} The new object.
-		             *
-		             * @static
-		             *
-		             * @example
-		             *
-		             *     var instance = MyType.create();
-		             */
-		            create: function () {
-		                var instance = this.extend();
-		                instance.init.apply(instance, arguments);
-
-		                return instance;
-		            },
-
-		            /**
-		             * Initializes a newly created object.
-		             * Override this method to add some logic when your objects are created.
-		             *
-		             * @example
-		             *
-		             *     var MyType = CryptoJS.lib.Base.extend({
-		             *         init: function () {
-		             *             // ...
-		             *         }
-		             *     });
-		             */
-		            init: function () {
-		            },
-
-		            /**
-		             * Copies properties into this object.
-		             *
-		             * @param {Object} properties The properties to mix in.
-		             *
-		             * @example
-		             *
-		             *     MyType.mixIn({
-		             *         field: 'value'
-		             *     });
-		             */
-		            mixIn: function (properties) {
-		                for (var propertyName in properties) {
-		                    if (properties.hasOwnProperty(propertyName)) {
-		                        this[propertyName] = properties[propertyName];
-		                    }
-		                }
-
-		                // IE won't copy toString using the loop above
-		                if (properties.hasOwnProperty('toString')) {
-		                    this.toString = properties.toString;
-		                }
-		            },
-
-		            /**
-		             * Creates a copy of this object.
-		             *
-		             * @return {Object} The clone.
-		             *
-		             * @example
-		             *
-		             *     var clone = instance.clone();
-		             */
-		            clone: function () {
-		                return this.init.prototype.extend(this);
-		            }
-		        };
-		    }());
-
-		    /**
-		     * An array of 32-bit words.
-		     *
-		     * @property {Array} words The array of 32-bit words.
-		     * @property {number} sigBytes The number of significant bytes in this word array.
-		     */
-		    var WordArray = C_lib.WordArray = Base.extend({
-		        /**
-		         * Initializes a newly created word array.
-		         *
-		         * @param {Array} words (Optional) An array of 32-bit words.
-		         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
-		         *
-		         * @example
-		         *
-		         *     var wordArray = CryptoJS.lib.WordArray.create();
-		         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
-		         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
-		         */
-		        init: function (words, sigBytes) {
-		            words = this.words = words || [];
-
-		            if (sigBytes != undefined) {
-		                this.sigBytes = sigBytes;
-		            } else {
-		                this.sigBytes = words.length * 4;
-		            }
-		        },
-
-		        /**
-		         * Converts this word array to a string.
-		         *
-		         * @param {Encoder} encoder (Optional) The encoding strategy to use. Default: CryptoJS.enc.Hex
-		         *
-		         * @return {string} The stringified word array.
-		         *
-		         * @example
-		         *
-		         *     var string = wordArray + '';
-		         *     var string = wordArray.toString();
-		         *     var string = wordArray.toString(CryptoJS.enc.Utf8);
-		         */
-		        toString: function (encoder) {
-		            return (encoder || Hex).stringify(this);
-		        },
-
-		        /**
-		         * Concatenates a word array to this word array.
-		         *
-		         * @param {WordArray} wordArray The word array to append.
-		         *
-		         * @return {WordArray} This word array.
-		         *
-		         * @example
-		         *
-		         *     wordArray1.concat(wordArray2);
-		         */
-		        concat: function (wordArray) {
-		            // Shortcuts
-		            var thisWords = this.words;
-		            var thatWords = wordArray.words;
-		            var thisSigBytes = this.sigBytes;
-		            var thatSigBytes = wordArray.sigBytes;
-
-		            // Clamp excess bits
-		            this.clamp();
-
-		            // Concat
-		            if (thisSigBytes % 4) {
-		                // Copy one byte at a time
-		                for (var i = 0; i < thatSigBytes; i++) {
-		                    var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
-		                    thisWords[(thisSigBytes + i) >>> 2] |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
-		                }
-		            } else {
-		                // Copy one word at a time
-		                for (var i = 0; i < thatSigBytes; i += 4) {
-		                    thisWords[(thisSigBytes + i) >>> 2] = thatWords[i >>> 2];
-		                }
-		            }
-		            this.sigBytes += thatSigBytes;
-
-		            // Chainable
-		            return this;
-		        },
-
-		        /**
-		         * Removes insignificant bits.
-		         *
-		         * @example
-		         *
-		         *     wordArray.clamp();
-		         */
-		        clamp: function () {
-		            // Shortcuts
-		            var words = this.words;
-		            var sigBytes = this.sigBytes;
-
-		            // Clamp
-		            words[sigBytes >>> 2] &= 0xffffffff << (32 - (sigBytes % 4) * 8);
-		            words.length = Math.ceil(sigBytes / 4);
-		        },
-
-		        /**
-		         * Creates a copy of this word array.
-		         *
-		         * @return {WordArray} The clone.
-		         *
-		         * @example
-		         *
-		         *     var clone = wordArray.clone();
-		         */
-		        clone: function () {
-		            var clone = Base.clone.call(this);
-		            clone.words = this.words.slice(0);
-
-		            return clone;
-		        },
-
-		        /**
-		         * Creates a word array filled with random bytes.
-		         *
-		         * @param {number} nBytes The number of random bytes to generate.
-		         *
-		         * @return {WordArray} The random word array.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var wordArray = CryptoJS.lib.WordArray.random(16);
-		         */
-		        random: function (nBytes) {
-		            var words = [];
-
-		            var r = (function (m_w) {
-		                var m_w = m_w;
-		                var m_z = 0x3ade68b1;
-		                var mask = 0xffffffff;
-
-		                return function () {
-		                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
-		                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
-		                    var result = ((m_z << 0x10) + m_w) & mask;
-		                    result /= 0x100000000;
-		                    result += 0.5;
-		                    return result * (Math.random() > .5 ? 1 : -1);
-		                }
-		            });
-
-		            for (var i = 0, rcache; i < nBytes; i += 4) {
-		                var _r = r((rcache || Math.random()) * 0x100000000);
-
-		                rcache = _r() * 0x3ade67b7;
-		                words.push((_r() * 0x100000000) | 0);
-		            }
-
-		            return new WordArray.init(words, nBytes);
-		        }
-		    });
-
-		    /**
-		     * Encoder namespace.
-		     */
-		    var C_enc = C.enc = {};
-
-		    /**
-		     * Hex encoding strategy.
-		     */
-		    var Hex = C_enc.Hex = {
-		        /**
-		         * Converts a word array to a hex string.
-		         *
-		         * @param {WordArray} wordArray The word array.
-		         *
-		         * @return {string} The hex string.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var hexString = CryptoJS.enc.Hex.stringify(wordArray);
-		         */
-		        stringify: function (wordArray) {
-		            // Shortcuts
-		            var words = wordArray.words;
-		            var sigBytes = wordArray.sigBytes;
-
-		            // Convert
-		            var hexChars = [];
-		            for (var i = 0; i < sigBytes; i++) {
-		                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
-		                hexChars.push((bite >>> 4).toString(16));
-		                hexChars.push((bite & 0x0f).toString(16));
-		            }
-
-		            return hexChars.join('');
-		        },
-
-		        /**
-		         * Converts a hex string to a word array.
-		         *
-		         * @param {string} hexStr The hex string.
-		         *
-		         * @return {WordArray} The word array.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var wordArray = CryptoJS.enc.Hex.parse(hexString);
-		         */
-		        parse: function (hexStr) {
-		            // Shortcut
-		            var hexStrLength = hexStr.length;
-
-		            // Convert
-		            var words = [];
-		            for (var i = 0; i < hexStrLength; i += 2) {
-		                words[i >>> 3] |= parseInt(hexStr.substr(i, 2), 16) << (24 - (i % 8) * 4);
-		            }
-
-		            return new WordArray.init(words, hexStrLength / 2);
-		        }
-		    };
-
-		    /**
-		     * Latin1 encoding strategy.
-		     */
-		    var Latin1 = C_enc.Latin1 = {
-		        /**
-		         * Converts a word array to a Latin1 string.
-		         *
-		         * @param {WordArray} wordArray The word array.
-		         *
-		         * @return {string} The Latin1 string.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
-		         */
-		        stringify: function (wordArray) {
-		            // Shortcuts
-		            var words = wordArray.words;
-		            var sigBytes = wordArray.sigBytes;
-
-		            // Convert
-		            var latin1Chars = [];
-		            for (var i = 0; i < sigBytes; i++) {
-		                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
-		                latin1Chars.push(String.fromCharCode(bite));
-		            }
-
-		            return latin1Chars.join('');
-		        },
-
-		        /**
-		         * Converts a Latin1 string to a word array.
-		         *
-		         * @param {string} latin1Str The Latin1 string.
-		         *
-		         * @return {WordArray} The word array.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var wordArray = CryptoJS.enc.Latin1.parse(latin1String);
-		         */
-		        parse: function (latin1Str) {
-		            // Shortcut
-		            var latin1StrLength = latin1Str.length;
-
-		            // Convert
-		            var words = [];
-		            for (var i = 0; i < latin1StrLength; i++) {
-		                words[i >>> 2] |= (latin1Str.charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
-		            }
-
-		            return new WordArray.init(words, latin1StrLength);
-		        }
-		    };
-
-		    /**
-		     * UTF-8 encoding strategy.
-		     */
-		    var Utf8 = C_enc.Utf8 = {
-		        /**
-		         * Converts a word array to a UTF-8 string.
-		         *
-		         * @param {WordArray} wordArray The word array.
-		         *
-		         * @return {string} The UTF-8 string.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
-		         */
-		        stringify: function (wordArray) {
-		            try {
-		                return decodeURIComponent(escape(Latin1.stringify(wordArray)));
-		            } catch (e) {
-		                throw new Error('Malformed UTF-8 data');
-		            }
-		        },
-
-		        /**
-		         * Converts a UTF-8 string to a word array.
-		         *
-		         * @param {string} utf8Str The UTF-8 string.
-		         *
-		         * @return {WordArray} The word array.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
-		         */
-		        parse: function (utf8Str) {
-		            return Latin1.parse(unescape(encodeURIComponent(utf8Str)));
-		        }
-		    };
-
-		    /**
-		     * Abstract buffered block algorithm template.
-		     *
-		     * The property blockSize must be implemented in a concrete subtype.
-		     *
-		     * @property {number} _minBufferSize The number of blocks that should be kept unprocessed in the buffer. Default: 0
-		     */
-		    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm = Base.extend({
-		        /**
-		         * Resets this block algorithm's data buffer to its initial state.
-		         *
-		         * @example
-		         *
-		         *     bufferedBlockAlgorithm.reset();
-		         */
-		        reset: function () {
-		            // Initial values
-		            this._data = new WordArray.init();
-		            this._nDataBytes = 0;
-		        },
-
-		        /**
-		         * Adds new data to this block algorithm's buffer.
-		         *
-		         * @param {WordArray|string} data The data to append. Strings are converted to a WordArray using UTF-8.
-		         *
-		         * @example
-		         *
-		         *     bufferedBlockAlgorithm._append('data');
-		         *     bufferedBlockAlgorithm._append(wordArray);
-		         */
-		        _append: function (data) {
-		            // Convert string to WordArray, else assume WordArray already
-		            if (typeof data == 'string') {
-		                data = Utf8.parse(data);
-		            }
-
-		            // Append
-		            this._data.concat(data);
-		            this._nDataBytes += data.sigBytes;
-		        },
-
-		        /**
-		         * Processes available data blocks.
-		         *
-		         * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
-		         *
-		         * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
-		         *
-		         * @return {WordArray} The processed data.
-		         *
-		         * @example
-		         *
-		         *     var processedData = bufferedBlockAlgorithm._process();
-		         *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
-		         */
-		        _process: function (doFlush) {
-		            // Shortcuts
-		            var data = this._data;
-		            var dataWords = data.words;
-		            var dataSigBytes = data.sigBytes;
-		            var blockSize = this.blockSize;
-		            var blockSizeBytes = blockSize * 4;
-
-		            // Count blocks ready
-		            var nBlocksReady = dataSigBytes / blockSizeBytes;
-		            if (doFlush) {
-		                // Round up to include partial blocks
-		                nBlocksReady = Math.ceil(nBlocksReady);
-		            } else {
-		                // Round down to include only full blocks,
-		                // less the number of blocks that must remain in the buffer
-		                nBlocksReady = Math.max((nBlocksReady | 0) - this._minBufferSize, 0);
-		            }
-
-		            // Count words ready
-		            var nWordsReady = nBlocksReady * blockSize;
-
-		            // Count bytes ready
-		            var nBytesReady = Math.min(nWordsReady * 4, dataSigBytes);
-
-		            // Process blocks
-		            if (nWordsReady) {
-		                for (var offset = 0; offset < nWordsReady; offset += blockSize) {
-		                    // Perform concrete-algorithm logic
-		                    this._doProcessBlock(dataWords, offset);
-		                }
-
-		                // Remove processed words
-		                var processedWords = dataWords.splice(0, nWordsReady);
-		                data.sigBytes -= nBytesReady;
-		            }
-
-		            // Return processed words
-		            return new WordArray.init(processedWords, nBytesReady);
-		        },
-
-		        /**
-		         * Creates a copy of this object.
-		         *
-		         * @return {Object} The clone.
-		         *
-		         * @example
-		         *
-		         *     var clone = bufferedBlockAlgorithm.clone();
-		         */
-		        clone: function () {
-		            var clone = Base.clone.call(this);
-		            clone._data = this._data.clone();
-
-		            return clone;
-		        },
-
-		        _minBufferSize: 0
-		    });
-
-		    /**
-		     * Abstract hasher template.
-		     *
-		     * @property {number} blockSize The number of 32-bit words this hasher operates on. Default: 16 (512 bits)
-		     */
-		    var Hasher = C_lib.Hasher = BufferedBlockAlgorithm.extend({
-		        /**
-		         * Configuration options.
-		         */
-		        cfg: Base.extend(),
-
-		        /**
-		         * Initializes a newly created hasher.
-		         *
-		         * @param {Object} cfg (Optional) The configuration options to use for this hash computation.
-		         *
-		         * @example
-		         *
-		         *     var hasher = CryptoJS.algo.SHA256.create();
-		         */
-		        init: function (cfg) {
-		            // Apply config defaults
-		            this.cfg = this.cfg.extend(cfg);
-
-		            // Set initial values
-		            this.reset();
-		        },
-
-		        /**
-		         * Resets this hasher to its initial state.
-		         *
-		         * @example
-		         *
-		         *     hasher.reset();
-		         */
-		        reset: function () {
-		            // Reset data buffer
-		            BufferedBlockAlgorithm.reset.call(this);
-
-		            // Perform concrete-hasher logic
-		            this._doReset();
-		        },
-
-		        /**
-		         * Updates this hasher with a message.
-		         *
-		         * @param {WordArray|string} messageUpdate The message to append.
-		         *
-		         * @return {Hasher} This hasher.
-		         *
-		         * @example
-		         *
-		         *     hasher.update('message');
-		         *     hasher.update(wordArray);
-		         */
-		        update: function (messageUpdate) {
-		            // Append
-		            this._append(messageUpdate);
-
-		            // Update the hash
-		            this._process();
-
-		            // Chainable
-		            return this;
-		        },
-
-		        /**
-		         * Finalizes the hash computation.
-		         * Note that the finalize operation is effectively a destructive, read-once operation.
-		         *
-		         * @param {WordArray|string} messageUpdate (Optional) A final message update.
-		         *
-		         * @return {WordArray} The hash.
-		         *
-		         * @example
-		         *
-		         *     var hash = hasher.finalize();
-		         *     var hash = hasher.finalize('message');
-		         *     var hash = hasher.finalize(wordArray);
-		         */
-		        finalize: function (messageUpdate) {
-		            // Final message update
-		            if (messageUpdate) {
-		                this._append(messageUpdate);
-		            }
-
-		            // Perform concrete-hasher logic
-		            var hash = this._doFinalize();
-
-		            return hash;
-		        },
-
-		        blockSize: 512/32,
-
-		        /**
-		         * Creates a shortcut function to a hasher's object interface.
-		         *
-		         * @param {Hasher} hasher The hasher to create a helper for.
-		         *
-		         * @return {Function} The shortcut function.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
-		         */
-		        _createHelper: function (hasher) {
-		            return function (message, cfg) {
-		                return new hasher.init(cfg).finalize(message);
-		            };
-		        },
-
-		        /**
-		         * Creates a shortcut function to the HMAC's object interface.
-		         *
-		         * @param {Hasher} hasher The hasher to use in this HMAC helper.
-		         *
-		         * @return {Function} The shortcut function.
-		         *
-		         * @static
-		         *
-		         * @example
-		         *
-		         *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
-		         */
-		        _createHmacHelper: function (hasher) {
-		            return function (message, key) {
-		                return new C_algo.HMAC.init(hasher, key).finalize(message);
-		            };
-		        }
-		    });
-
-		    /**
-		     * Algorithm namespace.
-		     */
-		    var C_algo = C.algo = {};
-
-		    return C;
-		}(Math));
-
-
-		return CryptoJS;
-
-	}));
-
-/***/ },
-
-/***/ 268:
+/***/ 273:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15475,7 +15595,7 @@ webpackJsonp([0],{
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _Button = __webpack_require__(240);
+	var _Button = __webpack_require__(247);
 
 	var _Dialog = __webpack_require__(233);
 
@@ -15483,7 +15603,9 @@ webpackJsonp([0],{
 
 	var _api = __webpack_require__(231);
 
-	var _mixedMD = __webpack_require__(265);
+	var _userProfile = __webpack_require__(234);
+
+	var _mixedMD = __webpack_require__(239);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -15543,11 +15665,48 @@ webpackJsonp([0],{
 	                    loginname: username,
 	                    mixedPWD: (0, _mixedMD2.default)((0, _mixedMD2.default)((0, _mixedMD2.default)(mixedPWD)) + salt)
 	                }).done(function () {
-	                    if (_this2.props.router.location.state && _this2.props.router.location.state.nextPathname) {
-	                        _this2.props.router.replace(_this2.props.router.location.state.nextPathname);
-	                    } else {
-	                        _this2.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
-	                    }
+	                    (0, _api.profile)().done(function (data) {
+	                        var user = {};
+	                        var func = [];
+
+	                        user.name = data.cNickname;
+	                        user.roles = [];
+	                        user.access = [];
+
+	                        data.roles.map(function (item) {
+	                            func = func.concat(item.functions);
+	                        });
+
+	                        func.map(function (item) {
+	                            if (item.WidgetType === 'MenuItem') {
+	                                var temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
+
+	                                user.roles.push(temp);
+	                            }
+
+	                            if (item.WidgetType === 'Command') {
+	                                var index = user.roles.findIndex(function (value) {
+	                                    return value.id === item.cParentId;
+	                                });
+
+	                                if (index >= 0) {
+	                                    user.roles[index].command.push(item.CommandCode);
+	                                }
+	                            }
+
+	                            if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]) {
+	                                user.access.push(item.cId);
+	                            }
+	                        });
+
+	                        (0, _userProfile.setProfile)(user);
+
+	                        if (_this2.props.router.location.state && _this2.props.router.location.state.nextPathname) {
+	                            _this2.props.router.replace(_this2.props.router.location.state.nextPathname);
+	                        } else {
+	                            _this2.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
+	                        }
+	                    });
 	                }).fail(function (data) {
 	                    _this2.setState({
 	                        loading: false
@@ -15610,7 +15769,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 269:
+/***/ 274:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15618,26 +15777,72 @@ webpackJsonp([0],{
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = Error;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(9);
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _NavBar = __webpack_require__(230);
+
+	var _NavBar2 = _interopRequireDefault(_NavBar);
+
+	var _AsideBar = __webpack_require__(235);
+
+	var _AsideBar2 = _interopRequireDefault(_AsideBar);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Error(props) {
-	    return _react2.default.createElement(
-	        'p',
-	        null,
-	        '\u6CA1\u6709\u6743\u9650\u8BBF\u95EE\u6B64\u9875\u9762 \uFF01'
-	    );
-	}
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Error = function (_React$Component) {
+	    _inherits(Error, _React$Component);
+
+	    function Error(props) {
+	        _classCallCheck(this, Error);
+
+	        return _possibleConstructorReturn(this, (Error.__proto__ || Object.getPrototypeOf(Error)).call(this, props));
+	    }
+
+	    _createClass(Error, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'view' },
+	                _react2.default.createElement(_NavBar2.default, { isSignin: true }),
+	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'main' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'main-container' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'mt-3' },
+	                            this.props.router.location.state && this.props.router.location.state.text ? this.props.router.location.state.text : '您访问的页面不存在 ！'
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Error;
+	}(_react2.default.Component);
+
+	exports.default = Error;
 
 /***/ },
 
-/***/ 270:
-/***/ function(module, exports) {
+/***/ 275:
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -15645,38 +15850,56 @@ webpackJsonp([0],{
 	    value: true
 	});
 	exports.default = checkAuth;
+
+	var _userProfile = __webpack_require__(234);
+
 	function checkAuth(nextState, replace) {
-	    var temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	    var hasMatch = false;
+	    var targetPath = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
+	    var profile = (0, _userProfile.getProfile)();
+	    console.log('start check auth ...');
+	    console.log('check path is ' + targetPath);
+	    if (profile) {
+	        var hasMatch = false;
 
-	    console.log('======== check auth ========');
+	        if (profile.access.length) {
+	            for (var i = 0; i < profile.access.length; i++) {
+	                var id = profile.access[i];
 
-	    if (SCHOOLPAL_CONFIG.accessRules) {
-	        for (var i = 0; i < SCHOOLPAL_CONFIG.accessRules.length; i++) {
-	            if (SCHOOLPAL_CONFIG.accessRules[i].test(temp) === true) {
-	                hasMatch = true;
-	                break;
+	                if (SCHOOLPAL_CONFIG.AUTH_DIC[id].PATH_RULE.test(targetPath) === true) {
+	                    hasMatch = true;
+	                    break;
+	                }
 	            }
 	        }
 
 	        if (hasMatch === false) {
+	            console.log('check auth result is not authorize !');
+
 	            replace({
-	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'error'
+	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'error',
+	                state: { text: '没有权限访问该页面 ！' }
 	            });
 	        }
+	    } else {
+	        console.log('check auth result is not login !');
+
+	        replace({
+	            pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+	            state: { nextPathname: nextState.location.pathname }
+	        });
 	    }
 	}
 
 /***/ },
 
-/***/ 271:
+/***/ 276:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 273:
+/***/ 278:
 /***/ function(module, exports) {
 
 	/*
@@ -15733,7 +15956,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 274:
+/***/ 279:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -15986,23 +16209,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 275:
+/***/ 280:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 278:
+/***/ 283:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(279);
+	var content = __webpack_require__(284);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(274)(content, {});
+	var update = __webpack_require__(279)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -16020,10 +16243,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 279:
+/***/ 284:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(273)();
+	exports = module.exports = __webpack_require__(278)();
 	// imports
 
 

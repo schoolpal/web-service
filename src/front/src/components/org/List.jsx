@@ -7,6 +7,7 @@ import Dialog from '../public/Dialog'
 import { sysOrgList, orgDel } from '../../utils/api'
 import DialogTips from '../../utils/DialogTips'
 import { conversionOrg } from '../../utils/conversion'
+import command from '../../utils/command'
 
 export default class List extends React.Component {
     constructor(props) {
@@ -50,7 +51,8 @@ export default class List extends React.Component {
 
     renderCommand() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
+
         let temp = [];
         let isDisabled;
 
@@ -60,21 +62,19 @@ export default class List extends React.Component {
             isDisabled = true;
         };
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Add') {
-                    temp.push(<CreateButton key={index} action={this.handleCreate} />)
-                };
+        commands.map((item, index) => {
+            if (item === 'Add') {
+                temp.push(<CreateButton key={index} action={this.handleCreate} />)
+            };
 
-                if (item === 'Mod') {
-                    temp.push(<EditorButton key={index} action={this.handleEditor} disabled={isDisabled} />)
-                }
+            if (item === 'Mod') {
+                temp.push(<EditorButton key={index} action={this.handleEditor} disabled={isDisabled} />)
+            }
 
-                if (item === 'Del') {
-                    temp.push(<DelButton key={index} action={this.confirmDel} disabled={isDisabled} />)
-                }
-            })
-        }
+            if (item === 'Del') {
+                temp.push(<DelButton key={index} action={this.confirmDel} disabled={isDisabled} />)
+            }
+        })
 
         return temp;
     }
@@ -146,13 +146,13 @@ export default class List extends React.Component {
 
     handleCreate() {
         this.props.router.push({
-            pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'org/create',
+            pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'sys/org/create',
             state: { selected: this.state.selected }
         })
     }
 
     handleEditor() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org/' + this.state.selected.id;
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/org/' + this.state.selected.id;
 
         this.props.router.push(editorPath)
     }
@@ -229,35 +229,29 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <div>
-                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
-                <AsideBar router={this.props.router} />
-                <div className="main">
-                    <div className="org">
-                        <h5>
-                            <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理
-                        <div className="btn-group float-right" role="group">
-                                {this.renderCommand()}
-                            </div>
-                        </h5>
-                        <div className="main-container">
-                            <table className="table table-bordered table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>组织名称</th>
-                                        <th>所在地区</th>
-                                        <th>详细地址</th>
-                                        <th>负责人</th>
-                                        <th>联系电话</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.renderTable(this.state.treeList)}
-                                </tbody>
-                            </table>
-                        </div>
+            <div className="org">
+                <h5>
+                    <i className="fa fa-sitemap" aria-hidden="true"></i>&nbsp;组织管理
+                    <div className="btn-group float-right" role="group">
+                        {this.renderCommand()}
                     </div>
+                </h5>
+                <div className="main-container">
+                    <table className="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>组织名称</th>
+                                <th>所在地区</th>
+                                <th>详细地址</th>
+                                <th>负责人</th>
+                                <th>联系电话</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderTable(this.state.treeList)}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         )

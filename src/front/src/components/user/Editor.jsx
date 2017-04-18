@@ -8,7 +8,6 @@ import subTitle from '../../utils/subTitle'
 import { orgDetails, roleList, userAdd, userDetails, userMod, checkName } from '../../utils/api'
 import mixedMD5 from '../../utils/mixedMD5'
 import DialogTips from '../../utils/DialogTips'
-import errorHandle from '../../utils/errorHandle'
 
 const RANK_ADMIN_ID = '4';
 
@@ -77,16 +76,12 @@ export default class Editor extends React.Component {
                             .find('[name=im]')
                             .val(user.cQq)
                     })
-                    .fail((data) => {
-                        errorHandle({ data: data, router: this.props.router })
-                    })
                     .always(() => {
                         dialogTips.close()
                     })
             }
         }).fail(() => {
             dialogTips.close()
-            errorHandle({ data: data, router: this.props.router })
         })
     }
 
@@ -96,8 +91,7 @@ export default class Editor extends React.Component {
         if (event.target.checked === true) {
             const isAdmin = $(event.target).data('rank').toString() === RANK_ADMIN_ID;
             const adminId = $('[data-rank=' + RANK_ADMIN_ID + ']').val();
-            console.log($(event.target).data('rank').toString() + '/' + RANK_ADMIN_ID)
-            console.log(isAdmin)
+
             tempRole.push(event.target.value)
 
             if (isAdmin === false) {
@@ -196,103 +190,94 @@ export default class Editor extends React.Component {
                         })
                 }
             })
-            .fail((data) => {
-                errorHandle({ data: data, router: this.props.router })
-            })
     }
 
     render() {
         return (
-            <div>
-                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
-                <AsideBar router={this.props.router} />
-                <div className="main">
-                    <div className="user" >
-                        <form ref={(dom) => { this.editorDom = dom }} onSubmit={this.editorSubmit}>
+            <div className="user" >
+                <form ref={(dom) => { this.editorDom = dom }} onSubmit={this.editorSubmit}>
 
-                            <h5>
-                                <i className="fa fa-user" aria-hidden="true"></i>&nbsp;用户管理&nbsp;&nbsp;|&nbsp;&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.uid, '用户')}</p>
-                                <div className="btn-group float-right mr-4" role="group">
-                                    <BackButton router={this.props.router} />
-                                    <SaveButton text="保存" />
+                    <h5>
+                        <i className="fa fa-user" aria-hidden="true"></i>&nbsp;用户管理&nbsp;&nbsp;|&nbsp;&nbsp;<p className="d-inline text-muted">{subTitle(this.props.router.params.uid, '用户')}</p>
+                        <div className="btn-group float-right mr-4" role="group">
+                            <BackButton router={this.props.router} />
+                            <SaveButton text="保存" />
+                        </div>
+                    </h5>
+
+                    <div className="main-container">
+                        <div className={this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide'}>
+
+                            <div className="w500 pr-3">
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>所属组织</label>
+                                    <input type="text" className="form-control" name="org" value={this.state.org ? this.state.org.name : ''} readOnly="readOnly" />
                                 </div>
-                            </h5>
 
-                            <div className="main-container">
-                                <div className={this.state.roleList.length ? 'd-flex align-items-stretch flex-nowrap' : 'hide'}>
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>用户名</label>
+                                    <input type="text" className="form-control" name="loginName" onChange={(event) => { event.target.setCustomValidity('') }} readOnly={this.props.params.uid === 'create' ? false : true} required="required" />
+                                </div>
 
-                                    <div className="w500 pr-3">
-                                        <div className="form-group">
-                                            <label for="name"><em className="text-danger">*</em>所属组织</label>
-                                            <input type="text" className="form-control" name="org" value={this.state.org ? this.state.org.name : ''} readOnly="readOnly" />
-                                        </div>
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>登陆密码</label>
+                                    <input type="password" className="form-control" name="loginPass" required={this.props.params.uid === 'create' ? true : false} />
+                                </div>
 
-                                        <div className="form-group">
-                                            <label for="name"><em className="text-danger">*</em>用户名</label>
-                                            <input type="text" className="form-control" name="loginName" onChange={(event) => { event.target.setCustomValidity('') }} readOnly={this.props.params.uid === 'create' ? false : true} required="required" />
-                                        </div>
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>姓名</label>
+                                    <input type="text" className="form-control" name="realName" required="required" />
+                                </div>
 
-                                        <div className="form-group">
-                                            <label for="name"><em className="text-danger">*</em>登陆密码</label>
-                                            <input type="password" className="form-control" name="loginPass" required={this.props.params.uid === 'create' ? true : false} />
-                                        </div>
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>电话号码</label>
+                                    <input type="text" className="form-control" name="phone" pattern="^1\d{10}$" required="required" />
+                                </div>
 
-                                        <div className="form-group">
-                                            <label for="name"><em className="text-danger">*</em>姓名</label>
-                                            <input type="text" className="form-control" name="realName" required="required" />
-                                        </div>
+                                <div className="form-group">
+                                    <label for="name"><em className="text-danger">*</em>电子邮箱</label>
+                                    <input type="text" className="form-control" name="email" required="required" />
+                                </div>
 
-                                        <div className="form-group">
-                                            <label for="name"><em className="text-danger">*</em>电话号码</label>
-                                            <input type="text" className="form-control" name="phone" pattern="^1\d{10}$" required="required" />
-                                        </div>
+                                <div className="form-group">
+                                    <label for="name">昵称</label>
+                                    <input type="text" className="form-control" name="nickName" />
+                                </div>
 
-                                        <div className="form-group">
-                                            <label for="name"><em className="text-danger">*</em>电子邮箱</label>
-                                            <input type="text" className="form-control" name="email" required="required" />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label for="name">昵称</label>
-                                            <input type="text" className="form-control" name="nickName" />
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label for="name">IM(QQ...)</label>
-                                            <input type="text" className="form-control" name="im" />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex-cell pl-3 b-l">
-                                        <p className="ht pb-3 b-b">用户角色</p>
-                                        {
-                                            this.state.roleList.map((item) => {
-                                                return (
-                                                    <div key={item.cId} className="form-check">
-                                                        <label className="form-check-label">
-                                                            <input
-                                                                onChange={this.checkedRole}
-                                                                className="form-check-input"
-                                                                type="checkbox"
-                                                                value={item.cId}
-                                                                data-rank={item.cRankId}
-                                                                checked={this.state.checkedRole.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
-                                                                required="required"
-                                                            />
-                                                            <span>{item.cName}</span>
-                                                        </label>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-
+                                <div className="form-group">
+                                    <label for="name">IM(QQ...)</label>
+                                    <input type="text" className="form-control" name="im" />
                                 </div>
                             </div>
 
-                        </form>
+                            <div className="flex-cell pl-3 b-l">
+                                <p className="ht pb-3 b-b">用户角色</p>
+                                {
+                                    this.state.roleList.map((item) => {
+                                        return (
+                                            <div key={item.cId} className="form-check">
+                                                <label className="form-check-label">
+                                                    <input
+                                                        onChange={this.checkedRole}
+                                                        className="form-check-input"
+                                                        type="checkbox"
+                                                        value={item.cId}
+                                                        data-rank={item.cRankId}
+                                                        checked={this.state.checkedRole.findIndex((id) => { return id === item.cId }) < 0 ? false : true}
+                                                        required="required"
+                                                    />
+                                                    <span>{item.cName}</span>
+                                                </label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+
+                        </div>
                     </div>
-                </div>
+
+                </form>
             </div>
         )
     }

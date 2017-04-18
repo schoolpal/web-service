@@ -2,11 +2,10 @@ window.SCHOOLPAL_CONFIG = {
     ROOTPATH: '/web/html/',
     AJAXPATH: '/web/ajax/',
 
-    SESSION_STORAGE_KYENAME: 'user',
-
     XHR_DONE: 'XHR_DONE',
     XHR_BUSINESS_ERROR: 'XHR_BUSINESS_ERROR',
     XHR_ERROR: 'XHR_ERROR',
+    NOT_SIGNIN: 'NOT_SIGNIN',
 
     AUTH_DIC: {
         '1-1': { PATH: 'crm/market/activity', PATH_RULE: /^crm\/market\/activity(\/\w+)?(\/)?$/, ICON: 'fa-pie-chart' },
@@ -17,16 +16,16 @@ window.SCHOOLPAL_CONFIG = {
         '1-2-1': { PATH_RULE: /^crm\/market\/chance\/edit\/create(\/)?$/ },
         '1-2-2': { PATH_RULE: /^crm\/market\/chance\/edit\/\w+(\/)?$/ },
 
-        '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
-        '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
-        '7-1-2': { PATH_RULE: /^sys\/org\/\w+(\/)?$/ },
-        '7-2': { PATH: 'sys/role', PATH_RULE: /^sys\/role(\/)?$/, ICON: 'fa-users' },
-        '7-2-1': { PATH_RULE: /^sys\/role\/\w+\/create(\/)?$/ },
-        '7-2-2': { PATH_RULE: /^sys\/role\/\w+\/\w+(\/)?$/ },
-        '7-3': { PATH: 'sys/auth', PATH_RULE: /^sys\/auth(\/)?$/, ICON: 'fa-shield' },
-        '7-4': { PATH: 'sys/user', PATH_RULE: /^sys\/user(\/)?$/, ICON: 'fa-user' },
-        '7-4-1': { PATH_RULE: /^sys\/user\/\w+\/create(\/)?$/ },
-        '7-4-2': { PATH_RULE: /^sys\/user\/\w+\/\w+(\/)?$/ },
+        '7-1': { PATH: 'org', PATH_RULE: /^org(\/)?$/, ICON: 'fa-sitemap' },
+        '7-1-1': { PATH_RULE: /^org\/create(\/)?$/ },
+        '7-1-2': { PATH_RULE: /^org\/\w+(\/)?$/ },
+        '7-2': { PATH: 'role', PATH_RULE: /^role(\/)?$/, ICON: 'fa-users' },
+        '7-2-1': { PATH_RULE: /^role\/\w+\/create(\/)?$/ },
+        '7-2-2': { PATH_RULE: /^role\/\w+\/\w+(\/)?$/ },
+        '7-3': { PATH: 'auth', PATH_RULE: /^auth(\/)?$/, ICON: 'fa-shield' },
+        '7-4': { PATH: 'user', PATH_RULE: /^user(\/)?$/, ICON: 'fa-user' },
+        '7-4-1': { PATH_RULE: /^user\/\w+\/create(\/)?$/ },
+        '7-4-2': { PATH_RULE: /^user\/\w+\/\w+(\/)?$/ },
     }
 };
 
@@ -42,8 +41,6 @@ import ReactDOM from 'react-dom'
 import { Router, Route, browserHistory } from 'react-router'
 import Dashboard from './components/Dashboard'
 
-import App from './components/App'
-import Sys from './components/Sys'
 import Crm from './components/Crm'
 
 import MarketActivityList from './components/market/activity/List'
@@ -69,27 +66,43 @@ import RoleEditor from './components/role/Editor';
 import AuthList from './components/auth/List';
 import UserList from './components/user/List';
 import UserEditor from './components/user/Editor';
-
 import Login from './components/login';
-import Error from './components/Error';
-
+import Error from './components/public/Error';
 import checkAuth from './utils/checkAuth';
 
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'login'} component={Login} />
 
-        <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={App}>
-            <Route path="sys" component={Sys} onEnter={checkAuth} onChange={checkAuth}>
-                <Route path="org" component={OrgList} />
-                <Route path="org/:id" component={OrgEditor} />
-                <Route path="role" component={RoleList} />
-                <Route path="role/:oid/:rid" component={RoleEditor} />
-                <Route path="auth" component={AuthList} />
-                <Route path="user" component={UserList} />
-                <Route path="user/:oid/:uid" component={UserEditor} />
+        <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={Dashboard}>
+            <Route path={'crm'} component={Crm}>
+                <Route path="market/activity" component={MarketActivityList} onEnter={checkAuth} />
+                <Route path="market/activity/:id" component={MarketActivityView} onEnter={checkAuth} />
+                <Route path="market/activity/edit/:id" component={MarketActivityEditor} onEnter={checkAuth} />
+
+                <Route path="market/chance" component={MarketChanceList} onEnter={checkAuth} />
+                <Route path="market/chance/:id" component={MarketChanceView} onEnter={checkAuth} />
+                <Route path="market/chance/edit/:id" component={MarketChanceEditor} onEnter={checkAuth} />
+
+                <Route path="sales/chance" component={SalesChanceList} />
+                <Route path="sales/chance/:id" component={SalesChanceView} />
+                <Route path="sales/chance/edit/:id" component={SalesChanceEditor} />
+
+                <Route path="sales/contract" component={SalesContractList} />
+                <Route path="sales/contract/:id" component={SalesContractView} />
+                <Route path="sales/contract/edit/:id" component={SalesContractEditor} />
+
+                <Route path="sales/student" component={SalesStudentList} />
+                <Route path="sales/student/:id" component={SalesStudentView} />
             </Route>
 
+            <Route path="org" component={OrgList} onEnter={checkAuth} />
+            <Route path="org/:id" component={OrgEditor} onEnter={checkAuth} />
+            <Route path="role" component={RoleList} onEnter={checkAuth} />
+            <Route path="role/:oid/:rid" component={RoleEditor} onEnter={checkAuth} />
+            <Route path="auth" component={AuthList} onEnter={checkAuth} />
+            <Route path="user" component={UserList} onEnter={checkAuth} />
+            <Route path="user/:oid/:uid" component={UserEditor} onEnter={checkAuth} />
             <Route path='*' component={Error} />
         </Route>
     </Router>

@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import NavBar from './public/NavBar';
 import { LoginButton } from './public/Button';
 import Dialog from './public/Dialog';
-import { salt, login } from '../utils/api';
+import { salt, login, profile } from '../utils/api';
+import { setProfile } from '../utils/userProfile'
 import mixedMD5 from '../utils/mixedMD5'
 
 export default class Login extends React.Component {
@@ -46,11 +47,46 @@ export default class Login extends React.Component {
                 loginname: username,
                 mixedPWD: mixedMD5(mixedMD5(mixedMD5(mixedPWD)) + salt)
             }).done(() => {
-                if (this.props.router.location.state && this.props.router.location.state.nextPathname) {
-                    this.props.router.replace(this.props.router.location.state.nextPathname);
-                } else {
-                    this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
-                }
+                profile().done((data) => {
+                    let user = {}
+                    let func = []
+
+                    user.name = data.cNickname
+                    user.roles = []
+                    user.access = []
+
+                    data.roles.map((item) => {
+                        func = func.concat(item.functions)
+                    })
+
+                    func.map((item) => {
+                        if (item.WidgetType === 'MenuItem') {
+                            const temp = $.extend({}, { id: item.cId, command: [] }, SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]);
+
+                            user.roles.push(temp)
+                        }
+
+                        if (item.WidgetType === 'Command') {
+                            const index = user.roles.findIndex((value) => { return value.id === item.cParentId });
+
+                            if (index >= 0) {
+                                user.roles[index].command.push(item.CommandCode);
+                            }
+                        }
+
+                        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.cId]) {
+                            user.access.push(item.cId)
+                        }
+                    })
+
+                    setProfile(user)
+
+                    if (this.props.router.location.state && this.props.router.location.state.nextPathname) {
+                        this.props.router.replace(this.props.router.location.state.nextPathname);
+                    } else {
+                        this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH);
+                    }
+                })
             }).fail((data) => {
                 this.setState({
                     loading: false

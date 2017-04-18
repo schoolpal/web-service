@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import { getProfile } from '../../utils/userProfile'
 
 export default class AsideBar extends React.Component {
     constructor(props) {
@@ -7,6 +8,7 @@ export default class AsideBar extends React.Component {
     }
 
     render() {
+        const profile = getProfile()
         let listItems = []
 
         if (this.props.hasChangeTree && this.props.hasChangeTree === true) {
@@ -17,7 +19,7 @@ export default class AsideBar extends React.Component {
             )
         }
 
-        $.each(SCHOOLPAL_CONFIG.commandRules, (k, v) => {
+        $.each(profile.roles, (k, v) => {
             listItems.push(
                 <Link key={v.id} to={SCHOOLPAL_CONFIG.ROOTPATH + v.PATH} className="btn btn-block btn-link">
                     <i className={'fa ' + v.ICON + ' fa-lg'} aria-hidden="true"></i>

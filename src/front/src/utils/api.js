@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router'
 import { conversionOrg, conversionFunc } from './conversion';
 
 function io(options, callback) {
@@ -18,8 +19,6 @@ function io(options, callback) {
     });
 
     jqxhr.done(function (data, textStatus, jqXHR) {
-        console.log(data, textStatus, jqXHR.status);
-
         if (data.code === 200) {
             callback({
                 type: SCHOOLPAL_CONFIG.XHR_DONE,
@@ -35,9 +34,17 @@ function io(options, callback) {
 
     jqxhr.fail(function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR.status, textStatus, errorThrown)
-        callback({
-            type: jqXHR.status === 401 ? SCHOOLPAL_CONFIG.NOT_SIGNIN : SCHOOLPAL_CONFIG.XHR_ERROR
-        })
+
+        if (jqXHR.status === 401) {
+            browserHistory.replace({
+                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+                state: { nextPathname: browserHistory.getCurrentLocation().pathname }
+            })
+        } else {
+            callback({
+                type: SCHOOLPAL_CONFIG.XHR_ERROR
+            })
+        }
     })
 }
 
@@ -91,6 +98,21 @@ export function logout() {
     return defer.promise();
 }
 
+export function profile() {
+    const defer = $.Deferred();
+    const url = 'user/profile.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
 export function permissions() {
     const defer = $.Deferred();
     const url = 'user/listFuncs.do';
@@ -130,6 +152,22 @@ export function permissions() {
             defer.reject(data);
         }
     });
+
+    return defer.promise();
+}
+
+export function changePwd(data) {
+    const defer = $.Deferred();
+    const url = 'user/changePassword.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
 
     return defer.promise();
 }

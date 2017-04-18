@@ -8,6 +8,7 @@ import Dialog from '../public/Dialog'
 import { CreateButton, EditorButton, DelButton } from '../public/Button'
 import { orgList, sysRoleList, roleDel } from '../../utils/api'
 import DialogTips from '../../utils/DialogTips'
+import command from '../../utils/command'
 
 function getFuncStr(data) {
     let funcArr = [];
@@ -66,24 +67,23 @@ export default class List extends React.Component {
 
     renderCommand() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
+
         let temp = [];
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Add') {
-                    temp.push(<CreateButton key={index} action={this.handleCreate} />)
-                };
+        commands.map((item, index) => {
+            if (item === 'Add') {
+                temp.push(<CreateButton key={index} action={this.handleCreate} />)
+            };
 
-                if (item === 'Mod') {
-                    temp.push(<EditorButton key={index} action={this.handleEditor} disabled={this.state.selected === null ? true : false} />)
-                }
+            if (item === 'Mod') {
+                temp.push(<EditorButton key={index} action={this.handleEditor} disabled={this.state.selected === null ? true : false} />)
+            }
 
-                if (item === 'Del') {
-                    temp.push(<DelButton key={index} action={this.confirmDel} disabled={this.state.selected === null ? true : false} />)
-                }
-            })
-        }
+            if (item === 'Del') {
+                temp.push(<DelButton key={index} action={this.confirmDel} disabled={this.state.selected === null ? true : false} />)
+            }
+        })
 
         return temp;
     }
@@ -118,13 +118,13 @@ export default class List extends React.Component {
     }
 
     handleCreate() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/create';
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/role/' + this.state.org.id + '/create';
 
         this.props.router.push(editorPath)
     }
 
     handleEditor() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role/' + this.state.org.id + '/' + this.state.selected.id;
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/role/' + this.state.org.id + '/' + this.state.selected.id;
 
         this.props.router.push(editorPath)
     }
@@ -169,65 +169,59 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <div>
-                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
-                <AsideBar router={this.props.router} />
-                <div className="main">
-                    <div className="role">
-                        <h5>
-                            <i className='fa fa-glass'></i>&nbsp;角色管理
+            <div className="role">
+                <h5>
+                    <i className='fa fa-glass'></i>&nbsp;角色管理
                             <div className="btn-group float-right" role="group">
-                                {this.renderCommand()}
-                            </div>
-                        </h5>
+                        {this.renderCommand()}
+                    </div>
+                </h5>
 
-                        <div className="main-container">
-                            <div className="d-flex align-items-stretch flex-nowrap">
-                                <div className={this.state.org === null ? 'hide' : 'w300'}>
-                                    <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.org ? this.state.org.id : null} />
-                                </div>
-                                <div className={this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l'}>
-                                    <table className={this.state.roleList === null ? 'hide' : 'table table-bordered table-sm'}>
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>角色职能</th>
-                                                <th>角色职级</th>
-                                                <th>角色名称</th>
-                                                <th>角色描述</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                this.state.roleList.map((item) => {
-                                                    return (
-                                                        <tr key={item.cId}>
-                                                            <td>
-                                                                <div className="form-check">
-                                                                    <label className="form-check-label">
-                                                                        <input
-                                                                            onChange={this.checkedRole}
-                                                                            className="form-check-input"
-                                                                            type="radio"
-                                                                            name="org"
-                                                                            checked={(this.state.selected && item.cId === this.state.selected.id) ? true : false}
-                                                                            value={item.cId}
-                                                                        />
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                            <td>{getFuncStr(item.rootFuncs)}</td>
-                                                            <td>{item.cRankName}</td>
-                                                            <td data-name>{item.cName}</td>
-                                                            <td>{item.cDesc}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                <div className="main-container">
+                    <div className="d-flex align-items-stretch flex-nowrap">
+                        <div className={this.state.org === null ? 'hide' : 'w300'}>
+                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.org ? this.state.org.id : null} />
+                        </div>
+                        <div className={this.state.org === null ? 'hide' : 'flex-cell pl-3 b-l'}>
+                            <table className={this.state.roleList === null ? 'hide' : 'table table-bordered table-sm'}>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>角色职能</th>
+                                        <th>角色职级</th>
+                                        <th>角色名称</th>
+                                        <th>角色描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.roleList.map((item) => {
+                                            return (
+                                                <tr key={item.cId}>
+                                                    <td>
+                                                        <div className="form-check">
+                                                            <label className="form-check-label">
+                                                                <input
+                                                                    onChange={this.checkedRole}
+                                                                    className="form-check-input"
+                                                                    type="radio"
+                                                                    name="org"
+                                                                    checked={(this.state.selected && item.cId === this.state.selected.id) ? true : false}
+                                                                    value={item.cId}
+                                                                />
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>{getFuncStr(item.rootFuncs)}</td>
+                                                    <td>{item.cRankName}</td>
+                                                    <td data-name>{item.cName}</td>
+                                                    <td>{item.cDesc}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

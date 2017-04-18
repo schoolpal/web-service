@@ -8,6 +8,7 @@ import { AuthButton } from '../public/Button'
 import Alerts from '../public/Alerts'
 import { orgList, roleList, funcByIds, roleDetails, roleAuth } from '../../utils/api'
 import DialogTips from '../../utils/DialogTips'
+import command from '../../utils/command'
 
 export default class List extends React.Component {
     constructor(props) {
@@ -84,23 +85,22 @@ export default class List extends React.Component {
 
     renderCommand() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
         const isDisabled = $.isEmptyObject(this.state.checkedFunc);
+
         let temp = [];
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Auth') {
-                    temp.push(
-                        <AuthButton
-                            key={index}
-                            action={this.handleAuth}
-                            disabled={isDisabled}
-                        />
-                    )
-                };
-            })
-        }
+        commands.map((item, index) => {
+            if (item === 'Auth') {
+                temp.push(
+                    <AuthButton
+                        key={index}
+                        action={this.handleAuth}
+                        disabled={isDisabled}
+                    />
+                )
+            };
+        })
 
         return temp;
     }
@@ -345,70 +345,64 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <div>
-                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
-                <AsideBar router={this.props.router} />
-                <div className="main">
-                    <div className="auth">
-                        <form ref={(dom) => { this.editorDom = dom }} onSubmit={this.handleAuth}>
-                            <h5>
-                                <i className='fa fa-shield' aria-hidden="true"></i>&nbsp;权限管理
+            <div className="auth">
+                <form ref={(dom) => { this.editorDom = dom }} onSubmit={this.handleAuth}>
+                    <h5>
+                        <i className='fa fa-shield' aria-hidden="true"></i>&nbsp;权限管理
                         <div className="btn-group float-right" role="group">
-                                    {this.renderCommand()}
-                                </div>
-                            </h5>
+                            {this.renderCommand()}
+                        </div>
+                    </h5>
 
-                            <Alerts type="danger" title="重要提示 !" text="权限修改成功后，需要重新登陆才能生效。"></Alerts>
+                    <Alerts type="danger" title="重要提示 !" text="权限修改成功后，需要重新登陆才能生效。"></Alerts>
 
-                            <div className="main-container">
-                                <div className="d-flex align-items-stretch flex-nowrap">
-                                    <div className={this.state.orgList === null ? 'hide' : 'w300'}>
-                                        <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
-                                    </div>
-
-                                    <div className={this.state.selected === null ? 'hide' : 'w200 pl-3 b-l'}>
-                                        {
-                                            this.state.roleList.map((item) => {
-                                                return (
-                                                    <div key={item.cId} className="form-check">
-                                                        <label className="form-check-label">
-                                                            <input
-                                                                onChange={this.checkedRole}
-                                                                className="form-check-input"
-                                                                type="radio"
-                                                                name="role"
-                                                                value={item.cId}
-                                                                checked={this.state.checkedRole.id === item.cId ? true : false}
-                                                            />
-                                                            <span>{item.cName}</span>
-                                                        </label>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-
-                                    <div className={this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l'}>
-                                        <p className="h6 pb-3 b-b">{this.state.checkedRole ? this.state.checkedRole.name : ''}</p>
-                                        <table className={this.state.funcLoading === true ? 'hide' : 'table table-bordered table-sm'}>
-                                            <thead>
-                                                <tr>
-                                                    <th>系统菜单</th>
-                                                    <th>选取</th>
-                                                    <th>功能权限</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {this.renderTable(this.state.funcList)}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                    <div className="main-container">
+                        <div className="d-flex align-items-stretch flex-nowrap">
+                            <div className={this.state.orgList === null ? 'hide' : 'w300'}>
+                                <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
                             </div>
 
-                        </form>
+                            <div className={this.state.selected === null ? 'hide' : 'w200 pl-3 b-l'}>
+                                {
+                                    this.state.roleList.map((item) => {
+                                        return (
+                                            <div key={item.cId} className="form-check">
+                                                <label className="form-check-label">
+                                                    <input
+                                                        onChange={this.checkedRole}
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="role"
+                                                        value={item.cId}
+                                                        checked={this.state.checkedRole.id === item.cId ? true : false}
+                                                    />
+                                                    <span>{item.cName}</span>
+                                                </label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+
+                            <div className={this.state.checkedRole === null ? 'hide' : 'flex-cell pl-3 b-l'}>
+                                <p className="h6 pb-3 b-b">{this.state.checkedRole ? this.state.checkedRole.name : ''}</p>
+                                <table className={this.state.funcLoading === true ? 'hide' : 'table table-bordered table-sm'}>
+                                    <thead>
+                                        <tr>
+                                            <th>系统菜单</th>
+                                            <th>选取</th>
+                                            <th>功能权限</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.renderTable(this.state.funcList)}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                </form>
             </div>
         )
     }

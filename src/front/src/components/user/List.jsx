@@ -9,6 +9,7 @@ import { CreateButton, EditorButton, DelButton, ToggleButton } from '../public/B
 import { orgList, userList, userEnable, userDel } from '../../utils/api';
 import DialogTips from '../../utils/DialogTips'
 import errorHandle from '../../utils/errorHandle'
+import command from '../../utils/command'
 
 export default class List extends React.Component {
     constructor(props) {
@@ -37,19 +38,16 @@ export default class List extends React.Component {
 
     componentDidMount() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
         const dialogTips = DialogTips({ type: 'loading' })
 
         let enable = false;
-        let disable = false;
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Enable') {
-                    enable = true;
-                }
-            })
-        }
+        commands.map((item, index) => {
+            if (item === 'Enable') {
+                enable = true;
+            }
+        })
 
         this.setState({
             enable: enable,
@@ -84,24 +82,23 @@ export default class List extends React.Component {
 
     renderCommand() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
+
         let temp = [];
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Add') {
-                    temp.push(<CreateButton key={index} action={this.handleCreate} disabled={this.state.selected === null ? true : false} />)
-                };
+        commands.map((item, index) => {
+            if (item === 'Add') {
+                temp.push(<CreateButton key={index} action={this.handleCreate} disabled={this.state.selected === null ? true : false} />)
+            };
 
-                if (item === 'Mod') {
-                    temp.push(<EditorButton key={index} action={this.handleEditor} disabled={this.state.checkedUser === null ? true : false} />)
-                }
+            if (item === 'Mod') {
+                temp.push(<EditorButton key={index} action={this.handleEditor} disabled={this.state.checkedUser === null ? true : false} />)
+            }
 
-                if (item === 'Del') {
-                    temp.push(<DelButton key={index} action={this.confirmDel} disabled={this.state.checkedUser === null ? true : false} />)
-                }
-            })
-        }
+            if (item === 'Del') {
+                temp.push(<DelButton key={index} action={this.confirmDel} disabled={this.state.checkedUser === null ? true : false} />)
+            }
+        })
 
         return temp;
     }
@@ -145,13 +142,13 @@ export default class List extends React.Component {
     }
 
     handleCreate() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/create';
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user/' + this.state.selected.id + '/create';
 
         this.props.router.push(editorPath)
     }
 
     handleEditor() {
-        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user/' + this.state.selected.id + '/' + this.state.checkedUser.id;
+        const editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user/' + this.state.selected.id + '/' + this.state.checkedUser.id;
 
         this.props.router.push(editorPath)
     }
@@ -230,83 +227,77 @@ export default class List extends React.Component {
 
     render() {
         return (
-            <div>
-                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
-                <AsideBar router={this.props.router} />
-                <div className="main">
-                    <div className="user">
-                        <h5>
-                            <i className="fa fa-user" aria-hidden="true"></i>&nbsp;用户管理
+            <div className="user">
+                <h5>
+                    <i className="fa fa-user" aria-hidden="true"></i>&nbsp;用户管理
                     <div className="btn-group float-right mr-4" role="group">
-                                {this.renderCommand()}
-                            </div>
-                        </h5>
+                        {this.renderCommand()}
+                    </div>
+                </h5>
 
-                        <div className="main-container">
-                            <div className="d-flex align-items-stretch flex-nowrap">
-                                <div className={this.state.orgList === null ? 'hide' : 'w300'}>
-                                    <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
-                                </div>
+                <div className="main-container">
+                    <div className="d-flex align-items-stretch flex-nowrap">
+                        <div className={this.state.orgList === null ? 'hide' : 'w300'}>
+                            <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
+                        </div>
 
-                                <div className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
-                                    <p className={this.state.selected === null ? 'hide' : 'h6 pb-3 b-b'}>{this.state.selected ? this.state.selected.name : ''}</p>
+                        <div className={this.state.selected === null ? 'hide' : 'flex-cell pl-3 b-l'}>
+                            <p className={this.state.selected === null ? 'hide' : 'h6 pb-3 b-b'}>{this.state.selected ? this.state.selected.name : ''}</p>
 
-                                    <table className={this.state.userList === null ? 'hide' : 'table table-bordered table-sm'}>
-                                        <thead>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>状态</th>
-                                                <th>用户名</th>
-                                                <th>姓名</th>
-                                                <th>昵称</th>
-                                                <th>电话号码</th>
-                                                <th>电子邮件</th>
-                                                <th>IM(QQ)</th>
-                                                <th>用户角色</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                this.state.userList.map((item) => {
-                                                    return (
-                                                        <tr key={item.cId} data-uid={item.cId}>
-                                                            <td>
-                                                                <div className="form-check form-check">
-                                                                    <label className="form-check-label">
-                                                                        <input
-                                                                            className="form-check-input"
-                                                                            type="radio"
-                                                                            name="user"
-                                                                            value={item.cId}
-                                                                            onChange={this.checkedUser}
-                                                                            checked={(this.state.checkedUser && this.state.checkedUser.id === item.cId) ? true : false}
-                                                                        />
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <ToggleButton
-                                                                    uid={item.cId}
-                                                                    enable={this.state.enable}
-                                                                    available={item.cAvailable}
-                                                                    action={this.handleToggle}
+                            <table className={this.state.userList === null ? 'hide' : 'table table-bordered table-sm'}>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>状态</th>
+                                        <th>用户名</th>
+                                        <th>姓名</th>
+                                        <th>昵称</th>
+                                        <th>电话号码</th>
+                                        <th>电子邮件</th>
+                                        <th>IM(QQ)</th>
+                                        <th>用户角色</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.userList.map((item) => {
+                                            return (
+                                                <tr key={item.cId} data-uid={item.cId}>
+                                                    <td>
+                                                        <div className="form-check form-check">
+                                                            <label className="form-check-label">
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="radio"
+                                                                    name="user"
+                                                                    value={item.cId}
+                                                                    onChange={this.checkedUser}
+                                                                    checked={(this.state.checkedUser && this.state.checkedUser.id === item.cId) ? true : false}
                                                                 />
-                                                            </td>
-                                                            <td>{item.cLoginname}</td>
-                                                            <td data-name>{item.cRealname}</td>
-                                                            <td>{item.cNickname}</td>
-                                                            <td>{item.cPhone}</td>
-                                                            <td>{item.cEmail}</td>
-                                                            <td>{item.cQq}</td>
-                                                            <td>{item.roles.map((role) => { return role.cName }).join(',')}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <ToggleButton
+                                                            uid={item.cId}
+                                                            enable={this.state.enable}
+                                                            available={item.cAvailable}
+                                                            action={this.handleToggle}
+                                                        />
+                                                    </td>
+                                                    <td>{item.cLoginname}</td>
+                                                    <td data-name>{item.cRealname}</td>
+                                                    <td>{item.cNickname}</td>
+                                                    <td>{item.cPhone}</td>
+                                                    <td>{item.cEmail}</td>
+                                                    <td>{item.cQq}</td>
+                                                    <td>{item.roles.map((role) => { return role.cName }).join(',')}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { logout } from '../../utils/api';
 import Dialog from './Dialog';
+import { clearProfile } from '../../utils/userProfile'
 
 export default class NavBar extends React.Component {
     constructor(props) {
@@ -25,8 +26,9 @@ export default class NavBar extends React.Component {
     }
 
     signout() {
-        logout();
-        this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'login');
+        logout()
+        clearProfile()
+        browserHistory.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'login')
     }
 
     render() {

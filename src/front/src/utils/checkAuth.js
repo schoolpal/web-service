@@ -1,21 +1,39 @@
+import { getProfile } from '../utils/userProfile'
+
+
 export default function checkAuth(nextState, replace) {
-    const temp = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-    let hasMatch = false;
+    const targetPath = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
+    const profile = getProfile();
+    console.log('start check auth ...')
+    console.log('check path is ' + targetPath)
+    if (profile) {
+        let hasMatch = false;
 
-    console.log('======== check auth ========')
+        if (profile.access.length) {
+            for (let i = 0; i < profile.access.length; i++) {
+                const id = profile.access[i];
 
-    if (SCHOOLPAL_CONFIG.accessRules) {
-        for (let i = 0; i < SCHOOLPAL_CONFIG.accessRules.length; i++) {
-            if (SCHOOLPAL_CONFIG.accessRules[i].test(temp) === true) {
-                hasMatch = true;
-                break;
+                if (SCHOOLPAL_CONFIG.AUTH_DIC[id].PATH_RULE.test(targetPath) === true) {
+                    hasMatch = true;
+                    break;
+                }
             }
         }
 
         if (hasMatch === false) {
+            console.log('check auth result is not authorize !')
+
             replace({
-                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'error'
+                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'error',
+                state: { text: '没有权限访问该页面 ！' }
             })
         }
+    } else {
+        console.log('check auth result is not login !')
+
+        replace({
+            pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+            state: { nextPathname: nextState.location.pathname }
+        })
     }
 }

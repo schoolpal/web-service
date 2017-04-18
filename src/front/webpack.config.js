@@ -23,6 +23,7 @@ module.exports = {
     output: {
         path: BUILD_PATH,
         filename: '[name].js',
+        chunkFilename: "[name].js",
         publicPath: '/web/html/dist/'
     },
     module: {
