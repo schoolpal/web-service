@@ -17,17 +17,19 @@
     <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
   </resultMap>
   <select id="selectManyByParentId" parameterType="java.lang.Integer" resultMap="selectManyByParentIdResultMap">
-    SELECT a.*, b.cnt 
+<!--     SELECT a.*, b.cnt 
     FROM (SELECT * FROM t_activity WHERE parent_id = 5) AS a
     LEFT JOIN 
     (SELECT parent_id, COUNT(*) AS cnt FROM t_activity 
         WHERE parent_id IN (SELECT id FROM t_activity WHERE parent_id = 5)
         GROUP BY parent_id) AS b
-    ON a.id = b.parent_id
-    select 
-    <include refid="Base_Column_List" />
-    from t_activity
-    where id = #{id,jdbcType=INTEGER}
+    ON a.id = b.parent_id -->
+	SELECT a.*,
+	(
+	  SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id=a.id
+	) AS children
+	FROM t_activity AS a 
+	WHERE a.parent_id=#{id,jdbcType=INTEGER}
   </select>
 
 

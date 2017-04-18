@@ -30,12 +30,6 @@ public class AjaxActivityController {
 	public String listRoles(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-/*			if (!AuthorizationHelper.CheckPermissionByMappedPath(
-					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}*/
 			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
 				res.setCode(400);
 				res.setDetail("No permission");
