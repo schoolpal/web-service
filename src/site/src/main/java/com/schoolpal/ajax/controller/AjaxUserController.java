@@ -141,7 +141,7 @@ public class AjaxUserController {
 			}
 			
 			TUser user = userServ.getCachedUser(currentUser);
-			if (oriPass != user.getcLoginpass()) {
+			if (!oriPass.equals(userServ.queryLoginPassByName(user.getcLoginname()))) {
 				res.setCode(405);
 				res.setDetail("Wrong original password");
 				break;
