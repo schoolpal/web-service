@@ -5,127 +5,127 @@ webpackJsonp([0],{
 
 	'use strict';
 
-	var _vendor = __webpack_require__(6);
+	var _vendor = __webpack_require__(7);
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _Dashboard = __webpack_require__(229);
+	var _Dashboard = __webpack_require__(230);
 
 	var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
-	var _App = __webpack_require__(237);
+	var _App = __webpack_require__(238);
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _Sys = __webpack_require__(243);
+	var _Sys = __webpack_require__(244);
 
 	var _Sys2 = _interopRequireDefault(_Sys);
 
-	var _Crm = __webpack_require__(244);
+	var _Crm = __webpack_require__(245);
 
 	var _Crm2 = _interopRequireDefault(_Crm);
 
-	var _List = __webpack_require__(246);
+	var _List = __webpack_require__(247);
 
 	var _List2 = _interopRequireDefault(_List);
 
-	var _Editor = __webpack_require__(248);
+	var _Editor = __webpack_require__(250);
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _View = __webpack_require__(251);
+	var _View = __webpack_require__(253);
 
 	var _View2 = _interopRequireDefault(_View);
 
-	var _List3 = __webpack_require__(252);
+	var _List3 = __webpack_require__(673);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(253);
+	var _Editor3 = __webpack_require__(674);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _View3 = __webpack_require__(254);
+	var _View3 = __webpack_require__(675);
 
 	var _View4 = _interopRequireDefault(_View3);
 
-	var _List5 = __webpack_require__(255);
+	var _List5 = __webpack_require__(676);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _Editor5 = __webpack_require__(256);
+	var _Editor5 = __webpack_require__(677);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _View5 = __webpack_require__(257);
+	var _View5 = __webpack_require__(678);
 
 	var _View6 = _interopRequireDefault(_View5);
 
-	var _List7 = __webpack_require__(258);
+	var _List7 = __webpack_require__(679);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor7 = __webpack_require__(259);
+	var _Editor7 = __webpack_require__(680);
 
 	var _Editor8 = _interopRequireDefault(_Editor7);
 
-	var _View7 = __webpack_require__(260);
+	var _View7 = __webpack_require__(681);
 
 	var _View8 = _interopRequireDefault(_View7);
 
-	var _List9 = __webpack_require__(261);
+	var _List9 = __webpack_require__(682);
 
 	var _List10 = _interopRequireDefault(_List9);
 
-	var _View9 = __webpack_require__(262);
+	var _View9 = __webpack_require__(683);
 
 	var _View10 = _interopRequireDefault(_View9);
 
-	var _List11 = __webpack_require__(263);
+	var _List11 = __webpack_require__(684);
 
 	var _List12 = _interopRequireDefault(_List11);
 
-	var _Editor9 = __webpack_require__(265);
+	var _Editor9 = __webpack_require__(685);
 
 	var _Editor10 = _interopRequireDefault(_Editor9);
 
-	var _List13 = __webpack_require__(267);
+	var _List13 = __webpack_require__(687);
 
 	var _List14 = _interopRequireDefault(_List13);
 
-	var _Editor11 = __webpack_require__(268);
+	var _Editor11 = __webpack_require__(688);
 
 	var _Editor12 = _interopRequireDefault(_Editor11);
 
-	var _List15 = __webpack_require__(269);
+	var _List15 = __webpack_require__(689);
 
 	var _List16 = _interopRequireDefault(_List15);
 
-	var _List17 = __webpack_require__(271);
+	var _List17 = __webpack_require__(691);
 
 	var _List18 = _interopRequireDefault(_List17);
 
-	var _Editor13 = __webpack_require__(272);
+	var _Editor13 = __webpack_require__(692);
 
 	var _Editor14 = _interopRequireDefault(_Editor13);
 
-	var _login = __webpack_require__(273);
+	var _login = __webpack_require__(693);
 
 	var _login2 = _interopRequireDefault(_login);
 
-	var _Error = __webpack_require__(274);
+	var _Error = __webpack_require__(694);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(275);
+	var _checkAuth = __webpack_require__(695);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -163,10 +163,10 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(276);
-	__webpack_require__(280);
-	__webpack_require__(283);
-	__webpack_require__(285);
+	__webpack_require__(696);
+	__webpack_require__(700);
+	__webpack_require__(703);
+	__webpack_require__(705);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -186,13 +186,31 @@ webpackJsonp([0],{
 	            _react2.default.createElement(_reactRouter.Route, { path: 'user', component: _List18.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'user/:oid/:uid', component: _Editor14.default })
 	        ),
+	        _react2.default.createElement(
+	            _reactRouter.Route,
+	            { path: 'crm', component: _Crm2.default },
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity', component: _List2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity/:id', component: _View2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity/edit/:id', component: _Editor2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance', component: _List4.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance/:id', component: _View4.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance/edit/:id', component: _Editor4.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance', component: _List6.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance/:id', component: _View6.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance/edit/:id', component: _Editor6.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/contract', component: _List8.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/contract/:id', component: _View8.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/contract/edit/:id', component: _Editor8.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/student', component: _List10.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/student/:id', component: _View10.default })
+	        ),
 	        _react2.default.createElement(_reactRouter.Route, { path: '*', component: _Error2.default })
 	    )
 	), document.querySelector('#app'));
 
 /***/ },
 
-/***/ 229:
+/***/ 230:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -203,27 +221,27 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _errorHandle = __webpack_require__(236);
+	var _errorHandle = __webpack_require__(237);
 
 	var _errorHandle2 = _interopRequireDefault(_errorHandle);
 
@@ -316,7 +334,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 230:
+/***/ 231:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -327,23 +345,23 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _Dialog = __webpack_require__(233);
+	var _Dialog = __webpack_require__(234);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _userProfile = __webpack_require__(234);
+	var _userProfile = __webpack_require__(235);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -432,7 +450,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 231:
+/***/ 232:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -470,9 +488,9 @@ webpackJsonp([0],{
 	exports.userDel = userDel;
 	exports.checkName = checkName;
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _conversion = __webpack_require__(232);
+	var _conversion = __webpack_require__(233);
 
 	function io(options, callback) {
 	    if (!(this instanceof io)) {
@@ -1008,7 +1026,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 232:
+/***/ 233:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1141,7 +1159,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 233:
+/***/ 234:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1152,11 +1170,11 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -1276,7 +1294,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 234:
+/***/ 235:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1307,7 +1325,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 235:
+/***/ 236:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1318,13 +1336,13 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _userProfile = __webpack_require__(234);
+	var _userProfile = __webpack_require__(235);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1380,7 +1398,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 236:
+/***/ 237:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1400,7 +1418,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 237:
+/***/ 238:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1411,29 +1429,29 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _ChangePwd = __webpack_require__(238);
+	var _ChangePwd = __webpack_require__(239);
 
 	var _ChangePwd2 = _interopRequireDefault(_ChangePwd);
 
-	var _userProfile = __webpack_require__(234);
+	var _userProfile = __webpack_require__(235);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1496,7 +1514,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 238:
+/***/ 239:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1507,21 +1525,21 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _userProfile = __webpack_require__(234);
+	var _userProfile = __webpack_require__(235);
 
-	var _mixedMD = __webpack_require__(239);
+	var _mixedMD = __webpack_require__(240);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -1660,7 +1678,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 239:
+/***/ 240:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1670,7 +1688,7 @@ webpackJsonp([0],{
 	});
 	exports.default = mixedMD5;
 
-	var _md = __webpack_require__(240);
+	var _md = __webpack_require__(241);
 
 	var _md2 = _interopRequireDefault(_md);
 
@@ -1682,13 +1700,13 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 240:
+/***/ 241:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
 		if (true) {
 			// CommonJS
-			module.exports = exports = factory(__webpack_require__(241));
+			module.exports = exports = factory(__webpack_require__(242));
 		}
 		else if (typeof define === "function" && define.amd) {
 			// AMD
@@ -1956,7 +1974,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 241:
+/***/ 242:
 /***/ function(module, exports, __webpack_require__) {
 
 	;(function (root, factory) {
@@ -2722,7 +2740,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 242:
+/***/ 243:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2779,7 +2797,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 243:
+/***/ 244:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2790,15 +2808,15 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
@@ -2843,7 +2861,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 244:
+/***/ 245:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2854,29 +2872,29 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _errorHandle = __webpack_require__(236);
+	var _errorHandle = __webpack_require__(237);
 
 	var _errorHandle2 = _interopRequireDefault(_errorHandle);
 
@@ -2982,7 +3000,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 245:
+/***/ 246:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2993,7 +3011,7 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -3137,7 +3155,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 246:
+/***/ 247:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3148,13 +3166,17 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
+
+	var _command = __webpack_require__(249);
+
+	var _command2 = _interopRequireDefault(_command);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3182,18 +3204,14 @@ webpackJsonp([0],{
 	            var _this2 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Add') {
-	                        temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: _this2.props.location.pathname + '/edit/create' }));
-	                    };
-	                });
-	            }
+	            commands.map(function (item, index) {
+	                if (item === 'Add') {
+	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: _this2.props.location.pathname + '/edit/create' }));
+	                };
+	            });
 
 	            return temp;
 	        }
@@ -3384,7 +3402,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 247:
+/***/ 248:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3401,11 +3419,11 @@ webpackJsonp([0],{
 	exports.BackButton = BackButton;
 	exports.ToggleButton = ToggleButton;
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3563,7 +3581,36 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 248:
+/***/ 249:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = command;
+
+	var _userProfile = __webpack_require__(235);
+
+	function command(path) {
+	    var profile = (0, _userProfile.getProfile)();
+	    var command = profile.roles.find(function (item) {
+	        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.id].PATH_RULE.test(path) === true) {
+	            return item;
+	        }
+	    });
+
+	    if (command && command.command.length) {
+	        return command.command;
+	    }
+
+	    return [];
+	}
+
+/***/ },
+
+/***/ 250:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3574,15 +3621,15 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3592,7 +3639,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(250);
+	__webpack_require__(252);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -3776,7 +3823,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 249:
+/***/ 251:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3795,7 +3842,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 250:
+/***/ 252:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5428,7 +5475,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 251:
+/***/ 253:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5439,15 +5486,19 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _Button = __webpack_require__(248);
+
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(247);
+	var _command = __webpack_require__(249);
+
+	var _command2 = _interopRequireDefault(_command);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5457,7 +5508,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(250);
+	__webpack_require__(252);
 
 	var View = function (_React$Component) {
 	    _inherits(View, _React$Component);
@@ -5474,27 +5525,91 @@ webpackJsonp([0],{
 	    }
 
 	    _createClass(View, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            __webpack_require__.e/* nsure */(1, function (require) {
+	                var echarts = __webpack_require__(254);
+	                var myChart = echarts.init(document.getElementById('chart'));
+
+	                myChart.setOption({
+	                    tooltip: {
+	                        trigger: 'item',
+	                        formatter: "{a} <br/>{b} : {c}"
+	                    },
+	                    series: [{
+	                        name: '预期',
+	                        type: 'funnel',
+	                        left: '10%',
+	                        width: '80%',
+	                        label: {
+	                            normal: {
+	                                formatter: '{b}预期'
+	                            },
+	                            emphasis: {
+	                                position: 'inside',
+	                                formatter: '{b}预期: {c}'
+	                            }
+	                        },
+	                        labelLine: {
+	                            normal: {
+	                                show: false
+	                            }
+	                        },
+	                        itemStyle: {
+	                            normal: {
+	                                opacity: 0.7
+	                            }
+	                        },
+	                        data: [{ value: 10, name: '签约客户量' }, { value: 50, name: '转化机会量' }, { value: 100, name: '获取线索量' }]
+	                    }, {
+	                        name: '实际',
+	                        type: 'funnel',
+	                        left: '10%',
+	                        width: '80%',
+	                        maxSize: '80%',
+	                        label: {
+	                            normal: {
+	                                position: 'inside',
+	                                formatter: '{c}',
+	                                textStyle: {
+	                                    color: '#fff'
+	                                }
+	                            },
+	                            emphasis: {
+	                                position: 'inside',
+	                                formatter: '{b}实际: {c}'
+	                            }
+	                        },
+	                        itemStyle: {
+	                            normal: {
+	                                opacity: 0.5,
+	                                borderColor: '#fff',
+	                                borderWidth: 2
+	                            }
+	                        },
+	                        data: [{ value: 5, name: '签约客户量' }, { value: 30, name: '转化机会量' }, { value: 100, name: '获取线索量' }]
+	                    }]
+	                });
+	            });
+	        }
+	    }, {
 	        key: 'renderCommand',
 	        value: function renderCommand() {
 	            var _this2 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this2.handleEditor }));
-	                    }
+	            commands.map(function (item, index) {
+	                if (item === 'Mod') {
+	                    temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this2.handleEditor }));
+	                }
 
-	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this2.confirmDel }));
-	                    }
-	                });
-	            }
+	                if (item === 'Del') {
+	                    temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this2.confirmDel }));
+	                }
+	            });
 
 	            return temp;
 	        }
@@ -5554,79 +5669,108 @@ webpackJsonp([0],{
 	                    { className: 'main-container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'w500' },
+	                        { className: 'd-flex align-items-stretch flex-nowrap' },
 	                        _react2.default.createElement(
-	                            'dl',
-	                            null,
+	                            'div',
+	                            { className: 'w300 pr-3 b-r' },
 	                            _react2.default.createElement(
-	                                'dt',
+	                                'dl',
 	                                null,
-	                                '\u6D3B\u52A8\u540D\u79F0'
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u6D3B\u52A8\u540D\u79F0'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u7236\u7EA7\u5E02\u573A\u6D3B\u52A8'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u65F6\u95F4\u5468\u671F'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx - xxxxx'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u9884\u7B97\u8D39\u7528'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u5B9E\u9645\u8D39\u7528'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u521B\u5EFA\u4EBA'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dt',
+	                                    null,
+	                                    '\u521B\u5EFA\u65F6\u95F4'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'dd',
+	                                    { className: 'b-l' },
+	                                    'xxxxx'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement('div', { id: 'chart', className: 'chart' }),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'flex-cell' },
+	                            _react2.default.createElement(
+	                                'p',
+	                                { className: 'mb-0' },
+	                                '\u7B7E\u7EA6\u5BA2\u6237\u91D1\u989D'
 	                            ),
 	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx'
+	                                'p',
+	                                { className: 'mb-3' },
+	                                '180000.00'
 	                            ),
 	                            _react2.default.createElement(
-	                                'dt',
+	                                'p',
+	                                { className: 'mb-0' },
+	                                '\u6295\u8D44\u56DE\u62A5\u7387\uFF08ROI\uFF09'
+	                            ),
+	                            _react2.default.createElement(
+	                                'p',
 	                                null,
-	                                '\u7236\u7EA7\u5E02\u573A\u6D3B\u52A8'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dt',
-	                                null,
-	                                '\u65F6\u95F4\u5468\u671F'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx - xxxxx'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dt',
-	                                null,
-	                                '\u9884\u7B97\u8D39\u7528'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dt',
-	                                null,
-	                                '\u5B9E\u9645\u8D39\u7528'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dt',
-	                                null,
-	                                '\u521B\u5EFA\u4EBA'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dt',
-	                                null,
-	                                '\u521B\u5EFA\u65F6\u95F4'
-	                            ),
-	                            _react2.default.createElement(
-	                                'dd',
-	                                { className: 'b-l' },
-	                                'xxxxx'
+	                                '40%'
 	                            )
 	                        )
 	                    )
@@ -5642,7 +5786,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 252:
+/***/ 673:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5653,13 +5797,13 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5988,7 +6132,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 253:
+/***/ 674:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5999,23 +6143,23 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -6771,7 +6915,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 254:
+/***/ 675:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6782,23 +6926,23 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -7635,7 +7779,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 255:
+/***/ 676:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7646,13 +7790,13 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8013,7 +8157,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 256:
+/***/ 677:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8024,23 +8168,23 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -8818,7 +8962,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 257:
+/***/ 678:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8829,23 +8973,23 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -9700,7 +9844,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 258:
+/***/ 679:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9711,11 +9855,11 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9863,7 +10007,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 259:
+/***/ 680:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9874,23 +10018,23 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -9902,7 +10046,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(250);
+	__webpack_require__(252);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -10742,7 +10886,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 260:
+/***/ 681:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10753,15 +10897,15 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11555,7 +11699,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 261:
+/***/ 682:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11566,13 +11710,13 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11704,7 +11848,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 262:
+/***/ 683:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11715,15 +11859,15 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12416,7 +12560,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 263:
+/***/ 684:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12427,37 +12571,37 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _Dialog = __webpack_require__(233);
+	var _Dialog = __webpack_require__(234);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _conversion = __webpack_require__(232);
+	var _conversion = __webpack_require__(233);
 
-	var _command = __webpack_require__(264);
+	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
 
@@ -12810,36 +12954,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 264:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = command;
-
-	var _userProfile = __webpack_require__(234);
-
-	function command(path) {
-	    var profile = (0, _userProfile.getProfile)();
-	    var command = profile.roles.find(function (item) {
-	        if (SCHOOLPAL_CONFIG.AUTH_DIC[item.id].PATH_RULE.test(path) === true) {
-	            return item;
-	        }
-	    });
-
-	    if (command && command.command.length) {
-	        return command.command;
-	    }
-
-	    return [];
-	}
-
-/***/ },
-
-/***/ 265:
+/***/ 685:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12850,33 +12965,33 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -12916,8 +13031,8 @@ webpackJsonp([0],{
 
 	            dialogTips.open();
 
-	            __webpack_require__.e/* nsure */(1, function (require) {
-	                __webpack_require__(266);
+	            __webpack_require__.e/* nsure */(2, function (require) {
+	                __webpack_require__(686);
 
 	                if (_this2.props.params.id === 'create') {
 	                    (0, _api.orgList)().done(function (data) {
@@ -13224,7 +13339,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 267:
+/***/ 687:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13235,41 +13350,41 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Dialog = __webpack_require__(233);
+	var _Dialog = __webpack_require__(234);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _command = __webpack_require__(264);
+	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
 
@@ -13586,7 +13701,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 268:
+/***/ 688:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13597,29 +13712,29 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -14043,7 +14158,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 269:
+/***/ 689:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14054,41 +14169,41 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _Alerts = __webpack_require__(270);
+	var _Alerts = __webpack_require__(690);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _command = __webpack_require__(264);
+	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
 
@@ -14627,7 +14742,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 270:
+/***/ 690:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14637,7 +14752,7 @@ webpackJsonp([0],{
 	});
 	exports.default = Alerts;
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -14661,7 +14776,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 271:
+/***/ 691:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14672,45 +14787,45 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _OrgTree = __webpack_require__(245);
+	var _OrgTree = __webpack_require__(246);
 
 	var _OrgTree2 = _interopRequireDefault(_OrgTree);
 
-	var _Dialog = __webpack_require__(233);
+	var _Dialog = __webpack_require__(234);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _errorHandle = __webpack_require__(236);
+	var _errorHandle = __webpack_require__(237);
 
 	var _errorHandle2 = _interopRequireDefault(_errorHandle);
 
-	var _command = __webpack_require__(264);
+	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
 
@@ -15146,7 +15261,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 272:
+/***/ 692:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15157,37 +15272,37 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(174);
+	var _reactRouter = __webpack_require__(175);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _Alerts = __webpack_require__(270);
+	var _Alerts = __webpack_require__(690);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
-	var _subTitle = __webpack_require__(249);
+	var _subTitle = __webpack_require__(251);
 
 	var _subTitle2 = _interopRequireDefault(_subTitle);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _mixedMD = __webpack_require__(239);
+	var _mixedMD = __webpack_require__(240);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
-	var _DialogTips = __webpack_require__(242);
+	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
@@ -15572,7 +15687,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 273:
+/***/ 693:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15583,29 +15698,29 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(40);
+	var _reactDom = __webpack_require__(41);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _Button = __webpack_require__(247);
+	var _Button = __webpack_require__(248);
 
-	var _Dialog = __webpack_require__(233);
+	var _Dialog = __webpack_require__(234);
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
-	var _api = __webpack_require__(231);
+	var _api = __webpack_require__(232);
 
-	var _userProfile = __webpack_require__(234);
+	var _userProfile = __webpack_require__(235);
 
-	var _mixedMD = __webpack_require__(239);
+	var _mixedMD = __webpack_require__(240);
 
 	var _mixedMD2 = _interopRequireDefault(_mixedMD);
 
@@ -15669,7 +15784,7 @@ webpackJsonp([0],{
 	                        var user = {};
 	                        var func = [];
 
-	                        user.name = data.cNickname;
+	                        user.name = data.cRealname;
 	                        user.roles = [];
 	                        user.access = [];
 
@@ -15769,7 +15884,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 274:
+/***/ 694:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15780,15 +15895,15 @@ webpackJsonp([0],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(9);
+	var _react = __webpack_require__(10);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _NavBar = __webpack_require__(230);
+	var _NavBar = __webpack_require__(231);
 
 	var _NavBar2 = _interopRequireDefault(_NavBar);
 
-	var _AsideBar = __webpack_require__(235);
+	var _AsideBar = __webpack_require__(236);
 
 	var _AsideBar2 = _interopRequireDefault(_AsideBar);
 
@@ -15841,7 +15956,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 275:
+/***/ 695:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15851,7 +15966,7 @@ webpackJsonp([0],{
 	});
 	exports.default = checkAuth;
 
-	var _userProfile = __webpack_require__(234);
+	var _userProfile = __webpack_require__(235);
 
 	function checkAuth(nextState, replace) {
 	    var targetPath = nextState.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
@@ -15892,14 +16007,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 276:
+/***/ 696:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 278:
+/***/ 698:
 /***/ function(module, exports) {
 
 	/*
@@ -15956,7 +16071,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 279:
+/***/ 699:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -16209,23 +16324,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 280:
+/***/ 700:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 283:
+/***/ 703:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(284);
+	var content = __webpack_require__(704);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(279)(content, {});
+	var update = __webpack_require__(699)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -16243,15 +16358,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 284:
+/***/ 704:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(278)();
+	exports = module.exports = __webpack_require__(698)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  width: 60px;\n  z-index: 100;\n}\n.aside-bar .btn {\n  padding: 0;\n  height: 54px;\n  border-radius: 0;\n}\n.aside-bar .btn-link {\n  line-height: 54px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.org-panel {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  bottom: 0;\n  right: 0;\n  background: rgba(0, 0, 0, 0.7);\n  z-index: 101;\n}\n.org-panel .org-oanel-content {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 400px;\n  background: #fff;\n  border-right: 2px solid #0275d8;\n  z-index: 102;\n}\n.datepicker {\n  padding: 4px;\n  direction: ltr;\n}\n.datepicker-inline {\n  width: 280px;\n}\n.datepicker.datepicker-rtl {\n  direction: rtl;\n}\n.datepicker.datepicker-rtl table tr td span {\n  float: right;\n}\n.datepicker-dropdown {\n  top: 0;\n  left: 0;\n}\n.datepicker > div {\n  display: none;\n}\n.datepicker.days div.datepicker-days {\n  display: block;\n}\n.datepicker.months div.datepicker-months {\n  display: block;\n}\n.datepicker.years div.datepicker-years {\n  display: block;\n}\n.datepicker table {\n  margin: 0;\n  float: left;\n  border-spacing: 0;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.datepicker td,\n.datepicker th {\n  text-align: center;\n  width: 38px;\n  height: 28px;\n  line-height: 28px;\n}\n.table-striped .datepicker table tr td,\n.table-striped .datepicker table tr th {\n  background-color: transparent;\n}\n.datepicker table tr td.day.focused,\n.datepicker table tr td.day:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.datepicker table tr td.new,\n.datepicker table tr td.old {\n  color: #999;\n}\n.datepicker table tr td.disabled,\n.datepicker table tr td.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td.today,\n.datepicker table tr td.today.disabled,\n.datepicker table tr td.today.disabled:hover,\n.datepicker table tr td.today:hover {\n  /*@todayBackground: lighten(@orange, 30%);\n\t\t\t.button-variant(#000,@todayBackground, spin(@todayBackground, 20));*/\n  color: #f89406;\n}\n.datepicker table tr td.today:hover:hover {\n  color: #f89406;\n}\n.datepicker table tr td.today.active:hover {\n  color: #f89406;\n}\n.datepicker table tr td.range,\n.datepicker table tr td.range.disabled,\n.datepicker table tr td.range.disabled:hover,\n.datepicker table tr td.range:hover {\n  background: #eee;\n}\n.datepicker table tr td.range.today,\n.datepicker table tr td.range.today.disabled,\n.datepicker table tr td.range.today.disabled:hover,\n.datepicker table tr td.range.today:hover {\n  color: #f89406;\n}\n.datepicker table tr td.selected,\n.datepicker table tr td.selected.disabled,\n.datepicker table tr td.selected.disabled:hover,\n.datepicker table tr td.selected:hover {\n  background-color: #b3b3b3;\n  border-color: #808080;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td.active,\n.datepicker table tr td.active.disabled,\n.datepicker table tr td.active.disabled:hover,\n.datepicker table tr td.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span {\n  display: block;\n  width: 23%;\n  height: 54px;\n  line-height: 54px;\n  float: left;\n  margin: 1%;\n  cursor: pointer;\n}\n.datepicker table tr td span:hover {\n  background: #eee;\n}\n.datepicker table tr td span.disabled,\n.datepicker table tr td span.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td span.active,\n.datepicker table tr td span.active.disabled,\n.datepicker table tr td span.active.disabled:hover,\n.datepicker table tr td span.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span.new,\n.datepicker table tr td span.old {\n  color: #999;\n}\n.datepicker th.datepicker-switch {\n  width: 145px;\n  font-size: 18px;\n  font-weight: 600;\n  height: 38px;\n}\n.datepicker .next b,\n.datepicker .prev b {\n  display: block;\n  width: 0;\n  height: 0;\n  line-height: 0;\n  border-top: 8px solid transparent;\n  border-bottom: 8px solid transparent;\n  border-left: 8px solid #bcbcbc;\n  border-right: 8px solid #bcbcbc;\n}\n.datepicker .date-header .next:hover,\n.datepicker .date-header .prev:hover {\n  background: transparent;\n}\n.datepicker .prev b {\n  margin-left: 2px;\n  border-left-color: transparent;\n}\n.datepicker .next b {\n  margin-left: 22px;\n  border-right-color: transparent;\n}\n.datepicker .week-content .dow {\n  border-top: 1px solid #e5e5e5;\n  border-bottom: 1px solid #e5e5e5;\n  border-left: none;\n  border-right: none;\n  margin: 0;\n  color: #999;\n  font-weight: 600;\n}\n.datepicker tfoot tr th,\n.datepicker thead tr:first-child th {\n  cursor: pointer;\n}\n.datepicker tfoot tr th:hover,\n.datepicker thead tr:first-child th:hover {\n  background: #eee;\n}\n.datepicker .cw {\n  font-size: 10px;\n  width: 12px;\n  padding: 0 2px 0 5px;\n  vertical-align: middle;\n}\n.datepicker thead tr:first-child th.cw {\n  cursor: default;\n  background-color: transparent;\n}\n.datepicker.dropdown-menu {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 1000;\n  float: left;\n  display: none;\n  min-width: 160px;\n  list-style: none;\n  padding: 0;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  -webkit-background-clip: padding-box;\n  -moz-background-clip: padding;\n  background-clip: padding-box;\n  *border-right-width: 2px;\n  *border-bottom-width: 2px;\n  color: #333333;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  line-height: 18px;\n}\n.datepicker .timepicker-container {\n  float: left;\n  border-left: 1px solid #e5e5e5;\n}\n.datepicker.datepicker-small .datepicker-days td,\n.datepicker.datepicker-small .datepicker-days th {\n  text-align: center;\n  width: 28px;\n  height: 20px;\n  line-height: 20px;\n}\n.datepicker.datepicker-small .datepicker-days .next b {\n  margin-left: 2px;\n}\n.datepicker.datepicker-small .datepicker-months td {\n  width: 25px;\n}\n.datepicker.datepicker-small .datepicker-months td span {\n  height: 30px;\n  line-height: 30px;\n}\n.datepicker.datepicker-small .timepicker .picker-con span {\n  height: 24px;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n  border-radius: 0;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-t {\n  position: relative;\n}\n.b-t:before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w100 {\n  width: 100px;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected {\n  color: #d9534f;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.market dl {\n  overflow: hidden;\n}\n.market dd,\n.market dt {\n  margin: 0;\n  padding: 10px 0;\n  line-height: 1.5;\n}\n.market dt {\n  float: left;\n  padding-right: 10px;\n  width: 150px;\n  text-align: right;\n}\n.market dd {\n  margin-left: 150px;\n  padding-left: 10px;\n}\n.market li,\n.market ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.market li {\n  margin-bottom: 1rem;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  width: 60px;\n  z-index: 100;\n}\n.aside-bar .btn {\n  padding: 0;\n  height: 54px;\n  border-radius: 0;\n}\n.aside-bar .btn-link {\n  line-height: 54px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.org-panel {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  bottom: 0;\n  right: 0;\n  background: rgba(0, 0, 0, 0.7);\n  z-index: 101;\n}\n.org-panel .org-oanel-content {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 400px;\n  background: #fff;\n  border-right: 2px solid #0275d8;\n  z-index: 102;\n}\n.datepicker {\n  padding: 4px;\n  direction: ltr;\n}\n.datepicker-inline {\n  width: 280px;\n}\n.datepicker.datepicker-rtl {\n  direction: rtl;\n}\n.datepicker.datepicker-rtl table tr td span {\n  float: right;\n}\n.datepicker-dropdown {\n  top: 0;\n  left: 0;\n}\n.datepicker > div {\n  display: none;\n}\n.datepicker.days div.datepicker-days {\n  display: block;\n}\n.datepicker.months div.datepicker-months {\n  display: block;\n}\n.datepicker.years div.datepicker-years {\n  display: block;\n}\n.datepicker table {\n  margin: 0;\n  float: left;\n  border-spacing: 0;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.datepicker td,\n.datepicker th {\n  text-align: center;\n  width: 38px;\n  height: 28px;\n  line-height: 28px;\n}\n.table-striped .datepicker table tr td,\n.table-striped .datepicker table tr th {\n  background-color: transparent;\n}\n.datepicker table tr td.day.focused,\n.datepicker table tr td.day:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.datepicker table tr td.new,\n.datepicker table tr td.old {\n  color: #999;\n}\n.datepicker table tr td.disabled,\n.datepicker table tr td.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td.today,\n.datepicker table tr td.today.disabled,\n.datepicker table tr td.today.disabled:hover,\n.datepicker table tr td.today:hover {\n  /*@todayBackground: lighten(@orange, 30%);\n\t\t\t.button-variant(#000,@todayBackground, spin(@todayBackground, 20));*/\n  color: #f89406;\n}\n.datepicker table tr td.today:hover:hover {\n  color: #f89406;\n}\n.datepicker table tr td.today.active:hover {\n  color: #f89406;\n}\n.datepicker table tr td.range,\n.datepicker table tr td.range.disabled,\n.datepicker table tr td.range.disabled:hover,\n.datepicker table tr td.range:hover {\n  background: #eee;\n}\n.datepicker table tr td.range.today,\n.datepicker table tr td.range.today.disabled,\n.datepicker table tr td.range.today.disabled:hover,\n.datepicker table tr td.range.today:hover {\n  color: #f89406;\n}\n.datepicker table tr td.selected,\n.datepicker table tr td.selected.disabled,\n.datepicker table tr td.selected.disabled:hover,\n.datepicker table tr td.selected:hover {\n  background-color: #b3b3b3;\n  border-color: #808080;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td.active,\n.datepicker table tr td.active.disabled,\n.datepicker table tr td.active.disabled:hover,\n.datepicker table tr td.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span {\n  display: block;\n  width: 23%;\n  height: 54px;\n  line-height: 54px;\n  float: left;\n  margin: 1%;\n  cursor: pointer;\n}\n.datepicker table tr td span:hover {\n  background: #eee;\n}\n.datepicker table tr td span.disabled,\n.datepicker table tr td span.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td span.active,\n.datepicker table tr td span.active.disabled,\n.datepicker table tr td span.active.disabled:hover,\n.datepicker table tr td span.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span.new,\n.datepicker table tr td span.old {\n  color: #999;\n}\n.datepicker th.datepicker-switch {\n  width: 145px;\n  font-size: 18px;\n  font-weight: 600;\n  height: 38px;\n}\n.datepicker .next b,\n.datepicker .prev b {\n  display: block;\n  width: 0;\n  height: 0;\n  line-height: 0;\n  border-top: 8px solid transparent;\n  border-bottom: 8px solid transparent;\n  border-left: 8px solid #bcbcbc;\n  border-right: 8px solid #bcbcbc;\n}\n.datepicker .date-header .next:hover,\n.datepicker .date-header .prev:hover {\n  background: transparent;\n}\n.datepicker .prev b {\n  margin-left: 2px;\n  border-left-color: transparent;\n}\n.datepicker .next b {\n  margin-left: 22px;\n  border-right-color: transparent;\n}\n.datepicker .week-content .dow {\n  border-top: 1px solid #e5e5e5;\n  border-bottom: 1px solid #e5e5e5;\n  border-left: none;\n  border-right: none;\n  margin: 0;\n  color: #999;\n  font-weight: 600;\n}\n.datepicker tfoot tr th,\n.datepicker thead tr:first-child th {\n  cursor: pointer;\n}\n.datepicker tfoot tr th:hover,\n.datepicker thead tr:first-child th:hover {\n  background: #eee;\n}\n.datepicker .cw {\n  font-size: 10px;\n  width: 12px;\n  padding: 0 2px 0 5px;\n  vertical-align: middle;\n}\n.datepicker thead tr:first-child th.cw {\n  cursor: default;\n  background-color: transparent;\n}\n.datepicker.dropdown-menu {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 1000;\n  float: left;\n  display: none;\n  min-width: 160px;\n  list-style: none;\n  padding: 0;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  -webkit-background-clip: padding-box;\n  -moz-background-clip: padding;\n  background-clip: padding-box;\n  *border-right-width: 2px;\n  *border-bottom-width: 2px;\n  color: #333333;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  line-height: 18px;\n}\n.datepicker .timepicker-container {\n  float: left;\n  border-left: 1px solid #e5e5e5;\n}\n.datepicker.datepicker-small .datepicker-days td,\n.datepicker.datepicker-small .datepicker-days th {\n  text-align: center;\n  width: 28px;\n  height: 20px;\n  line-height: 20px;\n}\n.datepicker.datepicker-small .datepicker-days .next b {\n  margin-left: 2px;\n}\n.datepicker.datepicker-small .datepicker-months td {\n  width: 25px;\n}\n.datepicker.datepicker-small .datepicker-months td span {\n  height: 30px;\n  line-height: 30px;\n}\n.datepicker.datepicker-small .timepicker .picker-con span {\n  height: 24px;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n  border-radius: 0;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-t {\n  position: relative;\n}\n.b-t:before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.hide {\n  display: none;\n}\n.w100 {\n  width: 100px;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected {\n  color: #d9534f;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.market dl {\n  overflow: hidden;\n}\n.market dd,\n.market dt {\n  margin: 0;\n  padding: 10px 0;\n  line-height: 1.5;\n}\n.market dt {\n  float: left;\n  padding-right: 10px;\n  width: 150px;\n  text-align: right;\n}\n.market dd {\n  margin-left: 150px;\n  padding-left: 10px;\n}\n.market li,\n.market ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.market li {\n  margin-bottom: 1rem;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n.chart {\n  width: 300px;\n  height: 400px;\n}\n", ""]);
 
 	// exports
 

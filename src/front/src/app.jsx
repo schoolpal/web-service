@@ -80,6 +80,7 @@ ReactDOM.render((
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'login'} component={Login} />
 
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={App}>
+
             <Route path="sys" component={Sys} onEnter={checkAuth} onChange={checkAuth}>
                 <Route path="org" component={OrgList} />
                 <Route path="org/:id" component={OrgEditor} />
@@ -88,6 +89,27 @@ ReactDOM.render((
                 <Route path="auth" component={AuthList} />
                 <Route path="user" component={UserList} />
                 <Route path="user/:oid/:uid" component={UserEditor} />
+            </Route>
+
+            <Route path={'crm'} component={Crm}>
+                <Route path="market/activity" component={MarketActivityList} />
+                <Route path="market/activity/:id" component={MarketActivityView} />
+                <Route path="market/activity/edit/:id" component={MarketActivityEditor} />
+
+                <Route path="market/chance" component={MarketChanceList} />
+                <Route path="market/chance/:id" component={MarketChanceView} />
+                <Route path="market/chance/edit/:id" component={MarketChanceEditor} />
+
+                <Route path="sales/chance" component={SalesChanceList} />
+                <Route path="sales/chance/:id" component={SalesChanceView} />
+                <Route path="sales/chance/edit/:id" component={SalesChanceEditor} />
+
+                <Route path="sales/contract" component={SalesContractList} />
+                <Route path="sales/contract/:id" component={SalesContractView} />
+                <Route path="sales/contract/edit/:id" component={SalesContractEditor} />
+
+                <Route path="sales/student" component={SalesStudentList} />
+                <Route path="sales/student/:id" component={SalesStudentView} />
             </Route>
 
             <Route path='*' component={Error} />
