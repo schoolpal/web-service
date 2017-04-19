@@ -114,6 +114,10 @@ public class UserService {
 		return userDao.ifExistsByName(loginname);
 	}
 
+	public String queryLoginPassByName(String loginname) {
+		return userDao.selectPasswordByLoginName(loginname);
+	}
+
 	public boolean changeLoginPassById(String id, String oriPass, String newPass) {
 		return userDao.updateLoginPassById(id, oriPass, newPass) > 0;
 	}
