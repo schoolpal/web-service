@@ -20,6 +20,10 @@ export default function checkAuth(nextState, replace) {
             }
         }
 
+        if (SCHOOLPAL_CONFIG.ROOTPATH === nextState.location.pathname) {
+            hasMatch = true;
+        }
+
         if (hasMatch === false) {
             console.log('check auth result is not authorize !')
 
