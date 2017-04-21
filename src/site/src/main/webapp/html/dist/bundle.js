@@ -174,10 +174,10 @@ webpackJsonp([0],{
 	    _react2.default.createElement(_reactRouter.Route, { path: SCHOOLPAL_CONFIG.ROOTPATH + 'login', component: _login2.default }),
 	    _react2.default.createElement(
 	        _reactRouter.Route,
-	        { path: SCHOOLPAL_CONFIG.ROOTPATH, component: _App2.default, onEnter: _checkAuth2.default, onChange: _checkAuth2.default },
+	        { path: SCHOOLPAL_CONFIG.ROOTPATH, component: _App2.default },
 	        _react2.default.createElement(
 	            _reactRouter.Route,
-	            { path: 'sys', component: _Sys2.default },
+	            { path: 'sys', component: _Sys2.default, onEnter: _checkAuth2.default, onChange: _checkAuth2.default },
 	            _react2.default.createElement(_reactRouter.Route, { path: 'org', component: _List12.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'org/:id', component: _Editor10.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'role', component: _List14.default }),
@@ -1471,6 +1471,18 @@ webpackJsonp([0],{
 	    }
 
 	    _createClass(App, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var profile = (0, _userProfile.getProfile)();
+
+	            if (!profile) {
+	                this.props.router.replace({
+	                    pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+	                    state: { nextPathname: this.props.location.pathname }
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var profile = (0, _userProfile.getProfile)();

@@ -79,9 +79,9 @@ ReactDOM.render((
     <Router history={browserHistory}>
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'login'} component={Login} />
 
-        <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={App} onEnter={checkAuth} onChange={checkAuth}>
+        <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={App}>
 
-            <Route path="sys" component={Sys}>
+            <Route path="sys" component={Sys} onEnter={checkAuth} onChange={checkAuth}>
                 <Route path="org" component={OrgList} />
                 <Route path="org/:id" component={OrgEditor} />
                 <Route path="role" component={RoleList} />
