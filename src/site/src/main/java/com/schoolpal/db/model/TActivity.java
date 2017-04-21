@@ -27,6 +27,20 @@ public class TActivity {
     private Date createTime;
 
     private String lastUpdate;
+    
+    private Integer children;
+    
+    private boolean hasChild;
+    
+    private Integer leads;
+    
+    private Integer opportunity;
+    
+    private Integer contracts;
+    
+    private BigDecimal totalAmount;
+    
+    private BigDecimal roi;
 
     public Integer getId() {
         return id;
@@ -123,4 +137,65 @@ public class TActivity {
     public void setLastUpdate(String lastUpdate) {
         this.lastUpdate = lastUpdate == null ? null : lastUpdate.trim();
     }
+
+	public Integer getChildren() {
+		return children;
+	}
+
+	public void setChildren(Integer children) {
+		this.children = children;
+		this.hasChild = children > 0;
+	}
+
+	public boolean isHasChild() {
+		return hasChild;
+	}
+
+	public void setHasChild(boolean hasChild) {
+		this.hasChild = hasChild;
+	}
+
+	public Integer getLeads() {
+		return leads;
+	}
+
+	public void setLeads(Integer leads) {
+		this.leads = leads;
+	}
+
+	public Integer getOpportunity() {
+		return opportunity;
+	}
+
+	public void setOpportunity(Integer opportunity) {
+		this.opportunity = opportunity;
+	}
+
+	public Integer getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(Integer contracts) {
+		this.contracts = contracts;
+	}
+
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getRoi() {
+		return roi;
+	}
+
+	public void setRoi(BigDecimal roi) {
+		this.roi = roi;
+	}
+	
+	public void calculateRoi() {
+		this.roi = this.totalAmount.divide(this.cost);
+	}
 }

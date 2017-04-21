@@ -1,5 +1,7 @@
 package com.schoolpal.ajax.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TActivity;
 import com.schoolpal.db.model.TUser;
+import com.schoolpal.service.ActivityService;
 import com.schoolpal.service.UserService;
 
 @Controller
@@ -22,12 +25,14 @@ public class AjaxActivityController {
 	
 	@Autowired
 	private UserService userServ;
+	@Autowired
+	private ActivityService actServ;
 	
 	private Gson gson = new Gson();
 
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listRoles(String id) {
+	public String list(Integer id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
@@ -36,13 +41,19 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			TUser user = userServ.getCachedUser();
-
-			if (id == null || id.isEmpty()) {
+			if (id == null) {
 				res.setCode(401);
 				res.setDetail("Id cannot be empty");
 				break;
 			}
+			
+			List<TActivity> acts = null;
+			if (id <= 0){
+				acts = actServ.queryTopLevelActivities();
+			}else{
+				acts = actServ.queryActivitiesByParentId(id);
+			}
+			res.setData(acts);
 
 		} while (false);
 

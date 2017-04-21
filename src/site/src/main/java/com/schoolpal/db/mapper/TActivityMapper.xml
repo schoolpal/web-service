@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TActivityMapper">
 
-  <resultMap id="selectManyByParentIdResultMap" type="com.schoolpal.db.model.TActivity">
+  <resultMap id="selectManyResultMap" type="com.schoolpal.db.model.TActivity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="root_id" jdbcType="INTEGER" property="rootId" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
@@ -15,8 +15,9 @@
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
+    <result column="children" jdbcType="CHAR" property="children" />
   </resultMap>
-  <select id="selectManyByParentId" parameterType="java.lang.Integer" resultMap="selectManyByParentIdResultMap">
+  <select id="selectManyByParentId" resultMap="selectManyResultMap">
 <!--     SELECT a.*, b.cnt 
     FROM (SELECT * FROM t_activity WHERE parent_id = 5) AS a
     LEFT JOIN 
@@ -26,10 +27,18 @@
     ON a.id = b.parent_id -->
 	SELECT a.*,
 	(
-	  SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id=a.id
+	  SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id = a.id
 	) AS children
 	FROM t_activity AS a 
-	WHERE a.parent_id=#{id,jdbcType=INTEGER}
+	WHERE a.parent_id=#{id,jdbcType=INTEGER} AND a.id != a.parent_id
+  </select>
+  <select id="selectManyByTopLevel" resultMap="selectManyResultMap">
+    SELECT a.*,
+    (
+      SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id = a.id
+    ) AS children
+    FROM t_activity AS a 
+    WHERE a.parent_id=a.root_id
   </select>
 
 

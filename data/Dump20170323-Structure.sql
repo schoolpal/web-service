@@ -40,7 +40,7 @@ CREATE TABLE `t_activity` (
   `leads` int(11) DEFAULT '0',
   `opportunities` int(11) DEFAULT '0',
   `contracts` int(11) DEFAULT '0',
-  `total_amount` decimal(8,2) DEFAULT '0.00',
+  `total_amount` decimal(11,2) DEFAULT '0.00',
   PRIMARY KEY (`id`),
   KEY `root_id` (`root_id`),
   KEY `parent_id` (`parent_id`),

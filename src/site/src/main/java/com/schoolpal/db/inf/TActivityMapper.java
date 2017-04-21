@@ -2,6 +2,8 @@ package com.schoolpal.db.inf;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.schoolpal.db.model.TActivity;
 
 public interface TActivityMapper {
@@ -17,5 +19,6 @@ public interface TActivityMapper {
 
     int updateByPrimaryKey(TActivity record);
 */    
-    List<TActivity> selectManyByParentId();
+    List<TActivity> selectManyByParentId(@Param("id")int id);
+    List<TActivity> selectManyByTopLevel();
 }
