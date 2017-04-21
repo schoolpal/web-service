@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router';
 import { CreateButton } from '../../public/Button'
+import command from '../../../utils/command'
 
 export default class List extends React.Component {
     constructor(props) {
@@ -11,16 +12,14 @@ export default class List extends React.Component {
 
     renderCommand() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
         let temp = [];
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Add') {
-                    temp.push(<CreateButton key={index} link={this.props.location.pathname + '/edit/create'} />)
-                };
-            })
-        }
+        commands.map((item, index) => {
+            if (item === 'Add') {
+                temp.push(<CreateButton key={index} link={this.props.location.pathname + '/edit/create'} />)
+            };
+        })
 
         return temp;
     }
