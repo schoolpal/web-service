@@ -21,4 +21,12 @@ public class ActivityService {
 	public List<TActivity> queryActivitiesByParentId(int id){
 		return activityDao.selectManyByParentId(id);
 	}
+	
+	public int addActivity(TActivity act){
+		int ret = 0;
+		if(activityDao.insertOne(act) > 0){
+			ret = act.getId();
+		}
+		return ret;
+	}
 }

@@ -40,61 +40,7 @@
     FROM t_activity AS a 
     WHERE a.parent_id=a.root_id
   </select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TActivity">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="root_id" jdbcType="INTEGER" property="rootId" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="start_date" jdbcType="DATE" property="startDate" />
-    <result column="end_date" jdbcType="DATE" property="endDate" />
-    <result column="budget" jdbcType="DECIMAL" property="budget" />
-    <result column="cost" jdbcType="DECIMAL" property="cost" />
-    <result column="exective_id" jdbcType="CHAR" property="exectiveId" />
-    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, root_id, parent_id, name, start_date, end_date, budget, cost, exective_id, creator_id, 
-    create_time, last_update
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_activity
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from t_activity
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.schoolpal.db.model.TActivity">
-    insert into t_activity (id, root_id, parent_id, 
-      name, start_date, end_date, 
-      budget, cost, exective_id, 
-      creator_id, create_time, last_update
-      )
-    values (#{id,jdbcType=INTEGER}, #{rootId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
-      #{budget,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, #{exectiveId,jdbcType=CHAR}, 
-      #{creatorId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=CHAR}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TActivity">
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TActivity" useGeneratedKeys="true" keyProperty="id">
     insert into t_activity
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -173,7 +119,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TActivity">
+  <update id="updateOneById" parameterType="com.schoolpal.db.model.TActivity">
     update t_activity
     <set>
       <if test="rootId != null">
@@ -212,6 +158,60 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <delete id="deleteOneById" parameterType="java.lang.Integer">
+    delete from t_activity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TActivity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="root_id" jdbcType="INTEGER" property="rootId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="budget" jdbcType="DECIMAL" property="budget" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="exective_id" jdbcType="CHAR" property="exectiveId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, root_id, parent_id, name, start_date, end_date, budget, cost, exective_id, creator_id, 
+    create_time, last_update
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TActivity">
+    insert into t_activity (id, root_id, parent_id, 
+      name, start_date, end_date, 
+      budget, cost, exective_id, 
+      creator_id, create_time, last_update
+      )
+    values (#{id,jdbcType=INTEGER}, #{rootId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
+      #{budget,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, #{exectiveId,jdbcType=CHAR}, 
+      #{creatorId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=CHAR}
+      )
+  </insert>
+
+
   <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TActivity">
     update t_activity
     set root_id = #{rootId,jdbcType=INTEGER},

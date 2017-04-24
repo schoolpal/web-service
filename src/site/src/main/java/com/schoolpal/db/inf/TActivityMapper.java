@@ -21,4 +21,8 @@ public interface TActivityMapper {
 */    
     List<TActivity> selectManyByParentId(@Param("id")int id);
     List<TActivity> selectManyByTopLevel();
+    
+    int insertOne(TActivity record);
+    int updateOneById(TActivity record);
+    int deleteOneById(Integer id);
 }
