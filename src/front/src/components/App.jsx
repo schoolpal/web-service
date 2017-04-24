@@ -11,6 +11,17 @@ export default class App extends React.Component {
         super(props)
     }
 
+    componentDidMount() {
+        const profile = getProfile();
+
+        if (!profile) {
+            this.props.router.replace({
+                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+                state: { nextPathname: this.props.location.pathname }
+            })
+        }
+    }
+
     render() {
         const profile = getProfile();
 

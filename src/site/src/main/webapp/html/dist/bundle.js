@@ -1471,6 +1471,18 @@ webpackJsonp([0],{
 	    }
 
 	    _createClass(App, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var profile = (0, _userProfile.getProfile)();
+
+	            if (!profile) {
+	                this.props.router.replace({
+	                    pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
+	                    state: { nextPathname: this.props.location.pathname }
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var profile = (0, _userProfile.getProfile)();
@@ -15985,6 +15997,10 @@ webpackJsonp([0],{
 	                    break;
 	                }
 	            }
+	        }
+
+	        if (SCHOOLPAL_CONFIG.ROOTPATH === nextState.location.pathname) {
+	            hasMatch = true;
 	        }
 
 	        if (hasMatch === false) {
