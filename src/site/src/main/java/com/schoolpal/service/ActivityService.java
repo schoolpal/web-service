@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,20 @@ public class ActivityService {
 		return activityDao.selectManyByParentId(id);
 	}
 	
-	public int addActivity(TActivity act){
-		int ret = 0;
-		if(activityDao.insertOne(act) > 0){
-			ret = act.getId();
-		}
-		return ret;
+	public boolean addActivity(TActivity act){
+		act.setLeads(0);
+		act.setOpportunities(0);
+		act.setContracts(0);
+		act.setTotalAmount(new BigDecimal(0));
+
+		return activityDao.insertOne(act) > 0;
+	}
+	
+	public boolean modActivity(TActivity act){
+		return activityDao.updateOneById(act) > 0;
+	}
+	
+	public boolean delActivity(int id){
+		return activityDao.deleteOneById(id) > 0;
 	}
 }

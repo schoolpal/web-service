@@ -1,5 +1,6 @@
 package com.schoolpal.ajax.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,14 +73,21 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			TUser user = userServ.getCachedUser();
-
 			if (act == null) {
 				res.setCode(401);
-				res.setDetail("Id cannot be empty");
+				res.setDetail("From data cannot be empty");
 				break;
 			}
 
+			TUser user = userServ.getCachedUser();
+
+			act.setCreatorId(user.getcLoginname());
+			act.setExectiveId(user.getcLoginname());
+			
+			actServ.addActivity(act);
+			
+			res.setData(act.getId());
+			
 		} while (false);
 
 		return gson.toJson(res);
@@ -97,14 +105,16 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			TUser user = userServ.getCachedUser();
-
 			if (act == null) {
 				res.setCode(401);
-				res.setDetail("Id cannot be empty");
+				res.setDetail("From data cannot be empty");
 				break;
 			}
 
+			actServ.modActivity(act);
+			
+			res.setData(act.getId());
+			
 		} while (false);
 
 		return gson.toJson(res);
@@ -122,8 +132,6 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			TUser user = userServ.getCachedUser();
-
 			if (id == null || id.isEmpty()) {
 				res.setCode(401);
 				res.setDetail("Id cannot be empty");

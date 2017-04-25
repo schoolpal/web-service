@@ -34,7 +34,7 @@ public class TActivity {
     
     private Integer leads;
     
-    private Integer opportunity;
+    private Integer opportunities;
     
     private Integer contracts;
     
@@ -163,12 +163,12 @@ public class TActivity {
 		this.leads = leads;
 	}
 
-	public Integer getOpportunity() {
-		return opportunity;
+	public Integer getOpportunities() {
+		return opportunities;
 	}
 
-	public void setOpportunity(Integer opportunity) {
-		this.opportunity = opportunity;
+	public void setOpportunities(Integer opportunity) {
+		this.opportunities = opportunity;
 	}
 
 	public Integer getContracts() {
