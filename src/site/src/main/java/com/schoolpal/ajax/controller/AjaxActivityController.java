@@ -1,6 +1,5 @@
 package com.schoolpal.ajax.controller;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,13 +77,45 @@ public class AjaxActivityController {
 				res.setDetail("From data cannot be empty");
 				break;
 			}
-
-			TUser user = userServ.getCachedUser();
-
-			act.setCreatorId(user.getcLoginname());
-			act.setExectiveId(user.getcLoginname());
 			
-			actServ.addActivity(act);
+			if (act.getParentId() == null){
+				res.setCode(402);
+				res.setDetail("Parent id cannot be empty");
+				break;
+			}
+			if (act.getParentId() <= 0){
+				act.setRootId(0);
+				act.setParentId(0);
+			}else{
+				TActivity parent = actServ.queryActivityById(act.getParentId());
+				if (parent == null){
+					res.setCode(403);
+					res.setDetail("Invalid parent id");
+					break;
+				}
+				act.setRootId(parent.getRootId());
+			}
+			
+			TUser user = userServ.getCachedUser();
+			act.setCreatorId(user.getcId());
+			if(act.getExectiveId() == null){
+				act.setExectiveId(user.getcId());
+			}
+			
+			if (actServ.addActivity(act) <= 0){
+				res.setCode(500);
+				res.setDetail("Failed to add activity");
+				break;
+			}
+			if (act.getRootId() <= 0){
+				act.setParentId(act.getId());
+				act.setRootId(act.getId());
+				if (!actServ.modActivity(act)){
+					res.setCode(500);
+					res.setDetail("Failed to add activity");
+					break;
+				}
+			}
 			
 			res.setData(act.getId());
 			
@@ -111,10 +142,41 @@ public class AjaxActivityController {
 				break;
 			}
 
-			actServ.modActivity(act);
+			if (act.getId() == null) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+			if (act.getParentId() == null){
+				res.setCode(402);
+				res.setDetail("Parent id cannot be empty");
+				break;
+			}
+
+			TActivity current = actServ.queryActivityById(act.getId());
+			if (current == null){
+				res.setCode(406);
+				res.setDetail("Failed to find activity");
+				break;
+			}
 			
-			res.setData(act.getId());
+			TActivity parent = actServ.queryActivityById(act.getParentId());
+			if (parent == null){
+				res.setCode(407);
+				res.setDetail("Failed to find parent activity");
+				break;
+			}
 			
+			if (current.getRootId() != parent.getRootId()){
+				act.setRootId(parent.getRootId());
+			}
+			
+			if (!actServ.modActivity(act)){
+				res.setCode(500);
+				res.setDetail("Failed to mod activity");
+				break;
+			}
+						
 		} while (false);
 
 		return gson.toJson(res);
@@ -122,7 +184,7 @@ public class AjaxActivityController {
 	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String del(String id, HttpServletRequest request) {
+	public String del(int id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -132,9 +194,15 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			if (id == null || id.isEmpty()) {
+			if (id <= 0) {
 				res.setCode(401);
 				res.setDetail("Id cannot be empty");
+				break;
+			}
+			
+			if (!actServ.delActivity(id)){
+				res.setCode(500);
+				res.setDetail("Failed to del activity");
 				break;
 			}
 

@@ -139,9 +139,9 @@
 			<if test="cCreator != null">
 				#{cCreator,jdbcType=CHAR},
 			</if>
-			<if test="cCreateTime != null">
-				#{cCreateTime,jdbcType=TIMESTAMP},
-			</if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
 			<if test="cLastVisitTime != null">
 				#{cLastVisitTime,jdbcType=TIMESTAMP},
 			</if>

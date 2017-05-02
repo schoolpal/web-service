@@ -38,7 +38,16 @@
       SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id = a.id
     ) AS children
     FROM t_activity AS a 
-    WHERE a.parent_id=a.root_id
+    WHERE a.id=a.root_id
+  </select>
+  <select id="selectAll" resultMap="selectManyResultMap">
+    SELECT * 
+    FROM t_activity 
+  </select>
+  <select id="selectOneById" resultMap="selectManyResultMap">
+    SELECT * 
+    FROM t_activity 
+    WHERE id=#{id,jdbcType=INTEGER}
   </select>
   <insert id="insertOne" parameterType="com.schoolpal.db.model.TActivity" useGeneratedKeys="true" keyProperty="id">
     insert into t_activity

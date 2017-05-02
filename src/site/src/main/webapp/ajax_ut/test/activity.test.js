@@ -10,6 +10,10 @@ describe('/ajax/activity/ APIs', function() {
 	var pass = '123456';
 	var salt = null;
 	
+	var id_val = 0;
+	
+	this.timeout(0);
+	
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -74,7 +78,7 @@ describe('/ajax/activity/ APIs', function() {
 			url : buildUrl(host, act_path, 'list.do'),
 			dataType : 'json',
 			data : {
-				id : 5
+				id : 1
 			}
 		});
 
@@ -83,6 +87,69 @@ describe('/ajax/activity/ APIs', function() {
 		resDump('list.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('add.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, act_path, 'add.do'),
+			dataType : 'json',
+			data : {
+			    parentId: 1,
+			    name: 'test_name',
+			    startDate: new Date(2016,6,6),
+			    endDate: new Date(2017,7,7)
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('add.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+		id_val = jsonData.data;
+	});
+
+	it('mod.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, act_path, 'mod.do'),
+			dataType : 'json',
+			data : {
+				id : id_val,
+			    parentId: 2,
+			    name: 'test_name_mod',
+			    startDate: new Date(2015,5,5),
+			    endDate: new Date(2018,8,8)
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('mod.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
+	it('del.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, act_path, 'del.do'),
+			dataType : 'json',
+			data : {
+				id : id_val
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('del.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 

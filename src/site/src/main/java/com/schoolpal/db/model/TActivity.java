@@ -26,7 +26,7 @@ public class TActivity {
 
     private Date createTime;
 
-    private String lastUpdate;
+    private Date lastUpdate;
     
     private Integer children;
     
@@ -130,12 +130,12 @@ public class TActivity {
         this.createTime = createTime;
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(String lastUpdate) {
-        this.lastUpdate = lastUpdate == null ? null : lastUpdate.trim();
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
 	public Integer getChildren() {
