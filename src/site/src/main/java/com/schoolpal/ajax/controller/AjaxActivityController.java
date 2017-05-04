@@ -30,9 +30,39 @@ public class AjaxActivityController {
 	
 	private Gson gson = new Gson();
 
+//	@RequestMapping(value = "list.do", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String list(Integer id) {
+//		AjaxResponse res = new AjaxResponse(200);
+//		do {
+//			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
+//				res.setCode(400);
+//				res.setDetail("No permission");
+//				break;
+//			}
+//			
+//			if (id == null) {
+//				res.setCode(401);
+//				res.setDetail("Id cannot be empty");
+//				break;
+//			}
+//			
+//			List<TActivity> acts = null;
+//			if (id <= 0){
+//				acts = actServ.queryTopLevelActivities();
+//			}else{
+//				acts = actServ.queryActivitiesByParentId(id);
+//			}
+//			res.setData(acts);
+//
+//		} while (false);
+//
+//		return gson.toJson(res);
+//	}
+	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(Integer id) {
+	public String list() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
@@ -41,25 +71,15 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			if (id == null) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
-			
 			List<TActivity> acts = null;
-			if (id <= 0){
-				acts = actServ.queryTopLevelActivities();
-			}else{
-				acts = actServ.queryActivitiesByParentId(id);
-			}
+			acts = actServ.queryActivityList();
 			res.setData(acts);
 
 		} while (false);
 
 		return gson.toJson(res);
 	}
-	
+
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String add(TActivity act, HttpServletRequest request) {

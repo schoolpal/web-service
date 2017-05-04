@@ -1,6 +1,7 @@
 package com.schoolpal.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,38 @@ public class ActivityService {
 		return activityDao.selectOneById(id);
 	}
 	
+	public List<TActivity> queryActivityList(){
+		List<TActivity> allRows = activityDao.selectAll();
+		List<TActivity> results = new ArrayList<TActivity>();
+
+		for (TActivity row : allRows) {
+			if (row.getId() == row.getRootId()) {
+				row.setLevel(0);
+				results.add(row);
+				break;
+			}
+		}
+		
+		int i = 0;
+		while (i < results.size()) {
+			int offset = 0;
+			TActivity currRow = results.get(i);
+
+			for (TActivity row : allRows) {
+				if (row.getParentId().equals(currRow.getId()) && !results.contains(row)) {
+					row.setLevel(currRow.getLevel() + 1);
+					results.add(i + (++offset), row);
+					currRow.setParent(true);
+				}
+			}
+
+			if (i < results.size()) {
+				i++;
+			}
+		}
+		return results;
+	}
+
 	public int addActivity(TActivity act){
 		int ret = 0;
 		try{

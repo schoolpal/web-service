@@ -52,15 +52,50 @@ describe('/ajax/activity/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('list.do - top level', function() {
+//	it('list.do - top level', function() {
+//		var xhr = $.ajax({
+//			async : false,
+//			method : 'POST',
+//			url : buildUrl(host, act_path, 'list.do'),
+//			dataType : 'json',
+//				data : {
+//					id : 0
+//				}
+//		});
+//
+//		expect(xhr.status).to.be.equal(200);
+//		var jsonData = xhr.responseJSON;
+//		resDump('list.do', jsonData);
+//		expect(jsonData.code).to.be.equal(200);
+//		expect(jsonData.data).to.not.empty;
+//		expect(jsonData.detail).to.be.equal('Ok');
+//	});
+//
+//	it('list.do - by parent id', function() {
+//		var xhr = $.ajax({
+//			async : false,
+//			method : 'POST',
+//			url : buildUrl(host, act_path, 'list.do'),
+//			dataType : 'json',
+//			data : {
+//				id : 1
+//			}
+//		});
+//
+//		expect(xhr.status).to.be.equal(200);
+//		var jsonData = xhr.responseJSON;
+//		resDump('list.do', jsonData);
+//		expect(jsonData.code).to.be.equal(200);
+//		expect(jsonData.data).to.not.empty;
+//		expect(jsonData.detail).to.be.equal('Ok');
+//	});
+
+	it('list.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, act_path, 'list.do'),
-			dataType : 'json',
-				data : {
-					id : 0
-				}
+			dataType : 'json'
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -70,26 +105,7 @@ describe('/ajax/activity/ APIs', function() {
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
-
-	it('list.do - by parent id', function() {
-		var xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, act_path, 'list.do'),
-			dataType : 'json',
-			data : {
-				id : 1
-			}
-		});
-
-		expect(xhr.status).to.be.equal(200);
-		var jsonData = xhr.responseJSON;
-		resDump('list.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
-	});
-
+	
 	it('add.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -100,7 +116,9 @@ describe('/ajax/activity/ APIs', function() {
 			    parentId: 1,
 			    name: 'test_name',
 			    startDate: new Date(2016,6,6),
-			    endDate: new Date(2017,7,7)
+			    endDate: new Date(2017,7,7),
+			    budget: 100000.79,
+			    cost: 88888.61
 			}
 		});
 

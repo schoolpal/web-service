@@ -42,6 +42,10 @@ public class TActivity {
     
     private BigDecimal roi;
 
+    private Integer level;
+    
+    private boolean parent;
+    
     public Integer getId() {
         return id;
     }
@@ -197,5 +201,21 @@ public class TActivity {
 	
 	public void calculateRoi() {
 		this.roi = this.totalAmount.divide(this.cost);
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public boolean isParent() {
+		return parent;
+	}
+
+	public void setParent(boolean parent) {
+		this.parent = parent;
 	}
 }
