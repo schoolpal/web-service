@@ -2,11 +2,18 @@
 
 set -e
 
+if [ ! -z $1 ]; then
+	BRANCH=$1
+fi
+
+if [ ! -z $2 ]; then
+	BUILD=$2
+fi
+
 function run(){
 	echo "$*"
 	$@
 }
-
 
 #GIT REPO BASE DIR
 REPO_BASE_DIR=../../
@@ -32,7 +39,7 @@ run "cp -fv ${REPO_DATA_DIR}/*data*.sql ${BUILD_SQL_DATA_DIR}/"
 run "cp -fv ${REPO_PKG_DIR}/*.war ${BUILD_PKG_DIR}/"
 
 #Build docker image
-IMAGE_TAG="schoolpal_testbed"
+IMAGE_TAG="schoolpal_testbed:${BRANCH}-${BUILD}"
 DOCKER_HUB="dockerhub.internal:5000"
 run "docker build -t ${IMAGE_TAG} ."
 run "docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG}"
