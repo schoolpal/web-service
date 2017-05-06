@@ -50,8 +50,8 @@ run "docker push ${DOCKER_HUB}/${IMAGE_NAME}"
 run "docker tag ${IMAGE_NAME} ${DOCKER_HUB}/${IMAGE_REPO}"
 run "docker push ${DOCKER_HUB}/${IMAGE_REPO}"
 
-run "docker rmi -f $(docker images -aq)"
-exit 0
+#run "docker rmi -f $(docker images -aq)"
+#exit 0
 
 IMAGES_TO_REMOVE=`docker images -a |grep schoolpal |awk '{print $3}' |sort -u`
 if [ ! -z ${IMAGES_TO_REMOVE} ]; then 
