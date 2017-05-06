@@ -53,7 +53,9 @@ run "docker push ${DOCKER_HUB}/${IMAGE_REPO}"
 #run "docker rmi -f $(docker images -aq)"
 #exit 0
 
-IMAGES_TO_REMOVE=`docker images -a |grep schoolpal |awk '{print $3}' |sort -u`
+run "docker rm -f schoolpal_testbed"
+
+IMAGES_TO_REMOVE=`docker images -a |grep schoolpal_testbed |awk '{print $3}' |sort -u`
 if [ ! -z "${IMAGES_TO_REMOVE}" ]; then 
 	echo "Remove old images ... "
 	run "docker rmi -f ${IMAGES_TO_REMOVE}"
