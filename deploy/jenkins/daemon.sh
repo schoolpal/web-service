@@ -24,10 +24,11 @@ while [ 1 ]; do
 	fi
 	if [ "$RUNNING" -ne "1" ]; then
 		echo "Not running, restart ... "
-		nohup java -jar ${JENKINS_WAR} > ${JENKINS_LOG} 2>&1 &
+		echo "++++++++++++++++++++++++++++++++++++" >> ${JENKINS_LOG}
+		nohup java -jar ${JENKINS_WAR} >> ${JENKINS_LOG} 2>&1 &
 		echo "$!" > ${JENKINS_PID}
 	else
-		#echo "Running"
+		echo "Running"
 	fi
 	sleep 5
 done
