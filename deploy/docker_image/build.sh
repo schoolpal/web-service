@@ -44,7 +44,11 @@ IMAGE_REPO="schoolpal_testbed"
 IMAGE_TAG="${BRANCH}-${BUILD}"
 IMAGE_NAME="${IMAGE_REPO}:${IMAGE_TAG}"
 run "docker build -t ${IMAGE_NAME} ."
-run "docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_NAME}"
+run "docker tag ${IMAGE_NAME} ${DOCKER_HUB}/${IMAGE_NAME}"
 run "docker push ${DOCKER_HUB}/${IMAGE_NAME}"
-run "docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_REPO}"
+run "docker tag ${IMAGE_NAME} ${DOCKER_HUB}/${IMAGE_REPO}"
 run "docker push ${DOCKER_HUB}/${IMAGE_REPO}"
+
+
+
+
