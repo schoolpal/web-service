@@ -34,7 +34,7 @@ run "cp -fv ${REPO_PKG_DIR}/*.war ${BUILD_PKG_DIR}/"
 #Build docker image
 IMAGE_TAG="schoolpal_testbed"
 DOCKER_HUB="dockerhub.internal:5000"
-run "docker build -t ${IMAGE_TAG}."
+run "docker build -t ${IMAGE_TAG} ."
 run "docker tag ${IMAGE_TAG} ${DOCKER_HUB}/${IMAGE_TAG}"
 run "docker push ${DOCKER_HUB}/${IMAGE_TAG}"
 #run "docker rm -f testbed"
