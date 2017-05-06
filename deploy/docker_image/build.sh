@@ -25,7 +25,7 @@ run "mkdir -p ${BUILD_SQL_DATA_DIR}"
 run "mkdir -p ${BUILD_PKG_DIR}"
 
 #Prepare SQLs
-run "cp -fv ${REPO_DATA_DIR}/*structure*.sql ${BUILD_SQL_SCHEMA_DIR}/"
+run "cp -fv ${REPO_DATA_DIR}/*schema*.sql ${BUILD_SQL_SCHEMA_DIR}/"
 run "cp -fv ${REPO_DATA_DIR}/*data*.sql ${BUILD_SQL_DATA_DIR}/"
 
 #Preape package
