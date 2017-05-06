@@ -44,14 +44,29 @@ IMAGE_REPO="schoolpal_testbed"
 IMAGE_TAG="${BRANCH}-${BUILD}"
 IMAGE_NAME="${IMAGE_REPO}:${IMAGE_TAG}"
 run "docker build -t ${IMAGE_NAME} ."
+run "docker tag ${IMAGE_NAME} ${IMAGE_REPO}"
 run "docker tag ${IMAGE_NAME} ${DOCKER_HUB}/${IMAGE_NAME}"
 run "docker push ${DOCKER_HUB}/${IMAGE_NAME}"
 run "docker tag ${IMAGE_NAME} ${DOCKER_HUB}/${IMAGE_REPO}"
 run "docker push ${DOCKER_HUB}/${IMAGE_REPO}"
 
+run "docker rmi -f $(docker images -aq)"
+exit 0
+
+IMAGES_TO_REMOVE=`docker images -a |grep schoolpal |awk '{print $3}' |sort -u`
+if [ ! -z ${IMAGES_TO_REMOVE} ]; then 
+	echo "Remove old images ... "
+	run "docker rmi -f ${IMAGES_TO_REMOVE}"
+else
+	echo "No images to remove"
+fi
+
 DANGLING=$(docker images -aqf "dangling=true")
 if [ ! -z ${DANGLING} ]; then 
-	docker rmi -f ${DANGLING}
+	echo "Remove dangling images ... "
+	run "docker rmi -f ${DANGLING}"
+else
+	echo "No dangling images"
 fi
 
 
