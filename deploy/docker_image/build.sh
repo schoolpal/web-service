@@ -20,9 +20,9 @@ BUILD_SQL_SCHEMA_DIR=${BUILD_SQL_DIR}/1-schema
 BUILD_SQL_DATA_DIR=${BUILD_SQL_DIR}/2-data
 BUILD_PKG_DIR=${BUILD_DEPLOY_DIR}/packages
 
-mkdir -p ${BUILD_SQL_SCHEMA_DIR}
-mkdir -p ${BUILD_SQL_DATA_DIR}
-mkdir -p ${BUILD_PACKAGE_DIR}
+run "mkdir -p ${BUILD_SQL_SCHEMA_DIR}"
+run "mkdir -p ${BUILD_SQL_DATA_DIR}"
+run "mkdir -p ${BUILD_PKG_DIR}"
 
 #Prepare SQLs
 run "cp -fv ${REPO_DATA_DIR}/*structure*.sql ${BUILD_SQL_SCHEMA_DIR}/"
