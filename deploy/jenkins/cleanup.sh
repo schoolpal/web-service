@@ -1,6 +1,6 @@
 #!/bin/sh
 
-docker stop schoolpal_testbed
+#docker stop schoolpal_testbed
 docker rm -f schoolpal_testbed
 IMAGES_TO_REMOVE=`docker images -a |grep schoolpal_testbed |awk '{print $3}' |sort -u`
 if [ ! -z "${IMAGES_TO_REMOVE}" ]; then 
