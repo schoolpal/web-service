@@ -1,4 +1,4 @@
-FROM redis-mariadb-tomcat8-jre7
+FROM dockerhub.internal:5000/redis-mariadb-tomcat8-jre7
 
 ##################################################################################
 ############################## Init app & data ###################################
