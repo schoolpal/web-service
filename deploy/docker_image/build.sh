@@ -49,6 +49,9 @@ run "docker push ${DOCKER_HUB}/${IMAGE_NAME}"
 run "docker tag ${IMAGE_NAME} ${DOCKER_HUB}/${IMAGE_REPO}"
 run "docker push ${DOCKER_HUB}/${IMAGE_REPO}"
 
-
+DANGLING=$(docker images -aqf "dangling=true")
+if [ ! -z ${DANGLING} ]; then 
+	docker rmi -f ${DANGLING}
+fi
 
 
