@@ -1,4 +1,6 @@
-#!/bin
+#!/bin/sh
+
+set -e
 
 RUNNING_CONTAINER=$(docker ps -qf "name=schoolpal_testbed")
 if [ ! -z ${RUNNING_CONTAINER} ]; then
