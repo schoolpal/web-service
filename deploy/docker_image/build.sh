@@ -54,7 +54,7 @@ run "docker push ${DOCKER_HUB}/${IMAGE_REPO}"
 #exit 0
 
 IMAGES_TO_REMOVE=`docker images -a |grep schoolpal |awk '{print $3}' |sort -u`
-if [ ! -z ${IMAGES_TO_REMOVE} ]; then 
+if [ ! -z "${IMAGES_TO_REMOVE}" ]; then 
 	echo "Remove old images ... "
 	run "docker rmi -f ${IMAGES_TO_REMOVE}"
 else
@@ -62,7 +62,7 @@ else
 fi
 
 DANGLING=$(docker images -aqf "dangling=true")
-if [ ! -z ${DANGLING} ]; then 
+if [ ! -z "${DANGLING}" ]; then 
 	echo "Remove dangling images ... "
 	run "docker rmi -f ${DANGLING}"
 else
