@@ -5,5 +5,5 @@ if [ ! -z ${RUNNING_CONTAINER} ]; then
 	docker stop ${RUNNING_CONTAINER}
 	docker rm ${RUNNING_CONTAINER}
 fi
-docker run -d -p 7180:8080 --name schoolpal_testbed dockerhub.internal:5000/schoolpal_testbed
+docker run -d --restart=always -p 7180:8080 --name schoolpal_testbed dockerhub.internal:5000/schoolpal_testbed
 
