@@ -1,6 +1,7 @@
 package com.schoolpal.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +146,8 @@ public class OrgService {
 			org.setcCreator(creatorId);
 			org.setcAvailable(true);
 			org.setcOrderNum(1);
+			org.setcCreateTime(new Date());
+			org.setcModifyTime(new Date());
 			if (orgDao.insertOne(org) > 0){
 				ret = id;
 			}

@@ -25,18 +25,19 @@ DROP TABLE IF EXISTS `t_activity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_activity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `root_id` int(11) DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
+  `id` char(50) NOT NULL,
+  `root_id` char(50) NOT NULL,
+  `parent_id` char(50) NOT NULL,
+  `orgnization_id` char(50) NOT NULL,
+  `name` varchar(45) NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `budget` decimal(16,2) DEFAULT '0.00',
   `cost` decimal(16,2) DEFAULT '0.00',
   `exective_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
-  `create_time` datetime,
-  `last_update` datetime,
+  `create_time` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
   `leads` int(11) DEFAULT '0',
   `opportunities` int(11) DEFAULT '0',
   `contracts` int(11) DEFAULT '0',
@@ -45,9 +46,7 @@ CREATE TABLE `t_activity` (
   KEY `root_id` (`root_id`),
   KEY `parent_id` (`parent_id`),
   KEY `fk_t_activity_t_user1_idx` (`exective_id`),
-  KEY `fk_t_activity_t_user2_idx` (`creator_id`),
-  CONSTRAINT `fk_t_activity_t_user1` FOREIGN KEY (`exective_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_activity_t_user2` FOREIGN KEY (`creator_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_activity_t_user2_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -82,9 +81,7 @@ CREATE TABLE `t_contact` (
   `summary` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_t_contact_t_user1_idx` (`executive_id`),
-  KEY `fk_t_contact_t_leads1_idx` (`leads_id`),
-  CONSTRAINT `fk_t_contact_t_leads1` FOREIGN KEY (`leads_id`) REFERENCES `t_leads` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contact_t_user1` FOREIGN KEY (`executive_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_contact_t_leads1_idx` (`leads_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,13 +125,7 @@ CREATE TABLE `t_contract` (
   KEY `fk_t_contract_t_id_type1_idx` (`stu_id_type`),
   KEY `fk_t_contract_t_user1_idx` (`creator_id`),
   KEY `fk_t_contract_t_user2_idx` (`executive_id`),
-  KEY `fk_t_contract_t_org1_idx` (`orgnization_id`),
-  CONSTRAINT `fk_t_contract_t_course_session1` FOREIGN KEY (`course_ori_id`) REFERENCES `t_course_session` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contract_t_id_type1` FOREIGN KEY (`stu_id_type`) REFERENCES `t_id_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contract_t_org1` FOREIGN KEY (`orgnization_id`) REFERENCES `t_org` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contract_t_student1` FOREIGN KEY (`stu_ori_id`) REFERENCES `t_student` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contract_t_user1` FOREIGN KEY (`creator_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contract_t_user2` FOREIGN KEY (`executive_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_contract_t_org1_idx` (`orgnization_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,9 +149,7 @@ CREATE TABLE `t_contract_parent` (
   `relationship` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_t_contract_customer_t_customer1_idx` (`parent_ori_id`),
-  KEY `fk_t_contract_customer_t_contract1_idx` (`contract_id`),
-  CONSTRAINT `fk_t_contract_customer_t_contract1` FOREIGN KEY (`contract_id`) REFERENCES `t_contract` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_contract_customer_t_customer1` FOREIGN KEY (`parent_ori_id`) REFERENCES `t_parent` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_contract_customer_t_contract1_idx` (`contract_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -202,8 +191,7 @@ CREATE TABLE `t_course_session` (
   `times` int(11) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_t_course_t_course_prototype1_idx` (`proto_id`),
-  CONSTRAINT `fk_t_course_t_course_prototype1` FOREIGN KEY (`proto_id`) REFERENCES `t_course_prototype` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_course_t_course_prototype1_idx` (`proto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -265,9 +253,7 @@ CREATE TABLE `t_function` (
   KEY `c_parent_id` (`c_parent_id`,`c_order_num`),
   KEY `fk_t_function_t_widget_type1_idx` (`c_widget_type_id`),
   KEY `fk_t_function_t_command_type1_idx` (`c_command_type_id`),
-  KEY `c_action` (`c_action`),
-  CONSTRAINT `fk_t_function_t_command_type1` FOREIGN KEY (`c_command_type_id`) REFERENCES `t_command_type` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_function_t_widget_type1` FOREIGN KEY (`c_widget_type_id`) REFERENCES `t_widget_type` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `c_action` (`c_action`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -321,7 +307,7 @@ CREATE TABLE `t_leads` (
   `orgnization_id` char(50) DEFAULT NULL,
   `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_t_leads_t_leads_status1_idx` (`status`),
@@ -331,15 +317,7 @@ CREATE TABLE `t_leads` (
   KEY `fk_t_leads_t_user1_idx` (`creator_id`),
   KEY `fk_t_leads_t_user2_idx` (`executive_id`),
   KEY `fk_t_leads_t_org1_idx` (`orgnization_id`),
-  KEY `fk_t_leads_t_activity1_idx` (`channel`),
-  CONSTRAINT `fk_t_leads_t_activity1` FOREIGN KEY (`channel`) REFERENCES `t_activity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_leads_source1` FOREIGN KEY (`source`) REFERENCES `t_leads_source` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_leads_stage1` FOREIGN KEY (`stage`) REFERENCES `t_leads_stage` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_leads_status1` FOREIGN KEY (`status`) REFERENCES `t_leads_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_leads_type1` FOREIGN KEY (`type`) REFERENCES `t_leads_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_org1` FOREIGN KEY (`orgnization_id`) REFERENCES `t_org` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_user1` FOREIGN KEY (`creator_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_t_user2` FOREIGN KEY (`executive_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_leads_t_activity1_idx` (`channel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -362,19 +340,15 @@ CREATE TABLE `t_leads_parent` (
   `id_type` int(1) DEFAULT NULL,
   `id_code` varchar(45) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `executive_id` varchar(50) DEFAULT NULL,
-  `creator_id` varchar(50) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `last_update` datetime DEFAULT NULL,
+  `executive_id` char(50) DEFAULT NULL,
+  `creator_id` char(50) DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
   PRIMARY KEY (`leads_id`),
   UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
   UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`),
   KEY `fk_t_leads_customer_t_user1_idx` (`creator_id`),
-  KEY `fk_t_leads_customer_t_user2_idx` (`executive_id`),
-  CONSTRAINT `fk_t_leads_customer_t_id_type1` FOREIGN KEY (`id_type`) REFERENCES `t_id_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_customer_t_leads1` FOREIGN KEY (`leads_id`) REFERENCES `t_leads` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_customer_t_user1` FOREIGN KEY (`creator_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_customer_t_user2` FOREIGN KEY (`executive_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_leads_customer_t_user2_idx` (`executive_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -443,16 +417,12 @@ CREATE TABLE `t_leads_student` (
   `school_name` varchar(45) DEFAULT NULL,
   `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `last_update` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
   PRIMARY KEY (`leads_id`),
   KEY `id_type_code` (`id_type`,`id_code`),
   KEY `fk_t_leads_student_t_user1_idx` (`executive_id`),
-  KEY `fk_t_leads_student_t_user2_idx` (`creator_id`),
-  CONSTRAINT `fk_t_leads_student_t_id_type1` FOREIGN KEY (`id_type`) REFERENCES `t_id_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_student_t_leads1` FOREIGN KEY (`leads_id`) REFERENCES `t_leads` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_student_t_user1` FOREIGN KEY (`executive_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_leads_student_t_user2` FOREIGN KEY (`creator_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_leads_student_t_user2_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -515,8 +485,8 @@ CREATE TABLE `t_org` (
   `c_parent_id` char(50) DEFAULT NULL,
   `c_root_id` char(50) DEFAULT NULL,
   `c_creator` char(50) DEFAULT NULL,
-  `c_create_time` datetime DEFAULT NULL,
-  `c_modifier` varchar(50) DEFAULT NULL,
+  `c_create_time` datetime NOT NULL,
+  `c_modifier` char(50) DEFAULT NULL,
   `c_modify_time` datetime DEFAULT NULL,
   `c_available` tinyint(1) DEFAULT NULL,
   `c_order_num` int(11) DEFAULT NULL,
@@ -557,8 +527,7 @@ CREATE TABLE `t_parent` (
   `last_update` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
-  UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`),
-  CONSTRAINT `fk_t_customer_t_id_type1` FOREIGN KEY (`id_type`) REFERENCES `t_id_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -601,9 +570,7 @@ CREATE TABLE `t_role` (
   KEY `fk_t_role_t_org1_idx` (`c_org_id`),
   KEY `c_name` (`c_name`),
   KEY `c_order` (`c_order_num`),
-  KEY `c_org_id` (`c_org_id`,`c_order_num`),
-  CONSTRAINT `fk_t_role_t_org1` FOREIGN KEY (`c_org_id`) REFERENCES `t_org` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_role_t_rank` FOREIGN KEY (`c_rank_id`) REFERENCES `t_rank` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `c_org_id` (`c_org_id`,`c_order_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -621,9 +588,7 @@ CREATE TABLE `t_role_function` (
   PRIMARY KEY (`c_role_id`,`c_function_root_id`),
   KEY `c_role_id` (`c_role_id`),
   KEY `c_order` (`c_order_num`),
-  KEY `fk_t_role_function_t_function1_idx` (`c_function_root_id`),
-  CONSTRAINT `fk_t_role_function_t_function1` FOREIGN KEY (`c_function_root_id`) REFERENCES `t_function` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_role_function_t_role1` FOREIGN KEY (`c_role_id`) REFERENCES `t_role` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_role_function_t_function1_idx` (`c_function_root_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -640,9 +605,7 @@ CREATE TABLE `t_role_function_exclude` (
   `c_creator` char(50) DEFAULT NULL,
   `c_create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`c_role_id`,`c_function_id`),
-  KEY `fk_t_role_function_exclude_t_function1_idx` (`c_function_id`),
-  CONSTRAINT `fk_t_role_function_exclude_t_function1` FOREIGN KEY (`c_function_id`) REFERENCES `t_function` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_role_function_exclude_t_role1` FOREIGN KEY (`c_role_id`) REFERENCES `t_role` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_role_function_exclude_t_function1_idx` (`c_function_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -661,9 +624,7 @@ CREATE TABLE `t_stu_par_relation` (
   `last_update` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_cust_id_UNIQUE` (`student_id`,`parent_id`),
-  UNIQUE KEY `cust_student_id_UNIQUE` (`parent_id`,`student_id`),
-  CONSTRAINT `fk_t_stu_cust_relation_t_customer1` FOREIGN KEY (`parent_id`) REFERENCES `t_parent` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_stu_cust_relation_t_student1` FOREIGN KEY (`student_id`) REFERENCES `t_student` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `cust_student_id_UNIQUE` (`parent_id`,`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -688,12 +649,11 @@ CREATE TABLE `t_student` (
   `school_name` varchar(45) DEFAULT NULL,
   `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `last_update` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`),
-  KEY `id_type_code` (`id_type`,`id_code`),
-  CONSTRAINT `fk_t_student_t_id_type1` FOREIGN KEY (`id_type`) REFERENCES `t_id_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `id_type_code` (`id_type`,`id_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -717,7 +677,7 @@ CREATE TABLE `t_user` (
   `c_org_id` char(50) DEFAULT NULL,
   `c_org_root_id` char(50) DEFAULT NULL,
   `c_creator` char(50) DEFAULT NULL,
-  `c_create_time` datetime DEFAULT NULL,
+  `c_create_time` datetime NOT NULL,
   `c_last_visit_time` datetime DEFAULT NULL,
   `c_last_visit_ip` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`c_id`),
@@ -728,8 +688,7 @@ CREATE TABLE `t_user` (
   KEY `c_creator` (`c_creator`),
   KEY `c_realname` (`c_realname`),
   KEY `c_email` (`c_email`),
-  KEY `c_qq` (`c_qq`),
-  CONSTRAINT `fk_t_user_t_org1` FOREIGN KEY (`c_org_id`) REFERENCES `t_org` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `c_qq` (`c_qq`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -749,9 +708,7 @@ CREATE TABLE `t_user_role` (
   PRIMARY KEY (`c_user_id`,`c_role_id`),
   KEY `c_role_id` (`c_role_id`),
   KEY `fk_t_user_role_t_role1_idx` (`c_role_id`),
-  KEY `fk_t_user_role_t_user1_idx` (`c_user_id`),
-  CONSTRAINT `fk_t_user_role_t_role1` FOREIGN KEY (`c_role_id`) REFERENCES `t_role` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_t_user_role_t_user1` FOREIGN KEY (`c_user_id`) REFERENCES `t_user` (`c_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_user_role_t_user1_idx` (`c_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
