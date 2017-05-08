@@ -11,6 +11,7 @@ describe('/ajax/activity/ APIs', function() {
 	var salt = null;
 	
 	var id_val = 0;
+	var org_val = 16122700000009;
 	
 	this.timeout(0);
 	
@@ -95,7 +96,10 @@ describe('/ajax/activity/ APIs', function() {
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, act_path, 'list.do'),
-			dataType : 'json'
+			dataType : 'json',
+			data: {
+				orgnizationId: org_val
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -113,7 +117,8 @@ describe('/ajax/activity/ APIs', function() {
 			url : buildUrl(host, act_path, 'add.do'),
 			dataType : 'json',
 			data : {
-			    parentId: 1,
+				orgnizationId: org_val,
+			    parentId: '16122700000003',
 			    name: 'test_name',
 			    startDate: new Date(2016,6,6),
 			    endDate: new Date(2017,7,7),
@@ -139,7 +144,7 @@ describe('/ajax/activity/ APIs', function() {
 			dataType : 'json',
 			data : {
 				id : id_val,
-			    parentId: 2,
+			    parentId: '16122700000002',
 			    name: 'test_name_mod',
 			    startDate: new Date(2015,5,5),
 			    endDate: new Date(2018,8,8)

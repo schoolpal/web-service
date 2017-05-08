@@ -136,6 +136,11 @@ public class OrgService {
 		
 	}
 	
+	public boolean isOrgBelongToTargetOrg(String targetId, String id){
+		List<String> orgList = this.queryOrgIdListByRootId(targetId);
+		return orgList.contains(id);
+	}
+	
 	public String addOrg(OrgForm form, String rootOrgId, String creatorId){
 		String ret = null;
 		try{

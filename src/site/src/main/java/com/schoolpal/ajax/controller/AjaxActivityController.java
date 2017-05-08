@@ -62,7 +62,7 @@ public class AjaxActivityController {
 	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list() {
+	public String list(String orgnizationId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
@@ -71,8 +71,14 @@ public class AjaxActivityController {
 				break;
 			}
 			
+			if (orgnizationId == null){
+				res.setCode(401);
+				res.setDetail("Orgnization id cannot be empty");
+				break;
+			}
+			
 			List<TActivity> acts = null;
-			acts = actServ.queryActivityList();
+			acts = actServ.queryActivityList(orgnizationId);
 			res.setData(acts);
 
 		} while (false);
@@ -97,15 +103,20 @@ public class AjaxActivityController {
 				res.setDetail("From data cannot be empty");
 				break;
 			}
-			
-			if (act.getParentId() == null){
+
+			if (act.getOrgnizationId() == null){
 				res.setCode(402);
-				res.setDetail("Parent id cannot be empty");
+				res.setDetail("Orgnization id cannot be empty");
 				break;
 			}
-			if (act.getParentId() <= 0){
-				act.setRootId(0);
-				act.setParentId(0);
+			
+//			if (act.getParentId() == null){
+//				res.setCode(402);
+//				res.setDetail("Parent id cannot be empty");
+//				break;
+//			}
+			if (act.getParentId() == null){
+				act.setRootId(null);
 			}else{
 				TActivity parent = actServ.queryActivityById(act.getParentId());
 				if (parent == null){
@@ -122,16 +133,16 @@ public class AjaxActivityController {
 				act.setExectiveId(user.getcId());
 			}
 			
-			if (actServ.addActivity(act) <= 0){
+			if (actServ.addActivity(act) == null){
 				res.setCode(500);
 				res.setDetail("Failed to add activity");
 				break;
 			}
-			if (act.getRootId() <= 0){
+			if (act.getRootId() == null){
 				act.setParentId(act.getId());
 				act.setRootId(act.getId());
 				if (!actServ.modActivity(act)){
-					res.setCode(500);
+					res.setCode(501);
 					res.setDetail("Failed to add activity");
 					break;
 				}
@@ -187,10 +198,18 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			if (current.getRootId() != parent.getRootId()){
-				act.setRootId(parent.getRootId());
+//			if (current.getRootId() == null || parent.getRootId() == null){
+//				res.setCode(408);
+//				res.setDetail("");
+//				break;
+//			}
+			if (!current.getRootId().equals(parent.getRootId())){
+				res.setCode(409);
+				res.setDetail("Invalid parent");
+				break;
 			}
 			
+			act.setRootId(parent.getRootId());
 			if (!actServ.modActivity(act)){
 				res.setCode(500);
 				res.setDetail("Failed to mod activity");
@@ -204,7 +223,7 @@ public class AjaxActivityController {
 	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String del(int id, HttpServletRequest request) {
+	public String del(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -214,7 +233,7 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			if (id <= 0) {
+			if (id == null || id.length() <= 0) {
 				res.setCode(401);
 				res.setDetail("Id cannot be empty");
 				break;

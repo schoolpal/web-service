@@ -72,7 +72,13 @@ UNLOCK TABLES;
 
 LOCK TABLES `t_index` WRITE;
 /*!40000 ALTER TABLE `t_index` DISABLE KEYS */;
-INSERT INTO `t_index` VALUES ('t_log','161227',2318,1,15),('t_org','161227',31,1,8),('t_role','161227',31,1,8),('t_user','161227',43,1,8),('t_user_role','161227',7,1,8);
+INSERT INTO `t_index` VALUES 
+('t_log','161227',2318,1,15),
+('t_org','161227',31,1,8),
+('t_role','161227',31,1,8),
+('t_user','161227',43,1,8),
+('t_user_role','161227',77,1,8),
+('t_activity','161227',77,1,8);
 /*!40000 ALTER TABLE `t_index` ENABLE KEYS */;
 UNLOCK TABLES;
 

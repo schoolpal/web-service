@@ -88,8 +88,7 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(form.getParentId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getParentId())) {
 				res.setCode(404);
 				res.setDetail("No permission to add orgnization under parent orgnization");
 			}
@@ -154,8 +153,7 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(form.getParentId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getParentId())) {
 				res.setCode(405);
 				res.setDetail("No permission to move orgnization to this parent orgnization");
 				break;
@@ -197,9 +195,8 @@ public class AjaxSystemController {
 				res.setDetail("No permission to del self-orgnization");
 				break;
 			}
-
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
+			
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
 				res.setCode(403);
 				res.setDetail("No permission to del parent orgnization");
 				break;
@@ -235,8 +232,7 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
 				res.setCode(402);
 				res.setDetail("No permission to query orgnization");
 				break;
@@ -290,8 +286,7 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(form.getOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
 				res.setCode(403);
 				res.setDetail("No permission to add role under parent orgnization");
 			}
@@ -362,8 +357,7 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(form.getOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
 				res.setCode(405);
 				res.setDetail("No permission to move orgnization to this parent orgnization");
 				break;
@@ -415,15 +409,6 @@ public class AjaxSystemController {
 
 			TUser user = userServ.getCachedUser();
 
-			List<String> orgList = null;
-			try {
-				orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			} catch (Exception e) {
-				res.setCode(501);
-				res.setDetail("Unexpect error");
-				break;
-			}
-
 			TRole role = null;
 			try {
 				role = roleServ.queryRoleById(id);
@@ -437,7 +422,7 @@ public class AjaxSystemController {
 				res.setDetail("Cannot find role");
 				break;
 			}
-			if (!orgList.contains(role.getcOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), role.getcOrgId())) {
 				res.setCode(403);
 				res.setDetail("No permission to del role under parent orgnization");
 			}
@@ -496,8 +481,7 @@ public class AjaxSystemController {
 				break;
 			}
 			// Validate organization relation
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(role.getcOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), role.getcOrgId())) {
 				res.setCode(404);
 				res.setDetail("No permission to access parent orgnization");
 				break;
@@ -590,7 +574,7 @@ public class AjaxSystemController {
 				break;
 			}			
 
-			TUser currentUser = userServ.getCachedUser();
+			TUser user = userServ.getCachedUser();
 
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
@@ -599,18 +583,17 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
-			if (!orgList.contains(form.getOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
 				res.setCode(405);
 				res.setDetail("No permission to add user under parent orgnization");
 				break;
 			}
 
-			TUser user = this.userFormToTUser(form);
-			user.setcOrgId(org.getcId());
-			user.setcOrgRootId(org.getcRootId());
+			TUser newUser = this.userFormToTUser(form);
+			newUser.setcOrgId(org.getcId());
+			newUser.setcOrgRootId(org.getcRootId());
 
-			String id = userServ.addUser(user, user.getcLoginname());
+			String id = userServ.addUser(newUser, newUser.getcLoginname());
 			if (id == null) {
 				res.setCode(501);
 				res.setDetail("Failed to add user");
@@ -674,7 +657,7 @@ public class AjaxSystemController {
 				break;
 			}			
 
-			TUser currentUser = userServ.getCachedUser();
+			TUser user = userServ.getCachedUser();
 
 			TOrg org = orgServ.queryOrgById(form.getOrgId());
 			if (org == null) {
@@ -683,26 +666,25 @@ public class AjaxSystemController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
-			if (!orgList.contains(form.getOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
 				res.setCode(406);
 				res.setDetail("No permission to add user under parent orgnization");
 				break;
 			}
 				
-			TUser user = this.userFormToTUser(form);
-			user.setcOrgId(org.getcId());
-			user.setcOrgRootId(org.getcRootId());
+			TUser newUser = this.userFormToTUser(form);
+			newUser.setcOrgId(org.getcId());
+			newUser.setcOrgRootId(org.getcRootId());
 			//user loginname cannot be modified
-			user.setcLoginname(null);
+			newUser.setcLoginname(null);
 			
-			if (!userServ.modUserById(user)) {
+			if (!userServ.modUserById(newUser)) {
 				res.setCode(501);
 				res.setDetail("Failed to add role");
 				break;
 			}
 
-			userServ.delUserRolesByUserId(user.getcId());
+			userServ.delUserRolesByUserId(newUser.getcId());
 			for (String roleId : roleIds) {
 				if (roleServ.roleExists(roleId)) {
 					// Add user/role relation
@@ -738,11 +720,10 @@ public class AjaxSystemController {
 			}
 
 
-			TUser currentUser = userServ.getCachedUser();
+			TUser user = userServ.getCachedUser();
 			TUser targetUser = userServ.queryUserById(id);
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
-			if (!orgList.contains(targetUser.getcOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
 				res.setCode(406);
 				res.setDetail("No permission to del user under parent orgnization");
 				break;
@@ -778,11 +759,10 @@ public class AjaxSystemController {
 				break;
 			}
 
-			TUser currentUser = userServ.getCachedUser();
+			TUser user = userServ.getCachedUser();
 			TUser targetUser = userServ.queryUserById(id);
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
-			if (!orgList.contains(targetUser.getcOrgId())) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
 				res.setCode(406);
 				res.setDetail("No permission to access user under parent orgnization");
 				break;
@@ -824,24 +804,22 @@ public class AjaxSystemController {
 				break;
 			}
 
-			TUser currentUser = userServ.getCachedUser();
+			TUser user = userServ.getCachedUser();
 			TUser targetUser = userServ.queryUserById(id);
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(currentUser.getcOrgId());
-			if (!orgList.contains(targetUser.getcOrgId())) {
+			if (targetUser == null) {
+				res.setCode(501);
+				res.setDetail("Failed to find user");
+				break;
+			}
+
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
 				res.setCode(406);
 				res.setDetail("No permission to access user under parent orgnization");
 				break;
 			}
 
-			TUser user = userServ.queryUserById(id);
-			if (user == null) {
-				res.setCode(501);
-				res.setDetail("Failed to disable user");
-				break;
-			}
-
-			res.setData(user);
+			res.setData(targetUser);
 		} while (false);
 
 		return gson.toJson(res);

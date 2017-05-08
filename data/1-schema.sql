@@ -45,8 +45,7 @@ CREATE TABLE `t_activity` (
   PRIMARY KEY (`id`),
   KEY `root_id` (`root_id`),
   KEY `parent_id` (`parent_id`),
-  KEY `fk_t_activity_t_user1_idx` (`exective_id`),
-  KEY `fk_t_activity_t_user2_idx` (`creator_id`)
+  KEY `orgnization_id` (`orgnization_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -168,8 +167,7 @@ CREATE TABLE `t_course_prototype` (
   `times` int(11) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_t_course_prototype_t_course_type1_idx` (`type`),
-  CONSTRAINT `fk_t_course_prototype_t_course_type1` FOREIGN KEY (`type`) REFERENCES `t_course_type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_t_course_prototype_t_course_type1_idx` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
