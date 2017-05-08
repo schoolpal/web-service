@@ -18,31 +18,23 @@ function run(){
 #GIT REPO BASE DIR
 REPO_BASE_DIR=../../
 REPO_DATA_DIR=${REPO_BASE_DIR}/data
-REPO_PKG_DIR=${REPO_BASE_DIR}/src/site/target
 
 #WORK DIR SHOULD BE $REPO_BASE_DIR/deploy/docker_image
 BUILD_DEPLOY_DIR=deploy
 BUILD_SQL_DIR=${BUILD_DEPLOY_DIR}/sqls
 BUILD_SQL_SCHEMA_DIR=${BUILD_SQL_DIR}/1-schema
 BUILD_SQL_DATA_DIR=${BUILD_SQL_DIR}/2-data
-BUILD_PKG_DIR=${BUILD_DEPLOY_DIR}/packages
-
-run "rm -rfv ${BUILD_DEPLOY_DIR}"
 
 run "mkdir -p ${BUILD_SQL_SCHEMA_DIR}"
 run "mkdir -p ${BUILD_SQL_DATA_DIR}"
-run "mkdir -p ${BUILD_PKG_DIR}"
 
 #Prepare SQLs
 run "cp -fv ${REPO_DATA_DIR}/*schema*.sql ${BUILD_SQL_SCHEMA_DIR}/"
 run "cp -fv ${REPO_DATA_DIR}/*data*.sql ${BUILD_SQL_DATA_DIR}/"
 
-#Preape package
-run "cp -fv ${REPO_PKG_DIR}/*.war ${BUILD_PKG_DIR}/"
-
 #Build docker image
 DOCKER_HUB="dockerhub.internal:5000"
-IMAGE_REPO="schoolpal_testbed"
+IMAGE_REPO="schoolpal_db"
 IMAGE_TAG="${BRANCH}-${BUILD}"
 IMAGE_NAME="${IMAGE_REPO}:${IMAGE_TAG}"
 run "docker build -t ${IMAGE_NAME} ."
