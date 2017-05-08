@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.schoolpal.db.inf.TActivityMapper;
+import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.model.TActivity;
 import com.schoolpal.web.consts.LogLevel;
 
@@ -19,26 +20,28 @@ public class ActivityService {
 	private LogService logServ;
 	
 	@Autowired
+	private TIndexMapper idxDao; 
+	@Autowired
 	private TActivityMapper activityDao; 
 
 	public List<TActivity> queryTopLevelActivities(){
 		return activityDao.selectManyByTopLevel();
 	}
 	
-	public List<TActivity> queryActivitiesByParentId(int id){
+	public List<TActivity> queryActivitiesByParentId(String id){
 		return activityDao.selectManyByParentId(id);
 	}
 	
-	public TActivity queryActivityById(int id){
+	public TActivity queryActivityById(String id){
 		return activityDao.selectOneById(id);
 	}
 	
-	public List<TActivity> queryActivityList(){
-		List<TActivity> allRows = activityDao.selectAll();
+	public List<TActivity> queryActivityList(String orgId){
+		List<TActivity> allRows = activityDao.selectManyByOrgId(orgId);
 		List<TActivity> results = new ArrayList<TActivity>();
 
 		for (TActivity row : allRows) {
-			if (row.getId() == row.getRootId()) {
+			if (row.getId().equals(row.getRootId())) {
 				row.setLevel(0);
 				results.add(row);
 				break;
@@ -65,9 +68,11 @@ public class ActivityService {
 		return results;
 	}
 
-	public int addActivity(TActivity act){
-		int ret = 0;
+	public String addActivity(TActivity act){
+		String ret = null;
 		try{
+			String id = idxDao.selectNextId("t_activity");
+			act.setId(id);
 			act.setLeads(0);
 			act.setOpportunities(0);
 			act.setContracts(0);
@@ -99,7 +104,7 @@ public class ActivityService {
 		return ret;
 	}
 	
-	public boolean delActivity(int id){
+	public boolean delActivity(String id){
 		boolean ret = false;
 		try{
 			ret = activityDao.deleteOneById(id) > 0;

@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
@@ -163,6 +164,7 @@ public class UserService {
 			user.setcId(id);
 			user.setcCreator(creatorId);
 			user.setcAvailable(true);
+			user.setcCreateTime(new Date());
 			if (userDao.insertOne(user) > 0) {
 				ret = id;
 			}

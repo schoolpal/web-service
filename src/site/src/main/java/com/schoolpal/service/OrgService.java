@@ -1,6 +1,7 @@
 package com.schoolpal.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,11 @@ public class OrgService {
 		
 	}
 	
+	public boolean isOrgBelongToTargetOrg(String targetId, String id){
+		List<String> orgList = this.queryOrgIdListByRootId(targetId);
+		return orgList.contains(id);
+	}
+	
 	public String addOrg(OrgForm form, String rootOrgId, String creatorId){
 		String ret = null;
 		try{
@@ -145,6 +151,8 @@ public class OrgService {
 			org.setcCreator(creatorId);
 			org.setcAvailable(true);
 			org.setcOrderNum(1);
+			org.setcCreateTime(new Date());
+			org.setcModifyTime(new Date());
 			if (orgDao.insertOne(org) > 0){
 				ret = id;
 			}

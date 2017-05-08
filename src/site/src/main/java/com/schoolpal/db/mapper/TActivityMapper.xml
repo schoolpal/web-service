@@ -3,10 +3,11 @@
 <mapper namespace="com.schoolpal.db.inf.TActivityMapper">
 
   <resultMap id="selectManyResultMap" type="com.schoolpal.db.model.TActivity">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="root_id" jdbcType="INTEGER" property="rootId" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="root_id" jdbcType="CHAR" property="rootId" />
+    <result column="parent_id" jdbcType="CHAR" property="parentId" />
+    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="name" jdbcType="CHAR" property="name" />
     <result column="start_date" jdbcType="DATE" property="startDate" />
     <result column="end_date" jdbcType="DATE" property="endDate" />
     <result column="budget" jdbcType="DECIMAL" property="budget" />
@@ -30,7 +31,7 @@
 	  SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id = a.id
 	) AS children
 	FROM t_activity AS a 
-	WHERE a.parent_id=#{id,jdbcType=INTEGER} AND a.id != a.parent_id
+	WHERE a.parent_id=#{id,jdbcType=CHAR} AND a.id != a.parent_id
   </select>
   <select id="selectManyByTopLevel" resultMap="selectManyResultMap">
     SELECT a.*,
@@ -40,6 +41,11 @@
     FROM t_activity AS a 
     WHERE a.id=a.root_id
   </select>
+  <select id="selectManyByOrgId" resultMap="selectManyResultMap">
+    SELECT * 
+    FROM t_activity 
+    WHERE orgnization_id=#{id,jdbcType=CHAR}
+  </select>
   <select id="selectAll" resultMap="selectManyResultMap">
     SELECT * 
     FROM t_activity 
@@ -47,7 +53,7 @@
   <select id="selectOneById" resultMap="selectManyResultMap">
     SELECT * 
     FROM t_activity 
-    WHERE id=#{id,jdbcType=INTEGER}
+    WHERE id=#{id,jdbcType=CHAR}
   </select>
   <insert id="insertOne" parameterType="com.schoolpal.db.model.TActivity" useGeneratedKeys="true" keyProperty="id">
     insert into t_activity
@@ -60,6 +66,9 @@
       </if>
       <if test="parentId != null">
         parent_id,
+      </if>
+      <if test="orgnizationId != null">
+        orgnization_id,
       </if>
       <if test="name != null">
         name,
@@ -91,13 +100,16 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=CHAR},
       </if>
       <if test="rootId != null">
-        #{rootId,jdbcType=INTEGER},
+        #{rootId,jdbcType=CHAR},
       </if>
       <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
+        #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="orgnizationId != null">
+        #{orgnizationId,jdbcType=CHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -137,6 +149,9 @@
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
+      <if test="orgnizationId != null">
+        orgnization_id = #{orgnizationId,jdbcType=CHAR},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -167,9 +182,9 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <delete id="deleteOneById" parameterType="java.lang.Integer">
+  <delete id="deleteOneById">
     delete from t_activity
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
   </delete>
 
 

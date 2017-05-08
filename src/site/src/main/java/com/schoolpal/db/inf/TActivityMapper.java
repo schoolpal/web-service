@@ -19,12 +19,13 @@ public interface TActivityMapper {
 
     int updateByPrimaryKey(TActivity record);
 */    
-    List<TActivity> selectManyByParentId(@Param("id")int id);
+    List<TActivity> selectManyByParentId(@Param("id")String id);
     List<TActivity> selectManyByTopLevel();
+    List<TActivity> selectManyByOrgId(@Param("id")String id);
     List<TActivity> selectAll();
-    TActivity selectOneById(@Param("id")int id);
+    TActivity selectOneById(@Param("id")String id);
     
     int insertOne(TActivity record);
     int updateOneById(TActivity record);
-    int deleteOneById(Integer id);
+    int deleteOneById(String id);
 }

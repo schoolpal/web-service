@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TActivity {
-    private Integer id;
+    private String id;
 
-    private Integer rootId;
+    private String rootId;
 
-    private Integer parentId;
+    private String parentId;
+    
+    private String orgnizationId;
 
     private String name;
 
@@ -46,30 +48,38 @@ public class TActivity {
     
     private boolean parent;
     
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getRootId() {
+    public String getRootId() {
         return rootId;
     }
 
-    public void setRootId(Integer rootId) {
+    public void setRootId(String rootId) {
         this.rootId = rootId;
     }
 
-    public Integer getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(Integer parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
+	public String getOrgnizationId() {
+		return orgnizationId;
+	}
+
+	public void setOrgnizationId(String orgnization_id) {
+		this.orgnizationId = orgnization_id;
+	}
+	
     public String getName() {
         return name;
     }
@@ -218,4 +228,5 @@ public class TActivity {
 	public void setParent(boolean parent) {
 		this.parent = parent;
 	}
+
 }
