@@ -27,8 +27,6 @@ BUILD_SQL_SCHEMA_DIR=${BUILD_SQL_DIR}/1-schema
 BUILD_SQL_DATA_DIR=${BUILD_SQL_DIR}/2-data
 BUILD_PKG_DIR=${BUILD_DEPLOY_DIR}/packages
 
-run "rm -rfv ${BUILD_DEPLOY_DIR}"
-
 run "mkdir -p ${BUILD_SQL_SCHEMA_DIR}"
 run "mkdir -p ${BUILD_SQL_DATA_DIR}"
 run "mkdir -p ${BUILD_PKG_DIR}"
