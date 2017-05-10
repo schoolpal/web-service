@@ -34,7 +34,6 @@ CREATE TABLE `t_activity` (
   `end_date` date DEFAULT NULL,
   `budget` decimal(16,2) DEFAULT '0.00',
   `cost` decimal(16,2) DEFAULT '0.00',
-  `exective_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `last_update` datetime NOT NULL,
@@ -327,9 +326,9 @@ DROP TABLE IF EXISTS `t_leads_parent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_parent` (
+  `id` char(50) NOT NULL,
   `leads_id` char(50) NOT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `gender` varchar(45) DEFAULT NULL,
   `cellphone` varchar(45) DEFAULT NULL,
   `weichat` varchar(45) DEFAULT NULL,
@@ -338,15 +337,15 @@ CREATE TABLE `t_leads_parent` (
   `id_type` int(1) DEFAULT NULL,
   `id_code` varchar(45) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `last_update` datetime NOT NULL,
-  PRIMARY KEY (`leads_id`),
+  `relation` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `leads_id_idx` (`leads_id`),
   UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
   UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`),
-  KEY `fk_t_leads_customer_t_user1_idx` (`creator_id`),
-  KEY `fk_t_leads_customer_t_user2_idx` (`executive_id`)
+  KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -403,9 +402,9 @@ DROP TABLE IF EXISTS `t_leads_student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_student` (
+  `id` char(50) NOT NULL,
   `leads_id` char(50) NOT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `gender` varchar(45) DEFAULT NULL,
   `id_type` int(1) DEFAULT NULL,
   `id_code` varchar(45) DEFAULT NULL,
@@ -413,14 +412,13 @@ CREATE TABLE `t_leads_student` (
   `school_grade` varchar(45) DEFAULT NULL,
   `class_grade` varchar(45) DEFAULT NULL,
   `school_name` varchar(45) DEFAULT NULL,
-  `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
   `create_time` datetime NOT NULL,
   `last_update` datetime NOT NULL,
-  PRIMARY KEY (`leads_id`),
+  PRIMARY KEY (`id`),
+  KEY `leads_id_idx` (`leads_id`),
   KEY `id_type_code` (`id_type`,`id_code`),
-  KEY `fk_t_leads_student_t_user1_idx` (`executive_id`),
-  KEY `fk_t_leads_student_t_user2_idx` (`creator_id`)
+  KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -618,7 +616,7 @@ CREATE TABLE `t_stu_par_relation` (
   `id` char(50) NOT NULL,
   `student_id` char(50) NOT NULL,
   `parent_id` char(50) NOT NULL,
-  `relationship` varchar(45) DEFAULT NULL,
+  `relation` varchar(45) DEFAULT NULL,
   `last_update` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `student_cust_id_UNIQUE` (`student_id`,`parent_id`),

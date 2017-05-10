@@ -36,7 +36,7 @@ public class ActivityService {
 		return activityDao.selectOneById(id);
 	}
 	
-	public List<TActivity> queryActivityList(String orgId){
+	public List<TActivity> queryActivitiesByOrgId(String orgId){
 		List<TActivity> allRows = activityDao.selectManyByOrgId(orgId);
 		List<TActivity> results = new ArrayList<TActivity>();
 
@@ -109,7 +109,7 @@ public class ActivityService {
 		return ret;
 	}
 	
-	public boolean delActivity(String id){
+	public boolean delActivityById(String id){
 		boolean ret = false;
 		try{
 			ret = activityDao.deleteOneById(id) > 0;

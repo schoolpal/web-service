@@ -15,18 +15,22 @@ import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TActivity;
+import com.schoolpal.db.model.TLeads;
+import com.schoolpal.db.model.TLeadsParent;
+import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.ActivityService;
+import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 
 @Controller
-@RequestMapping("/ajax/mkt/activity")
-public class AjaxActivityController {
+@RequestMapping("/ajax/mkt/leads")
+public class AjaxLeadsController {
 	
 	@Autowired
 	private UserService userServ;
 	@Autowired
-	private ActivityService actServ;
+	private LeadsService leadsServ;
 	
 	private Gson gson = new Gson();
 
@@ -35,7 +39,7 @@ public class AjaxActivityController {
 	public String list(String orgnizationId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
+			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -47,8 +51,8 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			List<TActivity> acts = null;
-			acts = actServ.queryActivitiesByOrgId(orgnizationId);
+			List<TLeads> acts = null;
+			acts = leadsServ.queryLeadsByOrgId(orgnizationId);
 			res.setData(acts);
 
 		} while (false);
@@ -58,7 +62,7 @@ public class AjaxActivityController {
 
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(TActivity act, HttpServletRequest request) {
+	public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -68,58 +72,108 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			if (act == null) {
+			if (leads == null) {
 				res.setCode(401);
-				res.setDetail("From data cannot be empty");
+				res.setDetail("Leads data cannot be empty");
+				break;
+			}
+			if (student == null) {
+				res.setCode(402);
+				res.setDetail("Student data cannot be empty");
+				break;
+			}
+			if (parent == null) {
+				res.setCode(403);
+				res.setDetail("Parent data cannot be empty");
 				break;
 			}
 
-			if (act.getOrgnizationId() == null){
-				res.setCode(402);
+			if (leads.getOrgnizationId() == null){
+				res.setCode(411);
 				res.setDetail("Orgnization id cannot be empty");
+				break;
+			}			
+			if (leads.getSource() == null){
+				res.setCode(412);
+				res.setDetail("Source cannot be empty");
+				break;
+			}
+			if (leads.getStage() == null){
+				res.setCode(413);
+				res.setDetail("Stage cannot be empty");
+				break;
+			}
+			if (leads.getChannel() == null){
+				res.setCode(414);
+				res.setDetail("Channel cannot be empty");
+				break;
+			}
+			if (leads.getStatus() == null){
+				res.setCode(415);
+				res.setDetail("Status cannot be empty");
 				break;
 			}
 			
-			if (act.getParentId() == null){
-				act.setRootId(null);
-			}else{
-				TActivity parent = actServ.queryActivityById(act.getParentId());
-				if (parent == null){
-					res.setCode(403);
-					res.setDetail("Invalid parent id");
-					break;
-				}
-				act.setRootId(parent.getRootId());
+			if (student.getName() == null){
+				res.setCode(421);
+				res.setDetail("Student name cannot be empty");
+				break;
+			}
+			if (student.getAge() == null){
+				res.setCode(422);
+				res.setDetail("Student age cannot be empty");
+				break;
+			}
+			
+			if (parent.getName() == null){
+				res.setCode(423);
+				res.setDetail("parent name cannot be empty");
+				break;
+			}
+			if (parent.getCellphone() == null){
+				res.setCode(424);
+				res.setDetail("Parent phone cannot be empty");
+				break;
 			}
 			
 			TUser user = userServ.getCachedUser();
-			act.setCreatorId(user.getcId());
 			
-			if (actServ.addActivity(act) == null){
+			leads.setCreatorId(user.getcId());			
+			if(leads.getExecutiveId() == null){
+				leads.setExecutiveId(user.getcId());
+			}
+			if (leadsServ.addLeads(leads) == null){
 				res.setCode(500);
-				res.setDetail("Failed to add activity");
+				res.setDetail("Failed to add leads");
 				break;
 			}
-			if (act.getRootId() == null){
-				act.setParentId(act.getId());
-				act.setRootId(act.getId());
-				if (!actServ.modActivity(act)){
-					res.setCode(501);
-					res.setDetail("Failed to add activity");
-					break;
-				}
+			
+			student.setLeadsId(leads.getId());
+			student.setCreatorId(user.getcId());
+			if (leadsServ.addStudent(student) == null){
+				res.setCode(501);
+				res.setDetail("Failed to add student");
+				break;
 			}
 			
-			res.setData(act.getId());
+			parent.setLeadsId(leads.getId());
+			parent.setCreatorId(user.getcId());
+			if (leadsServ.addParent(parent) == null){
+				res.setCode(502);
+				res.setDetail("Failed to add parent");
+				break;
+			}
+			
+			res.setData(leads.getId());
 			
 		} while (false);
 
 		return gson.toJson(res);
 	}
 	
-	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
+/*	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TActivity act, HttpServletRequest request) {
+	public String mod(TLeads leads, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -129,43 +183,26 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			if (act == null) {
+			if (leads == null) {
 				res.setCode(401);
 				res.setDetail("From data cannot be empty");
 				break;
 			}
 
-			if (act.getId() == null) {
+			if (leads.getId() == null) {
 				res.setCode(401);
 				res.setDetail("Id cannot be empty");
 				break;
 			}
 
-			TActivity current = actServ.queryActivityById(act.getId());
+			TLeads current = leadsServ.queryLeadsById(leads.getId());
 			if (current == null){
 				res.setCode(406);
 				res.setDetail("Failed to find activity");
 				break;
 			}
 			
-			if (act.getParentId() != null){
-				TActivity parent = actServ.queryActivityById(act.getParentId());
-				if (parent == null){
-					res.setCode(407);
-					res.setDetail("Failed to find parent activity");
-					break;
-				}
-				
-				if (!current.getRootId().equals(parent.getRootId())){
-					res.setCode(409);
-					res.setDetail("Invalid parent");
-					break;
-				}
-				
-				act.setRootId(parent.getRootId());
-			}
-			
-			if (!actServ.modActivity(act)){
+			if (!actServ.modActivity(leads)){
 				res.setCode(500);
 				res.setDetail("Failed to mod activity");
 				break;
@@ -204,5 +241,5 @@ public class AjaxActivityController {
 
 		return gson.toJson(res);
 	}
-	
+	*/
 }

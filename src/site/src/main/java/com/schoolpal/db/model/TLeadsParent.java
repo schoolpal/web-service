@@ -5,9 +5,7 @@ import java.util.Date;
 public class TLeadsParent {
     private String leadsId;
 
-    private String firstName;
-
-    private String lastName;
+    private String name;
 
     private String gender;
 
@@ -41,20 +39,16 @@ public class TLeadsParent {
         this.leadsId = leadsId == null ? null : leadsId.trim();
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName == null ? null : firstName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName == null ? null : lastName.trim();
+    public void setParentName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getGender() {

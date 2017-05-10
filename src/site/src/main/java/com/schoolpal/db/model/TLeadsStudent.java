@@ -5,9 +5,7 @@ import java.util.Date;
 public class TLeadsStudent {
     private String leadsId;
 
-    private String firstName;
-
-    private String lastName;
+    private String name;
 
     private String gender;
 
@@ -16,6 +14,8 @@ public class TLeadsStudent {
     private String idCode;
 
     private Date birthday;
+    
+    private Integer age;
 
     private String schoolGrade;
 
@@ -39,20 +39,15 @@ public class TLeadsStudent {
         this.leadsId = leadsId == null ? null : leadsId.trim();
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName == null ? null : firstName.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName == null ? null : lastName.trim();
+    public void setStudentName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getGender() {
@@ -87,7 +82,18 @@ public class TLeadsStudent {
         this.birthday = birthday;
     }
 
-    public String getSchoolGrade() {
+    public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	public void setStudentAge(Integer age) {
+		this.age = age;
+	}
+
+	public String getSchoolGrade() {
         return schoolGrade;
     }
 
