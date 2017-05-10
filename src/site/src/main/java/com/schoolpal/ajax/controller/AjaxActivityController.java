@@ -178,11 +178,6 @@ public class AjaxActivityController {
 				res.setDetail("Id cannot be empty");
 				break;
 			}
-			if (act.getParentId() == null){
-				res.setCode(402);
-				res.setDetail("Parent id cannot be empty");
-				break;
-			}
 
 			TActivity current = actServ.queryActivityById(act.getId());
 			if (current == null){
@@ -191,25 +186,23 @@ public class AjaxActivityController {
 				break;
 			}
 			
-			TActivity parent = actServ.queryActivityById(act.getParentId());
-			if (parent == null){
-				res.setCode(407);
-				res.setDetail("Failed to find parent activity");
-				break;
+			if (act.getParentId() != null){
+				TActivity parent = actServ.queryActivityById(act.getParentId());
+				if (parent == null){
+					res.setCode(407);
+					res.setDetail("Failed to find parent activity");
+					break;
+				}
+				
+				if (!current.getRootId().equals(parent.getRootId())){
+					res.setCode(409);
+					res.setDetail("Invalid parent");
+					break;
+				}
+				
+				act.setRootId(parent.getRootId());
 			}
 			
-//			if (current.getRootId() == null || parent.getRootId() == null){
-//				res.setCode(408);
-//				res.setDetail("");
-//				break;
-//			}
-			if (!current.getRootId().equals(parent.getRootId())){
-				res.setCode(409);
-				res.setDetail("Invalid parent");
-				break;
-			}
-			
-			act.setRootId(parent.getRootId());
 			if (!actServ.modActivity(act)){
 				res.setCode(500);
 				res.setDetail("Failed to mod activity");

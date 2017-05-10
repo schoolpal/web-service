@@ -73,6 +73,12 @@ public class ActivityService {
 		try{
 			String id = idxDao.selectNextId("t_activity");
 			act.setId(id);
+			if (act.getParentId() == null){
+				act.setParentId(id);
+			}
+			if (act.getRootId() == null){
+				act.setRootId(id);
+			}
 			act.setLeads(0);
 			act.setOpportunities(0);
 			act.setContracts(0);
