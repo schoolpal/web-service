@@ -72,11 +72,9 @@ export default class List extends React.Component {
                 dialogTips.close()
             }).fail((data) => {
                 dialogTips.close()
-                errorHandle({ data: data, router: this.props.router })
             })
         }).fail((data) => {
             dialogTips.close()
-            errorHandle({ data: data, router: this.props.router })
         })
     }
 

@@ -528,3 +528,35 @@ export function checkName(name) {
 
     return defer.promise();
 }
+
+export function marketActivityList(oid) {
+    const defer = $.Deferred();
+    const url = 'mkt/activity/list.do';
+    const settings = $.extend({ url: url }, { data: { orgnizationId: oid } });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function marketActivityAdd(data) {
+    const defer = $.Deferred();
+    const url = 'mkt/activity/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}

@@ -2,12 +2,49 @@ import React from 'react'
 import { Link } from 'react-router';
 import { CreateButton } from '../../public/Button'
 import command from '../../../utils/command'
+import formatDate from '../../../utils/formatDate'
+import { marketActivityList } from '../../../utils/api';
+import DialogTips from '../../../utils/DialogTips';
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
 
+        this.state = { list: [] }
         this.renderCommand = this.renderCommand.bind(this)
+        this.renderItems = this.renderItems.bind(this)
+    }
+
+    componentDidMount() {
+        if (this.props.org) {
+            const dialogTips = DialogTips({ type: 'loading' })
+
+            dialogTips.open()
+            marketActivityList(this.props.org.id)
+                .done((data) => {
+                    this.setState({ list: data })
+                })
+                .always(() => {
+                    dialogTips.close()
+                })
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.org) {
+            if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+                const dialogTips = DialogTips({ type: 'loading' })
+
+                dialogTips.open()
+                marketActivityList(nextProps.org.id)
+                    .done((data) => {
+                        this.setState({ list: data })
+                    })
+                    .always(() => {
+                        dialogTips.close()
+                    })
+            }
+        }
     }
 
     renderCommand() {
@@ -22,6 +59,31 @@ export default class List extends React.Component {
         })
 
         return temp;
+    }
+
+    renderItems(data) {
+        return (
+            <tr key={data.id}>
+                <td>{data.id}</td>
+                <td>--</td>
+                <td>{formatDate(data.createTime)}</td>
+                <td>
+                    {
+                        data.hasChild === false ? '' : <span className='tree-node'></span>
+                    }
+                    <Link to={this.props.location.pathname + '/' + data.id}>{data.name}</Link>
+                </td>
+                <td>{formatDate(data.startDate)}</td>
+                <td>{formatDate(data.endDate)}</td>
+                <td>{data.budget}</td>
+                <td>{data.cost}</td>
+                <td>{data.leads}</td>
+                <td>{data.opportunities}</td>
+                <td>{data.contracts}</td>
+                <td>--</td>
+                <td>--</td>
+            </tr>
+        )
     }
 
     render() {
@@ -54,24 +116,7 @@ export default class List extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>曹磊</td>
-                                <td>2016-03-28</td>
-                                <td>
-                                    <span className='tree-node'></span>
-                                    <Link to={this.props.location.pathname + '/123'}>网络营销</Link>
-                                </td>
-                                <td>2016-04-01</td>
-                                <td>2016-04-01</td>
-                                <td>6000.00</td>
-                                <td>6000.00</td>
-                                <td>1000</td>
-                                <td>1000</td>
-                                <td>30</td>
-                                <td>450000.00</td>
-                                <td>40.00%</td>
-                            </tr>
+                            {this.state.list.map(this.renderItems)}
                         </tbody>
                     </table>
                 </div>
