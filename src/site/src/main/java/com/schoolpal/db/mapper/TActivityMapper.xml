@@ -14,9 +14,14 @@
     <result column="cost" jdbcType="DECIMAL" property="cost" />
     <result column="exective_id" jdbcType="CHAR" property="exectiveId" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="creator_name" jdbcType="CHAR" property="creatorName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
-    <result column="children" jdbcType="CHAR" property="children" />
+    <result column="leads" jdbcType="INTEGER" property="leads" />
+    <result column="opportunities" jdbcType="INTEGER" property="opportunities" />
+    <result column="contracts" jdbcType="INTEGER" property="contracts" />
+    <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="children" jdbcType="INTEGER" property="children" />
   </resultMap>
   <select id="selectManyByParentId" resultMap="selectManyResultMap">
 <!--     SELECT a.*, b.cnt 
@@ -42,13 +47,15 @@
     WHERE a.id=a.root_id
   </select>
   <select id="selectManyByOrgId" resultMap="selectManyResultMap">
-    SELECT * 
-    FROM t_activity 
-    WHERE orgnization_id=#{id,jdbcType=CHAR}
+    SELECT *, u.c_realname AS creator_name
+    FROM t_activity AS a
+    LEFT JOIN t_user AS u ON a.creator_id = u.c_id
+    WHERE a.orgnization_id=#{id,jdbcType=CHAR}
   </select>
   <select id="selectAll" resultMap="selectManyResultMap">
-    SELECT * 
-    FROM t_activity 
+    SELECT a.*, u.c_realname AS creator_name
+    FROM t_activity AS a
+    LEFT JOIN t_user AS u ON a.creator_id = u.c_id
   </select>
   <select id="selectOneById" resultMap="selectManyResultMap">
     SELECT * 

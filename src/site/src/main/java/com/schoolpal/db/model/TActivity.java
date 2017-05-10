@@ -26,6 +26,8 @@ public class TActivity {
 
     private String creatorId;
 
+    private String creatorName;
+
     private Date createTime;
 
     private Date lastUpdate;
@@ -136,7 +138,15 @@ public class TActivity {
         this.creatorId = creatorId == null ? null : creatorId.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

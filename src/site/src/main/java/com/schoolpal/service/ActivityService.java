@@ -44,7 +44,6 @@ public class ActivityService {
 			if (row.getId().equals(row.getRootId())) {
 				row.setLevel(0);
 				results.add(row);
-				break;
 			}
 		}
 		
