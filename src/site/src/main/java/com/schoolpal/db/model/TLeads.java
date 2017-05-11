@@ -27,6 +27,8 @@ public class TLeads {
 
     private Date createTime;
 
+    private Date lastUpdate;
+
     private String note;
 
     public String getId() {
@@ -125,7 +127,15 @@ public class TLeads {
         this.createTime = createTime;
     }
 
-    public String getNote() {
+    public Date getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
+	public String getNote() {
         return note;
     }
 

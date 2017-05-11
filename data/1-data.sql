@@ -79,6 +79,8 @@ INSERT INTO `t_index` VALUES
 ('t_user','161227',43,1,8),
 ('t_user_role','161227',77,1,8),
 ('t_leads','161227',77,1,8),
+('t_leads_parent','161227',77,1,8),
+('t_leads_student','161227',77,1,8),
 ('t_activity','161227',77,1,8);
 /*!40000 ALTER TABLE `t_index` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -5,9 +5,7 @@ import com.schoolpal.db.model.TLeads;
 public interface TLeadsMapper {
     int deleteByPrimaryKey(String id);
 
-    int insert(TLeads record);
-
-    int insertSelective(TLeads record);
+    int insertOne(TLeads record);
 
     TLeads selectByPrimaryKey(String id);
 

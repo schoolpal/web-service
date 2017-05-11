@@ -3,6 +3,8 @@ package com.schoolpal.db.model;
 import java.util.Date;
 
 public class TLeadsParent {
+    private String id;
+    
     private String leadsId;
 
     private String name;
@@ -23,15 +25,21 @@ public class TLeadsParent {
 
     private Date birthday;
 
-    private String executiveId;
-
     private String creatorId;
 
     private Date createTime;
 
     private Date lastUpdate;
 
-    public String getLeadsId() {
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getLeadsId() {
         return leadsId;
     }
 
@@ -113,14 +121,6 @@ public class TLeadsParent {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getExecutiveId() {
-        return executiveId;
-    }
-
-    public void setExecutiveId(String executiveId) {
-        this.executiveId = executiveId == null ? null : executiveId.trim();
     }
 
     public String getCreatorId() {

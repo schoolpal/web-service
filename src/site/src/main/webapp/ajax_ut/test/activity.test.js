@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-describe('/ajax/activity/ APIs', function() {
+describe('/ajax/mkt/activity/ APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';
@@ -52,44 +52,6 @@ describe('/ajax/activity/ APIs', function() {
 		expect(jsonData.data).to.be.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
-
-//	it('list.do - top level', function() {
-//		var xhr = $.ajax({
-//			async : false,
-//			method : 'POST',
-//			url : buildUrl(host, act_path, 'list.do'),
-//			dataType : 'json',
-//				data : {
-//					id : 0
-//				}
-//		});
-//
-//		expect(xhr.status).to.be.equal(200);
-//		var jsonData = xhr.responseJSON;
-//		resDump('list.do', jsonData);
-//		expect(jsonData.code).to.be.equal(200);
-//		expect(jsonData.data).to.not.empty;
-//		expect(jsonData.detail).to.be.equal('Ok');
-//	});
-//
-//	it('list.do - by parent id', function() {
-//		var xhr = $.ajax({
-//			async : false,
-//			method : 'POST',
-//			url : buildUrl(host, act_path, 'list.do'),
-//			dataType : 'json',
-//			data : {
-//				id : 1
-//			}
-//		});
-//
-//		expect(xhr.status).to.be.equal(200);
-//		var jsonData = xhr.responseJSON;
-//		resDump('list.do', jsonData);
-//		expect(jsonData.code).to.be.equal(200);
-//		expect(jsonData.data).to.not.empty;
-//		expect(jsonData.detail).to.be.equal('Ok');
-//	});
 
 	it('list.do', function() {
 		var xhr = $.ajax({

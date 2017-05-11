@@ -1,48 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TLeadsMapper">
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
-    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="source" jdbcType="INTEGER" property="source" />
-    <result column="channel" jdbcType="INTEGER" property="channel" />
-    <result column="stage" jdbcType="INTEGER" property="stage" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
-    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
-    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, course_type, course_name, type, source, channel, stage, status, orgnization_id, 
-    executive_id, creator_id, create_time, note
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_leads
-    where id = #{id,jdbcType=CHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_leads
-    where id = #{id,jdbcType=CHAR}
-  </delete>
-  <insert id="insert" parameterType="com.schoolpal.db.model.TLeads">
-    insert into t_leads (id, course_type, course_name, 
-      type, source, channel, 
-      stage, status, orgnization_id, 
-      executive_id, creator_id, create_time, 
-      note)
-    values (#{id,jdbcType=CHAR}, #{courseType,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, #{channel,jdbcType=INTEGER}, 
-      #{stage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{orgnizationId,jdbcType=CHAR}, 
-      #{executiveId,jdbcType=CHAR}, #{creatorId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{note,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TLeads">
+
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TLeads">
     insert into t_leads
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -80,6 +40,9 @@
       </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
       </if>
       <if test="note != null">
         note,
@@ -122,11 +85,64 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
       <if test="note != null">
         #{note,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="channel" jdbcType="INTEGER" property="channel" />
+    <result column="stage" jdbcType="INTEGER" property="stage" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, course_type, course_name, type, source, channel, stage, status, orgnization_id, 
+    executive_id, creator_id, create_time, note
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_leads
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_leads
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TLeads">
+    insert into t_leads (id, course_type, course_name, 
+      type, source, channel, 
+      stage, status, orgnization_id, 
+      executive_id, creator_id, create_time, 
+      note)
+    values (#{id,jdbcType=CHAR}, #{courseType,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, #{channel,jdbcType=INTEGER}, 
+      #{stage,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{orgnizationId,jdbcType=CHAR}, 
+      #{executiveId,jdbcType=CHAR}, #{creatorId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TLeads">
     update t_leads
     <set>

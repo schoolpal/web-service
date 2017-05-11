@@ -305,6 +305,7 @@ CREATE TABLE `t_leads` (
   `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
   `create_time` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_t_leads_t_leads_status1_idx` (`status`),
@@ -343,8 +344,8 @@ CREATE TABLE `t_leads_parent` (
   `relation` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `leads_id_idx` (`leads_id`),
-  UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
-  UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`),
+  KEY `c_cellphone` (`cellphone`),
+  KEY `id_type_code_idx` (`id_type`,`id_code`),
   KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

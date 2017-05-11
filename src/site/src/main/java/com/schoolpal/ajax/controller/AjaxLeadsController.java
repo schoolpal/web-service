@@ -14,12 +14,10 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
-import com.schoolpal.db.model.TActivity;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
 import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.ActivityService;
 import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 

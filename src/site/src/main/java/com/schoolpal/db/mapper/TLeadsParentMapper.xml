@@ -1,6 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TLeadsParentMapper">
+
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TLeadsParent">
+    insert into t_leads_parent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="leadsId != null">
+        leads_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="cellphone != null">
+        cellphone,
+      </if>
+      <if test="weichat != null">
+        weichat,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="idType != null">
+        id_type,
+      </if>
+      <if test="idCode != null">
+        id_code,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="leadsId != null">
+        #{leadsId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null">
+        #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="weichat != null">
+        #{weichat,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="idCode != null">
+        #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeadsParent">
     <id column="leads_id" jdbcType="CHAR" property="leadsId" />
     <result column="first_name" jdbcType="VARCHAR" property="firstName" />
@@ -46,103 +155,7 @@
       #{creatorId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TLeadsParent">
-    insert into t_leads_parent
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="leadsId != null">
-        leads_id,
-      </if>
-      <if test="firstName != null">
-        first_name,
-      </if>
-      <if test="lastName != null">
-        last_name,
-      </if>
-      <if test="gender != null">
-        gender,
-      </if>
-      <if test="cellphone != null">
-        cellphone,
-      </if>
-      <if test="weichat != null">
-        weichat,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="address != null">
-        address,
-      </if>
-      <if test="idType != null">
-        id_type,
-      </if>
-      <if test="idCode != null">
-        id_code,
-      </if>
-      <if test="birthday != null">
-        birthday,
-      </if>
-      <if test="executiveId != null">
-        executive_id,
-      </if>
-      <if test="creatorId != null">
-        creator_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdate != null">
-        last_update,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="leadsId != null">
-        #{leadsId,jdbcType=CHAR},
-      </if>
-      <if test="firstName != null">
-        #{firstName,jdbcType=VARCHAR},
-      </if>
-      <if test="lastName != null">
-        #{lastName,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        #{gender,jdbcType=VARCHAR},
-      </if>
-      <if test="cellphone != null">
-        #{cellphone,jdbcType=VARCHAR},
-      </if>
-      <if test="weichat != null">
-        #{weichat,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="idType != null">
-        #{idType,jdbcType=INTEGER},
-      </if>
-      <if test="idCode != null">
-        #{idCode,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        #{birthday,jdbcType=DATE},
-      </if>
-      <if test="executiveId != null">
-        #{executiveId,jdbcType=VARCHAR},
-      </if>
-      <if test="creatorId != null">
-        #{creatorId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdate != null">
-        #{lastUpdate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TLeadsParent">
     update t_leads_parent
     <set>
