@@ -8,7 +8,6 @@ import Dialog from '../public/Dialog'
 import { CreateButton, EditorButton, DelButton, ToggleButton } from '../public/Button';
 import { orgList, userList, userEnable, userDel } from '../../utils/api';
 import DialogTips from '../../utils/DialogTips'
-import errorHandle from '../../utils/errorHandle'
 import command from '../../utils/command'
 
 export default class List extends React.Component {
@@ -118,9 +117,6 @@ export default class List extends React.Component {
                     this.setState({
                         userList: data
                     })
-                })
-                .fail((data) => {
-                    errorHandle({ data: data, router: this.props.router })
                 })
                 .always(() => {
                     dialogTips.close()
