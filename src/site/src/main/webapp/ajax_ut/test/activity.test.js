@@ -118,12 +118,11 @@ describe('/ajax/activity/ APIs', function() {
 			dataType : 'json',
 			data : {
 				orgnizationId: org_val,
-//			    parentId: '16122700000003',
 			    name: 'test_name',
 			    startDate: new Date(2016,6,6),
 			    endDate: new Date(2017,7,7),
 			    budget: 100000.79,
-			    cost: 88888.61
+//			    cost: 88888.61
 			}
 		});
 
@@ -163,7 +162,6 @@ describe('/ajax/activity/ APIs', function() {
 			dataType : 'json',
 			data : {
 				id : id_val,
-//			    parentId: '16122700000002',
 			    name: 'test_name_mod',
 			    startDate: new Date(2015,5,5),
 			    endDate: new Date(2018,8,8)

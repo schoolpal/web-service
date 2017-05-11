@@ -33,7 +33,11 @@ public class LogDB {
 				ps.setString(2, ipUser);
 				ps.setString(3, creator);
 				ps.setString(4, type);
-				ps.setString(5, title);
+				String safe_title = title;
+				if (title.length() > 49){
+					safe_title = title.substring(0, 49);
+				}
+				ps.setString(5, safe_title);
 				ps.setString(6, desc);
 				ps.setString(7, debug);
 				return ps;

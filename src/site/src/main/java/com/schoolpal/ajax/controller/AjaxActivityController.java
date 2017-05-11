@@ -48,7 +48,11 @@ public class AjaxActivityController {
 			}
 			
 			TActivity act = actServ.queryActivityById(id);
-			act.calculateRoi();
+			if (act == null){
+				res.setCode(500);
+				res.setDetail("Failed to query activity");
+				break;
+			}
 			res.setData(act);
 
 		} while (false);
@@ -74,6 +78,9 @@ public class AjaxActivityController {
 			
 			List<TActivity> acts = null;
 			acts = actServ.queryActivitiesByOrgId(orgnizationId);
+//			for (TActivity act : acts) {
+//				act.calculateRoi();
+//			}
 			res.setData(acts);
 
 		} while (false);

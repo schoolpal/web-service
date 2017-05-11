@@ -59,10 +59,13 @@
     LEFT JOIN t_user AS u ON a.creator_id = u.c_id
   </select>
   <select id="selectOneById" resultMap="selectManyResultMap">
-    SELECT a.*, 
+    SELECT a.*,
     (
       SELECT name FROM t_activity AS b WHERE b.id = a.parent_id
-    ) AS parent_name
+    ) AS parent_name, 
+    (
+      SELECT c_realname FROM t_user AS u WHERE u.c_id = a.creator_id
+    ) AS creator_name 
     FROM t_activity AS a
     WHERE id=#{id,jdbcType=CHAR}
   </select>
