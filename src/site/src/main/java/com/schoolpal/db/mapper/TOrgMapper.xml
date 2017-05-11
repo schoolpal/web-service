@@ -126,6 +126,21 @@
         WHERE
         c_available = 1
     </select>
+    <select id="selectOneByIdLite" resultMap="selectAllLiteResultMap">
+        SELECT c_id, c_name, c_root_id, c_parent_id
+        FROM t_org
+        WHERE
+        c_available = 1 and c_id = #{cId,jdbcType=CHAR}
+    </select>
+    <resultMap id="selectAllIdsResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+    </resultMap>
+    <select id="selectAllIds" resultMap="selectAllIdsResultMap">
+        SELECT c_id, c_parent_id
+        FROM t_org
+        WHERE c_available = 1
+    </select>
 	<delete id="deleteOneById" parameterType="java.lang.String">
 		delete from t_org
 		where
@@ -135,15 +150,6 @@
 		delete from t_org
 		where c_code = #{cCode,jdbcType=CHAR}
 	</delete>
-	<resultMap id="selectAllIdsResultMap" type="com.schoolpal.db.model.TOrg">
-		<id column="c_id" jdbcType="CHAR" property="cId" />
-		<result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
-	</resultMap>
-	<select id="selectAllIds" resultMap="selectAllIdsResultMap">
-		SELECT c_id, c_parent_id
-		FROM t_org
-		WHERE c_available = 1
-	</select>
     <insert id="insertOne" parameterType="com.schoolpal.db.model.TOrg">
         insert into t_org
         <trim prefix="(" suffix=")" suffixOverrides=",">

@@ -12,6 +12,8 @@ public interface TOrgMapper {
 
     TOrg selectOneByCodeWithExcludeId(String cCode, String cId);
     
+    TOrg selectOneByIdLite(String cId);
+    
     int ifExistsById(String cId);
     
     int insertOne(TOrg org);
@@ -24,6 +26,7 @@ public interface TOrgMapper {
 
     List<TOrg> selectAll();
     List<TOrg> selectAllLite();
+    List<TOrg> selectAllIds();
     
 //    List<TOrg> selectAllIds();
 //    

@@ -2,6 +2,7 @@ package com.schoolpal.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +89,7 @@ public class OrgService {
 	}
 
 	public List<String> queryOrgIdListByRootId(String id){
-		List<TOrg> orgRows = orgDao.selectAll();
+		List<TOrg> orgRows = orgDao.selectAllIds();
 		List<String> results = new ArrayList<String>();
 
 		for (TOrg row : orgRows) {
@@ -116,6 +117,30 @@ public class OrgService {
 		return results;
 	}
 
+	public List<TOrg> queryUpperOrgListByIdLite(String id){
+		LinkedList<TOrg> results = new LinkedList<TOrg>();
+		
+		do{
+		
+			TOrg org = orgDao.selectOneByIdLite(id);
+			if (org == null){
+				break;
+			}
+			results.addLast(org);
+			
+			String rootId = org.getcRootId();
+			while (!org.getcId().equals(rootId)){
+				org = orgDao.selectOneByIdLite(org.getcParentId());
+				if (org == null){
+					break;
+				}
+				results.addLast(org);
+			}
+		} while(false);
+		
+		return results;
+	}
+	
 	public TOrg queryOrgByCode(String code){
 		TOrg org = orgDao.selectOneByCode(code);
 		return org;
