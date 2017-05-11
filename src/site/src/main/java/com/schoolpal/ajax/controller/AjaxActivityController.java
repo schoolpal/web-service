@@ -30,6 +30,31 @@ public class AjaxActivityController {
 	
 	private Gson gson = new Gson();
 
+	@RequestMapping(value = "query.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String query(String id) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+			if (id == null){
+				res.setCode(401);
+				res.setDetail("Orgnization id cannot be empty");
+				break;
+			}
+			
+			TActivity act = actServ.queryActivityById(id);
+			act.calculateRoi();
+			res.setData(act);
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String list(String orgnizationId) {

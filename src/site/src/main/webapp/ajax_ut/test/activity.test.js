@@ -136,6 +136,25 @@ describe('/ajax/activity/ APIs', function() {
 		id_val = jsonData.data;
 	});
 
+	it('query.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, act_path, 'query.do'),
+			dataType : 'json',
+			data : {
+				id: id_val,
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('query.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
 	it('mod.do', function() {
 		var xhr = $.ajax({
 			async : false,

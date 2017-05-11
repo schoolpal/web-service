@@ -14,6 +14,8 @@ public class TActivity {
 
     private String name;
 
+    private String parentName;
+    
     private Date startDate;
 
     private Date endDate;
@@ -90,7 +92,15 @@ public class TActivity {
         this.name = name == null ? null : name.trim();
     }
 
-    public Date getStartDate() {
+    public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
+	public Date getStartDate() {
         return startDate;
     }
 
@@ -219,10 +229,6 @@ public class TActivity {
 		this.roi = roi;
 	}
 	
-	public void calculateRoi() {
-		this.roi = this.totalAmount.divide(this.cost);
-	}
-
 	public Integer getLevel() {
 		return level;
 	}
@@ -237,6 +243,14 @@ public class TActivity {
 
 	public void setParent(boolean parent) {
 		this.parent = parent;
+	}
+
+	public void calculateRoi() {
+		if (this.cost.doubleValue() > 0.0){
+			this.roi = this.totalAmount.divide(this.cost);
+		}else{
+			this.roi = new BigDecimal(0.0);
+		}
 	}
 
 }

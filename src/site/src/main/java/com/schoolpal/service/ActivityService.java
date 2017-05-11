@@ -55,6 +55,7 @@ public class ActivityService {
 			for (TActivity row : allRows) {
 				if (row.getParentId().equals(currRow.getId()) && !results.contains(row)) {
 					row.setLevel(currRow.getLevel() + 1);
+					row.calculateRoi();
 					results.add(i + (++offset), row);
 					currRow.setParent(true);
 				}

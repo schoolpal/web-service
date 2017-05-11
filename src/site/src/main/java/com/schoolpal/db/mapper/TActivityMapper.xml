@@ -6,6 +6,7 @@
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="root_id" jdbcType="CHAR" property="rootId" />
     <result column="parent_id" jdbcType="CHAR" property="parentId" />
+    <result column="parent_name" jdbcType="CHAR" property="parentName" />
     <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="start_date" jdbcType="DATE" property="startDate" />
@@ -58,8 +59,11 @@
     LEFT JOIN t_user AS u ON a.creator_id = u.c_id
   </select>
   <select id="selectOneById" resultMap="selectManyResultMap">
-    SELECT * 
-    FROM t_activity 
+    SELECT a.*, 
+    (
+      SELECT name FROM t_activity AS b WHERE b.id = a.parent_id
+    ) AS parent_name
+    FROM t_activity AS a
     WHERE id=#{id,jdbcType=CHAR}
   </select>
   <insert id="insertOne" parameterType="com.schoolpal.db.model.TActivity" useGeneratedKeys="true" keyProperty="id">
