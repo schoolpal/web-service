@@ -560,3 +560,35 @@ export function marketActivityAdd(data) {
 
     return defer.promise();
 }
+
+export function marketActivityMod(data) {
+    const defer = $.Deferred();
+    const url = 'mkt/activity/mod.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function marketActivityDel(id) {
+    const defer = $.Deferred();
+    const url = 'mkt/activity/del.do';
+    const settings = $.extend({ url: url }, { data: { id: id } });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import subTitle from '../../../utils/subTitle';
 import { SaveButton, BackButton } from '../../public/Button';
-import { marketActivityAdd } from '../../../utils/api';
+import { marketActivityAdd, marketActivityMod } from '../../../utils/api';
 import DialogTips from '../../../utils/DialogTips';
 
 require('../../../utils/datepicker');
@@ -18,7 +18,7 @@ export default class Editor extends React.Component {
             event.preventDefault()
         };
 
-        const addSuccessPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/activity';
+        const successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/activity';
         const loading = DialogTips({ type: 'loading' })
         const success = DialogTips({ type: 'success' })
         const fail = DialogTips({ type: 'fail', autoClose: true })
@@ -34,23 +34,36 @@ export default class Editor extends React.Component {
 
         loading.open()
 
-        //if (this.state.editorId) {
-        //param.id = this.state.editorId;
-        //} else {
-        marketActivityAdd(param)
-            .done(() => {
-                loading.close()
-                success.open()
-                setTimeout(() => {
-                    success.close()
-                    this.props.router.push(addSuccessPath)
-                }, 2000)
-            })
-            .fail((data) => {
-                loading.close()
-                fail.open()
-            })
-        //}
+        if (this.props.params.id) {
+            param.id = this.props.params.id;
+            marketActivityMod(param)
+                .done(() => {
+                    loading.close()
+                    success.open()
+                    setTimeout(() => {
+                        success.close()
+                        this.props.router.push(successPath + '/' + this.props.params.id)
+                    }, 2000)
+                })
+                .fail((data) => {
+                    loading.close()
+                    fail.open()
+                })
+        } else {
+            marketActivityAdd(param)
+                .done(() => {
+                    loading.close()
+                    success.open()
+                    setTimeout(() => {
+                        success.close()
+                        this.props.router.push(successPath)
+                    }, 2000)
+                })
+                .fail((data) => {
+                    loading.close()
+                    fail.open()
+                })
+        }
     }
 
     render() {

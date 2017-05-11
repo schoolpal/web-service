@@ -489,6 +489,8 @@ webpackJsonp([0],{
 	exports.checkName = checkName;
 	exports.marketActivityList = marketActivityList;
 	exports.marketActivityAdd = marketActivityAdd;
+	exports.marketActivityMod = marketActivityMod;
+	exports.marketActivityDel = marketActivityDel;
 
 	var _reactRouter = __webpack_require__(175);
 
@@ -1046,6 +1048,38 @@ webpackJsonp([0],{
 	    var defer = $.Deferred();
 	    var url = 'mkt/activity/add.do';
 	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function marketActivityMod(data) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/activity/mod.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function marketActivityDel(id) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/activity/del.do';
+	    var settings = $.extend({ url: url }, { data: { id: id } });
 
 	    io(settings, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -3325,7 +3359,7 @@ webpackJsonp([0],{
 	                _react2.default.createElement(
 	                    'td',
 	                    null,
-	                    '--'
+	                    data.creatorName
 	                ),
 	                _react2.default.createElement(
 	                    'td',
@@ -3380,7 +3414,7 @@ webpackJsonp([0],{
 	                _react2.default.createElement(
 	                    'td',
 	                    null,
-	                    '--'
+	                    data.totalAmount
 	                ),
 	                _react2.default.createElement(
 	                    'td',
@@ -3789,7 +3823,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var addSuccessPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/activity';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/activity';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -3805,21 +3839,32 @@ webpackJsonp([0],{
 
 	            loading.open();
 
-	            //if (this.state.editorId) {
-	            //param.id = this.state.editorId;
-	            //} else {
-	            (0, _api.marketActivityAdd)(param).done(function () {
-	                loading.close();
-	                success.open();
-	                setTimeout(function () {
-	                    success.close();
-	                    _this2.props.router.push(addSuccessPath);
-	                }, 2000);
-	            }).fail(function (data) {
-	                loading.close();
-	                fail.open();
-	            });
-	            //}
+	            if (this.props.params.id) {
+	                param.id = this.props.params.id;
+	                (0, _api.marketActivityMod)(param).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this2.props.router.push(successPath + '/' + _this2.props.params.id);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            } else {
+	                (0, _api.marketActivityAdd)(param).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this2.props.router.push(successPath);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -5616,6 +5661,10 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(41);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _Button = __webpack_require__(248);
 
 	var _subTitle = __webpack_require__(252);
@@ -5625,6 +5674,16 @@ webpackJsonp([0],{
 	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
+
+	var _Dialog = __webpack_require__(234);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
+	var _DialogTips = __webpack_require__(243);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _api = __webpack_require__(232);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5647,6 +5706,7 @@ webpackJsonp([0],{
 	        _this.renderCommand = _this.renderCommand.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
 	        _this.confirmDel = _this.confirmDel.bind(_this);
+	        _this.handleDel = _this.handleDel.bind(_this);
 	        return _this;
 	    }
 
@@ -5748,7 +5808,39 @@ webpackJsonp([0],{
 	        }
 	    }, {
 	        key: 'confirmDel',
-	        value: function confirmDel() {}
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除此活动 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
+	        }
+	    }, {
+	        key: 'handleDel',
+	        value: function handleDel() {
+	            var _this3 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
+	            loading.open();
+
+	            (0, _api.marketActivityDel)(this.props.params.id).done(function () {
+	                loading.close();
+	                success.open();
+
+	                setTimeout(function () {
+	                    success.close();
+	                    _this3.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/activity');
+	                }, 2000);
+	            }).fail(function (data) {
+	                loading.close();
+	                fail.open();
+	            });
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -14947,10 +15039,6 @@ webpackJsonp([0],{
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
-	var _errorHandle = __webpack_require__(237);
-
-	var _errorHandle2 = _interopRequireDefault(_errorHandle);
-
 	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
@@ -15086,8 +15174,6 @@ webpackJsonp([0],{
 	                        _this4.setState({
 	                            userList: data
 	                        });
-	                    }).fail(function (data) {
-	                        (0, _errorHandle2.default)({ data: data, router: _this4.props.router });
 	                    }).always(function () {
 	                        dialogTips.close();
 	                    });

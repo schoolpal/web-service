@@ -65,7 +65,7 @@ export default class List extends React.Component {
         return (
             <tr key={data.id}>
                 <td>{data.id}</td>
-                <td>--</td>
+                <td>{data.creatorName}</td>
                 <td>{formatDate(data.createTime)}</td>
                 <td>
                     {
@@ -80,7 +80,7 @@ export default class List extends React.Component {
                 <td>{data.leads}</td>
                 <td>{data.opportunities}</td>
                 <td>{data.contracts}</td>
-                <td>--</td>
+                <td>{data.totalAmount}</td>
                 <td>--</td>
             </tr>
         )

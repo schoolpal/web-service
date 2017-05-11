@@ -1,7 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { EditorButton, DelButton, BackButton } from '../../public/Button';
 import subTitle from '../../../utils/subTitle';
 import command from '../../../utils/command'
+import Dialog from '../../public/Dialog'
+import DialogTips from '../../../utils/DialogTips';
+import { marketActivityDel } from '../../../utils/api';
 
 require('../../../utils/datepicker');
 
@@ -13,6 +17,7 @@ export default class View extends React.Component {
         this.renderCommand = this.renderCommand.bind(this)
         this.handleEditor = this.handleEditor.bind(this)
         this.confirmDel = this.confirmDel.bind(this)
+        this.handleDel = this.handleDel.bind(this)
     }
 
     componentDidMount() {
@@ -117,7 +122,40 @@ export default class View extends React.Component {
         this.props.router.push(editorPath)
     }
 
-    confirmDel() { }
+    confirmDel() {
+        const div = document.createElement('div');
+
+        ReactDOM.render(
+            <Dialog
+                container={div}
+                text={'是否确认删除此活动 ？'}
+                action={this.handleDel}
+            />,
+            document.body.appendChild(div)
+        )
+    }
+
+    handleDel() {
+        const loading = DialogTips({ type: 'loading' })
+        const success = DialogTips({ type: 'success' })
+        const fail = DialogTips({ type: 'fail', autoClose: true })
+
+        loading.open()
+
+        marketActivityDel(this.props.params.id).done(() => {
+            loading.close()
+            success.open()
+
+            setTimeout(() => {
+                success.close()
+                this.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/activity')
+            }, 2000)
+
+        }).fail((data) => {
+            loading.close()
+            fail.open()
+        })
+    }
 
     render() {
         return (
