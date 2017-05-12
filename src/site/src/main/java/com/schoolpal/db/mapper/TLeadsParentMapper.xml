@@ -93,8 +93,71 @@
       </if>
     </trim>
   </insert>
+  <update id="updateOne" parameterType="com.schoolpal.db.model.TLeadsParent">
+    update t_leads_parent
+    <set>
+      <if test="leadsId != null">
+        leads_id = #{leadsId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="cellphone != null">
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+      </if>
+      <if test="weichat != null">
+        weichat = #{weichat,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        id_type = #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="idCode != null">
+        id_code = #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <delete id="deleteOneId" parameterType="java.lang.String">
+    delete from t_leads_parent
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteManyByLeadsId" parameterType="java.lang.String">
+    delete from t_leads_parent
+    where leads_id = #{leadsId,jdbcType=CHAR}
+  </delete>
 
-
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_leads_parent
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectIdsByLeadsId" parameterType="java.lang.String" resultType="java.lang.String">
+    select id
+    from t_leads_parent
+    where leads_id = #{leadsId,jdbcType=CHAR}
+  </select>
 
 
 
@@ -137,89 +200,4 @@
     from t_leads_parent
     where leads_id = #{leadsId,jdbcType=CHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from t_leads_parent
-    where leads_id = #{leadsId,jdbcType=CHAR}
-  </delete>
-  <insert id="insert" parameterType="com.schoolpal.db.model.TLeadsParent">
-    insert into t_leads_parent (leads_id, first_name, last_name, 
-      gender, cellphone, weichat, 
-      email, address, id_type, 
-      id_code, birthday, executive_id, 
-      creator_id, create_time, last_update
-      )
-    values (#{leadsId,jdbcType=CHAR}, #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=VARCHAR}, #{cellphone,jdbcType=VARCHAR}, #{weichat,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{idType,jdbcType=INTEGER}, 
-      #{idCode,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{executiveId,jdbcType=VARCHAR}, 
-      #{creatorId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP}
-      )
-  </insert>
-
-  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TLeadsParent">
-    update t_leads_parent
-    <set>
-      <if test="firstName != null">
-        first_name = #{firstName,jdbcType=VARCHAR},
-      </if>
-      <if test="lastName != null">
-        last_name = #{lastName,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=VARCHAR},
-      </if>
-      <if test="cellphone != null">
-        cellphone = #{cellphone,jdbcType=VARCHAR},
-      </if>
-      <if test="weichat != null">
-        weichat = #{weichat,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null">
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="idType != null">
-        id_type = #{idType,jdbcType=INTEGER},
-      </if>
-      <if test="idCode != null">
-        id_code = #{idCode,jdbcType=VARCHAR},
-      </if>
-      <if test="birthday != null">
-        birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="executiveId != null">
-        executive_id = #{executiveId,jdbcType=VARCHAR},
-      </if>
-      <if test="creatorId != null">
-        creator_id = #{creatorId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdate != null">
-        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where leads_id = #{leadsId,jdbcType=CHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TLeadsParent">
-    update t_leads_parent
-    set first_name = #{firstName,jdbcType=VARCHAR},
-      last_name = #{lastName,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR},
-      cellphone = #{cellphone,jdbcType=VARCHAR},
-      weichat = #{weichat,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      id_type = #{idType,jdbcType=INTEGER},
-      id_code = #{idCode,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      executive_id = #{executiveId,jdbcType=VARCHAR},
-      creator_id = #{creatorId,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
-    where leads_id = #{leadsId,jdbcType=CHAR}
-  </update>
 </mapper>

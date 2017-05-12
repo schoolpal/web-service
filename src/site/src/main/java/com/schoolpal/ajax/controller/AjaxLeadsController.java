@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,6 +59,17 @@ public class AjaxLeadsController {
 		return gson.toJson(res);
 	}
 
+	protected class LeadsAddResponse{
+		private String leads_id;
+		private String parent_id;
+		private String student_id;
+		
+		public LeadsAddResponse(String leads_id, String parent_id, String student_id){
+			this.leads_id = leads_id;
+			this.parent_id = parent_id;
+			this.student_id = student_id;
+		}
+	}
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
@@ -162,16 +174,17 @@ public class AjaxLeadsController {
 				break;
 			}
 			
-			res.setData(leads.getId());
+			LeadsAddResponse data = new LeadsAddResponse(leads.getId(), parent.getId(), student.getId());
+			res.setData(data);
 			
 		} while (false);
 
 		return gson.toJson(res);
 	}
 	
-/*	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
+	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TLeads leads, HttpServletRequest request) {
+	public String mod(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -183,29 +196,52 @@ public class AjaxLeadsController {
 			
 			if (leads == null) {
 				res.setCode(401);
-				res.setDetail("From data cannot be empty");
+				res.setDetail("Leads data cannot be empty");
+				break;
+			}
+			if (student == null) {
+				res.setCode(402);
+				res.setDetail("Student data cannot be empty");
+				break;
+			}
+			if (parent == null) {
+				res.setCode(403);
+				res.setDetail("Parent data cannot be empty");
 				break;
 			}
 
-			if (leads.getId() == null) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
+			if (leads.getId() == null){
+				res.setCode(411);
+				res.setDetail("Leads id cannot be empty");
 				break;
 			}
-
-			TLeads current = leadsServ.queryLeadsById(leads.getId());
-			if (current == null){
-				res.setCode(406);
-				res.setDetail("Failed to find activity");
+			if (StringUtils.isEmpty(student.getId())){
+				student.setLeadsId(leads.getId());
+			}
+			if (StringUtils.isEmpty(parent.getId())){
+				parent.setLeadsId(leads.getId());
+			}
+			
+			if (!leadsServ.modLeads(leads)){
+				res.setCode(500);
+				res.setDetail("Failed to mod leads");
 				break;
 			}
 			
-			if (!actServ.modActivity(leads)){
-				res.setCode(500);
-				res.setDetail("Failed to mod activity");
+			if (!leadsServ.modStudent(student)){
+				res.setCode(501);
+				res.setDetail("Failed to mod student");
 				break;
 			}
-						
+			
+			if (!leadsServ.modParent(parent)){
+				res.setCode(502);
+				res.setDetail("Failed to mod parent");
+				break;
+			}
+			
+			res.setData(leads.getId());
+			
 		} while (false);
 
 		return gson.toJson(res);
@@ -229,9 +265,9 @@ public class AjaxLeadsController {
 				break;
 			}
 			
-			if (!actServ.delActivityById(id)){
+			if (!leadsServ.delLeadsById(id) || !leadsServ.delParentByLeadsId(id) || !leadsServ.delStudentByLeadsId(id)){
 				res.setCode(500);
-				res.setDetail("Failed to del activity");
+				res.setDetail("Failed to del leads");
 				break;
 			}
 
@@ -239,5 +275,4 @@ public class AjaxLeadsController {
 
 		return gson.toJson(res);
 	}
-	*/
 }

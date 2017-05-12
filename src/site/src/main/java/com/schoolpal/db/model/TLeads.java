@@ -38,6 +38,9 @@ public class TLeads {
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
+    public void setLeadsId(String id) {
+        this.id = id == null ? null : id.trim();
+    }
 
     public String getCourseType() {
         return courseType;

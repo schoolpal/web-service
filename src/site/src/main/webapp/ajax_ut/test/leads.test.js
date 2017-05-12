@@ -10,7 +10,9 @@ describe('/ajax/mkt/leads/ APIs', function() {
 	var pass = '123456';
 	var salt = null;
 	
-	var id_val = 0;
+	var leads_id_val = "";
+	var student_id_val = "";
+	var parent_id_val = "";
 	var org_val = 16122700000009;
 	
 	this.timeout(0);
@@ -103,21 +105,36 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
-		id_val = jsonData.data;
+		leads_id_val = jsonData.data.leads_id;
+		parent_id_val = jsonData.data.parent_id;
+		student_id_val = jsonData.data.student_id;
 	});
-/*
+
 	it('mod.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, act_path, 'mod.do'),
+			url : buildUrl(host, leads_path, 'mod.do'),
 			dataType : 'json',
 			data : {
-				id : id_val,
-//			    parentId: '16122700000002',
-			    name: 'test_name_mod',
-			    startDate: new Date(2015,5,5),
-			    endDate: new Date(2018,8,8)
+				leadsId : leads_id_val,
+				parentId : parent_id_val,
+				studentId : student_id_val,
+				orgnizationId: org_val,
+				source: 4,
+				channel: 3,
+				stage: 2,
+				status: 1,
+			    studentName: 'student name mod',
+			    gender: 2,
+			    age: 4,
+			    classGrade: 2,
+			    schoolName: 'school name mod',
+			    parentName: 'parent name mod',
+			    relation: 'father mod',
+			    cellphone: 13800010009,
+			    weichat: '13670808',
+			    address: 'address mod'
 			}
 		});
 
@@ -132,10 +149,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, act_path, 'del.do'),
+			url : buildUrl(host, leads_path, 'del.do'),
 			dataType : 'json',
 			data : {
-				id : id_val
+				id : leads_id_val
 			}
 		});
 
@@ -160,5 +177,5 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.be.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
-	});*/
+	});
 });

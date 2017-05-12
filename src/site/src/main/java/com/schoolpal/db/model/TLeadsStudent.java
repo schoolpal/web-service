@@ -39,6 +39,9 @@ public class TLeadsStudent {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public void setStudentId(String id) {
+		this.id = id;
+	}
 
 	public String getLeadsId() {
         return leadsId;

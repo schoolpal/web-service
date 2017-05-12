@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TLeadsMapper;
@@ -60,14 +61,30 @@ public class LeadsService {
 		return ret;
 	}
 	
-	public String modLeads(TLeads leads){
-		return null;
-		
+	public boolean modLeads(TLeads leads){
+		boolean ret = false;
+		try{
+			leads.setLastUpdate(new Date());
+			
+			ret = leadsDao.updateOne(leads) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 	
-	public String delLeadsById(String id){
-		return null;
-		
+	public boolean delLeadsById(String id){
+		boolean ret = false;
+		try{
+			ret = leadsDao.deleteOneById(id) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 	
 	public String addParent(TLeadsParent parent){
@@ -90,14 +107,49 @@ public class LeadsService {
 		return ret;
 	}
 	
-	public String modParent(TLeadsParent leads){
-		return null;
-		
+	public boolean modParent(TLeadsParent parent){
+		boolean ret = false;
+		try{
+			if (StringUtils.isEmpty(parent.getId())){
+				List<String> ids = parentDao.selectIdsByLeadsId(parent.getLeadsId());
+				if (ids.size() > 1){
+					throw new Exception("More than one student found");
+				}
+				parent.setId(ids.get(0));
+			}
+			parent.setLastUpdate(new Date());
+			
+			ret = parentDao.updateOne(parent) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 	
-	public String delParentByLeadsId(String id){
-		return null;
-		
+	public boolean delParentById(String id){
+		boolean ret = false;
+		try{
+			ret = parentDao.deleteOneById(id) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public boolean delParentByLeadsId(String leadsId){
+		boolean ret = false;
+		try{
+			ret = parentDao.deleteManyByLeadsId(leadsId) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 	
 	public String addStudent(TLeadsStudent student){
@@ -120,14 +172,49 @@ public class LeadsService {
 		return ret;
 	}
 	
-	public String modStudent(TLeadsStudent leads){
-		return null;
-		
+	public boolean modStudent(TLeadsStudent student){
+		boolean ret = false;
+		try{
+			if (StringUtils.isEmpty(student.getId())){
+				List<String> ids = studentDao.selectIdsByLeadsId(student.getLeadsId());
+				if (ids.size() > 1){
+					throw new Exception("More than one student found");
+				}
+				student.setId(ids.get(0));
+			}
+			student.setLastUpdate(new Date());
+			
+			ret = studentDao.updateOne(student) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 	
-	public String delStudentByLeadsId(String id){
-		return null;
-		
+	public boolean delStudentById(String id){
+		boolean ret = false;
+		try{
+			ret = studentDao.deleteOneById(id) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+
+	public boolean delStudentByLeadsId(String leadsId){
+		boolean ret = false;
+		try{
+			ret = studentDao.deleteManyByLeadsId(leadsId) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 
 
