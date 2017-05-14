@@ -10,9 +10,15 @@ import org.springframework.util.StringUtils;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TLeadsMapper;
 import com.schoolpal.db.inf.TLeadsParentMapper;
+import com.schoolpal.db.inf.TLeadsSourceMapper;
+import com.schoolpal.db.inf.TLeadsStageMapper;
+import com.schoolpal.db.inf.TLeadsStatusMapper;
 import com.schoolpal.db.inf.TLeadsStudentMapper;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
+import com.schoolpal.db.model.TLeadsSource;
+import com.schoolpal.db.model.TLeadsStage;
+import com.schoolpal.db.model.TLeadsStatus;
 import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.web.consts.LogLevel;
 
@@ -30,6 +36,12 @@ public class LeadsService {
 	private TLeadsParentMapper parentDao; 
 	@Autowired
 	private TLeadsStudentMapper studentDao; 
+	@Autowired
+	private TLeadsSourceMapper sourceDao; 
+	@Autowired
+	private TLeadsStageMapper stageDao; 
+	@Autowired
+	private TLeadsStatusMapper statusDao; 
 
 	public List<TLeads> queryLeadsByOrgId(String id){
 		return null;
@@ -217,5 +229,40 @@ public class LeadsService {
 		return ret;
 	}
 
+	public List<TLeadsSource> queryLeadsSources(){
+		List<TLeadsSource> ret = null;
+		try{
+			ret = sourceDao.selectAll();
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+
+	public List<TLeadsStage> queryLeadsStages(){
+		List<TLeadsStage> ret = null;
+		try{
+			ret = stageDao.selectAll();
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+
+	public List<TLeadsStatus> queryLeadsStatus(){
+		List<TLeadsStatus> ret = null;
+		try{
+			ret = statusDao.selectAll();
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
 
 }

@@ -1,15 +1,18 @@
 package com.schoolpal.db.inf;
 
+import java.util.List;
+
 import com.schoolpal.db.model.TLeadsStatus;
 
 public interface TLeadsStatusMapper {
+    List<TLeadsStatus> selectAll();
+    TLeadsStatus selectOneById(Integer id);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(TLeadsStatus record);
 
     int insertSelective(TLeadsStatus record);
-
-    TLeadsStatus selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(TLeadsStatus record);
 

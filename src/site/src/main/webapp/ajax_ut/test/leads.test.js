@@ -54,7 +54,56 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.data).to.be.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
-/*
+	
+	it('listSources.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'listSources.do'),
+			dataType : 'json',
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('listSources.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	it('listStages.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'listStages.do'),
+			dataType : 'json',
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('listStages.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	it('listStatus.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'listStatus.do'),
+			dataType : 'json',
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('listStatus.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	/*
 	it('list.do', function() {
 		var xhr = $.ajax({
 			async : false,
