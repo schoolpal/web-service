@@ -5,8 +5,6 @@ import java.util.Date;
 public class TLeadsParent {
     private String id;
     
-    private String leadsId;
-
     private String name;
 
     private String gender;
@@ -42,14 +40,6 @@ public class TLeadsParent {
 	public void setParentId(String id) {
 		this.id = id;
 	}
-
-	public String getLeadsId() {
-        return leadsId;
-    }
-
-    public void setLeadsId(String leadsId) {
-        this.leadsId = leadsId == null ? null : leadsId.trim();
-    }
 
     public String getName() {
         return name;

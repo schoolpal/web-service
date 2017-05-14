@@ -9,18 +9,18 @@ public class TLeads {
 
     private String courseName;
 
-    private Integer type;
+    private Integer typeId;
 
-    private Integer source;
+    private Integer sourceId;
     private String sourceName;
 
-    private Integer channel;
+    private Integer channelId;
     private String channelName;
 
-    private Integer stage;
+    private Integer stageId;
     private String stageName;
 
-    private Integer status;
+    private Integer statusId;
     private String statusName;
 
     private String orgnizationId;
@@ -38,9 +38,27 @@ public class TLeads {
 
     private String note;
     
+    private String parentId;
     private TLeadsParent parent;
     
-    private TLeadsStudent student;
+    private String studentId;
+    public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public String getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
+
+	private TLeadsStudent student;
 
     public String getId() {
         return id;
@@ -69,44 +87,44 @@ public class TLeads {
         this.courseName = courseName == null ? null : courseName.trim();
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setTypeId(Integer type) {
+        this.typeId = type;
     }
 
-    public Integer getSource() {
-        return source;
+    public Integer getSourceId() {
+        return sourceId;
     }
 
-    public void setSource(Integer source) {
-        this.source = source;
+    public void setSourceId(Integer source) {
+        this.sourceId = source;
     }
 
-    public Integer getChannel() {
-        return channel;
+    public Integer getChannelId() {
+        return channelId;
     }
 
-    public void setChannel(Integer channel) {
-        this.channel = channel;
+    public void setChannelId(Integer channel) {
+        this.channelId = channel;
     }
 
-    public Integer getStage() {
-        return stage;
+    public Integer getStageId() {
+        return stageId;
     }
 
-    public void setStage(Integer stage) {
-        this.stage = stage;
+    public void setStageId(Integer stage) {
+        this.stageId = stage;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getStatusId() {
+        return statusId;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatusId(Integer status) {
+        this.statusId = status;
     }
 
     public String getOrgnizationId() {

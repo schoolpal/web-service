@@ -103,25 +103,6 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.data).to.not.empty;
 	});
 
-	it('list.do', function() {
-		var xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, leads_path, 'list.do'),
-			dataType : 'json',
-			data: {
-				orgId: org_val
-			}
-		});
-
-		expect(xhr.status).to.be.equal(200);
-		var jsonData = xhr.responseJSON;
-		resDump('list.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
-	});
-	
 	it('add.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -130,10 +111,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			dataType : 'json',
 			data : {
 				orgnizationId: org_val,
-				source: 1,
-				channel: 2,
-				stage: 3,
-				status: 4,
+				sourceId: 1,
+				channelId: 2,
+				stageId: 3,
+				statusId: 4,
 			    studentName: 'student name',
 			    gender: 1,
 			    age: 3,
@@ -153,9 +134,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
-		leads_id_val = jsonData.data.leads_id;
-		parent_id_val = jsonData.data.parent_id;
-		student_id_val = jsonData.data.student_id;
+		leads_id_val = jsonData.data;
 	});
 
 	it('query.do', function() {
@@ -175,6 +154,9 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
+		leads_id_val = jsonData.data.id;
+		parent_id_val = jsonData.data.parentId;
+		student_id_val = jsonData.data.studentId;
 	});
 	
 	it('mod.do', function() {
@@ -185,13 +167,13 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			dataType : 'json',
 			data : {
 				leadsId : leads_id_val,
-				parentId : parent_id_val,
-				studentId : student_id_val,
+				parentId: parent_id_val,
+				studentId: student_id_val,
 				orgnizationId: org_val,
-				source: 4,
-				channel: 3,
-				stage: 2,
-				status: 1,
+				sourceId: 4,
+				channelId: 3,
+				stageId: 2,
+				statusId: 1,
 			    studentName: 'student name mod',
 			    gender: 2,
 			    age: 4,
@@ -212,23 +194,81 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-//	it('del.do', function() {
-//		var xhr = $.ajax({
-//			async : false,
-//			method : 'POST',
-//			url : buildUrl(host, leads_path, 'del.do'),
-//			dataType : 'json',
-//			data : {
-//				id : leads_id_val
-//			}
-//		});
-//
-//		expect(xhr.status).to.be.equal(200);
-//		var jsonData = xhr.responseJSON;
-//		resDump('del.do', jsonData);
-//		expect(jsonData.code).to.be.equal(200);
-//		expect(jsonData.detail).to.be.equal('Ok');
-//	});
+	it('assign.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'assign.do'),
+			dataType : 'json',
+			data: {
+				id: leads_id_val,
+				assigneeId: '16122700000036'
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('assign.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.be.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
+	it('convert.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'convert.do'),
+			dataType : 'json',
+			data: {
+				id: leads_id_val,
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('convert.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.be.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
+	it('list.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'list.do'),
+			dataType : 'json',
+			data: {
+				orgId: org_val
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
+	it('del.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'del.do'),
+			dataType : 'json',
+			data : {
+				id : leads_id_val
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('del.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
 
 	it('logout.do', function() {
 		xhr = $.ajax({

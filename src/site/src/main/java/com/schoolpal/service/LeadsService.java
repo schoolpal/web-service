@@ -65,12 +65,26 @@ public class LeadsService {
 		return ret;
 	}
 	
+	public TLeads queryLeadsStudentAndParentById(String id){
+		TLeads ret = null;
+		try{			
+			ret =leadsDao.selectStudentAndParentById(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;		
+	}
+	
 	public String addLeads(TLeads leads){
 		String ret = null;
 		try{
 			String id = idxDao.selectNextId("t_leads");
 			leads.setId(id);
 			
+			if(leads.getExecutiveId() == null){
+				leads.setExecutiveId(leads.getCreatorId());
+			}
 			leads.setCreateTime(new Date());
 			leads.setLastUpdate(new Date());
 			
@@ -102,7 +116,101 @@ public class LeadsService {
 	public boolean delLeadsById(String id){
 		boolean ret = false;
 		try{
+			
+			TLeads leads = leadsDao.selectStudentAndParentById(id);
+			if (leads == null){
+				throw new Exception("Leads not exists");
+			}
+			
+			if (!StringUtils.isEmpty(leads.getParentId())){
+				parentDao.deleteOneById(leads.getParentId());
+			}
+			if (!StringUtils.isEmpty(leads.getStudentId())){
+				studentDao.deleteOneById(leads.getStudentId());
+			}
 			ret = leadsDao.deleteOneById(id) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, String creatorId){
+		String ret = null;
+		do{
+			student.setCreatorId(creatorId);
+			if (this.addStudent(student) == null){
+				break;
+			}
+			
+			parent.setCreatorId(creatorId);
+			if (this.addParent(parent) == null){
+				break;
+			}
+			
+			leads.setTypeId(1);
+			leads.setCreatorId(creatorId);	
+			leads.setStudentId(student.getId());
+			leads.setParentId(parent.getId());
+			if (this.addLeads(leads) == null){
+				break;
+			}
+			ret = leads.getId();
+		
+		}while(false);
+		
+		return ret;
+	}
+	public boolean mod(TLeads leads, TLeadsStudent student, TLeadsParent parent){
+		boolean ret = false;
+		do{
+			if (!this.modStudent(student)){
+				break;
+			}
+			
+			if (!this.modParent(parent)){
+				break;
+			}
+			
+			if (!this.modLeads(leads)){
+				break;
+			}
+			ret = true;
+		}while(false);
+		return ret;
+	}
+	public boolean delById(String id){
+		TLeads leads = this.queryLeadsStudentAndParentById(id);
+		if (leads == null){
+			return false;
+		}
+		if (!StringUtils.isEmpty(leads.getParentId())){
+			parentDao.deleteOneById(leads.getParentId());
+		}
+		if (!StringUtils.isEmpty(leads.getStudentId())){
+			studentDao.deleteOneById(leads.getStudentId());
+		}
+		return leadsDao.deleteOneById(id) > 0;
+	}
+	
+	public boolean assignToExecutiveById(String id, String userId){
+		boolean ret = false;
+		try{
+			ret = leadsDao.updateExecutiveById(id, userId) > 0;
+			
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public boolean convertToOpportunityById(String id){
+		boolean ret = false;
+		try{
+			ret = leadsDao.updateTypeById(id, 2) > 0;
 			
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -134,13 +242,6 @@ public class LeadsService {
 	public boolean modParent(TLeadsParent parent){
 		boolean ret = false;
 		try{
-			if (StringUtils.isEmpty(parent.getId())){
-				List<String> ids = parentDao.selectIdsByLeadsId(parent.getLeadsId());
-				if (ids.size() > 1){
-					throw new Exception("More than one student found");
-				}
-				parent.setId(ids.get(0));
-			}
 			parent.setLastUpdate(new Date());
 			
 			ret = parentDao.updateOne(parent) > 0;
@@ -199,13 +300,6 @@ public class LeadsService {
 	public boolean modStudent(TLeadsStudent student){
 		boolean ret = false;
 		try{
-			if (StringUtils.isEmpty(student.getId())){
-				List<String> ids = studentDao.selectIdsByLeadsId(student.getLeadsId());
-				if (ids.size() > 1){
-					throw new Exception("More than one student found");
-				}
-				student.setId(ids.get(0));
-			}
 			student.setLastUpdate(new Date());
 			
 			ret = studentDao.updateOne(student) > 0;

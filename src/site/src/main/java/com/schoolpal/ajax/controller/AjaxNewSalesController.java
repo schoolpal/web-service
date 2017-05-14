@@ -26,8 +26,8 @@ import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 
 @Controller
-@RequestMapping("/ajax/sales")
-public class AjaxOpportunityController {
+@RequestMapping("/ajax/sales/new")
+public class AjaxNewSalesController {
 	
 	@Autowired
 	private UserService userServ;
@@ -88,17 +88,6 @@ public class AjaxOpportunityController {
 		return gson.toJson(res);
 	}
 
-	protected class LeadsAddResponse{
-		private String leads_id;
-		private String parent_id;
-		private String student_id;
-		
-		public LeadsAddResponse(String leads_id, String parent_id, String student_id){
-			this.leads_id = leads_id;
-			this.parent_id = parent_id;
-			this.student_id = student_id;
-		}
-	}
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
@@ -132,22 +121,22 @@ public class AjaxOpportunityController {
 				res.setDetail("Orgnization id cannot be empty");
 				break;
 			}			
-			if (leads.getSource() == null){
+			if (leads.getSourceId() == null){
 				res.setCode(412);
 				res.setDetail("Source cannot be empty");
 				break;
 			}
-			if (leads.getStage() == null){
+			if (leads.getStageId() == null){
 				res.setCode(413);
 				res.setDetail("Stage cannot be empty");
 				break;
 			}
-			if (leads.getChannel() == null){
+			if (leads.getChannelId() == null){
 				res.setCode(414);
 				res.setDetail("Channel cannot be empty");
 				break;
 			}
-			if (leads.getStatus() == null){
+			if (leads.getStatusId() == null){
 				res.setCode(415);
 				res.setDetail("Status cannot be empty");
 				break;
@@ -177,18 +166,6 @@ public class AjaxOpportunityController {
 			
 			TUser user = userServ.getCachedUser();
 			
-			leads.setType(2);
-			leads.setCreatorId(user.getcId());			
-			if(leads.getExecutiveId() == null){
-				leads.setExecutiveId(user.getcId());
-			}
-			if (leadsServ.addLeads(leads) == null){
-				res.setCode(500);
-				res.setDetail("Failed to add leads");
-				break;
-			}
-			
-			student.setLeadsId(leads.getId());
 			student.setCreatorId(user.getcId());
 			if (leadsServ.addStudent(student) == null){
 				res.setCode(501);
@@ -196,7 +173,6 @@ public class AjaxOpportunityController {
 				break;
 			}
 			
-			parent.setLeadsId(leads.getId());
 			parent.setCreatorId(user.getcId());
 			if (leadsServ.addParent(parent) == null){
 				res.setCode(502);
@@ -204,8 +180,16 @@ public class AjaxOpportunityController {
 				break;
 			}
 			
-			LeadsAddResponse data = new LeadsAddResponse(leads.getId(), parent.getId(), student.getId());
-			res.setData(data);
+			leads.setTypeId(2);
+			leads.setCreatorId(user.getcId());	
+			leads.setStudentId(student.getId());
+			leads.setParentId(parent.getId());
+			if (leadsServ.addLeads(leads) == null){
+				res.setCode(500);
+				res.setDetail("Failed to add leads");
+				break;
+			}
+			res.setData(leads.getId());
 			
 		} while (false);
 
@@ -245,11 +229,19 @@ public class AjaxOpportunityController {
 				res.setDetail("Leads id cannot be empty");
 				break;
 			}
-			if (StringUtils.isEmpty(student.getId())){
-				student.setLeadsId(leads.getId());
+			
+			student.setId(leads.getStudentId());
+			if (!leadsServ.modStudent(student)){
+				res.setCode(501);
+				res.setDetail("Failed to mod student");
+				break;
 			}
-			if (StringUtils.isEmpty(parent.getId())){
-				parent.setLeadsId(leads.getId());
+			
+			parent.setId(leads.getParentId());
+			if (!leadsServ.modParent(parent)){
+				res.setCode(502);
+				res.setDetail("Failed to mod parent");
+				break;
 			}
 			
 			if (!leadsServ.modLeads(leads)){
@@ -257,20 +249,6 @@ public class AjaxOpportunityController {
 				res.setDetail("Failed to mod leads");
 				break;
 			}
-			
-			if (!leadsServ.modStudent(student)){
-				res.setCode(501);
-				res.setDetail("Failed to mod student");
-				break;
-			}
-			
-			if (!leadsServ.modParent(parent)){
-				res.setCode(502);
-				res.setDetail("Failed to mod parent");
-				break;
-			}
-			
-			res.setData(leads.getId());
 			
 		} while (false);
 
@@ -298,6 +276,69 @@ public class AjaxOpportunityController {
 			if (!leadsServ.delLeadsById(id) || !leadsServ.delParentByLeadsId(id) || !leadsServ.delStudentByLeadsId(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del leads");
+				break;
+			}
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+	
+	@RequestMapping(value = "assign.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String assign(String id, String assigneeId, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+			if (StringUtils.isEmpty(id)) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+			if (StringUtils.isEmpty(assigneeId)) {
+				res.setCode(401);
+				res.setDetail("Assignee id cannot be empty");
+				break;
+			}
+			
+			if (!leadsServ.assignToExecutiveById(id, assigneeId)){
+				res.setCode(500);
+				res.setDetail("Failed to assign leads");
+				break;
+			}
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+	
+	@RequestMapping(value = "convert.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String convert(String id, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (!AuthorizationHelper.CheckPermissionByMappedPath(
+					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+			if (StringUtils.isEmpty(id)) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+			
+			if (!leadsServ.convertToOpportunityById(id)){
+				res.setCode(500);
+				res.setDetail("Failed to assign leads");
 				break;
 			}
 

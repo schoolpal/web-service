@@ -6,8 +6,6 @@ public class TLeadsStudent {
 
 	private String id;
     
-	private String leadsId;
-
     private String name;
 
     private String gender;
@@ -42,14 +40,6 @@ public class TLeadsStudent {
 	public void setStudentId(String id) {
 		this.id = id;
 	}
-
-	public String getLeadsId() {
-        return leadsId;
-    }
-
-    public void setLeadsId(String leadsId) {
-        this.leadsId = leadsId == null ? null : leadsId.trim();
-    }
 
     public String getName() {
         return name;

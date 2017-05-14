@@ -14,20 +14,26 @@
       <if test="courseName != null">
         course_name,
       </if>
-      <if test="type != null">
-        type,
+      <if test="typeId != null">
+        type_id,
       </if>
-      <if test="source != null">
-        source,
+      <if test="studentId != null">
+        student_id,
       </if>
-      <if test="channel != null">
-        channel,
+      <if test="parentId != null">
+        parent_id,
       </if>
-      <if test="stage != null">
-        stage,
+      <if test="sourceId != null">
+        source_id,
       </if>
-      <if test="status != null">
-        status,
+      <if test="channelId != null">
+        channel_id,
+      </if>
+      <if test="stageId != null">
+        stage_id,
+      </if>
+      <if test="statusId != null">
+        status_id,
       </if>
       <if test="orgnizationId != null">
         orgnization_id,
@@ -58,20 +64,26 @@
       <if test="courseName != null">
         #{courseName,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
       </if>
-      <if test="source != null">
-        #{source,jdbcType=INTEGER},
+      <if test="studentId != null">
+        #{studentId,jdbcType=INTEGER},
       </if>
-      <if test="channel != null">
-        #{channel,jdbcType=INTEGER},
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="stage != null">
-        #{stage,jdbcType=INTEGER},
+      <if test="sourceId != null">
+        #{sourceId,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="channelId != null">
+        #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="stageId != null">
+        #{stageId,jdbcType=INTEGER},
+      </if>
+      <if test="statusId != null">
+        #{statusId,jdbcType=INTEGER},
       </if>
       <if test="orgnizationId != null">
         #{orgnizationId,jdbcType=CHAR},
@@ -102,20 +114,26 @@
       <if test="courseName != null">
         course_name = #{courseName,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
       </if>
-      <if test="source != null">
-        source = #{source,jdbcType=INTEGER},
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=INTEGER},
       </if>
-      <if test="channel != null">
-        channel = #{channel,jdbcType=INTEGER},
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="stage != null">
-        stage = #{stage,jdbcType=INTEGER},
+      <if test="sourceId != null">
+        source_id = #{sourceId,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="stageId != null">
+        stage_id = #{stageId,jdbcType=INTEGER},
+      </if>
+      <if test="statusId != null">
+        status_id = #{statusId,jdbcType=INTEGER},
       </if>
       <if test="orgnizationId != null">
         orgnization_id = #{orgnizationId,jdbcType=CHAR},
@@ -138,15 +156,31 @@
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
+  <update id="updateExecutiveById">
+    update t_leads
+    set executive_id = #{userId,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateTypeById">
+    update t_leads
+    set type_id = #{typeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
   <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_leads
     where id = #{id,jdbcType=CHAR}
   </delete>
+  <select id="selectStudentAndParentById" parameterType="java.lang.String" resultMap="StudentAndParentResultMap">
+    SELECT id,student_id,parent_id
+    FROM t_leads
+    WHERE id = #{id,jdbcType=CHAR}
+  </select>
   <select id="selectOneById" parameterType="java.lang.String" resultMap="ExtendedResultMap">
-    select l.id, l.course_type, l.course_name, l.type, l.source, l.channel, l.stage, l.status, l.orgnization_id, 
+    SELECT l.id, l.course_type, l.course_name, l.type_id, l.source_id, l.student_id, l.parent_id, 
+        l.channel_id, l.stage_id, l.status_id, l.orgnization_id, 
         l.executive_id, l.creator_id, l.create_time, l.note, 
-        s.id AS student_id, s.name AS student_name, s.gender, s.birthday, s.class_grade, s.school_name,
-        p.id AS parent_id, p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
+        s.name AS student_name, s.gender, s.birthday, s.class_grade, s.school_name,
+        p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
         uc.c_realname AS creator_name,
         ue.c_realname AS executive_name,
         src.name AS source_name,
@@ -155,22 +189,23 @@
         status.name AS status_name,
         o.c_name AS orgnization_name
     from t_leads AS l
-    LEFT JOIN t_leads_student AS s ON s.leads_id = l.id
-    LEFT JOIN t_leads_parent AS p ON p.leads_id = l.id
+    LEFT JOIN t_leads_student AS s ON s.id = l.student_id
+    LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
     LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
     LEFT JOIN t_user AS ue ON ue.c_id = l.creator_id
-    LEFT JOIN t_leads_source AS src ON src.id = l.source
-    LEFT JOIN t_activity AS a ON a.id = l.channel
-    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage
-    LEFT JOIN t_leads_status AS status ON status.id = l.status
+    LEFT JOIN t_leads_source AS src ON src.id = l.source_id
+    LEFT JOIN t_activity AS a ON a.id = l.channel_id
+    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
+    LEFT JOIN t_leads_status AS status ON status.id = l.status_id
     LEFT JOIN t_org AS o ON o.c_id = l.orgnization_id
     where l.id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectManyByOrgAndTypeId" resultMap="ExtendedResultMap">
-    SELECT l.id, l.course_type, l.course_name, l.type, l.source, l.channel, l.stage, l.status, l.orgnization_id, 
+    SELECT l.id, l.course_type, l.course_name, l.type_id, l.source_id, l.student_id, l.parent_id, 
+        l.channel_id, l.stage_id, l.status_id, l.orgnization_id, 
         l.executive_id, l.creator_id, l.create_time, l.note, 
-        s.id AS student_id, s.name AS student_name, s.gender, s.birthday, s.class_grade, s.school_name,
-        p.id AS parent_id, p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
+        s.name AS student_name, s.gender, s.birthday, s.class_grade, s.school_name,
+        p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
         uc.c_realname AS creator_name,
         ue.c_realname AS executive_name,
         src.name AS source_name,
@@ -179,16 +214,16 @@
         status.name AS status_name,
         o.c_name AS orgnization_name
     FROM t_leads AS l
-    LEFT JOIN t_leads_student AS s ON s.leads_id = l.id
-    LEFT JOIN t_leads_parent AS p ON p.leads_id = l.id
+    LEFT JOIN t_leads_student AS s ON s.id = l.student_id
+    LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
     LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
     LEFT JOIN t_user AS ue ON ue.c_id = l.creator_id
-    LEFT JOIN t_leads_source AS src ON src.id = l.source
-    LEFT JOIN t_activity AS a ON a.id = l.channel
-    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage
-    LEFT JOIN t_leads_status AS status ON status.id = l.status
+    LEFT JOIN t_leads_source AS src ON src.id = l.source_id
+    LEFT JOIN t_activity AS a ON a.id = l.channel_id
+    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
+    LEFT JOIN t_leads_status AS status ON status.id = l.status_id
     LEFT JOIN t_org AS o ON o.c_id = l.orgnization_id
-    WHERE l.orgnization_id = #{orgId,jdbcType=CHAR} AND l.type = #{typeId,jdbcType=INTEGER};
+    WHERE l.orgnization_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER};
   </select>
 
 
@@ -199,14 +234,16 @@
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="course_type" jdbcType="VARCHAR" property="courseType" />
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="student_id" jdbcType="CHAR" property="studentId" />
+    <result column="parent_id" jdbcType="CHAR" property="parentId" />
+    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="source_name" jdbcType="VARCHAR" property="sourceName" />
-    <result column="channel" jdbcType="INTEGER" property="channel" />
+    <result column="channel_id" jdbcType="INTEGER" property="channelId" />
     <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
-    <result column="stage" jdbcType="INTEGER" property="stage" />
+    <result column="stage_id" jdbcType="INTEGER" property="stageId" />
     <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="status_id" jdbcType="INTEGER" property="statusId" />
     <result column="status_name" jdbcType="VARCHAR" property="statusName" />
     <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
     <result column="orgnization_name" jdbcType="VARCHAR" property="orgnizationName" />
@@ -233,6 +270,16 @@
         <result column="relation" jdbcType="VARCHAR" property="birthday" />
     </association>
   </resultMap>
+  <resultMap id="StudentAndParentResultMap" type="com.schoolpal.db.model.TLeads">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="student_id" jdbcType="CHAR" property="studentId" />
+    <result column="parent_id" jdbcType="CHAR" property="parentId" />
+  </resultMap>
+
+
+
+
+
 
 
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">

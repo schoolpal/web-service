@@ -8,9 +8,6 @@
       <if test="id != null">
         id,
       </if>
-      <if test="leadsId != null">
-        leads_id,
-      </if>
       <if test="name != null">
         name,
       </if>
@@ -51,9 +48,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=CHAR},
-      </if>
-      <if test="leadsId != null">
-        #{leadsId,jdbcType=CHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -96,9 +90,6 @@
   <update id="updateOne" parameterType="com.schoolpal.db.model.TLeadsParent">
     update t_leads_parent
     <set>
-      <if test="leadsId != null">
-        leads_id = #{leadsId,jdbcType=CHAR},
-      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
@@ -138,7 +129,7 @@
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
-  <delete id="deleteOneId" parameterType="java.lang.String">
+  <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_leads_parent
     where id = #{id,jdbcType=CHAR}
   </delete>
@@ -175,7 +166,6 @@
 
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeadsParent">
     <id column="id" jdbcType="CHAR" property="id" />
-    <result column="leads_id" jdbcType="VARCHAR" property="leads_id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
@@ -190,7 +180,7 @@
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, leads_id, name, gender, cellphone, weichat, email, address, id_type, 
+    id, name, gender, cellphone, weichat, email, address, id_type, 
     id_code, birthday, creator_id, create_time, last_update
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">

@@ -26,8 +26,8 @@ import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 
 @Controller
-@RequestMapping("/ajax/mkt/leads")
-public class AjaxLeadsController {
+@RequestMapping("/ajax/sales/renew")
+public class AjaxRenewSalesController {
 	
 	@Autowired
 	private UserService userServ;
@@ -41,7 +41,7 @@ public class AjaxLeadsController {
 	public String list(String orgId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -54,7 +54,7 @@ public class AjaxLeadsController {
 			}
 			
 			List<TLeads> leadsList = null;
-			leadsList = leadsServ.queryLeadsListByOrgId(orgId, 1);
+			leadsList = leadsServ.queryLeadsListByOrgId(orgId, 2);
 			res.setData(leadsList);
 
 		} while (false);
@@ -67,7 +67,7 @@ public class AjaxLeadsController {
 	public String query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -165,7 +165,26 @@ public class AjaxLeadsController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-			if(leadsServ.add(leads, student, parent, user.getcId()) == null){
+			
+			student.setCreatorId(user.getcId());
+			if (leadsServ.addStudent(student) == null){
+				res.setCode(501);
+				res.setDetail("Failed to add student");
+				break;
+			}
+			
+			parent.setCreatorId(user.getcId());
+			if (leadsServ.addParent(parent) == null){
+				res.setCode(502);
+				res.setDetail("Failed to add parent");
+				break;
+			}
+			
+			leads.setTypeId(3);
+			leads.setCreatorId(user.getcId());	
+			leads.setStudentId(student.getId());
+			leads.setParentId(parent.getId());
+			if (leadsServ.addLeads(leads) == null){
 				res.setCode(500);
 				res.setDetail("Failed to add leads");
 				break;
@@ -210,13 +229,27 @@ public class AjaxLeadsController {
 				res.setDetail("Leads id cannot be empty");
 				break;
 			}
-
-			if (!leadsServ.mod(leads, student, parent)){
+			
+			student.setId(leads.getStudentId());
+			if (!leadsServ.modStudent(student)){
+				res.setCode(501);
+				res.setDetail("Failed to mod student");
+				break;
+			}
+			
+			parent.setId(leads.getParentId());
+			if (!leadsServ.modParent(parent)){
+				res.setCode(502);
+				res.setDetail("Failed to mod parent");
+				break;
+			}
+			
+			if (!leadsServ.modLeads(leads)){
 				res.setCode(500);
 				res.setDetail("Failed to mod leads");
 				break;
 			}
-						
+		
 		} while (false);
 
 		return gson.toJson(res);
@@ -240,7 +273,7 @@ public class AjaxLeadsController {
 				break;
 			}
 			
-			if (!leadsServ.delById(id)){
+			if (!leadsServ.delLeadsById(id) || !leadsServ.delParentByLeadsId(id) || !leadsServ.delStudentByLeadsId(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del leads");
 				break;
@@ -319,14 +352,14 @@ public class AjaxLeadsController {
 	public String listSources() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
 			List<TLeadsSource> sources = null;
-			sources = leadsServ.queryLeadsSourcesByTypeId(1);
+			sources = leadsServ.queryLeadsSourcesByTypeId(2);
 			res.setData(sources);
 
 		} while (false);
@@ -339,14 +372,14 @@ public class AjaxLeadsController {
 	public String listStages() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
 			List<TLeadsStage> stages = null;
-			stages = leadsServ.queryLeadsStagesByTypeId(1);
+			stages = leadsServ.queryLeadsStagesByTypeId(2);
 			res.setData(stages);
 
 		} while (false);
@@ -359,14 +392,14 @@ public class AjaxLeadsController {
 	public String listStatus() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
 			List<TLeadsStatus> status = null;
-			status = leadsServ.queryLeadsStatusByTypeId(1);
+			status = leadsServ.queryLeadsStatusByTypeId(2);
 			res.setData(status);
 
 		} while (false);

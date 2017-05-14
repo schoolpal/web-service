@@ -294,28 +294,58 @@ DROP TABLE IF EXISTS `t_leads`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads` (
   `id` char(50) NOT NULL,
+  `student_id` char(50) DEFAULT NULL,
+  `parent_id` char(50) DEFAULT NULL,
+  `type_id` int(2) DEFAULT NULL,
+  `orgnization_id` char(50) DEFAULT NULL,
+  `source_id` int(2) DEFAULT NULL,
+  `channel_id` int(11) DEFAULT NULL,
+  `stage_id` int(2) DEFAULT NULL,
+  `status_id` int(2) DEFAULT NULL,
   `course_type` varchar(45) DEFAULT NULL,
   `course_name` varchar(45) DEFAULT NULL,
-  `type` int(2) DEFAULT NULL,
-  `source` int(2) DEFAULT NULL,
-  `channel` int(11) DEFAULT NULL,
-  `stage` int(2) DEFAULT NULL,
-  `status` int(2) DEFAULT NULL,
-  `orgnization_id` char(50) DEFAULT NULL,
-  `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
   `create_time` datetime NOT NULL,
+  `executive_id` char(50) DEFAULT NULL,
   `last_update` datetime NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `type1_idx` (`type`),
-  KEY `org_type_exec_idx` (`orgnization_id`,`type`,`executive_id`),
-  KEY `source1_idx` (`source`),
-  KEY `channel1_idx` (`channel`),
-  KEY `stage1_idx` (`stage`),
-  KEY `status1_idx` (`status`),
-  KEY `user1_idx` (`creator_id`),
-  KEY `user2_idx` (`executive_id`)
+  KEY `type_id_idx` (`type_id`),
+  KEY `org_type_exec_idx` (`orgnization_id`,`type_id`,`executive_id`),
+  KEY `student_id_idx` (`source_id`),
+  KEY `parent_id_idx` (`parent_id`),
+  KEY `source_id_idx` (`source_id`),
+  KEY `channel_id_idx` (`channel_id`),
+  KEY `stage_id_idx` (`stage_id`),
+  KEY `status_id_idx` (`status_id`),
+  KEY `creator_idx` (`creator_id`),
+  KEY `executive_idx` (`executive_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_leads_student`
+--
+
+DROP TABLE IF EXISTS `t_leads_student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_leads_student` (
+  `id` char(50) NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `gender` varchar(45) DEFAULT NULL,
+  `id_type` int(1) DEFAULT NULL,
+  `id_code` varchar(45) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `school_grade` varchar(45) DEFAULT NULL,
+  `class_grade` varchar(45) DEFAULT NULL,
+  `school_name` varchar(45) DEFAULT NULL,
+  `creator_id` char(50) DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `last_update` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_type_code` (`id_type`,`id_code`),
+  KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -328,7 +358,6 @@ DROP TABLE IF EXISTS `t_leads_parent`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_parent` (
   `id` char(50) NOT NULL,
-  `leads_id` char(50) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `gender` varchar(45) DEFAULT NULL,
   `cellphone` varchar(45) DEFAULT NULL,
@@ -343,7 +372,6 @@ CREATE TABLE `t_leads_parent` (
   `last_update` datetime NOT NULL,
   `relation` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `leads_id_idx` (`leads_id`),
   KEY `c_cellphone` (`cellphone`),
   KEY `id_type_code_idx` (`id_type`,`id_code`),
   KEY `creator_id_idx` (`creator_id`)
@@ -395,34 +423,6 @@ CREATE TABLE `t_leads_status` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type_idx` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `t_leads_student`
---
-
-DROP TABLE IF EXISTS `t_leads_student`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_leads_student` (
-  `id` char(50) NOT NULL,
-  `leads_id` char(50) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `gender` varchar(45) DEFAULT NULL,
-  `id_type` int(1) DEFAULT NULL,
-  `id_code` varchar(45) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `school_grade` varchar(45) DEFAULT NULL,
-  `class_grade` varchar(45) DEFAULT NULL,
-  `school_name` varchar(45) DEFAULT NULL,
-  `creator_id` char(50) DEFAULT NULL,
-  `create_time` datetime NOT NULL,
-  `last_update` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `leads_id_idx` (`leads_id`),
-  KEY `id_type_code` (`id_type`,`id_code`),
-  KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -499,35 +499,6 @@ CREATE TABLE `t_org` (
   KEY `c_parent_id` (`c_parent_id`,`c_order_num`),
   KEY `c_root_id` (`c_root_id`,`c_order_num`),
   KEY `c_order` (`c_order_num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `t_parent`
---
-
-DROP TABLE IF EXISTS `t_parent`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_parent` (
-  `id` char(50) NOT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
-  `gender` varchar(45) DEFAULT NULL,
-  `cellphone` varchar(45) DEFAULT NULL,
-  `weichat` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
-  `id_type` int(1) DEFAULT NULL,
-  `id_code` varchar(45) DEFAULT NULL,
-  `birthday` date DEFAULT NULL,
-  `executive_id` char(50) DEFAULT NULL,
-  `creator_id` char(50) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `last_update` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
-  UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -610,21 +581,31 @@ CREATE TABLE `t_role_function_exclude` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `t_stu_par_relation`
+-- Table structure for table `t_parent`
 --
 
-DROP TABLE IF EXISTS `t_stu_par_relation`;
+DROP TABLE IF EXISTS `t_parent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_stu_par_relation` (
+CREATE TABLE `t_parent` (
   `id` char(50) NOT NULL,
-  `student_id` char(50) NOT NULL,
-  `parent_id` char(50) NOT NULL,
-  `relation` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `gender` varchar(45) DEFAULT NULL,
+  `cellphone` varchar(45) DEFAULT NULL,
+  `weichat` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `id_type` int(1) DEFAULT NULL,
+  `id_code` varchar(45) DEFAULT NULL,
+  `birthday` date DEFAULT NULL,
+  `executive_id` char(50) DEFAULT NULL,
+  `creator_id` char(50) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
   `last_update` datetime DEFAULT NULL,
+  `relation` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `student_cust_id_UNIQUE` (`student_id`,`parent_id`),
-  UNIQUE KEY `cust_student_id_UNIQUE` (`parent_id`,`student_id`)
+  UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
+  UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -638,8 +619,7 @@ DROP TABLE IF EXISTS `t_student`;
 CREATE TABLE `t_student` (
   `id` char(50) NOT NULL,
   `code` varchar(45) DEFAULT NULL,
-  `first_name` varchar(45) DEFAULT NULL,
-  `last_name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `gender` varchar(45) DEFAULT NULL,
   `id_type` int(1) DEFAULT NULL,
   `id_code` varchar(45) DEFAULT NULL,

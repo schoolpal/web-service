@@ -31,7 +31,8 @@ INSERT INTO `t_command_type` VALUES
 (5,'Enable','Enable'),
 (6,'Import','Import'),
 (7,'Assign','Assign'),
-(8,'Convert','Convert')
+(8,'Convert','Convert'),
+(9,'Sign','Sign')
 ;
 /*!40000 ALTER TABLE `t_command_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -42,27 +43,54 @@ UNLOCK TABLES;
 
 LOCK TABLES `t_function` WRITE;
 /*!40000 ALTER TABLE `t_function` DISABLE KEYS */;
-INSERT INTO `t_function` VALUES ('1','1','1','市场','市场管理','/ajax/mkt/',1,1,'',NULL),('1-1','1','1','','市场活动','/ajax/mkt/',2,1,'',NULL),
-('1-1-1','1','1-1','','新建','/ajax/mkt/activity/add.do',3,1,'',1),('1-1-2','1','1-1','','编辑','/ajax/mkt/activity/mod.do',3,2,'',2),
+INSERT INTO `t_function` VALUES 
+('1','1','1','市场','市场管理','/ajax/mkt/',1,1,'',NULL),
+('1-1','1','1','','市场活动','/ajax/mkt/',2,1,'',NULL),
+('1-1-1','1','1-1','','新建','/ajax/mkt/activity/add.do',3,1,'',1),
+('1-1-2','1','1-1','','编辑','/ajax/mkt/activity/mod.do',3,2,'',2),
 ('1-1-3','1','1-1','','删除','/ajax/mkt/activity/del.do',3,3,'',3),
 ('1-2','1','1','','销售线索','/ajax/mkt/',2,1,'',NULL),
 ('1-2-1','1','1-2','','新建','/ajax/mkt/leads/add.do',3,1,'',1),
 ('1-2-2','1','1-2','','编辑','/ajax/mkt/leads/mod.do',3,2,'',2),
 ('1-2-3','1','1-2','','删除','/ajax/mkt/leads/del.do',3,3,'',3),
-('1-2-4','1','1-2','','导入','/ajax/mkt/leads/import.do',3,3,'',6),
-('1-2-5','1','1-2','','分配','/ajax/mkt/leads/assign.do',3,3,'',7),
-('1-2-6','1','1-2','','转化','/ajax/mkt/leads/convert.do',3,3,'',8),
+('1-2-4','1','1-2','','导入','/ajax/mkt/leads/import.do',3,4,'',6),
+('1-2-5','1','1-2','','分配','/ajax/mkt/leads/assign.do',3,5,'',7),
+('1-2-6','1','1-2','','转化','/ajax/mkt/leads/convert.do',3,6,'',8),
 ('2','2','2','销售','销售管理','/ajax/sales',1,2,'',NULL),
-('3','3','3','客服','客户服务','/ajax/service',1,3,'',NULL),('4','4','4','财务','财务管理','/ajax/finance',1,4,'',NULL),
-('5','5','5','教务','教务管理','/ajax/academy',1,5,'',NULL),('6','6','6','教学','教学管理','/ajax/education',1,6,'',NULL),
-('7','7','7','系统','系统管理','/ajax/sys/',1,7,'',NULL),('7-1','7','7','','组织管理','/ajax/sys/',2,1,'',NULL),
-('7-1-1','7','7-1','','新建','/ajax/sys/org/add.do',3,1,'',1),('7-1-2','7','7-1','','编辑','/ajax/sys/org/mod.do',3,2,'',2),
-('7-1-3','7','7-1','','删除','/ajax/sys/org/del.do',3,3,'',3),('7-2','7','7','','角色管理','/ajax/sys/role/',2,2,'',NULL),
-('7-2-1','7','7-2','','新建','/ajax/sys/role/add.do',3,1,'',1),('7-2-2','7','7-2','','编辑','/ajax/sys/role/mod.do',3,2,'',2),
-('7-2-3','7','7-2','','删除','/ajax/sys/role/del.do',3,3,'',3),('7-3','7','7','','权限管理','/ajax/sys/role/',2,3,'',NULL),
-('7-3-1','7','7-3','','授权','/ajax/sys/role/auth.do',3,1,'',4),('7-4','7','7','','用户管理','/ajax/sys/user/',2,4,'',NULL),
-('7-4-1','7','7-4','','新建','/ajax/sys/user/add.do',3,1,'',1),('7-4-2','7','7-4','','编辑','/ajax/sys/user/mod.do',3,2,'',2),
-('7-4-3','7','7-4','','删除','/ajax/sys/user/del.do',3,3,'',3),('7-4-4','7','7-4','','启用/停用','/ajax/sys/user/enable.do',3,4,'',5);
+('2-1','2','2','','新招销售机会','/ajax/sales/new/',2,1,'',NULL),
+('2-1-1','2','2-1','','新建','/ajax/sales/new/add.do',3,1,'',1),
+('2-1-2','2','2-1','','编辑','/ajax/sales/new/mod.do',3,2,'',2),
+('2-1-3','2','2-1','','删除','/ajax/sales/new/del.do',3,3,'',3),
+/*--('2-1-4','2','2-1','','导入','/ajax/sales/import.do',3,4,'',6),*/
+('2-1-5','2','2-1','','分配','/ajax/sales/new/assign.do',3,5,'',7),
+('2-1-6','2','2-1','','创建合同','/ajax/sales/new/sign.do',3,6,'',9),
+('2-2','2','2','','续报销售机会','/ajax/sales/renew/',2,1,'',NULL),
+('2-2-1','2','2-2','','新建','/ajax/sales/renew/add.do',3,1,'',1),
+('2-2-2','2','2-2','','编辑','/ajax/sales/renew/mod.do',3,2,'',2),
+('2-2-3','2','2-2','','删除','/ajax/sales/renew/del.do',3,3,'',3),
+/*--('2-2-4','2','2-2','','导入','/ajax/mkt/sales/import.do',3,4,'',6),*/
+('2-2-5','2','2-2','','分配','/ajax/sales/renew/assign.do',3,5,'',7),
+('2-2-6','2','2-2','','创建合同','/ajax/sales/renew/sign.do',3,6,'',9),
+('3','3','3','客服','客户服务','/ajax/service',1,3,'',NULL),
+('4','4','4','财务','财务管理','/ajax/finance',1,4,'',NULL),
+('5','5','5','教务','教务管理','/ajax/academy',1,5,'',NULL),
+('6','6','6','教学','教学管理','/ajax/education',1,6,'',NULL),
+('7','7','7','系统','系统管理','/ajax/sys/',1,7,'',NULL),
+('7-1','7','7','','组织管理','/ajax/sys/',2,1,'',NULL),
+('7-1-1','7','7-1','','新建','/ajax/sys/org/add.do',3,1,'',1),
+('7-1-2','7','7-1','','编辑','/ajax/sys/org/mod.do',3,2,'',2),
+('7-1-3','7','7-1','','删除','/ajax/sys/org/del.do',3,3,'',3),
+('7-2','7','7','','角色管理','/ajax/sys/role/',2,2,'',NULL),
+('7-2-1','7','7-2','','新建','/ajax/sys/role/add.do',3,1,'',1),
+('7-2-2','7','7-2','','编辑','/ajax/sys/role/mod.do',3,2,'',2),
+('7-2-3','7','7-2','','删除','/ajax/sys/role/del.do',3,3,'',3),
+('7-3','7','7','','权限管理','/ajax/sys/role/',2,3,'',NULL),
+('7-3-1','7','7-3','','授权','/ajax/sys/role/auth.do',3,1,'',4),
+('7-4','7','7','','用户管理','/ajax/sys/user/',2,4,'',NULL),
+('7-4-1','7','7-4','','新建','/ajax/sys/user/add.do',3,1,'',1),
+('7-4-2','7','7-4','','编辑','/ajax/sys/user/mod.do',3,2,'',2),
+('7-4-3','7','7-4','','删除','/ajax/sys/user/del.do',3,3,'',3),
+('7-4-4','7','7-4','','启用/停用','/ajax/sys/user/enable.do',3,4,'',5);
 /*!40000 ALTER TABLE `t_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -201,7 +229,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `t_leads_type` WRITE;
 /*!40000 ALTER TABLE `t_leads_type` DISABLE KEYS */;
-INSERT INTO `t_leads_type` VALUES (1,'销售线索'),(2,'销售机会');
+INSERT INTO `t_leads_type` VALUES 
+(1,'销售线索'),
+(2,'新招销售机会'),
+(3,'续报销售机会')
+;
 /*!40000 ALTER TABLE `t_leads_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
