@@ -103,7 +103,6 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.data).to.not.empty;
 	});
 
-	/*
 	it('list.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -111,7 +110,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			url : buildUrl(host, leads_path, 'list.do'),
 			dataType : 'json',
 			data: {
-				orgnizationId: org_val
+				orgId: org_val
 			}
 		});
 
@@ -121,7 +120,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
-	});*/
+	});
 	
 	it('add.do', function() {
 		var xhr = $.ajax({
@@ -159,6 +158,25 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		student_id_val = jsonData.data.student_id;
 	});
 
+	it('query.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'query.do'),
+			dataType : 'json',
+			data: {
+				id: leads_id_val
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('query.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
 	it('mod.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -194,23 +212,23 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('del.do', function() {
-		var xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, leads_path, 'del.do'),
-			dataType : 'json',
-			data : {
-				id : leads_id_val
-			}
-		});
-
-		expect(xhr.status).to.be.equal(200);
-		var jsonData = xhr.responseJSON;
-		resDump('del.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.detail).to.be.equal('Ok');
-	});
+//	it('del.do', function() {
+//		var xhr = $.ajax({
+//			async : false,
+//			method : 'POST',
+//			url : buildUrl(host, leads_path, 'del.do'),
+//			dataType : 'json',
+//			data : {
+//				id : leads_id_val
+//			}
+//		});
+//
+//		expect(xhr.status).to.be.equal(200);
+//		var jsonData = xhr.responseJSON;
+//		resDump('del.do', jsonData);
+//		expect(jsonData.code).to.be.equal(200);
+//		expect(jsonData.detail).to.be.equal('Ok');
+//	});
 
 	it('logout.do', function() {
 		xhr = $.ajax({

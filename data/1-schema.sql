@@ -296,11 +296,11 @@ CREATE TABLE `t_leads` (
   `id` char(50) NOT NULL,
   `course_type` varchar(45) DEFAULT NULL,
   `course_name` varchar(45) DEFAULT NULL,
-  `type` int(1) DEFAULT NULL,
-  `source` int(1) DEFAULT NULL,
+  `type` int(2) DEFAULT NULL,
+  `source` int(2) DEFAULT NULL,
   `channel` int(11) DEFAULT NULL,
-  `stage` int(1) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `stage` int(2) DEFAULT NULL,
+  `status` int(2) DEFAULT NULL,
   `orgnization_id` char(50) DEFAULT NULL,
   `executive_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
@@ -308,14 +308,14 @@ CREATE TABLE `t_leads` (
   `last_update` datetime NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_t_leads_t_leads_status1_idx` (`status`),
-  KEY `fk_t_leads_t_leads_stage1_idx` (`stage`),
-  KEY `fk_t_leads_t_leads_source1_idx` (`source`),
-  KEY `fk_t_leads_t_leads_type1_idx` (`type`),
-  KEY `fk_t_leads_t_user1_idx` (`creator_id`),
-  KEY `fk_t_leads_t_user2_idx` (`executive_id`),
-  KEY `fk_t_leads_t_org1_idx` (`orgnization_id`),
-  KEY `fk_t_leads_t_activity1_idx` (`channel`)
+  KEY `type1_idx` (`type`),
+  KEY `org_type_exec_idx` (`orgnization_id`,`type`,`executive_id`),
+  KEY `source1_idx` (`source`),
+  KEY `channel1_idx` (`channel`),
+  KEY `stage1_idx` (`stage`),
+  KEY `status1_idx` (`status`),
+  KEY `user1_idx` (`creator_id`),
+  KEY `user2_idx` (`executive_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -358,10 +358,11 @@ DROP TABLE IF EXISTS `t_leads_source`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_source` (
-  `id` int(1) NOT NULL,
-  `type` int(1) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `type` int(2) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_idx` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -373,10 +374,11 @@ DROP TABLE IF EXISTS `t_leads_stage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_stage` (
-  `id` int(1) NOT NULL,
-  `type` int(1) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `type` int(2) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_idx` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -388,10 +390,11 @@ DROP TABLE IF EXISTS `t_leads_status`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_status` (
-  `id` int(1) NOT NULL,
-  `type` int(1) DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `type` int(2) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `type_idx` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -431,8 +434,8 @@ DROP TABLE IF EXISTS `t_leads_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `t_leads_type` (
-  `id` int(1) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
+  `id` int(1) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

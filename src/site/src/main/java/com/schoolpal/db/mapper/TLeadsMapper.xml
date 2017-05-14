@@ -142,11 +142,97 @@
     delete from t_leads
     where id = #{id,jdbcType=CHAR}
   </delete>
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="ExtendedResultMap">
+    select l.id, l.course_type, l.course_name, l.type, l.source, l.channel, l.stage, l.status, l.orgnization_id, 
+        l.executive_id, l.creator_id, l.create_time, l.note, 
+        s.id AS student_id, s.name AS student_name, s.gender, s.birthday, s.class_grade, s.school_name,
+        p.id AS parent_id, p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
+        uc.c_realname AS creator_name,
+        ue.c_realname AS executive_name,
+        src.name AS source_name,
+        a.name AS activity_name,
+        stage.name AS stage_name,
+        status.name AS status_name,
+        o.c_name AS orgnization_name
+    from t_leads AS l
+    LEFT JOIN t_leads_student AS s ON s.leads_id = l.id
+    LEFT JOIN t_leads_parent AS p ON p.leads_id = l.id
+    LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
+    LEFT JOIN t_user AS ue ON ue.c_id = l.creator_id
+    LEFT JOIN t_leads_source AS src ON src.id = l.source
+    LEFT JOIN t_activity AS a ON a.id = l.channel
+    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage
+    LEFT JOIN t_leads_status AS status ON status.id = l.status
+    LEFT JOIN t_org AS o ON o.c_id = l.orgnization_id
+    where l.id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectManyByOrgAndTypeId" resultMap="ExtendedResultMap">
+    SELECT l.id, l.course_type, l.course_name, l.type, l.source, l.channel, l.stage, l.status, l.orgnization_id, 
+        l.executive_id, l.creator_id, l.create_time, l.note, 
+        s.id AS student_id, s.name AS student_name, s.gender, s.birthday, s.class_grade, s.school_name,
+        p.id AS parent_id, p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
+        uc.c_realname AS creator_name,
+        ue.c_realname AS executive_name,
+        src.name AS source_name,
+        a.name AS channel_name,
+        stage.name AS stage_name,
+        status.name AS status_name,
+        o.c_name AS orgnization_name
+    FROM t_leads AS l
+    LEFT JOIN t_leads_student AS s ON s.leads_id = l.id
+    LEFT JOIN t_leads_parent AS p ON p.leads_id = l.id
+    LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
+    LEFT JOIN t_user AS ue ON ue.c_id = l.creator_id
+    LEFT JOIN t_leads_source AS src ON src.id = l.source
+    LEFT JOIN t_activity AS a ON a.id = l.channel
+    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage
+    LEFT JOIN t_leads_status AS status ON status.id = l.status
+    LEFT JOIN t_org AS o ON o.c_id = l.orgnization_id
+    WHERE l.orgnization_id = #{orgId,jdbcType=CHAR} AND l.type = #{typeId,jdbcType=INTEGER};
+  </select>
 
 
 
 
 
+  <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="source_name" jdbcType="VARCHAR" property="sourceName" />
+    <result column="channel" jdbcType="INTEGER" property="channel" />
+    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+    <result column="stage" jdbcType="INTEGER" property="stage" />
+    <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="status_name" jdbcType="VARCHAR" property="statusName" />
+    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="orgnization_name" jdbcType="VARCHAR" property="orgnizationName" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <association property="student" javaType="com.schoolpal.db.model.TLeadsStudent">
+        <id column="student_id" jdbcType="CHAR" property="id" />
+        <result column="student_name" jdbcType="VARCHAR" property="name" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="birthday" jdbcType="DATE" property="birthday" />
+        <result column="class_grade" jdbcType="VARCHAR" property="classGrade" />
+        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    </association>
+    <association property="parent" javaType="com.schoolpal.db.model.TLeadsParent">
+        <id column="parent_id" jdbcType="CHAR" property="id" />
+        <result column="parent_name" jdbcType="VARCHAR" property="name" />
+        <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
+        <result column="weichat" jdbcType="VARCHAR" property="weichat" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="relation" jdbcType="VARCHAR" property="birthday" />
+    </association>
+  </resultMap>
 
 
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">

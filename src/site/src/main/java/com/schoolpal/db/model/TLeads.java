@@ -12,24 +12,35 @@ public class TLeads {
     private Integer type;
 
     private Integer source;
+    private String sourceName;
 
     private Integer channel;
+    private String channelName;
 
     private Integer stage;
+    private String stageName;
 
     private Integer status;
+    private String statusName;
 
     private String orgnizationId;
+    private String orgnizationName;
 
     private String executiveId;
+    private String executiveName;
 
     private String creatorId;
+    private String creatorName;
 
     private Date createTime;
 
     private Date lastUpdate;
 
     private String note;
+    
+    private TLeadsParent parent;
+    
+    private TLeadsStudent student;
 
     public String getId() {
         return id;
@@ -122,7 +133,63 @@ public class TLeads {
         this.creatorId = creatorId == null ? null : creatorId.trim();
     }
 
-    public Date getCreateTime() {
+    public String getSourceName() {
+		return sourceName;
+	}
+
+	public void setSourceName(String sourceName) {
+		this.sourceName = sourceName;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public String getStageName() {
+		return stageName;
+	}
+
+	public void setStageName(String stageName) {
+		this.stageName = stageName;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public String getOrgnizationName() {
+		return orgnizationName;
+	}
+
+	public void setOrgnizationName(String orgnizationName) {
+		this.orgnizationName = orgnizationName;
+	}
+
+	public String getExecutiveName() {
+		return executiveName;
+	}
+
+	public void setExecutiveName(String executiveName) {
+		this.executiveName = executiveName;
+	}
+
+	public String getCreatorName() {
+		return creatorName;
+	}
+
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 
@@ -145,4 +212,20 @@ public class TLeads {
     public void setNote(String note) {
         this.note = note == null ? null : note.trim();
     }
+
+	public TLeadsParent getParent() {
+		return parent;
+	}
+
+	public void setParent(TLeadsParent parent) {
+		this.parent = parent;
+	}
+
+	public TLeadsStudent getStudent() {
+		return student;
+	}
+
+	public void setStudent(TLeadsStudent student) {
+		this.student = student;
+	}
 }

@@ -26,8 +26,8 @@ import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 
 @Controller
-@RequestMapping("/ajax/mkt/leads")
-public class AjaxLeadsController {
+@RequestMapping("/ajax/sales")
+public class AjaxOpportunityController {
 	
 	@Autowired
 	private UserService userServ;
@@ -41,7 +41,7 @@ public class AjaxLeadsController {
 	public String list(String orgId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -54,7 +54,7 @@ public class AjaxLeadsController {
 			}
 			
 			List<TLeads> leadsList = null;
-			leadsList = leadsServ.queryLeadsListByOrgId(orgId, 1);
+			leadsList = leadsServ.queryLeadsListByOrgId(orgId, 2);
 			res.setData(leadsList);
 
 		} while (false);
@@ -67,7 +67,7 @@ public class AjaxLeadsController {
 	public String query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -177,7 +177,7 @@ public class AjaxLeadsController {
 			
 			TUser user = userServ.getCachedUser();
 			
-			leads.setType(1);
+			leads.setType(2);
 			leads.setCreatorId(user.getcId());			
 			if(leads.getExecutiveId() == null){
 				leads.setExecutiveId(user.getcId());
@@ -311,14 +311,14 @@ public class AjaxLeadsController {
 	public String listSources() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
 			List<TLeadsSource> sources = null;
-			sources = leadsServ.queryLeadsSourcesByTypeId(1);
+			sources = leadsServ.queryLeadsSourcesByTypeId(2);
 			res.setData(sources);
 
 		} while (false);
@@ -331,14 +331,14 @@ public class AjaxLeadsController {
 	public String listStages() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
 			List<TLeadsStage> stages = null;
-			stages = leadsServ.queryLeadsStagesByTypeId(1);
+			stages = leadsServ.queryLeadsStagesByTypeId(2);
 			res.setData(stages);
 
 		} while (false);
@@ -351,14 +351,14 @@ public class AjaxLeadsController {
 	public String listStatus() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
 			List<TLeadsStatus> status = null;
-			status = leadsServ.queryLeadsStatusByTypeId(1);
+			status = leadsServ.queryLeadsStatusByTypeId(2);
 			res.setData(status);
 
 		} while (false);

@@ -161,9 +161,9 @@
 
 
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeadsStudent">
-    <id column="leads_id" jdbcType="CHAR" property="leadsId" />
-    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
-    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="leads_id" jdbcType="VARCHAR" property="leadsId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="id_type" jdbcType="INTEGER" property="idType" />
     <result column="id_code" jdbcType="VARCHAR" property="idCode" />
@@ -171,14 +171,13 @@
     <result column="school_grade" jdbcType="VARCHAR" property="schoolGrade" />
     <result column="class_grade" jdbcType="VARCHAR" property="classGrade" />
     <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
-    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
   <sql id="Base_Column_List">
-    leads_id, first_name, last_name, gender, id_type, id_code, birthday, school_grade, 
-    class_grade, school_name, executive_id, creator_id, create_time, last_update
+    id, leads_id, name, gender, id_type, id_code, birthday, school_grade, 
+    class_grade, school_name, creator_id, create_time, last_update
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

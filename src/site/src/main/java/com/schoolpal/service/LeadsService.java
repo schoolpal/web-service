@@ -43,14 +43,26 @@ public class LeadsService {
 	@Autowired
 	private TLeadsStatusMapper statusDao; 
 
-	public List<TLeads> queryLeadsByOrgId(String id){
-		return null;
-		
+	public List<TLeads> queryLeadsListByOrgId(String orgId, Integer typeId){
+		List<TLeads> ret = null;
+		try{			
+			ret =leadsDao.selectManyByOrgAndTypeId(orgId, typeId);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;		
 	}
 	
 	public TLeads queryLeadsById(String id){
-		return null;
-		
+		TLeads ret = null;
+		try{			
+			ret =leadsDao.selectOneById(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
 	}
 	
 	public String addLeads(TLeads leads){
@@ -229,10 +241,10 @@ public class LeadsService {
 		return ret;
 	}
 
-	public List<TLeadsSource> queryLeadsSources(){
+	public List<TLeadsSource> queryLeadsSourcesByTypeId(Integer typeId){
 		List<TLeadsSource> ret = null;
 		try{
-			ret = sourceDao.selectAll();
+			ret = sourceDao.selectManyByTypeId(typeId);
 			
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -241,10 +253,10 @@ public class LeadsService {
 		return ret;
 	}
 
-	public List<TLeadsStage> queryLeadsStages(){
+	public List<TLeadsStage> queryLeadsStagesByTypeId(Integer typeId){
 		List<TLeadsStage> ret = null;
 		try{
-			ret = stageDao.selectAll();
+			ret = stageDao.selectManyByTypeId(typeId);
 			
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -253,10 +265,10 @@ public class LeadsService {
 		return ret;
 	}
 
-	public List<TLeadsStatus> queryLeadsStatus(){
+	public List<TLeadsStatus> queryLeadsStatusByTypeId(Integer typeId){
 		List<TLeadsStatus> ret = null;
 		try{
-			ret = statusDao.selectAll();
+			ret = statusDao.selectManyByTypeId(typeId);
 			
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();

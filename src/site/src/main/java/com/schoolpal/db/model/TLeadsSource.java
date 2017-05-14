@@ -2,6 +2,8 @@ package com.schoolpal.db.model;
 
 public class TLeadsSource {
     private Integer id;
+    
+    private Integer type;
 
     private String name;
 
@@ -13,7 +15,15 @@ public class TLeadsSource {
         this.id = id;
     }
 
-    public String getName() {
+    public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public String getName() {
         return name;
     }
 

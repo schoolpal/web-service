@@ -195,6 +195,77 @@ INSERT INTO `t_activity` VALUES
 /*!40000 ALTER TABLE `t_activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `t_leads_type`
+--
+
+LOCK TABLES `t_leads_type` WRITE;
+/*!40000 ALTER TABLE `t_leads_type` DISABLE KEYS */;
+INSERT INTO `t_leads_type` VALUES (1,'销售线索'),(2,'销售机会');
+/*!40000 ALTER TABLE `t_leads_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `t_leads_stage`
+--
+
+LOCK TABLES `t_leads_stage` WRITE;
+/*!40000 ALTER TABLE `t_leads_stage` DISABLE KEYS */;
+INSERT INTO `t_leads_stage` VALUES
+(1,1,'新线索（未处理）'),
+(2,1,'已分配'),
+(3,1,'已联系，未答复'),
+(4,1,'已确认'),
+(5,1,'已转化'),
+(6,2,'邀约（已邀约，未承诺）'),
+(7,2,'邀约（已邀约，已承诺）'),
+(8,2,'体验（已承诺，未体验）'),
+(9,2,'体验（已承诺，已体验）'),
+(10,2,'签约（已体验，未签约）'),
+(11,2,'签约（已体验，定金）'),
+(12,2,'已签约');
+/*!40000 ALTER TABLE `t_leads_stage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `t_leads_status`
+--
+
+LOCK TABLES `t_leads_status` WRITE;
+/*!40000 ALTER TABLE `t_leads_status` DISABLE KEYS */;
+INSERT INTO `t_leads_status` VALUES 
+(1,1,'新线索（未处理）'),
+(2,1,'进程中（处理中）'),
+(3,1,'已转化（销售机会）'),
+(4,1,'已关闭（无效信息）'),
+(5,2,'新机会（未处理）'),
+(6,2,'进程中（处理中）'),
+(7,2,'已签约（合同）'),
+(8,2,'已关闭（无效信息）');
+/*!40000 ALTER TABLE `t_leads_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `t_leads_source`
+--
+
+LOCK TABLES `t_leads_source` WRITE;
+/*!40000 ALTER TABLE `t_leads_source` DISABLE KEYS */;
+INSERT INTO `t_leads_source` VALUES 
+(1,1,'Call in'),
+(2,1,'Call out'),
+(3,1,'Walked in'),
+(4,1,'Web(Net) in'),
+(5,1,'WeChat in'),
+(9,1,'Other'),
+(11,2,'Call in'),
+(12,2,'Call out'),
+(13,2,'Walked in'),
+(14,2,'Web(Net) in'),
+(15,2,'WeChat in'),
+(19,2,'Other');
+/*!40000 ALTER TABLE `t_leads_source` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

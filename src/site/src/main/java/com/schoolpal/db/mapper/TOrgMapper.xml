@@ -83,12 +83,8 @@
 	</select>
     <select id="selectOneByCodeWithExcludeId" parameterType="String" resultMap="OrgResultMap">
         SELECT o.*,
-        po.c_id AS po_id, po.c_code AS po_code, po.c_name
-        AS po_name, po.c_name_abbr
-        AS po_name_abbr,
-        ro.c_id AS ro_id, ro.c_code
-        AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
-        AS ro_name_abbr
+        po.c_id AS po_id, po.c_code AS po_code, po.c_name AS po_name, po.c_name_abbr AS po_name_abbr, 
+        ro.c_id AS ro_id, ro.c_code AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr AS ro_name_abbr
         FROM
         t_org AS o
         LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
