@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 import { CreateButton } from '../../public/Button'
 import command from '../../../utils/command'
 import formatDate from '../../../utils/formatDate'
-import { marketActivityList } from '../../../utils/api';
+import { actList } from '../../../utils/api';
+import { conversionTree } from '../../../utils/conversion';
 import DialogTips from '../../../utils/DialogTips';
 
 export default class List extends React.Component {
@@ -11,40 +12,39 @@ export default class List extends React.Component {
         super(props)
 
         this.state = { list: [] }
+        this.dataInit = this.dataInit.bind(this)
         this.renderCommand = this.renderCommand.bind(this)
+        this.renderTable = this.renderTable.bind(this)
         this.renderItems = this.renderItems.bind(this)
     }
 
     componentDidMount() {
         if (this.props.org) {
-            const dialogTips = DialogTips({ type: 'loading' })
-
-            dialogTips.open()
-            marketActivityList(this.props.org.id)
-                .done((data) => {
-                    this.setState({ list: data })
-                })
-                .always(() => {
-                    dialogTips.close()
-                })
+            this.dataInit(this.props.org.id)
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.org) {
             if (!this.props.org || this.props.org.id !== nextProps.org.id) {
-                const dialogTips = DialogTips({ type: 'loading' })
-
-                dialogTips.open()
-                marketActivityList(nextProps.org.id)
-                    .done((data) => {
-                        this.setState({ list: data })
-                    })
-                    .always(() => {
-                        dialogTips.close()
-                    })
+                this.dataInit(nextProps.org.id)
             }
         }
+    }
+
+    dataInit(oid) {
+        const loading = DialogTips({ type: 'loading' })
+
+        loading.open()
+        actList(oid)
+            .done((data) => {
+                this.setState({
+                    list: conversionTree(data)
+                })
+            })
+            .always(() => {
+                loading.close()
+            })
     }
 
     renderCommand() {
@@ -61,17 +61,38 @@ export default class List extends React.Component {
         return temp;
     }
 
+    renderTable(data) {
+        let table = []
+
+        if (data.length) {
+            $.each(data, (i, item) => {
+                table.push(this.renderItems(item));
+
+                if (item.children && item.children.length) {
+                    let children = [];
+
+                    children.push(this.renderTable(item.children));
+                    table.push(children);
+                }
+            })
+        }
+
+        return table;
+    }
+
     renderItems(data) {
+        const spacingStyle = { marginLeft: 40 * data.level + 'px' };
+        const childrenClass = data.children ? '' : 'not-child';
+
         return (
-            <tr key={data.id}>
+            <tr key={data.id} data-id={data.cId} data-level={data.level}>
                 <td>{data.id}</td>
                 <td>{data.creatorName}</td>
                 <td>{formatDate(data.createTime)}</td>
                 <td>
-                    {
-                        data.hasChild === false ? '' : <span className='tree-node'></span>
-                    }
-                    <Link to={this.props.location.pathname + '/' + data.id}>{data.name}</Link>
+                    <p onClick={this.handleNode} className={'tree-node ' + childrenClass} style={spacingStyle}>
+                        <Link to={this.props.location.pathname + '/' + data.id}>{data.name}</Link>
+                    </p>
                 </td>
                 <td>{formatDate(data.startDate)}</td>
                 <td>{formatDate(data.endDate)}</td>
@@ -81,9 +102,37 @@ export default class List extends React.Component {
                 <td>{data.opportunities}</td>
                 <td>{data.contracts}</td>
                 <td>{data.totalAmount}</td>
-                <td>--</td>
+                <td>{data.roi}</td>
             </tr>
         )
+    }
+
+    handleNode(event) {
+        if ($(event.target).hasClass('not-child')) {
+            return;
+        };
+
+        const tr = $(event.target).parents('tr');
+        const level = tr.data('level');
+
+        tr.nextAll('tr').each((i, item) => {
+            if ($(item).data('level') <= level) {
+                return false;
+            };
+
+            if ($(event.target).hasClass('closed')) {
+                if ($(item).data('level') === (level + 1)) {
+                    $(item).show();
+                }
+            } else {
+                $(item)
+                    .hide()
+                    .find('.tree-node')
+                    .addClass('closed');
+            }
+        });
+
+        $(event.target).toggleClass('closed');
     }
 
     render() {
@@ -116,7 +165,7 @@ export default class List extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.list.map(this.renderItems)}
+                            {this.renderTable(this.state.list)}
                         </tbody>
                     </table>
                 </div>

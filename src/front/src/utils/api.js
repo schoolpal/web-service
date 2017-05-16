@@ -529,7 +529,7 @@ export function checkName(name) {
     return defer.promise();
 }
 
-export function marketActivityList(oid) {
+export function actList(oid) {
     const defer = $.Deferred();
     const url = 'mkt/activity/list.do';
     const settings = $.extend({ url: url }, { data: { orgnizationId: oid } });
@@ -545,7 +545,23 @@ export function marketActivityList(oid) {
     return defer.promise();
 }
 
-export function marketActivityAdd(data) {
+export function mktActList(oid) {
+    const defer = $.Deferred();
+    const url = 'mkt/listActivities.do';
+    const settings = $.extend({ url: url }, { data: { orgId: oid } });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function actAdd(data) {
     const defer = $.Deferred();
     const url = 'mkt/activity/add.do';
     const settings = $.extend({ url: url }, { data: data });
@@ -561,7 +577,7 @@ export function marketActivityAdd(data) {
     return defer.promise();
 }
 
-export function marketActivityMod(data) {
+export function actMod(data) {
     const defer = $.Deferred();
     const url = 'mkt/activity/mod.do';
     const settings = $.extend({ url: url }, { data: data });
@@ -577,7 +593,7 @@ export function marketActivityMod(data) {
     return defer.promise();
 }
 
-export function marketActivityDel(id) {
+export function actDel(id) {
     const defer = $.Deferred();
     const url = 'mkt/activity/del.do';
     const settings = $.extend({ url: url }, { data: { id: id } });
@@ -589,6 +605,67 @@ export function marketActivityDel(id) {
             defer.reject(data);
         }
     });
+
+    return defer.promise();
+}
+
+export function actQuery(id) {
+    const defer = $.Deferred();
+    const url = 'mkt/activity/query.do';
+    const settings = $.extend({ url: url }, { data: { id: id } });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function leadsSources() {
+    const defer = $.Deferred();
+    const url = 'mkt/leads/listSources.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function leadsStages() {
+    const defer = $.Deferred();
+    const url = 'mkt/leads/listStages.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
+
+    return defer.promise();
+}
+
+export function leadsStatus() {
+    const defer = $.Deferred();
+    const url = 'mkt/leads/listStatus.do';
+
+    io({ url: url }, (data) => {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    })
 
     return defer.promise();
 }

@@ -4,6 +4,7 @@ import OrgTree from '../../public/OrgTree';
 import { SaveButton, BackButton } from '../../public/Button';
 import { orgList } from '../../../utils/api';
 import DialogTips from '../../../utils/DialogTips';
+import { leadsSources, leadsStages, leadsStatus, mktActList } from '../../../utils/api';
 
 export default class Editor extends React.Component {
     constructor(props) {
@@ -14,26 +15,62 @@ export default class Editor extends React.Component {
             selected: null
         }
         this.selectOrg = this.selectOrg.bind(this)
+        this.record = this.record.bind(this)
     }
 
     componentDidMount() {
-        const dialogTips = DialogTips({ type: 'loading' })
+        if (this.props.org) {
+            this.dataInit(this.props.org.id)
+        }
 
-        dialogTips.open()
+        // const dialogTips = DialogTips({ type: 'loading' })
 
-        orgList()
-            .done((data) => {
-                this.setState({
-                    orgList: data.tree,
-                    selected: {
-                        id: data.original[0].cId,
-                        name: data.original[0].cName
-                    }
-                })
+        // dialogTips.open()
+
+        // orgList()
+        //     .done((data) => {
+        //         this.setState({
+        //             orgList: data.tree,
+        //             selected: {
+        //                 id: data.original[0].cId,
+        //                 name: data.original[0].cName
+        //             }
+        //         })
+        //     })
+        //     .always(() => {
+        //         dialogTips.close()
+        //     })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.org) {
+            if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+                this.dataInit(nextProps.org.id)
+            }
+        }
+    }
+
+    dataInit(oid) {
+        const loading = DialogTips({ type: 'loading' })
+
+        loading.open()
+        $.when(
+            mktActList(oid),
+            leadsSources(),
+            leadsStages(),
+            leadsStatus()
+        ).done((act, sources, stages, status) => {
+            this.setState({
+                option: {
+                    act,
+                    sources,
+                    stages,
+                    status
+                }
             })
-            .always(() => {
-                dialogTips.close()
-            })
+        }).always(() => {
+            loading.close()
+        })
     }
 
     selectOrg(org) {
@@ -42,6 +79,63 @@ export default class Editor extends React.Component {
                 selected: org
             })
         }
+    }
+
+    record() {
+        if (this.props.params.id === 'create') {
+            return null
+        }
+
+        return (
+            <div>
+                <p className="ht pt-3 pb-3 b-t b-b">沟通记录</p>
+                <table className="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>沟通方式</th>
+                            <th>咨询时间</th>
+                            <th>所属组织</th>
+                            <th>所属用户</th>
+                            <th>沟通记录</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <select className="form-control">
+                                    <option>请选择</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" className="form-control" name="name" />
+                            </td>
+                            <td>
+                                <div className="btn-group btn-block">
+                                    <input type="text" className="form-control" data-toggle="dropdown" value={this.state.selected ? this.state.selected.name : ''} readOnly />
+                                    <div className="dropdown-menu">
+                                        <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <select className="form-control">
+                                    <option>请选择</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" className="form-control" name="name" />
+                            </td>
+                            <td>
+                                <button type="submit" className="btn btn-primary">保存</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        )
     }
 
     render() {
@@ -182,7 +276,7 @@ export default class Editor extends React.Component {
                                 </ul>
                             </div>
                         </div>
-                        <p className="ht pb-3 b-b">线索信息</p>
+                        <p className="ht pt-3 pb-3 b-t b-b">线索进程</p>
                         <div className="row">
                             <div className="col">
                                 <ul>
@@ -265,52 +359,7 @@ export default class Editor extends React.Component {
                                 </ul>
                             </div>
                         </div>
-                        <p className="ht pb-3 b-b">沟通记录</p>
-                        <table className="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>序号</th>
-                                    <th>沟通方式</th>
-                                    <th>咨询时间</th>
-                                    <th>所属组织</th>
-                                    <th>所属用户</th>
-                                    <th>沟通记录</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <select className="form-control">
-                                            <option>请选择</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" className="form-control" name="name" />
-                                    </td>
-                                    <td>
-                                        <div className="btn-group btn-block">
-                                            <input type="text" className="form-control" data-toggle="dropdown" value={this.state.selected ? this.state.selected.name : ''} readOnly />
-                                            <div className="dropdown-menu">
-                                                <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <select className="form-control">
-                                            <option>请选择</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" className="form-control" name="name" />
-                                    </td>
-                                    <td>
-                                        <button type="submit" className="btn btn-primary">保存</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        {this.record()}
                     </div>
 
                 </form>

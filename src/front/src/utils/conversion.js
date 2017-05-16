@@ -11,6 +11,46 @@ function uniq(arr) {
 }
 
 function insertTree(rootData, data) {
+    if (rootData.id === data.parentId) {
+        if (!rootData.children) {
+            rootData.children = [];
+        };
+
+        rootData.children.push(data);
+    } else {
+        if (rootData.children && rootData.children.length) {
+            $.each(rootData.children, function (i, item) {
+                insertTree(item, data);
+            })
+        };
+    }
+}
+
+export function conversionTree(original) {
+    const data = original.map((item) => { return $.extend({}, item) });
+    let tree = [];
+    let rootLevel = [];
+
+    if (data.length) {
+        data.map((item) => {
+            rootLevel.push(item.level);
+
+            if (item.id === item.rootId) {
+                tree.push(item)
+            } else {
+                const rootItem = tree.find((treeItem) => { return item.rootId === treeItem.id })
+
+                if (rootItem) {
+                    insertTree(rootItem, item);
+                }
+            }
+        })
+    }
+
+    return tree;
+}
+
+function insertOrg(rootData, data) {
     if (rootData.cId === data.cParentId) {
         if (!rootData.children) {
             rootData.children = [];
@@ -48,7 +88,7 @@ export function conversionOrg(original) {
                 const rootItem = tree.find((treeItem) => { return item.cRootId === treeItem.cId })
 
                 if (rootItem) {
-                    insertTree(rootItem, item);
+                    insertOrg(rootItem, item);
                 }
             }
         })

@@ -33,6 +33,34 @@
     min-width: 400px;
 }
 
+.dropdown {
+    .form-control {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+.market {
+    .dropdown {
+        .dropdown-toggle {
+            width: 100%;
+
+            &::after {
+                -webkit-align-self: center!important;
+                -ms-flex-item-align: center!important;
+                -ms-grid-row-align: center!important;
+                align-self: center!important;
+            }
+
+            span {
+                text-align: left;
+            }
+        }
+    }
+}
+
 .b-l {
     position: relative;
 
@@ -113,8 +141,21 @@
     }
 }
 
+.relative {
+    position: relative;
+}
+
 .hide {
     display: none;
+}
+
+.opacity {
+    opacity: 0;
+}
+
+.form-control-style {
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
 }
 
 .w100 {

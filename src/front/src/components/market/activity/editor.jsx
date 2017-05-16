@@ -1,16 +1,108 @@
 import React from 'react';
 import subTitle from '../../../utils/subTitle';
 import { SaveButton, BackButton } from '../../public/Button';
-import { marketActivityAdd, marketActivityMod } from '../../../utils/api';
+import { actAdd, actMod, actQuery, mktActList } from '../../../utils/api';
 import DialogTips from '../../../utils/DialogTips';
+import formatDate from '../../../utils/formatDate'
 
 require('../../../utils/datepicker');
+
+function renderListOption(data) {
+    let group = [];
+
+    if ($.isEmptyObject(data) === false) {
+        const tempOrg = data.orgList.filter((org) => {
+            if (data.actListMap[org.cId].length) {
+                return org
+            }
+        })
+
+        group = tempOrg.map((org) => {
+            const tempList = data.actListMap[org.cId].filter((act) => {
+                if (act.level < 3) {
+                    return act
+                }
+            })
+
+            return (
+                <optgroup key={org.cId} label={org.cName}>
+                    {
+                        tempList.map((act) => {
+                            const content = space(act.level) + act.name;
+
+                            return <option key={act.id} value={act.id} dangerouslySetInnerHTML={{ __html: content }}></option>
+                        })
+                    }
+                </optgroup>
+            )
+        })
+    }
+    return group
+
+    function space(level) {
+        const base = '&nbsp;&nbsp;&nbsp;&nbsp;';
+        let s = '';
+
+        if (level) {
+            for (let i = 0; i < level; i++) {
+                s += base;
+            }
+        }
+
+        return s
+    }
+}
 
 export default class Editor extends React.Component {
     constructor(props) {
         super(props)
 
+        this.state = { option: [] }
+        this.dataInit = this.dataInit.bind(this)
         this.editorSubmit = this.editorSubmit.bind(this)
+    }
+
+    componentDidMount() {
+        if (this.props.org) {
+            this.dataInit(this.props.org.id)
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.org) {
+            if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+                this.dataInit(nextProps.org.id)
+            }
+        }
+    }
+
+    dataInit(oid) {
+        const loading = DialogTips({ type: 'loading' })
+
+        loading.open()
+        mktActList(oid)
+            .done((data) => {
+                this.setState({
+                    option: data
+                })
+
+                if (this.props.params.id !== 'create') {
+                    actQuery(this.props.params.id)
+                        .done((act) => {
+                            $(this.editorDom).find('[name=name]').val(act.name)
+                            $(this.editorDom).find('[name=startDate]').val(formatDate(act.startDate))
+                            $(this.editorDom).find('[name=endDate]').val(formatDate(act.endDate))
+                            $(this.editorDom).find('[name=budget]').val(act.budget)
+                            $(this.editorDom).find('[name=cost]').val(act.cost)
+                        })
+                        .always(() => { loading.close() })
+                } else {
+                    loading.close()
+                }
+            })
+            .fail(() => {
+                loading.close()
+            })
     }
 
     editorSubmit(event) {
@@ -25,7 +117,11 @@ export default class Editor extends React.Component {
         let param = {};
 
         param.orgnizationId = this.props.org.id;
-        //param.parentId = null;
+
+        if ($(this.editorDom).find('[name=parentId]').val() !== 'root') {
+            param.parentId = $(this.editorDom).find('[name=parentId]').val()
+        }
+
         param.name = $(this.editorDom).find('[name=name]').val()
         param.startDate = new Date($(this.editorDom).find('[name=startDate]').val())
         param.endDate = new Date($(this.editorDom).find('[name=endDate]').val())
@@ -34,9 +130,9 @@ export default class Editor extends React.Component {
 
         loading.open()
 
-        if (this.props.params.id) {
+        if (this.props.params.id !== 'create') {
             param.id = this.props.params.id;
-            marketActivityMod(param)
+            actMod(param)
                 .done(() => {
                     loading.close()
                     success.open()
@@ -50,7 +146,7 @@ export default class Editor extends React.Component {
                     fail.open()
                 })
         } else {
-            marketActivityAdd(param)
+            actAdd(param)
                 .done(() => {
                     loading.close()
                     success.open()
@@ -64,6 +160,16 @@ export default class Editor extends React.Component {
                     fail.open()
                 })
         }
+    }
+
+    changeText(event) {
+        const elem = $(event.target)
+        const text = elem.find('option:selected').html()
+
+        elem
+            .siblings('.btn')
+            .find('span')
+            .text(text.replace(/&nbsp;/gi, ''))
     }
 
     render() {
@@ -89,9 +195,15 @@ export default class Editor extends React.Component {
 
                             <div className="form-group">
                                 <label for="name"><em className="text-danger">*</em>父级市场活动</label>
-                                <select className="form-control" required={true}>
-                                    <option>作为一级活动</option>
-                                </select>
+                                <div className="dropdown">
+                                    <button className="btn btn-secondary dropdown-toggle d-flex" type="button">
+                                        <span className="flex-cell">作为一级活动</span>
+                                    </button>
+                                    <select onChange={this.changeText} className="form-control opacity" name="parentId" required={true}>
+                                        <option value="root">作为一级活动</option>
+                                        {renderListOption(this.state.option)}
+                                    </select>
+                                </div>
                             </div>
 
                             <div className="form-group">
