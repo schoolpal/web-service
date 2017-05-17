@@ -11,8 +11,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="gender != null">
-        gender,
+      <if test="genderId != null">
+        gender_id,
       </if>
       <if test="cellphone != null">
         cellphone,
@@ -52,8 +52,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        #{gender,jdbcType=VARCHAR},
+      <if test="genderId != null">
+        #{genderId,jdbcType=VARCHAR},
       </if>
       <if test="cellphone != null">
         #{cellphone,jdbcType=VARCHAR},
@@ -93,8 +93,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=VARCHAR},
+      <if test="genderId != null">
+        gender_id = #{genderId,jdbcType=VARCHAR},
       </if>
       <if test="cellphone != null">
         cellphone = #{cellphone,jdbcType=VARCHAR},
@@ -139,8 +139,7 @@
   </delete>
 
   <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select *
     from t_leads_parent
     where id = #{id,jdbcType=CHAR}
   </select>
@@ -167,7 +166,7 @@
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeadsParent">
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
     <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
     <result column="weichat" jdbcType="VARCHAR" property="weichat" />
     <result column="email" jdbcType="VARCHAR" property="email" />
@@ -179,14 +178,4 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, gender, cellphone, weichat, email, address, id_type, 
-    id_code, birthday, creator_id, create_time, last_update
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_leads_parent
-    where leads_id = #{leadsId,jdbcType=CHAR}
-  </select>
 </mapper>

@@ -2,13 +2,16 @@ package com.schoolpal.db.model;
 
 import java.util.Date;
 
+import com.schoolpal.web.consts.Gender;
+
 public class TLeadsStudent {
 
 	private String id;
     
     private String name;
 
-    private String gender;
+    private Integer genderId;
+    private String genderText;
 
     private Integer idType;
 
@@ -52,15 +55,28 @@ public class TLeadsStudent {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getGender() {
-        return gender;
+    public Integer getGenderId() {
+        return genderId;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+    public void setGenderId(Integer genderId) {
+        this.genderId = genderId;
+        this.genderText = Gender.valueOf(genderId).getName();
+    }
+    public void setStudentGender(String gender) {
+        this.genderId = Gender.nameOf(gender.trim()).getValue();
+        this.genderText = gender;
     }
 
-    public Integer getIdType() {
+    public String getGenderText() {
+		return genderText;
+	}
+
+	public void setGenderText(String genderText) {
+		this.genderText = genderText;
+	}
+
+	public Integer getIdType() {
         return idType;
     }
 

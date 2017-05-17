@@ -11,8 +11,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="gender != null">
-        gender,
+      <if test="genderId != null">
+        gender_id,
       </if>
       <if test="idType != null">
         id_type,
@@ -49,8 +49,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        #{gender,jdbcType=VARCHAR},
+      <if test="genderId != null">
+        #{genderId,jdbcType=VARCHAR},
       </if>
       <if test="idType != null">
         #{idType,jdbcType=INTEGER},
@@ -87,8 +87,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=VARCHAR},
+      <if test="genderId != null">
+        gender_id = #{genderId,jdbcType=VARCHAR},
       </if>
       <if test="idType != null">
         id_type = #{idType,jdbcType=INTEGER},
@@ -130,8 +130,7 @@
   </delete>
 
   <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+    select *
     from t_leads_student
     where id = #{id,jdbcType=CHAR}
   </select>
@@ -154,7 +153,7 @@
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeadsStudent">
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
     <result column="id_type" jdbcType="INTEGER" property="idType" />
     <result column="id_code" jdbcType="VARCHAR" property="idCode" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
@@ -165,14 +164,4 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, gender, id_type, id_code, birthday, school_grade, 
-    class_grade, school_name, creator_id, create_time, last_update
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_leads_student
-    where leads_id = #{leadsId,jdbcType=CHAR}
-  </select>
 </mapper>

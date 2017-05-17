@@ -329,7 +329,7 @@ DROP TABLE IF EXISTS `t_leads_student`;
 CREATE TABLE `t_leads_student` (
   `id` char(50) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  `gender` varchar(45) DEFAULT NULL,
+  `gender_id` int(1) DEFAULT NULL,
   `id_type` int(1) DEFAULT NULL,
   `id_code` varchar(45) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
@@ -355,7 +355,7 @@ DROP TABLE IF EXISTS `t_leads_parent`;
 CREATE TABLE `t_leads_parent` (
   `id` char(50) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
-  `gender` varchar(45) DEFAULT NULL,
+  `gender_id` int(1) DEFAULT NULL,
   `cellphone` varchar(45) DEFAULT NULL,
   `weichat` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,

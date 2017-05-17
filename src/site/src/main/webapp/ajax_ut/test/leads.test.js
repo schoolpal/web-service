@@ -116,7 +116,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 				stageId: 3,
 				statusId: 4,
 			    studentName: 'student name',
-			    gender: 1,
+			    studentGender: '男',
 			    age: 3,
 			    classGrade: 1,
 			    schoolName: 'school name',
@@ -159,6 +159,25 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		student_id_val = jsonData.data.studentId;
 	});
 	
+	it('list.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'list.do'),
+			dataType : 'json',
+			data: {
+				orgId: org_val
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
 	it('mod.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -175,7 +194,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 				stageId: 2,
 				statusId: 1,
 			    studentName: 'student name mod',
-			    gender: 2,
+			    studentGender: 2,
 			    age: 4,
 			    classGrade: 2,
 			    schoolName: 'school name mod',
@@ -233,25 +252,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
-	it('list.do', function() {
-		var xhr = $.ajax({
-			async : false,
-			method : 'POST',
-			url : buildUrl(host, leads_path, 'list.do'),
-			dataType : 'json',
-			data: {
-				orgId: org_val
-			}
-		});
 
-		expect(xhr.status).to.be.equal(200);
-		var jsonData = xhr.responseJSON;
-		resDump('list.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.not.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
-	});
-	
 	it('del.do', function() {
 		var xhr = $.ajax({
 			async : false,
