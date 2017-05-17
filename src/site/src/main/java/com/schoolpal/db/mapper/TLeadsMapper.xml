@@ -127,7 +127,7 @@
         source_id = #{sourceId,jdbcType=INTEGER},
       </if>
       <if test="channelId != null">
-        channel_id = #{channelId,jdbcType=INTEGER},
+        channel_id = #{channelId,jdbcType=CHAR},
       </if>
       <if test="stageId != null">
         stage_id = #{stageId,jdbcType=INTEGER},
@@ -239,7 +239,7 @@
     <result column="parent_id" jdbcType="CHAR" property="parentId" />
     <result column="source_id" jdbcType="INTEGER" property="sourceId" />
     <result column="source_name" jdbcType="VARCHAR" property="sourceName" />
-    <result column="channel_id" jdbcType="INTEGER" property="channelId" />
+    <result column="channel_id" jdbcType="CHAR" property="channelId" />
     <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
     <result column="stage_id" jdbcType="INTEGER" property="stageId" />
     <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
@@ -288,7 +288,7 @@
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="source" jdbcType="INTEGER" property="source" />
-    <result column="channel" jdbcType="INTEGER" property="channel" />
+    <result column="channel" jdbcType="CHAR" property="channel" />
     <result column="stage" jdbcType="INTEGER" property="stage" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />

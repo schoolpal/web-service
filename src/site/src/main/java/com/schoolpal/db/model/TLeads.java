@@ -14,7 +14,7 @@ public class TLeads {
     private Integer sourceId;
     private String sourceName;
 
-    private Integer channelId;
+    private String channelId;
     private String channelName;
 
     private Integer stageId;
@@ -99,32 +99,32 @@ public class TLeads {
         return sourceId;
     }
 
-    public void setSourceId(Integer source) {
-        this.sourceId = source;
+    public void setSourceId(Integer sourceId) {
+        this.sourceId = sourceId;
     }
 
-    public Integer getChannelId() {
+    public String getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(Integer channel) {
-        this.channelId = channel;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
     public Integer getStageId() {
         return stageId;
     }
 
-    public void setStageId(Integer stage) {
-        this.stageId = stage;
+    public void setStageId(Integer stageId) {
+        this.stageId = stageId;
     }
 
     public Integer getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(Integer status) {
-        this.statusId = status;
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
     public String getOrgnizationId() {

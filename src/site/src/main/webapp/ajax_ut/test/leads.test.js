@@ -112,7 +112,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			data : {
 				orgnizationId: org_val,
 				sourceId: 1,
-				channelId: 2,
+				channelId: '16122700000076',
 				stageId: 3,
 				statusId: 4,
 			    studentName: 'student name',
@@ -122,9 +122,12 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			    schoolName: 'school name',
 			    parentName: 'parent name',
 			    relation: 'father',
-			    cellphone: 13800010002,
-			    weichat: '13670804',
-			    address: 'address'
+			    cellphone: 1,
+			    weichat: '',
+			    address: '',
+			    courseType: null,
+			    courseName: null,
+			    note: ''
 			}
 		});
 

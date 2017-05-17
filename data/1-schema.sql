@@ -295,7 +295,7 @@ CREATE TABLE `t_leads` (
   `type_id` int(2) DEFAULT NULL,
   `orgnization_id` char(50) DEFAULT NULL,
   `source_id` int(2) DEFAULT NULL,
-  `channel_id` int(11) DEFAULT NULL,
+  `channel_id` char(50) DEFAULT NULL,
   `stage_id` int(2) DEFAULT NULL,
   `status_id` int(2) DEFAULT NULL,
   `course_type` varchar(45) DEFAULT NULL,
