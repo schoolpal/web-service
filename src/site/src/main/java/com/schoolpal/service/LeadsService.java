@@ -45,7 +45,7 @@ public class LeadsService {
 
 	public List<TLeads> queryLeadsListByOrgId(String orgId, Integer typeId){
 		List<TLeads> ret = null;
-		try{			
+		try{
 			ret =leadsDao.selectManyByOrgAndTypeId(orgId, typeId);
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();

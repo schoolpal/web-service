@@ -1,17 +1,17 @@
 package com.schoolpal.db.inf;
 
+import java.util.List;
+
 import com.schoolpal.db.model.TContact;
 
 public interface TContactMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteOneById(String id);
 
-    int insert(TContact record);
+    int insertOne(TContact record);
 
-    int insertSelective(TContact record);
+    TContact selectOneById(String id);
+    List<TContact> selectManyByLeadsId(String leadsId);
 
-    TContact selectByPrimaryKey(String id);
+    int updateOneById(TContact record);
 
-    int updateByPrimaryKeySelective(TContact record);
-
-    int updateByPrimaryKey(TContact record);
 }
