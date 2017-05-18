@@ -30,6 +30,8 @@ public class TLeadsParent {
     private Date createTime;
 
     private Date lastUpdate;
+    
+    private String relation;
 
     public String getId() {
 		return id;
@@ -148,4 +150,12 @@ public class TLeadsParent {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+	public String getRelation() {
+		return relation;
+	}
+
+	public void setRelation(String relation) {
+		this.relation = relation;
+	}
 }

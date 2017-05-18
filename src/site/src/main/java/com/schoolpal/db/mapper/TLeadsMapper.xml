@@ -184,7 +184,7 @@
         uc.c_realname AS creator_name,
         ue.c_realname AS executive_name,
         src.name AS source_name,
-        a.name AS activity_name,
+        a.name AS channel_name,
         stage.name AS stage_name,
         status.name AS status_name,
         o.c_name AS orgnization_name
@@ -267,7 +267,7 @@
         <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
         <result column="weichat" jdbcType="VARCHAR" property="weichat" />
         <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="relation" jdbcType="VARCHAR" property="birthday" />
+        <result column="relation" jdbcType="VARCHAR" property="relation" />
     </association>
   </resultMap>
   <resultMap id="StudentAndParentResultMap" type="com.schoolpal.db.model.TLeads">

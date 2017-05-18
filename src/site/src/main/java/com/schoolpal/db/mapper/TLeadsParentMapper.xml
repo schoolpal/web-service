@@ -35,6 +35,9 @@
       <if test="birthday != null">
         birthday,
       </if>
+      <if test="relation != null">
+        relation,
+      </if>
       <if test="creatorId != null">
         creator_id,
       </if>
@@ -76,6 +79,9 @@
       <if test="birthday != null">
         #{birthday,jdbcType=DATE},
       </if>
+      <if test="relation != null">
+        #{relation,jdbcType=VARCHAR},
+      </if>
       <if test="creatorId != null">
         #{creatorId,jdbcType=VARCHAR},
       </if>
@@ -116,6 +122,9 @@
       </if>
       <if test="birthday != null">
         birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="relation != null">
+        relation = #{relation,jdbcType=VARCHAR},
       </if>
       <if test="creatorId != null">
         creator_id = #{creatorId,jdbcType=VARCHAR},

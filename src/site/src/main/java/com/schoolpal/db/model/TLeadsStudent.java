@@ -1,5 +1,6 @@
 package com.schoolpal.db.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import com.schoolpal.web.consts.Gender;
@@ -98,6 +99,9 @@ public class TLeadsStudent {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+        if (this.age == null){
+        	this.setAge(this.ConvertBirthdayToAge(birthday));
+        }
     }
 
     public Integer getAge() {
@@ -106,9 +110,24 @@ public class TLeadsStudent {
 
 	public void setAge(Integer age) {
 		this.age = age;
+		if (this.birthday == null){
+			this.setBirthday(this.ConvertAgeToBirthday(age));
+		}
 	}
 	public void setStudentAge(Integer age) {
-		this.age = age;
+		this.setAge(age);
+	}
+	
+	private Date ConvertAgeToBirthday(Integer age){
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -age);
+		return cal.getTime();
+	}
+	private Integer ConvertBirthdayToAge(Date birthday){
+		Calendar cal1 = Calendar.getInstance();
+		Calendar cal2 = Calendar.getInstance();
+		cal1.setTime(birthday);
+		return cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR);
 	}
 
 	public String getSchoolGrade() {
