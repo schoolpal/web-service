@@ -247,6 +247,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			dataType : 'json',
 			data: {
 				id: leads_id_val,
+				assigneeId: '16122700000036'
 			}
 		});
 

@@ -269,7 +269,7 @@ public class AjaxLeadsController {
 				break;
 			}
 			if (StringUtils.isEmpty(assigneeId)) {
-				res.setCode(401);
+				res.setCode(402);
 				res.setDetail("Assignee id cannot be empty");
 				break;
 			}
@@ -287,7 +287,7 @@ public class AjaxLeadsController {
 	
 	@RequestMapping(value = "convert.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String convert(String id, HttpServletRequest request) {
+	public String convert(String id, String assigneeId, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -302,8 +302,18 @@ public class AjaxLeadsController {
 				res.setDetail("Id cannot be empty");
 				break;
 			}
+			if (StringUtils.isEmpty(assigneeId)) {
+				res.setCode(402);
+				res.setDetail("Assignee id cannot be empty");
+				break;
+			}
 			
 			if (!leadsServ.convertToOpportunityById(id)){
+				res.setCode(500);
+				res.setDetail("Failed to assign leads");
+				break;
+			}
+			if (!leadsServ.assignToExecutiveById(id, assigneeId)){
 				res.setCode(500);
 				res.setDetail("Failed to assign leads");
 				break;
