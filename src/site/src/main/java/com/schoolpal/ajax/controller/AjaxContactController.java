@@ -165,11 +165,6 @@ public class AjaxContactController {
 				res.setDetail("Approach id cannot be empty");
 				break;
 			}
-			if (contact.getExecutiveId() == null){
-				res.setCode(404);
-				res.setDetail("Executive id cannot be empty");
-				break;
-			}
 			
 			String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
 			if (!AuthorizationHelper.CheckPermissionById(permId)){
@@ -211,7 +206,14 @@ public class AjaxContactController {
 				break;
 			}
 
-			String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
+			TContact target = contactServ.queryContactById(contact.getId());
+			if (target == null){
+				res.setCode(401);
+				res.setDetail("Invalid contact id");
+				break;
+			}
+			
+			String permId = this.getModPermIdByLeadsId(target.getLeadsId());
 			if (!AuthorizationHelper.CheckPermissionById(permId)){
 				res.setCode(400);
 				res.setDetail("No permission");

@@ -47,7 +47,7 @@ public class ContactService {
 	public String addContact(TContact contact){
 		String ret = null;
 		try{
-			String id = idxDao.selectNextId("t_activity");
+			String id = idxDao.selectNextId("t_contact");
 			contact.setId(id);
 			contact.setDatetime(new Date());
 			
