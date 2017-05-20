@@ -166,10 +166,20 @@ public class LeadsService {
 	public boolean mod(TLeads leads, TLeadsStudent student, TLeadsParent parent){
 		boolean ret = false;
 		do{
+			TLeads target = this.queryLeadsById(leads.getId());
+			if (target == null){
+				StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+				logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", 
+						"Cannot find target leads, id: " + leads.getId());
+				break;
+			}
+			
+			student.setId(target.getStudentId());
 			if (!this.modStudent(student)){
 				break;
 			}
 			
+			parent.setId(target.getParentId());
 			if (!this.modParent(parent)){
 				break;
 			}

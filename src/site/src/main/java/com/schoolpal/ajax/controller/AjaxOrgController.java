@@ -82,8 +82,7 @@ public class AjaxOrgController {
 				break;
 			}
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
+			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
 				res.setCode(402);
 				res.setDetail("No permission to query orgnization");
 				break;

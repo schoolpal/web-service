@@ -188,24 +188,25 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			url : buildUrl(host, leads_path, 'mod.do'),
 			dataType : 'json',
 			data : {
-				leadsId : leads_id_val,
-				parentId: parent_id_val,
-				studentId: student_id_val,
+				id : leads_id_val,
 				orgnizationId: org_val,
-				sourceId: 4,
-				channelId: 3,
-				stageId: 2,
-				statusId: 1,
+				sourceId: 1,
+				channelId: '16122700000076',
+				stageId: 3,
+				statusId: 4,
 			    studentName: 'student name mod',
-			    studentGender: 2,
-			    age: 4,
-			    classGrade: 2,
+			    studentGender: '男',
+			    age: 3,
+			    classGrade: 1,
 			    schoolName: 'school name mod',
 			    parentName: 'parent name mod',
 			    relation: 'father mod',
-			    cellphone: 13800010009,
-			    weichat: '13670808',
-			    address: 'address mod'
+			    cellphone: 1,
+			    weichat: 'mod',
+			    address: 'mod',
+			    courseType: null,
+			    courseName: null,
+			    note: 'mod'
 			}
 		});
 
