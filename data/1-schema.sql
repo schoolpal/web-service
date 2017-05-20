@@ -28,7 +28,7 @@ CREATE TABLE `t_activity` (
   `id` char(50) NOT NULL,
   `root_id` char(50) NOT NULL,
   `parent_id` char(50) NOT NULL,
-  `orgnization_id` char(50) NOT NULL,
+  `org_id` char(50) NOT NULL,
   `name` varchar(45) NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `t_activity` (
   PRIMARY KEY (`id`),
   KEY `root_id` (`root_id`),
   KEY `parent_id` (`parent_id`),
-  KEY `orgnization_id` (`orgnization_id`)
+  KEY `org_id` (`org_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,7 +85,7 @@ CREATE TABLE `t_contract` (
   `par_email` varchar(45) DEFAULT NULL,
   `par_address` varchar(200) DEFAULT NULL,
   `relationship` varchar(45) DEFAULT NULL,
-  `orgnization_id` char(50) DEFAULT NULL,
+  `org_id` char(50) DEFAULT NULL,
   `creator_id` char(50) DEFAULT NULL,
   `executive_id` char(50) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
@@ -293,7 +293,7 @@ CREATE TABLE `t_leads` (
   `student_id` char(50) DEFAULT NULL,
   `parent_id` char(50) DEFAULT NULL,
   `type_id` int(2) DEFAULT NULL,
-  `orgnization_id` char(50) DEFAULT NULL,
+  `org_id` char(50) DEFAULT NULL,
   `source_id` int(2) DEFAULT NULL,
   `channel_id` char(50) DEFAULT NULL,
   `stage_id` int(2) DEFAULT NULL,
@@ -307,7 +307,7 @@ CREATE TABLE `t_leads` (
   `note` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type_id_idx` (`type_id`),
-  KEY `org_type_exec_idx` (`orgnization_id`,`type_id`,`executive_id`),
+  KEY `org_type_exec_idx` (`org_id`,`type_id`,`executive_id`),
   KEY `student_id_idx` (`source_id`),
   KEY `parent_id_idx` (`parent_id`),
   KEY `source_id_idx` (`source_id`),

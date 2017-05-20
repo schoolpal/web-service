@@ -7,7 +7,7 @@
     <result column="root_id" jdbcType="CHAR" property="rootId" />
     <result column="parent_id" jdbcType="CHAR" property="parentId" />
     <result column="parent_name" jdbcType="CHAR" property="parentName" />
-    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="start_date" jdbcType="DATE" property="startDate" />
     <result column="end_date" jdbcType="DATE" property="endDate" />
@@ -51,7 +51,7 @@
     SELECT *, u.c_realname AS creator_name
     FROM t_activity AS a
     LEFT JOIN t_user AS u ON a.creator_id = u.c_id
-    WHERE a.orgnization_id=#{id,jdbcType=CHAR}
+    WHERE a.org_id=#{id,jdbcType=CHAR}
   </select>
   <select id="selectAll" resultMap="selectManyResultMap">
     SELECT a.*, u.c_realname AS creator_name
@@ -82,7 +82,7 @@
         parent_id,
       </if>
       <if test="orgnizationId != null">
-        orgnization_id,
+        org_id,
       </if>
       <if test="name != null">
         name,
@@ -164,7 +164,7 @@
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="orgnizationId != null">
-        orgnization_id = #{orgnizationId,jdbcType=CHAR},
+        org_id = #{orgnizationId,jdbcType=CHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},

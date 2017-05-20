@@ -36,7 +36,7 @@
         status_id,
       </if>
       <if test="orgnizationId != null">
-        orgnization_id,
+        org_id,
       </if>
       <if test="executiveId != null">
         executive_id,
@@ -136,7 +136,7 @@
         status_id = #{statusId,jdbcType=INTEGER},
       </if>
       <if test="orgnizationId != null">
-        orgnization_id = #{orgnizationId,jdbcType=CHAR},
+        org_id = #{orgnizationId,jdbcType=CHAR},
       </if>
       <if test="executiveId != null">
         executive_id = #{executiveId,jdbcType=CHAR},
@@ -177,7 +177,7 @@
   </select>
   <select id="selectOneById" parameterType="java.lang.String" resultMap="ExtendedResultMap">
     SELECT l.id, l.course_type, l.course_name, l.type_id, l.source_id, l.student_id, l.parent_id, 
-        l.channel_id, l.stage_id, l.status_id, l.orgnization_id, 
+        l.channel_id, l.stage_id, l.status_id, l.org_id, 
         l.executive_id, l.creator_id, l.create_time, l.note, 
         s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
         p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
@@ -197,12 +197,12 @@
     LEFT JOIN t_activity AS a ON a.id = l.channel_id
     LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
     LEFT JOIN t_leads_status AS status ON status.id = l.status_id
-    LEFT JOIN t_org AS o ON o.c_id = l.orgnization_id
+    LEFT JOIN t_org AS o ON o.c_id = l.org_id
     where l.id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectManyByOrgAndTypeId" resultMap="ExtendedResultMap">
     SELECT l.id, l.course_type, l.course_name, l.type_id, l.source_id, l.student_id, l.parent_id, 
-        l.channel_id, l.stage_id, l.status_id, l.orgnization_id, 
+        l.channel_id, l.stage_id, l.status_id, l.org_id, 
         l.executive_id, l.creator_id, l.create_time, l.note, 
         s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
         p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
@@ -222,8 +222,8 @@
     LEFT JOIN t_activity AS a ON a.id = l.channel_id
     LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
     LEFT JOIN t_leads_status AS status ON status.id = l.status_id
-    LEFT JOIN t_org AS o ON o.c_id = l.orgnization_id
-    WHERE l.orgnization_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
+    LEFT JOIN t_org AS o ON o.c_id = l.org_id
+    WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
   </select>
 
 
@@ -245,7 +245,7 @@
     <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
     <result column="status_id" jdbcType="INTEGER" property="statusId" />
     <result column="status_name" jdbcType="VARCHAR" property="statusName" />
-    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
     <result column="orgnization_name" jdbcType="VARCHAR" property="orgnizationName" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
     <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
@@ -291,14 +291,14 @@
     <result column="channel" jdbcType="CHAR" property="channel" />
     <result column="stage" jdbcType="INTEGER" property="stage" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="orgnization_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, course_type, course_name, type, source, channel, stage, status, orgnization_id, 
+    id, course_type, course_name, type, source, channel, stage, status, org_id, 
     executive_id, creator_id, create_time, note
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
