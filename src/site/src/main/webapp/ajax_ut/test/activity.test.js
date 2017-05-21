@@ -72,6 +72,25 @@ describe('/ajax/mkt/activity/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
+	it('listTree.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, act_path, 'listTree.do'),
+			dataType : 'json',
+			data: {
+				orgId: org_val
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('listTree.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+
 	it('add.do', function() {
 		var xhr = $.ajax({
 			async : false,

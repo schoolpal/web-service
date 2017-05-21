@@ -1,6 +1,8 @@
 package com.schoolpal.ajax.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,8 +17,10 @@ import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TActivity;
+import com.schoolpal.db.model.TOrg;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.ActivityService;
+import com.schoolpal.service.OrgService;
 import com.schoolpal.service.UserService;
 
 @Controller
@@ -27,6 +31,8 @@ public class AjaxActivityController {
 	private UserService userServ;
 	@Autowired
 	private ActivityService actServ;
+	@Autowired
+	private OrgService orgServ;
 	
 	private Gson gson = new Gson();
 
@@ -59,6 +65,7 @@ public class AjaxActivityController {
 
 		return gson.toJson(res);
 	}
+	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String list(String orgnizationId) {
@@ -78,9 +85,6 @@ public class AjaxActivityController {
 			
 			List<TActivity> acts = null;
 			acts = actServ.queryActivitiesByOrgId(orgnizationId);
-//			for (TActivity act : acts) {
-//				act.calculateRoi();
-//			}
 			res.setData(acts);
 
 		} while (false);
@@ -88,6 +92,48 @@ public class AjaxActivityController {
 		return gson.toJson(res);
 	}
 
+	protected class listTreeResponse{
+		private List<TOrg> orgList = null;
+		private Map<String, List<TActivity>> actListMap = null;
+		
+		public listTreeResponse(List<TOrg> orgList, Map<String, List<TActivity>> actListMap){
+			this.orgList = orgList;
+			this.actListMap = actListMap;
+		}
+	}
+	@RequestMapping(value = "listTree.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String listTree(String orgId) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (!AuthorizationHelper.CheckPermissionById("1")) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+			if (orgId == null){
+				res.setCode(401);
+				res.setDetail("Orgnization id cannot be empty");
+				break;
+			}
+			
+			List<TOrg> orgList = orgServ.queryUpperOrgListByIdLite(orgId);
+			Map<String, List<TActivity>> actListMap = new HashMap<String, List<TActivity>>();
+			
+			for (TOrg org : orgList){
+				List<TActivity> actList = actServ.queryActivitiesByOrgId(org.getcId());
+				actListMap.put(org.getcId(), actList);
+			}
+			
+			listTreeResponse data = new listTreeResponse(orgList, actListMap);
+			res.setData(data);
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+	
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String add(TActivity act, HttpServletRequest request) {

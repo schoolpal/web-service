@@ -17,9 +17,6 @@ import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
-import com.schoolpal.db.model.TLeadsSource;
-import com.schoolpal.db.model.TLeadsStage;
-import com.schoolpal.db.model.TLeadsStatus;
 import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LeadsService;
@@ -324,64 +321,4 @@ public class AjaxLeadsController {
 		return gson.toJson(res);
 	}
 	
-	@RequestMapping(value = "listSources.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listSources() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TLeadsSource> sources = null;
-			sources = leadsServ.queryLeadsSourcesByTypeId(1);
-			res.setData(sources);
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "listStages.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listStages() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TLeadsStage> stages = null;
-			stages = leadsServ.queryLeadsStagesByTypeId(1);
-			res.setData(stages);
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "listStatus.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listStatus() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TLeadsStatus> status = null;
-			status = leadsServ.queryLeadsStatusByTypeId(1);
-			res.setData(status);
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
 }

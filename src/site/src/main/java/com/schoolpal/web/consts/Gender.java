@@ -1,7 +1,9 @@
 package com.schoolpal.web.consts;
 
 public enum Gender {
-    NA(0, "未知"), Male(1, "男"), Female(2, "女");
+    NA(0, "未知"), 
+    Male(1, "男"), 
+    Female(2, "女");
 
     private int _value;
     private String _name;

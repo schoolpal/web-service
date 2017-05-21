@@ -10,16 +10,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
-import com.schoolpal.db.model.TActivity;
 import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.ActivityService;
 import com.schoolpal.service.ContactService;
 import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;

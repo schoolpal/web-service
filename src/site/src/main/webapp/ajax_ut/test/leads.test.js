@@ -4,6 +4,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';
+	var mkt_path = '/web/ajax/mkt/';
 	var leads_path = '/web/ajax/mkt/leads/';
 	var contact_path = '/web/ajax/contact/';
 
@@ -57,49 +58,81 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
-	it('listSources.do', function() {
+	it('source/list.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'listSources.do'),
+			url : buildUrl(host, leads_path, 'source/list.do'),
 			dataType : 'json',
 		});
 
 		expect(xhr.status).to.be.equal(200);
 		var jsonData = xhr.responseJSON;
-		resDump('listSources.do', jsonData);
+		resDump('source/list.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.detail).to.be.equal('Ok');
 		expect(jsonData.data).to.not.empty;
 	});
 
-	it('listStages.do', function() {
+	it('stage/list.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'listStages.do'),
+			url : buildUrl(host, leads_path, 'stage/list.do'),
 			dataType : 'json',
 		});
 
 		expect(xhr.status).to.be.equal(200);
 		var jsonData = xhr.responseJSON;
-		resDump('listStages.do', jsonData);
+		resDump('stage/list.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.detail).to.be.equal('Ok');
 		expect(jsonData.data).to.not.empty;
 	});
 
-	it('listStatus.do', function() {
+	it('status/list.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'listStatus.do'),
+			url : buildUrl(host, leads_path, 'status/list.do'),
 			dataType : 'json',
 		});
 
 		expect(xhr.status).to.be.equal(200);
 		var jsonData = xhr.responseJSON;
-		resDump('listStatus.do', jsonData);
+		resDump('status/list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	it('gender/list.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, mkt_path, 'gender/list.do'),
+			dataType : 'json',
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('listGenders.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	it('relation/list.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, mkt_path, 'relation/list.do'),
+			dataType : 'json',
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('listGenders.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.detail).to.be.equal('Ok');
 		expect(jsonData.data).to.not.empty;
