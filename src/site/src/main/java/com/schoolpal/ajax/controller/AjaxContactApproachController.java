@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.db.model.*;
-import com.schoolpal.service.*;
+import com.schoolpal.db.model.TContactApproach;
+import com.schoolpal.service.ContactService;
 
 @Controller
-@RequestMapping("/ajax/mkt/leads/stage")
-public class AjaxLeadsStageController {
+@RequestMapping("/ajax/contact/approach")
+public class AjaxContactApproachController {
 
 	@Autowired
-	private LeadsService leadsServ;
+	private ContactService contactServ;
 
 	private Gson gson = new Gson();
 
@@ -25,9 +25,9 @@ public class AjaxLeadsStageController {
 	public String list() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			List<TLeadsStage> stages = null;
-			stages = leadsServ.queryLeadsStagesByTypeId(1);
-			res.setData(stages);
+			List<TContactApproach> approaches = null;
+			approaches = contactServ.queryContactApproaches();
+			res.setData(approaches);
 
 		} while (false);
 

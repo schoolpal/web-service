@@ -157,7 +157,7 @@ public class AjaxContactController {
 				res.setDetail("Leads id cannot be empty");
 				break;
 			}
-			if (contact.getApproach() == null){
+			if (contact.getApproachId() == null){
 				res.setCode(403);
 				res.setDetail("Approach id cannot be empty");
 				break;

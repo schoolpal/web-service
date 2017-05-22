@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.schoolpal.db.inf.TContactApproachMapper;
 import com.schoolpal.db.inf.TContactMapper;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.model.TContact;
+import com.schoolpal.db.model.TContactApproach;
 import com.schoolpal.web.consts.LogLevel;
 
 @Service
@@ -21,6 +23,8 @@ public class ContactService {
 	private TIndexMapper idxDao; 
 	@Autowired
 	private TContactMapper contactDao; 
+	@Autowired
+	private TContactApproachMapper approachDao; 
 
 	public TContact queryContactById(String id){
 		TContact ret = null;
@@ -49,8 +53,9 @@ public class ContactService {
 		try{
 			String id = idxDao.selectNextId("t_contact");
 			contact.setId(id);
-			contact.setDatetime(new Date());
-			
+			if(contact.getDatetime() == null){
+				contact.setDatetime(new Date());
+			}
 			if (contactDao.insertOne(contact) > 0){
 				ret = contact.getId();
 			}
@@ -65,6 +70,9 @@ public class ContactService {
 	public boolean modConact(TContact contact){
 		boolean ret = false;
 		try{
+			if(contact.getDatetime() == null){
+				contact.setDatetime(new Date());
+			}
 			ret = contactDao.updateOneById(contact) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -82,5 +90,16 @@ public class ContactService {
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
 		}
 		return ret;
+	}
+	
+	public List<TContactApproach> queryContactApproaches(){
+		List<TContactApproach> ret = null;
+		try{
+			ret = approachDao.selectAll();
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;		
 	}
 }

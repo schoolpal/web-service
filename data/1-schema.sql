@@ -375,6 +375,20 @@ CREATE TABLE `t_leads_parent` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `t_contact_approach`
+--
+
+DROP TABLE IF EXISTS `t_contact_approach`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_contact_approach` (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `t_contact`
 --
 
@@ -384,7 +398,7 @@ DROP TABLE IF EXISTS `t_contact`;
 CREATE TABLE `t_contact` (
   `id` char(50) NOT NULL,
   `leads_id` char(50) DEFAULT NULL,
-  `approach` varchar(45) DEFAULT NULL,
+  `approach_id` int(2) DEFAULT NULL,
   `datetime` datetime DEFAULT NULL,
   `executive_id` char(50) DEFAULT NULL,
   `summary` varchar(255) DEFAULT NULL,

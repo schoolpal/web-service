@@ -300,6 +300,15 @@ INSERT INTO `t_leads_source` VALUES
 /*!40000 ALTER TABLE `t_leads_source` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `t_contact_approach`
+--
+
+LOCK TABLES `t_contact_approach` WRITE;
+/*!40000 ALTER TABLE `t_contact_approach` DISABLE KEYS */;
+INSERT INTO `t_contact_approach` VALUES (1,'Call in'),(2,'Call out');
+/*!40000 ALTER TABLE `t_contact_approach` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

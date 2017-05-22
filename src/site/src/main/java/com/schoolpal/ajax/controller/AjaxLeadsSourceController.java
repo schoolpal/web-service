@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TLeadsSource;
 import com.schoolpal.service.LeadsService;
 
@@ -26,12 +25,6 @@ public class AjaxLeadsSourceController {
 	public String list() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("1-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
 			List<TLeadsSource> sources = null;
 			sources = leadsServ.queryLeadsSourcesByTypeId(1);
 			res.setData(sources);

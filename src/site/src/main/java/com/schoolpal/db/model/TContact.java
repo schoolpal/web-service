@@ -8,6 +8,7 @@ public class TContact {
     private String leadsId;
 
     private String approach;
+    private String approachId;
 
     private Date datetime;
 
@@ -39,7 +40,15 @@ public class TContact {
         this.approach = approach == null ? null : approach.trim();
     }
 
-    public Date getDatetime() {
+    public String getApproachId() {
+		return approachId;
+	}
+
+	public void setApproachId(String approachId) {
+		this.approachId = approachId;
+	}
+
+	public Date getDatetime() {
         return datetime;
     }
 

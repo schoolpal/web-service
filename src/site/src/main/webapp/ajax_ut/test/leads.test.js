@@ -292,6 +292,22 @@ describe('/ajax/mkt/leads/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
+	it('contact/approach - list.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, contact_path + 'approach/', 'list.do'),
+			dataType : 'json'
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
 	it('contact - add.do', function() {
 		var xhr = $.ajax({
 			async : false,
@@ -300,7 +316,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			dataType : 'json',
 			data : {
 				leadsId : leads_id_val,
-				approach: 'call out',
+				approachId: '1',
 				datetime: new Date(),
 				summary: 'Summary ... '
 			}
