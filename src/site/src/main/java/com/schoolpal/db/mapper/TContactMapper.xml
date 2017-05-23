@@ -75,8 +75,15 @@
     where id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectManyByLeadsId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select id, leads_id, approach_id, datetime, executive_id, summary
-    from t_contact
+    select id, leads_id, 
+    (select org_id from t_leads where id = c.leads_id) AS org_id,
+    (select c_name from t_org where c_id = org_id) AS org_name,
+    approach_id, 
+    (select name from t_contact_approach where id = c.approach_id) AS approach_name,
+    datetime, executive_id, 
+    (select c_realname from t_user where c_id = c.executive_id) AS executive_name,
+    summary
+    from t_contact AS c
     where leads_id = #{leadsId,jdbcType=CHAR}
   </select>
 
@@ -101,9 +108,13 @@
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="leads_id" jdbcType="CHAR" property="leadsId" />
     <result column="approach_id" jdbcType="VARCHAR" property="approachId" />
+    <result column="approach_name" jdbcType="VARCHAR" property="approachName" />
     <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
     <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="org_id" jdbcType="CHAR" property="orgId" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, leads_id, approach_id, datetime, executive_id, summary
