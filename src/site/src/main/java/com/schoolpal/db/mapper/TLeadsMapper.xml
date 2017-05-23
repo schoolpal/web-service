@@ -192,7 +192,7 @@
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
     LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
-    LEFT JOIN t_user AS ue ON ue.c_id = l.creator_id
+    LEFT JOIN t_user AS ue ON ue.c_id = l.executive_id
     LEFT JOIN t_leads_source AS src ON src.id = l.source_id
     LEFT JOIN t_activity AS a ON a.id = l.channel_id
     LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
@@ -217,7 +217,7 @@
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
     LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
-    LEFT JOIN t_user AS ue ON ue.c_id = l.creator_id
+    LEFT JOIN t_user AS ue ON ue.c_id = l.executive_id
     LEFT JOIN t_leads_source AS src ON src.id = l.source_id
     LEFT JOIN t_activity AS a ON a.id = l.channel_id
     LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
