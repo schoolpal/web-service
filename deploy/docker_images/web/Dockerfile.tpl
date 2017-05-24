@@ -1,10 +1,9 @@
-FROM dockerhub.internal:5000/mariadb
+FROM $$_DOCKER_HUB_$$redis-mariadb-tomcat8-jre7
 
 ##################################################################################
 ############################## Init app & data ###################################
 ##################################################################################
-ENV DEPLOY_DIR /deploy
-COPY deploy ${DEPLOY_DIR}
+COPY *.war /tomcat/webapps/
 
 ENV SUPERVISORD_DIR /etc/supervisor.d
 ENV SUPERVISORD_CONF ${SUPERVISORD_DIR}/init.conf
