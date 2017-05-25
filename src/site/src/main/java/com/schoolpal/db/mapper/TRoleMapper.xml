@@ -37,7 +37,7 @@
         <result column="c_name" jdbcType="VARCHAR" property="cName" />
     </resultMap>
     <select id="selectRolesByOrgIdLite" parameterType="java.lang.String" resultMap="RoleResultMap">
-        SELECT c_id, c_name
+        SELECT c_id, c_name, c_rank_id
         FROM t_role
         WHERE c_available = 1 AND c_org_id = #{cId,jdbcType=CHAR}
     </select>
