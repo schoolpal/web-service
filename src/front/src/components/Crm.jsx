@@ -56,7 +56,7 @@ export default class Crm extends React.Component {
     render() {
         return (
             <div>
-                <NavBar router={this.props.router} isSignin={SCHOOLPAL_CONFIG.accessRules ? true : false} />
+                <NavBar router={this.props.router} isSignin={true} />
                 <AsideBar hasChangeTree={true} toggleOrgPanel={this.toggleOrgPanel} router={this.props.router} />
                 <div className="main">
                     {

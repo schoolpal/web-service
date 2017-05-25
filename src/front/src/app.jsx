@@ -13,9 +13,9 @@ window.SCHOOLPAL_CONFIG = {
         '1-1-1': { PATH_RULE: /^crm\/market\/activity\/edit\/create(\/)?$/ },
         '1-1-2': { PATH_RULE: /^crm\/market\/activity\/edit\/\w+(\/)?$/ },
 
-        '1-2': { PATH: 'crm/market/chance', PATH_RULE: /^crm\/market\/chance(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
-        '1-2-1': { PATH_RULE: /^crm\/market\/chance\/edit\/create(\/)?$/ },
-        '1-2-2': { PATH_RULE: /^crm\/market\/chance\/edit\/\w+(\/)?$/ },
+        '1-2': { PATH: 'crm/market/leads', PATH_RULE: /^crm\/market\/leads(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
+        '1-2-1': { PATH_RULE: /^crm\/market\/leads\/edit\/create(\/)?$/ },
+        '1-2-2': { PATH_RULE: /^crm\/market\/leads\/edit\/\w+(\/)?$/ },
 
         '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
@@ -70,7 +70,7 @@ import AuthList from './components/auth/List';
 import UserList from './components/user/List';
 import UserEditor from './components/user/Editor';
 
-import Login from './components/login';
+import Login from './components/Login';
 import Error from './components/Error';
 
 import checkAuth from './utils/checkAuth';
@@ -96,9 +96,9 @@ ReactDOM.render((
                 <Route path="market/activity/:id" component={MarketActivityView} />
                 <Route path="market/activity/edit/:id" component={MarketActivityEditor} />
 
-                <Route path="market/chance" component={MarketChanceList} />
-                <Route path="market/chance/:id" component={MarketChanceView} />
-                <Route path="market/chance/edit/:id" component={MarketChanceEditor} />
+                <Route path="market/leads" component={MarketChanceList} />
+                <Route path="market/leads/:id" component={MarketChanceView} />
+                <Route path="market/leads/edit/:id" component={MarketChanceEditor} />
 
                 <Route path="sales/chance" component={SalesChanceList} />
                 <Route path="sales/chance/:id" component={SalesChanceView} />

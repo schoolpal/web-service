@@ -1,4 +1,4 @@
-import { getProfile } from '../utils/userProfile'
+import { getProfile } from './userProfile'
 
 export default function command(path) {
     const profile = getProfile()

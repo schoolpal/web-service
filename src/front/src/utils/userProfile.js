@@ -1,6 +1,4 @@
 export function setProfile(profile) {
-    console.log(profile)
-    console.log(JSON.stringify(profile))
     sessionStorage.setItem(SCHOOLPAL_CONFIG.SESSION_STORAGE_KYENAME, JSON.stringify(profile));
 }
 

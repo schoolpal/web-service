@@ -11,7 +11,7 @@ export default class Sys extends React.Component {
     render() {
         return (
             <div className="view">
-                <NavBar isSignin={true} />
+                <NavBar router={this.props.router} isSignin={true} />
                 <AsideBar router={this.props.router} />
                 <div className="main">
                     {this.props.children}
