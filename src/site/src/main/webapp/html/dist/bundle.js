@@ -14940,7 +14940,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/org';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -15755,7 +15755,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/role';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -17249,7 +17249,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });

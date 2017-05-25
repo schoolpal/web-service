@@ -121,7 +121,7 @@ export default class Editor extends React.Component {
             event.preventDefault()
         };
 
-        const successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user';
+        const successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user';
         const loading = DialogTips({ type: 'loading' })
         const success = DialogTips({ type: 'success' })
         const fail = DialogTips({ type: 'fail', autoClose: true })
