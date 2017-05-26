@@ -14,8 +14,9 @@ ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin:$CATALINA_HOME/scripts
 ENV TOMCAT_MAJOR 9
 ENV TOMCAT_VERSION 9.0.0.M20
 
-#http://mirrors.hust.edu.cn/apache/tomcat/tomcat-9/v9.0.0.M20/bin/apache-tomcat-9.0.0.M20.tar.gz
-RUN wget -q http://mirrors.hust.edu.cn/apache/tomcat/tomcat-${TOMCAT_MAJOR}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
+#http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.0.M20/bin/apache-tomcat-9.0.0.M20.tar.gz
+ENV APACHE_SITE archive.apache.org
+RUN wget -q http://${APACHE_SITE}/dist/tomcat/tomcat-${TOMCAT_MAJOR}/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
  tar -xvf apache-tomcat-${TOMCAT_VERSION}.tar.gz && \
  rm apache-tomcat*.tar.gz && \
  mv apache-tomcat* ${CATALINA_HOME}
@@ -23,6 +24,6 @@ RUN wget -q http://mirrors.hust.edu.cn/apache/tomcat/tomcat-${TOMCAT_MAJOR}/v${T
 COPY init.sh /tmp/
 RUN /tmp/init.sh
 
-VOLUME ${CATALINA_HOME}/webapps
+#VOLUME ${CATALINA_HOME}/webapps
 EXPOSE 8080
 
