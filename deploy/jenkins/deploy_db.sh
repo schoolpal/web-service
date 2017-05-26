@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 DOCKER_HUB=dockerhub.internal:5000
 
 docker rm -f db
