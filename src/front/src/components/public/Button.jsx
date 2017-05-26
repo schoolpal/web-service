@@ -58,6 +58,18 @@ export function EditorButton(props) {
     }
 }
 
+export function AssignButton(props) {
+    return (
+        <button onClick={props.action} type="button" className="btn btn-primary">分配给</button>
+    )
+}
+
+export function ConvertButton(props) {
+    return (
+        <button onClick={props.action} type="button" className="btn btn-primary">转化为</button>
+    )
+}
+
 export function DelButton(props) {
     const text = props.loading === true ? '' : ' 删除';
 

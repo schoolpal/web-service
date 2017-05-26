@@ -2,11 +2,46 @@ import React from 'react'
 import { Link } from 'react-router'
 import { CreateButton } from '../../public/Button'
 import command from '../../../utils/command'
+import { leadsList } from '../../../utils/api';
+import DialogTips from '../../../utils/DialogTips';
+import formatDate from '../../../utils/formatDate'
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = { list: [] }
         this.renderCommand = this.renderCommand.bind(this)
+        this.renderItem = this.renderItem.bind(this)
+    }
+
+    componentDidMount() {
+        if (this.props.org) {
+            this.dataInit(this.props.org.id)
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.org) {
+            if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+                this.dataInit(nextProps.org.id)
+            }
+        }
+    }
+
+    dataInit(oid) {
+        const loading = DialogTips({ type: 'loading' })
+
+        loading.open()
+        leadsList(oid)
+            .done((data) => {
+                this.setState({
+                    list: data
+                })
+            })
+            .always(() => {
+                loading.close()
+            })
     }
 
     renderCommand() {
@@ -23,6 +58,47 @@ export default class List extends React.Component {
         return temp;
     }
 
+    renderItem(data) {
+        let list = [];
+
+        if (data.length) {
+            list = data.map((item) => {
+                return (
+                    <tr key={item.id}>
+                        <td>{item.creatorName}</td>
+                        <td>{formatDate(item.createTime)}</td>
+                        <td>{item.orgnizationName}</td>
+                        <td>{item.executiveName}</td>
+                        <td>{item.sourceName}</td>
+                        <td>{item.channelName}</td>
+                        <td>{item.stageName}</td>
+                        <td>{item.statusName}</td>
+                        <td>
+                            <Link to={this.props.location.pathname + '/' + item.id}>{item.student.name}</Link>
+                        </td>
+                        <td>{item.student.genderText !== 'null' ? item.student.genderText : '--'}</td>
+                        <td>{item.student.age !== 'null' ? item.student.age : '--'}</td>
+                        <td>{item.student.classGrade !== 'null' ? item.student.classGrade : '--'}</td>
+                        <td>{item.student.schoolName ? item.student.schoolName : '--'}</td>
+                        <td>
+                            <Link to={this.props.location.pathname + '/' + item.id}>{item.parent.name}</Link>
+                        </td>
+                        <td>{item.parent.relation ? item.parent.relation : '--'}</td>
+                        <td>{item.parent.cellphone ? item.parent.cellphone : '--'}</td>
+                        <td>{item.parent.weichat ? item.parent.weichat : '--'}</td>
+                        <td>{item.parent.address ? item.parent.address : '--'}</td>
+                        <td>{item.courseType !== 'null' ? item.courseType : '--'}</td>
+                        <td>{item.courseName !== 'null' ? item.courseName : '--'}</td>
+                        <td>{item.note ? item.note : '--'}</td>
+                        <td>--</td>
+                    </tr>
+                )
+            })
+        }
+
+        return list;
+    }
+
     render() {
         return (
             <div className="market">
@@ -32,7 +108,7 @@ export default class List extends React.Component {
                         {
                             //<button type="button" className="btn btn-success"><i className="fa fa-file-excel-o" aria-hidden="true"></i> 导入</button>
                         }
-                        
+
                         {this.renderCommand()}
                     </div>
                 </h5>
@@ -66,34 +142,7 @@ export default class List extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>曹磊</td>
-                                <td>2015-05-05 10：00</td>
-                                <td>门头沟龙湖校区</td>
-                                <td>苗地</td>
-                                <td>call in</td>
-                                <td>百度推广1期</td>
-                                <td>已转化</td>
-                                <td>已转化</td>
-                                <td>
-                                    <Link to={this.props.location.pathname + '/123'}>刁梦缘</Link>
-                                </td>
-                                <td>男</td>
-                                <td>3</td>
-                                <td>幼儿园小班</td>
-                                <td>石景山第三幼儿园</td>
-                                <td>
-                                    <Link to={this.props.location.pathname + '/123'}>刁旭</Link>
-                                </td>
-                                <td>父亲</td>
-                                <td>13911015199</td>
-                                <td>dxyl218106</td>
-                                <td>石景山区模式口大街60号院</td>
-                                <td>ise-start</td>
-                                <td>pre-k</td>
-                                <td>--</td>
-                                <td>2016-05-10</td>
-                            </tr>
+                            {this.renderItem(this.state.list)}
                         </tbody>
                     </table>
                 </div>

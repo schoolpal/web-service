@@ -4,6 +4,7 @@ import { SaveButton, BackButton } from '../../public/Button';
 import { actAdd, actMod, actQuery, mktActList } from '../../../utils/api';
 import DialogTips from '../../../utils/DialogTips';
 import formatDate from '../../../utils/formatDate'
+import changeText from '../../../utils/changeText'
 
 require('../../../utils/datepicker');
 
@@ -162,16 +163,6 @@ export default class Editor extends React.Component {
         }
     }
 
-    changeText(event) {
-        const elem = $(event.target)
-        const text = elem.find('option:selected').html()
-
-        elem
-            .siblings('.btn')
-            .find('span')
-            .text(text.replace(/&nbsp;/gi, ''))
-    }
-
     render() {
         return (
             <div className="market">
@@ -199,7 +190,7 @@ export default class Editor extends React.Component {
                                     <button className="btn btn-secondary dropdown-toggle d-flex" type="button">
                                         <span className="flex-cell">作为一级活动</span>
                                     </button>
-                                    <select onChange={this.changeText} className="form-control opacity" name="parentId" required={true}>
+                                    <select onChange={(event) => { changeText(event.target) }} className="form-control opacity" name="parentId" required={true}>
                                         <option value="root">作为一级活动</option>
                                         {renderListOption(this.state.option)}
                                     </select>

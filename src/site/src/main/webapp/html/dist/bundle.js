@@ -41,91 +41,91 @@ webpackJsonp([0],{
 
 	var _Editor2 = _interopRequireDefault(_Editor);
 
-	var _View = __webpack_require__(254);
+	var _View = __webpack_require__(255);
 
 	var _View2 = _interopRequireDefault(_View);
 
-	var _List3 = __webpack_require__(674);
+	var _List3 = __webpack_require__(675);
 
 	var _List4 = _interopRequireDefault(_List3);
 
-	var _Editor3 = __webpack_require__(675);
+	var _Editor3 = __webpack_require__(676);
 
 	var _Editor4 = _interopRequireDefault(_Editor3);
 
-	var _View3 = __webpack_require__(676);
+	var _View3 = __webpack_require__(681);
 
 	var _View4 = _interopRequireDefault(_View3);
 
-	var _List5 = __webpack_require__(677);
+	var _List5 = __webpack_require__(683);
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _Editor5 = __webpack_require__(678);
+	var _Editor5 = __webpack_require__(684);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _View5 = __webpack_require__(679);
+	var _View5 = __webpack_require__(685);
 
 	var _View6 = _interopRequireDefault(_View5);
 
-	var _List7 = __webpack_require__(680);
+	var _List7 = __webpack_require__(686);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor7 = __webpack_require__(681);
+	var _Editor7 = __webpack_require__(687);
 
 	var _Editor8 = _interopRequireDefault(_Editor7);
 
-	var _View7 = __webpack_require__(682);
+	var _View7 = __webpack_require__(688);
 
 	var _View8 = _interopRequireDefault(_View7);
 
-	var _List9 = __webpack_require__(683);
+	var _List9 = __webpack_require__(689);
 
 	var _List10 = _interopRequireDefault(_List9);
 
-	var _View9 = __webpack_require__(684);
+	var _View9 = __webpack_require__(690);
 
 	var _View10 = _interopRequireDefault(_View9);
 
-	var _List11 = __webpack_require__(685);
+	var _List11 = __webpack_require__(691);
 
 	var _List12 = _interopRequireDefault(_List11);
 
-	var _Editor9 = __webpack_require__(686);
+	var _Editor9 = __webpack_require__(692);
 
 	var _Editor10 = _interopRequireDefault(_Editor9);
 
-	var _List13 = __webpack_require__(688);
+	var _List13 = __webpack_require__(694);
 
 	var _List14 = _interopRequireDefault(_List13);
 
-	var _Editor11 = __webpack_require__(689);
+	var _Editor11 = __webpack_require__(695);
 
 	var _Editor12 = _interopRequireDefault(_Editor11);
 
-	var _List15 = __webpack_require__(690);
+	var _List15 = __webpack_require__(696);
 
 	var _List16 = _interopRequireDefault(_List15);
 
-	var _List17 = __webpack_require__(692);
+	var _List17 = __webpack_require__(698);
 
 	var _List18 = _interopRequireDefault(_List17);
 
-	var _Editor13 = __webpack_require__(693);
+	var _Editor13 = __webpack_require__(699);
 
 	var _Editor14 = _interopRequireDefault(_Editor13);
 
-	var _login = __webpack_require__(694);
+	var _Login = __webpack_require__(700);
 
-	var _login2 = _interopRequireDefault(_login);
+	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Error = __webpack_require__(695);
+	var _Error = __webpack_require__(701);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(696);
+	var _checkAuth = __webpack_require__(702);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -146,9 +146,9 @@ webpackJsonp([0],{
 	        '1-1-1': { PATH_RULE: /^crm\/market\/activity\/edit\/create(\/)?$/ },
 	        '1-1-2': { PATH_RULE: /^crm\/market\/activity\/edit\/\w+(\/)?$/ },
 
-	        '1-2': { PATH: 'crm/market/chance', PATH_RULE: /^crm\/market\/chance(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
-	        '1-2-1': { PATH_RULE: /^crm\/market\/chance\/edit\/create(\/)?$/ },
-	        '1-2-2': { PATH_RULE: /^crm\/market\/chance\/edit\/\w+(\/)?$/ },
+	        '1-2': { PATH: 'crm/market/leads', PATH_RULE: /^crm\/market\/leads(\/\w+)?(\/)?$/, ICON: 'fa-bar-chart' },
+	        '1-2-1': { PATH_RULE: /^crm\/market\/leads\/edit\/create(\/)?$/ },
+	        '1-2-2': { PATH_RULE: /^crm\/market\/leads\/edit\/\w+(\/)?$/ },
 
 	        '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
 	        '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
@@ -163,15 +163,15 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(697);
-	__webpack_require__(701);
-	__webpack_require__(704);
-	__webpack_require__(706);
+	__webpack_require__(703);
+	__webpack_require__(707);
+	__webpack_require__(710);
+	__webpack_require__(712);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(_reactRouter.Route, { path: SCHOOLPAL_CONFIG.ROOTPATH + 'login', component: _login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: SCHOOLPAL_CONFIG.ROOTPATH + 'login', component: _Login2.default }),
 	    _react2.default.createElement(
 	        _reactRouter.Route,
 	        { path: SCHOOLPAL_CONFIG.ROOTPATH, component: _App2.default },
@@ -192,9 +192,9 @@ webpackJsonp([0],{
 	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity', component: _List2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity/:id', component: _View2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'market/activity/edit/:id', component: _Editor2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance', component: _List4.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance/:id', component: _View4.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: 'market/chance/edit/:id', component: _Editor4.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/leads', component: _List4.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/leads/:id', component: _View4.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: 'market/leads/edit/:id', component: _Editor4.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance', component: _List6.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance/:id', component: _View6.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: 'sales/chance/edit/:id', component: _Editor6.default }),
@@ -496,6 +496,19 @@ webpackJsonp([0],{
 	exports.leadsSources = leadsSources;
 	exports.leadsStages = leadsStages;
 	exports.leadsStatus = leadsStatus;
+	exports.genderList = genderList;
+	exports.relationList = relationList;
+	exports.leadsAdd = leadsAdd;
+	exports.leadsList = leadsList;
+	exports.leadsQuery = leadsQuery;
+	exports.leadsMod = leadsMod;
+	exports.leadsDel = leadsDel;
+	exports.leadsAssign = leadsAssign;
+	exports.leadsConvert = leadsConvert;
+	exports.contactList = contactList;
+	exports.approachList = approachList;
+	exports.contactAdd = contactAdd;
+	exports.contactMod = contactMod;
 
 	var _reactRouter = __webpack_require__(175);
 
@@ -536,6 +549,10 @@ webpackJsonp([0],{
 	        console.log(jqXHR.status, textStatus, errorThrown);
 
 	        if (jqXHR.status === 401) {
+	            callback({
+	                type: SCHOOLPAL_CONFIG.XHR_ERROR
+	            });
+
 	            _reactRouter.browserHistory.replace({
 	                pathname: SCHOOLPAL_CONFIG.ROOTPATH + 'login',
 	                state: { nextPathname: _reactRouter.browserHistory.getCurrentLocation().pathname }
@@ -1051,7 +1068,7 @@ webpackJsonp([0],{
 
 	function mktActList(oid) {
 	    var defer = $.Deferred();
-	    var url = 'mkt/listActivities.do';
+	    var url = 'mkt/activity/listTree.do';
 	    var settings = $.extend({ url: url }, { data: { orgId: oid } });
 
 	    io(settings, function (data) {
@@ -1131,7 +1148,7 @@ webpackJsonp([0],{
 
 	function leadsSources() {
 	    var defer = $.Deferred();
-	    var url = 'mkt/leads/listSources.do';
+	    var url = 'mkt/leads/source/list.do';
 
 	    io({ url: url }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -1146,7 +1163,7 @@ webpackJsonp([0],{
 
 	function leadsStages() {
 	    var defer = $.Deferred();
-	    var url = 'mkt/leads/listStages.do';
+	    var url = 'mkt/leads/stage/list.do';
 
 	    io({ url: url }, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
@@ -1161,9 +1178,214 @@ webpackJsonp([0],{
 
 	function leadsStatus() {
 	    var defer = $.Deferred();
-	    var url = 'mkt/leads/listStatus.do';
+	    var url = 'mkt/leads/status/list.do';
 
 	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function genderList() {
+	    var defer = $.Deferred();
+	    var url = 'mkt/gender/list.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function relationList() {
+	    var defer = $.Deferred();
+	    var url = 'mkt/relation/list.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsAdd(data) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/add.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsList(oid) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/list.do';
+	    var settings = $.extend({ url: url }, { data: { orgId: oid } });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsQuery(id) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/query.do';
+	    var settings = $.extend({ url: url }, { data: { id: id } });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsMod(data) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/mod.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsDel(id) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/del.do';
+	    var settings = $.extend({ url: url }, { data: { id: id } });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsAssign(data) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/assign.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function leadsConvert(data) {
+	    var defer = $.Deferred();
+	    var url = 'mkt/leads/convert.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function contactList(id) {
+	    var defer = $.Deferred();
+	    var url = 'contact/list.do';
+	    var settings = $.extend({ url: url }, { data: { leadsId: id } });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function approachList() {
+	    var defer = $.Deferred();
+	    var url = 'contact/approach/list.do';
+
+	    io({ url: url }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function contactAdd(data) {
+	    var defer = $.Deferred();
+	    var url = 'contact/add.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function contactMod(data) {
+	    var defer = $.Deferred();
+	    var url = 'contact/mod.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -1256,7 +1478,7 @@ webpackJsonp([0],{
 	    } else {
 	        if (rootData.children && rootData.children.length) {
 	            $.each(rootData.children, function (i, item) {
-	                insertTree(item, data);
+	                insertOrg(item, data);
 	            });
 	        };
 	    }
@@ -1501,8 +1723,6 @@ webpackJsonp([0],{
 	exports.getProfile = getProfile;
 	exports.clearProfile = clearProfile;
 	function setProfile(profile) {
-	    console.log(profile);
-	    console.log(JSON.stringify(profile));
 	    sessionStorage.setItem(SCHOOLPAL_CONFIG.SESSION_STORAGE_KYENAME, JSON.stringify(profile));
 	}
 
@@ -3050,7 +3270,7 @@ webpackJsonp([0],{
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'view' },
-	                _react2.default.createElement(_NavBar2.default, { isSignin: true }),
+	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: true }),
 	                _react2.default.createElement(_AsideBar2.default, { router: this.props.router }),
 	                _react2.default.createElement(
 	                    'div',
@@ -3178,7 +3398,7 @@ webpackJsonp([0],{
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: SCHOOLPAL_CONFIG.accessRules ? true : false }),
+	                _react2.default.createElement(_NavBar2.default, { router: this.props.router, isSignin: true }),
 	                _react2.default.createElement(_AsideBar2.default, { hasChangeTree: true, toggleOrgPanel: this.toggleOrgPanel, router: this.props.router }),
 	                _react2.default.createElement(
 	                    'div',
@@ -3727,6 +3947,8 @@ webpackJsonp([0],{
 	exports.LoginButton = LoginButton;
 	exports.CreateButton = CreateButton;
 	exports.EditorButton = EditorButton;
+	exports.AssignButton = AssignButton;
+	exports.ConvertButton = ConvertButton;
 	exports.DelButton = DelButton;
 	exports.AuthButton = AuthButton;
 	exports.SaveButton = SaveButton;
@@ -3805,6 +4027,22 @@ webpackJsonp([0],{
 	            ' \u7F16\u8F91'
 	        );
 	    }
+	}
+
+	function AssignButton(props) {
+	    return _react2.default.createElement(
+	        'button',
+	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	        '\u5206\u914D\u7ED9'
+	    );
+	}
+
+	function ConvertButton(props) {
+	    return _react2.default.createElement(
+	        'button',
+	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	        '\u8F6C\u5316\u4E3A'
+	    );
 	}
 
 	function DelButton(props) {
@@ -3975,6 +4213,10 @@ webpackJsonp([0],{
 
 	var _formatDate2 = _interopRequireDefault(_formatDate);
 
+	var _changeText = __webpack_require__(253);
+
+	var _changeText2 = _interopRequireDefault(_changeText);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3983,7 +4225,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(253);
+	__webpack_require__(254);
 
 	function renderListOption(data) {
 	    var group = [];
@@ -4146,14 +4388,6 @@ webpackJsonp([0],{
 	            }
 	        }
 	    }, {
-	        key: 'changeText',
-	        value: function changeText(event) {
-	            var elem = $(event.target);
-	            var text = elem.find('option:selected').html();
-
-	            elem.siblings('.btn').find('span').text(text.replace(/&nbsp;/gi, ''));
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
 	            var _this4 = this;
@@ -4231,7 +4465,9 @@ webpackJsonp([0],{
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'select',
-	                                        { onChange: this.changeText, className: 'form-control opacity', name: 'parentId', required: true },
+	                                        { onChange: function onChange(event) {
+	                                                (0, _changeText2.default)(event.target);
+	                                            }, className: 'form-control opacity', name: 'parentId', required: true },
 	                                        _react2.default.createElement(
 	                                            'option',
 	                                            { value: 'root' },
@@ -4315,6 +4551,25 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 253:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = changeText;
+	function changeText(target) {
+	    console.log(target);
+	    var elem = $(target);
+	    var text = elem.find('option:selected').html();
+
+	    elem.siblings('.btn').find('span').text(text.replace(/&nbsp;/gi, ''));
+	}
+
+/***/ },
+
+/***/ 254:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5947,7 +6202,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 254:
+/***/ 255:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5998,7 +6253,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(253);
+	__webpack_require__(254);
 
 	function chartInit(data) {
 	    var config = {
@@ -6040,7 +6295,7 @@ webpackJsonp([0],{
 	    };
 
 	    __webpack_require__.e/* nsure */(1, function (require) {
-	        var echarts = __webpack_require__(255);
+	        var echarts = __webpack_require__(256);
 	        var myChart = echarts.init(document.getElementById('chart'));
 
 	        myChart.setOption(config);
@@ -6318,7 +6573,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 674:
+/***/ 675:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6341,6 +6596,16 @@ webpackJsonp([0],{
 
 	var _command2 = _interopRequireDefault(_command);
 
+	var _api = __webpack_require__(232);
+
+	var _DialogTips = __webpack_require__(243);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _formatDate = __webpack_require__(250);
+
+	var _formatDate2 = _interopRequireDefault(_formatDate);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6357,14 +6622,48 @@ webpackJsonp([0],{
 
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
+	        _this.state = { list: [] };
 	        _this.renderCommand = _this.renderCommand.bind(_this);
+	        _this.renderItem = _this.renderItem.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(List, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            if (this.props.org) {
+	                this.dataInit(this.props.org.id);
+	            }
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (nextProps.org) {
+	                if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+	                    this.dataInit(nextProps.org.id);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'dataInit',
+	        value: function dataInit(oid) {
+	            var _this2 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            loading.open();
+	            (0, _api.leadsList)(oid).done(function (data) {
+	                _this2.setState({
+	                    list: data
+	                });
+	            }).always(function () {
+	                loading.close();
+	            });
+	        }
+	    }, {
 	        key: 'renderCommand',
 	        value: function renderCommand() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
 	            var commands = (0, _command2.default)(path);
@@ -6372,11 +6671,147 @@ webpackJsonp([0],{
 
 	            commands.map(function (item, index) {
 	                if (item === 'Add') {
-	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: _this2.props.location.pathname + '/edit/create' }));
+	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: _this3.props.location.pathname + '/edit/create' }));
 	                };
 	            });
 
 	            return temp;
+	        }
+	    }, {
+	        key: 'renderItem',
+	        value: function renderItem(data) {
+	            var _this4 = this;
+
+	            var list = [];
+
+	            if (data.length) {
+	                list = data.map(function (item) {
+	                    return _react2.default.createElement(
+	                        'tr',
+	                        { key: item.id },
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.creatorName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            (0, _formatDate2.default)(item.createTime)
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.orgnizationName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.executiveName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.sourceName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.channelName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.stageName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.statusName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: _this4.props.location.pathname + '/' + item.id },
+	                                item.student.name
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.genderText !== 'null' ? item.student.genderText : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.age !== 'null' ? item.student.age : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.classGrade !== 'null' ? item.student.classGrade : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.schoolName ? item.student.schoolName : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: _this4.props.location.pathname + '/' + item.id },
+	                                item.parent.name
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.relation ? item.parent.relation : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.cellphone ? item.parent.cellphone : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.weichat ? item.parent.weichat : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.address ? item.parent.address : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.courseType !== 'null' ? item.courseType : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.courseName !== 'null' ? item.courseName : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.note ? item.note : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            '--'
+	                        )
+	                    );
+	                });
+	            }
+
+	            return list;
 	        }
 	    }, {
 	        key: 'render',
@@ -6522,128 +6957,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'tbody',
 	                            null,
-	                            _react2.default.createElement(
-	                                'tr',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u66F9\u78CA'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '2015-05-05 10\uFF1A00'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u95E8\u5934\u6C9F\u9F99\u6E56\u6821\u533A'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u82D7\u5730'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'call in'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u767E\u5EA6\u63A8\u5E7F1\u671F'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u5DF2\u8F6C\u5316'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u5DF2\u8F6C\u5316'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: this.props.location.pathname + '/123' },
-	                                        '\u5201\u68A6\u7F18'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u7537'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '3'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u5E7C\u513F\u56ED\u5C0F\u73ED'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u77F3\u666F\u5C71\u7B2C\u4E09\u5E7C\u513F\u56ED'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: this.props.location.pathname + '/123' },
-	                                        '\u5201\u65ED'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u7236\u4EB2'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '13911015199'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'dxyl218106'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u77F3\u666F\u5C71\u533A\u6A21\u5F0F\u53E3\u5927\u885760\u53F7\u9662'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'ise-start'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'pre-k'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '2016-05-10'
-	                                )
-	                            )
+	                            this.renderItem(this.state.list)
 	                        )
 	                    )
 	                )
@@ -6658,7 +6972,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 675:
+/***/ 676:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6673,21 +6987,23 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(252);
+	var _List = __webpack_require__(677);
 
-	var _subTitle2 = _interopRequireDefault(_subTitle);
-
-	var _OrgTree = __webpack_require__(246);
-
-	var _OrgTree2 = _interopRequireDefault(_OrgTree);
+	var _List2 = _interopRequireDefault(_List);
 
 	var _Button = __webpack_require__(248);
-
-	var _api = __webpack_require__(232);
 
 	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _api = __webpack_require__(232);
+
+	var _changeText = __webpack_require__(253);
+
+	var _changeText2 = _interopRequireDefault(_changeText);
+
+	var _static = __webpack_require__(680);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6696,6 +7012,80 @@ webpackJsonp([0],{
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function renderListOption(data) {
+	    var group = [];
+
+	    if ($.isEmptyObject(data) === false) {
+	        var tempOrg = data.orgList.filter(function (org) {
+	            if (data.actListMap[org.cId].length) {
+	                return org;
+	            }
+	        });
+
+	        group = tempOrg.map(function (org) {
+	            var tempList = data.actListMap[org.cId].filter(function (act) {
+	                if (act.level < 3) {
+	                    return act;
+	                }
+	            });
+
+	            return _react2.default.createElement(
+	                'optgroup',
+	                { key: org.cId, label: org.cName },
+	                tempList.map(function (act) {
+	                    var content = space(act.level) + act.name;
+
+	                    return _react2.default.createElement('option', { key: act.id, value: act.id, dangerouslySetInnerHTML: { __html: content } });
+	                })
+	            );
+	        });
+	    }
+	    return group;
+
+	    function space(level) {
+	        var base = '&nbsp;&nbsp;&nbsp;&nbsp;';
+	        var s = '';
+
+	        if (level) {
+	            for (var i = 0; i < level; i++) {
+	                s += base;
+	            }
+	        }
+
+	        return s;
+	    }
+	}
+
+	function renderNormalOption(data) {
+	    var option = [];
+
+	    if (data.length) {
+	        option = data.map(function (item) {
+	            return _react2.default.createElement(
+	                'option',
+	                { key: item.id, value: item.id },
+	                item.name
+	            );
+	        });
+	    }
+
+	    return option;
+	}
+
+	function renderObjectOption(data) {
+	    var option = [];
+
+	    $.each(data, function (i, item) {
+	        option.push(_react2.default.createElement(
+	            'option',
+	            { key: i, value: item },
+	            item
+	        ));
+	    });
+
+	    return option;
+	}
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -6709,8 +7099,8 @@ webpackJsonp([0],{
 	            orgList: [],
 	            selected: null
 	        };
-	        _this.selectOrg = _this.selectOrg.bind(_this);
 	        _this.record = _this.record.bind(_this);
+	        _this.editorSubmit = _this.editorSubmit.bind(_this);
 	        return _this;
 	    }
 
@@ -6720,24 +7110,6 @@ webpackJsonp([0],{
 	            if (this.props.org) {
 	                this.dataInit(this.props.org.id);
 	            }
-
-	            // const dialogTips = DialogTips({ type: 'loading' })
-
-	            // dialogTips.open()
-
-	            // orgList()
-	            //     .done((data) => {
-	            //         this.setState({
-	            //             orgList: data.tree,
-	            //             selected: {
-	            //                 id: data.original[0].cId,
-	            //                 name: data.original[0].cName
-	            //             }
-	            //         })
-	            //     })
-	            //     .always(() => {
-	            //         dialogTips.close()
-	            //     })
 	        }
 	    }, {
 	        key: 'componentWillReceiveProps',
@@ -6756,27 +7128,62 @@ webpackJsonp([0],{
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            loading.open();
-	            $.when((0, _api.mktActList)(oid), (0, _api.leadsSources)(), (0, _api.leadsStages)(), (0, _api.leadsStatus)()).done(function (act, sources, stages, status) {
+	            $.when((0, _api.mktActList)(oid), (0, _api.leadsSources)(), (0, _api.leadsStages)(), (0, _api.leadsStatus)(), (0, _api.genderList)(), (0, _api.relationList)()).done(function (act, sources, stages, status, gender, relation) {
 	                _this2.setState({
 	                    option: {
 	                        act: act,
 	                        sources: sources,
 	                        stages: stages,
-	                        status: status
+	                        status: status,
+	                        gender: gender,
+	                        relation: relation
 	                    }
 	                });
-	            }).always(function () {
+
+	                if (_this2.props.params.id !== 'create') {
+	                    (0, _api.leadsQuery)(_this2.props.params.id).done(function (data) {
+	                        _this2.setState({
+	                            student: data.student
+	                        });
+
+	                        $(_this2.editorDom).find('[name=studentName]').val(data.student.name);
+	                        $(_this2.editorDom).find('[name=age]').val(data.student.age);
+	                        $(_this2.editorDom).find('[name=schoolName]').val(data.student.schoolName);
+	                        $(_this2.editorDom).find('[name=parentName]').val(data.parent.name);
+	                        $(_this2.editorDom).find('[name=cellphone]').val(data.parent.cellphone);
+	                        $(_this2.editorDom).find('[name=weichat]').val(data.parent.weichat);
+	                        $(_this2.editorDom).find('[name=address]').val(data.parent.address);
+
+	                        $(_this2.editorDom).find('textarea, select').each(function () {
+	                            var name = $(this).attr('name');
+
+	                            switch (name) {
+	                                case 'classGrade':
+	                                    $(this).val(data.student.classGrade);
+	                                    break;
+	                                case 'studentGender':
+	                                    $(this).val(data.student.genderText);
+	                                    break;
+	                                case 'relation':
+	                                    $(this).val(data.parent.relation);
+	                                    break;
+	                                default:
+	                                    $(this).val(data[name]);
+	                            }
+
+	                            if (name === 'channelId') {
+	                                $(this).siblings('button').find('span').text(data.channelName);
+	                            }
+	                        });
+	                    }).always(function () {
+	                        loading.close();
+	                    });
+	                } else {
+	                    loading.close();
+	                }
+	            }).fail(function () {
 	                loading.close();
 	            });
-	        }
-	    }, {
-	        key: 'selectOrg',
-	        value: function selectOrg(org) {
-	            if (org) {
-	                this.setState({
-	                    selected: org
-	                });
-	            }
 	        }
 	    }, {
 	        key: 'record',
@@ -6874,7 +7281,7 @@ webpackJsonp([0],{
 	                                    _react2.default.createElement(
 	                                        'div',
 	                                        { className: 'dropdown-menu' },
-	                                        _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
+	                                        _react2.default.createElement(OrgTree, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
 	                                    )
 	                                )
 	                            ),
@@ -6911,9 +7318,81 @@ webpackJsonp([0],{
 	            );
 	        }
 	    }, {
+	        key: 'editorSubmit',
+	        value: function editorSubmit(event) {
+	            var _this3 = this;
+
+	            if (this.editorDom.checkValidity() === true) {
+	                event.preventDefault();
+	            };
+
+	            var form = $(this.editorDom);
+	            var flug = 0;
+
+	            form.find('select[required]').each(function () {
+	                if ($(this).val() === 'null') {
+	                    this.setCustomValidity('请选择 ！');
+	                    flug++;
+
+	                    return false;
+	                }
+	            });
+
+	            if (flug) {
+	                setTimeout(function () {
+	                    form.find('[type=submit]').trigger('click');
+	                }, 100);
+
+	                return;
+	            }
+
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/leads';
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+	            var param = {};
+
+	            param.orgnizationId = this.props.org.id;
+
+	            loading.open();
+
+	            $(this.editorDom).serializeArray().map(function (item) {
+	                param[item.name] = item.value;
+	            });
+
+	            if (this.props.params.id !== 'create') {
+	                param.leadsId = this.props.params.id;
+	                (0, _api.leadsMod)(param).done(function () {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath + '/' + _this3.props.params.id);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            } else {
+	                (0, _api.leadsAdd)(param).done(function (data) {
+	                    loading.close();
+	                    success.open();
+	                    setTimeout(function () {
+	                        success.close();
+	                        _this3.props.router.push(successPath + '/edit/' + data);
+	                    }, 2000);
+	                }).fail(function (data) {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this3 = this;
+	            var _this4 = this;
+
+	            var subTitle = this.props.router.params.id === 'create' ? '新建销售线索' : this.state.student ? this.state.student.name : '';
 
 	            return _react2.default.createElement(
 	                'div',
@@ -6921,8 +7400,8 @@ webpackJsonp([0],{
 	                _react2.default.createElement(
 	                    'form',
 	                    { ref: function ref(dom) {
-	                            _this3.editorDom = dom;
-	                        } },
+	                            _this4.editorDom = dom;
+	                        }, onSubmit: this.editorSubmit },
 	                    _react2.default.createElement(
 	                        'h5',
 	                        null,
@@ -6931,7 +7410,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'p',
 	                            { className: 'd-inline text-muted' },
-	                            (0, _subTitle2.default)(this.props.router.params.id, '销售线索')
+	                            subTitle
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -6973,7 +7452,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'studentName', required: true })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -6988,40 +7467,14 @@ webpackJsonp([0],{
 	                                            'div',
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'form-check form-check-inline' },
+	                                                'select',
+	                                                { name: 'studentGender', className: 'form-control' },
 	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        className: 'form-check-input',
-	                                                        type: 'radio',
-	                                                        name: 'gender'
-	                                                    }),
-	                                                    _react2.default.createElement(
-	                                                        'span',
-	                                                        null,
-	                                                        '\u7537'
-	                                                    )
-	                                                )
-	                                            ),
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'form-check form-check-inline' },
-	                                                _react2.default.createElement(
-	                                                    'label',
-	                                                    { className: 'form-check-label' },
-	                                                    _react2.default.createElement('input', {
-	                                                        className: 'form-check-input',
-	                                                        type: 'radio',
-	                                                        name: 'gender'
-	                                                    }),
-	                                                    _react2.default.createElement(
-	                                                        'span',
-	                                                        null,
-	                                                        '\u5973'
-	                                                    )
-	                                                )
+	                                                    'option',
+	                                                    { value: 'null' },
+	                                                    '\u8BF7\u9009\u62E9'
+	                                                ),
+	                                                renderObjectOption(this.state.option ? this.state.option.gender : [])
 	                                            )
 	                                        )
 	                                    ),
@@ -7041,15 +7494,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'age', required: true })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -7063,7 +7508,22 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement(
+	                                                'select',
+	                                                { name: 'classGrade', className: 'form-control' },
+	                                                _react2.default.createElement(
+	                                                    'option',
+	                                                    { value: 'null' },
+	                                                    '\u8BF7\u9009\u62E9'
+	                                                ),
+	                                                _static.GRADE.map(function (item) {
+	                                                    return _react2.default.createElement(
+	                                                        'option',
+	                                                        { key: item, value: item },
+	                                                        item
+	                                                    );
+	                                                })
+	                                            )
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -7077,7 +7537,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'schoolName' })
 	                                        )
 	                                    )
 	                                )
@@ -7104,7 +7564,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'parentName', required: true })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -7125,12 +7585,15 @@ webpackJsonp([0],{
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                { name: 'relation', onChange: function onChange(event) {
+	                                                        event.target.setCustomValidity('');
+	                                                    }, className: 'form-control', required: true },
 	                                                _react2.default.createElement(
 	                                                    'option',
-	                                                    null,
+	                                                    { key: 'null', value: 'null' },
 	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
+	                                                ),
+	                                                renderObjectOption(this.state.option ? this.state.option.relation : [])
 	                                            )
 	                                        )
 	                                    ),
@@ -7150,7 +7613,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'cellphone', required: true })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -7164,7 +7627,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'weichat' })
 	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
@@ -7178,7 +7641,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'name', required: true })
+	                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'address' })
 	                                        )
 	                                    )
 	                                )
@@ -7202,12 +7665,19 @@ webpackJsonp([0],{
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                { name: 'courseType', className: 'form-control' },
 	                                                _react2.default.createElement(
 	                                                    'option',
-	                                                    null,
+	                                                    { value: 'null' },
 	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
+	                                                ),
+	                                                _static.COURSE_CATEGORY.map(function (item) {
+	                                                    return _react2.default.createElement(
+	                                                        'option',
+	                                                        { key: item, value: item },
+	                                                        item
+	                                                    );
+	                                                })
 	                                            )
 	                                        )
 	                                    ),
@@ -7224,12 +7694,19 @@ webpackJsonp([0],{
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                { name: 'courseName', className: 'form-control' },
 	                                                _react2.default.createElement(
 	                                                    'option',
-	                                                    null,
+	                                                    { value: 'null' },
 	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
+	                                                ),
+	                                                _static.COURSE_PRODUCTS.map(function (item) {
+	                                                    return _react2.default.createElement(
+	                                                        'option',
+	                                                        { key: item, value: item },
+	                                                        item
+	                                                    );
+	                                                })
 	                                            )
 	                                        )
 	                                    )
@@ -7252,7 +7729,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement('textarea', { className: 'form-control', rows: '3' })
+	                                            _react2.default.createElement('textarea', { name: 'note', className: 'form-control', rows: '3' })
 	                                        )
 	                                    )
 	                                )
@@ -7278,6 +7755,11 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                            _react2.default.createElement(
+	                                                'em',
+	                                                { className: 'text-danger' },
+	                                                '*'
+	                                            ),
 	                                            '\u4FE1\u606F\u6765\u6E90'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7285,12 +7767,15 @@ webpackJsonp([0],{
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                { name: 'sourceId', className: 'form-control', onChange: function onChange(event) {
+	                                                        event.target.setCustomValidity('');
+	                                                    }, required: true },
 	                                                _react2.default.createElement(
 	                                                    'option',
-	                                                    null,
+	                                                    { key: 'null', value: 'null' },
 	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
+	                                                ),
+	                                                renderNormalOption(this.state.option ? this.state.option.sources : [])
 	                                            )
 	                                        )
 	                                    ),
@@ -7300,18 +7785,39 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                            _react2.default.createElement(
+	                                                'em',
+	                                                { className: 'text-danger' },
+	                                                '*'
+	                                            ),
 	                                            '\u5177\u4F53\u6E20\u9053'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                'div',
+	                                                { className: 'dropdown' },
 	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
+	                                                    'button',
+	                                                    { className: 'btn btn-secondary dropdown-toggle d-flex', type: 'button' },
+	                                                    _react2.default.createElement(
+	                                                        'span',
+	                                                        { className: 'flex-cell' },
+	                                                        '\u8BF7\u9009\u62E9'
+	                                                    )
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'select',
+	                                                    { onChange: function onChange(event) {
+	                                                            event.target.setCustomValidity('');(0, _changeText2.default)(event.target);
+	                                                        }, className: 'form-control opacity', name: 'channelId', required: true },
+	                                                    _react2.default.createElement(
+	                                                        'option',
+	                                                        { key: 'null', value: 'null' },
+	                                                        '\u8BF7\u9009\u62E9'
+	                                                    ),
+	                                                    renderListOption(this.state.option ? this.state.option.act : [])
 	                                                )
 	                                            )
 	                                        )
@@ -7330,6 +7836,11 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                            _react2.default.createElement(
+	                                                'em',
+	                                                { className: 'text-danger' },
+	                                                '*'
+	                                            ),
 	                                            '\u7EBF\u7D22\u9636\u6BB5'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7337,12 +7848,15 @@ webpackJsonp([0],{
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                { name: 'stageId', className: 'form-control', onChange: function onChange(event) {
+	                                                        event.target.setCustomValidity('');
+	                                                    }, required: true },
 	                                                _react2.default.createElement(
 	                                                    'option',
-	                                                    null,
+	                                                    { key: 'null', value: 'null' },
 	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
+	                                                ),
+	                                                renderNormalOption(this.state.option ? this.state.option.stages : [])
 	                                            )
 	                                        )
 	                                    ),
@@ -7352,6 +7866,11 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                            _react2.default.createElement(
+	                                                'em',
+	                                                { className: 'text-danger' },
+	                                                '*'
+	                                            ),
 	                                            '\u7EBF\u7D22\u72B6\u6001'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7359,123 +7878,24 @@ webpackJsonp([0],{
 	                                            { className: 'flex-cell' },
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { className: 'form-control', required: true },
+	                                                { name: 'statusId', className: 'form-control', onChange: function onChange(event) {
+	                                                        event.target.setCustomValidity('');
+	                                                    }, required: true },
 	                                                _react2.default.createElement(
 	                                                    'option',
-	                                                    null,
+	                                                    { key: 'null', value: 'null' },
 	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
+	                                                ),
+	                                                renderNormalOption(this.state.option ? this.state.option.status : [])
 	                                            )
 	                                        )
 	                                    )
 	                                )
 	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7EC4\u7EC7'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7528\u6237'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u521B\u5EFA\u4EBA'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u521B\u5EFA\u65F6\u95F4'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
+	                            _react2.default.createElement('div', { className: 'col' }),
+	                            _react2.default.createElement('div', { className: 'col' })
 	                        ),
-	                        this.record()
+	                        _react2.default.createElement(_List2.default, { canEditd: true, leadsId: this.props.params.id })
 	                    )
 	                )
 	            );
@@ -7489,7 +7909,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 676:
+/***/ 677:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7504,21 +7924,639 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(252);
+	var _reactAddonsUpdate = __webpack_require__(678);
 
-	var _subTitle2 = _interopRequireDefault(_subTitle);
-
-	var _OrgTree = __webpack_require__(246);
-
-	var _OrgTree2 = _interopRequireDefault(_OrgTree);
-
-	var _Button = __webpack_require__(248);
+	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
 	var _api = __webpack_require__(232);
+
+	var _userProfile = __webpack_require__(235);
+
+	var _formatDate = __webpack_require__(250);
+
+	var _formatDate2 = _interopRequireDefault(_formatDate);
 
 	var _DialogTips = __webpack_require__(243);
 
 	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function tableTitle(canEditd) {
+	    var base = [{ key: 'index', name: '序号' }, { key: 'approachName', name: '沟通方式' }, { key: 'datetime', name: '咨询时间' }, { key: 'orgName', name: '所属组织' }, { key: 'executiveName', name: '所属用户' }, { key: 'summary', name: '备注' }];
+
+	    if (canEditd === true) {
+	        base.push({
+	            key: 'action',
+	            name: '操作'
+	        });
+	    }
+
+	    return base;
+	}
+
+	function showEdit(target) {
+	    $(target).parents('tr').find('div').children('span').addClass('hide').siblings('.form-control').removeClass('hide');
+	}
+
+	function hideEdit(target) {
+	    $(target).parents('tr').find('div').children('span').removeClass('hide').siblings('.form-control').addClass('hide');
+	}
+
+	var List = function (_React$Component) {
+	    _inherits(List, _React$Component);
+
+	    function List(props) {
+	        _classCallCheck(this, List);
+
+	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
+
+	        _this.state = {
+	            operator: {
+	                name: (0, _userProfile.getProfile)().name,
+	                org: (0, _userProfile.getProfile)().org
+	            },
+	            canEditd: _this.props.canEditd,
+	            leadsId: _this.props.leadsId,
+
+	            list: [],
+	            approach: [],
+
+	            add: {
+	                approachId: '',
+	                summary: ''
+	            },
+
+	            edit: {
+	                id: '',
+	                approachId: '',
+	                summary: ''
+	            }
+	        };
+
+	        _this.renderItem = _this.renderItem.bind(_this);
+	        _this.renderAddContact = _this.renderAddContact.bind(_this);
+	        _this.addContact = _this.addContact.bind(_this);
+	        _this.editContact = _this.editContact.bind(_this);
+	        _this.changeApproach = _this.changeApproach.bind(_this);
+	        _this.changeSummary = _this.changeSummary.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(List, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            $.when((0, _api.approachList)(), (0, _api.contactList)(this.state.leadsId)).done(function (approach, list) {
+	                _this2.setState({
+	                    approach: approach,
+	                    list: list
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'changeApproach',
+	        value: function changeApproach(event, type) {
+	            var data = void 0;
+
+	            if (type === 'add') {
+	                data = (0, _reactAddonsUpdate2.default)(this.state.add, { approachId: { $set: event.target.value } });
+
+	                this.setState({
+	                    add: data
+	                });
+	            } else {
+	                data = (0, _reactAddonsUpdate2.default)(this.state.edit, { approachId: { $set: event.target.value } });
+
+	                this.setState({
+	                    edit: data
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'changeSummary',
+	        value: function changeSummary(event, type) {
+	            var data = void 0;
+
+	            if (type === 'add') {
+	                data = (0, _reactAddonsUpdate2.default)(this.state.add, { summary: { $set: event.target.value } });
+
+	                this.setState({
+	                    add: data
+	                });
+	            } else {
+	                data = (0, _reactAddonsUpdate2.default)(this.state.edit, { summary: { $set: event.target.value } });
+
+	                this.setState({
+	                    edit: data
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'addContact',
+	        value: function addContact() {
+	            var _this3 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
+	            loading.open();
+	            (0, _api.contactAdd)({
+	                leadsId: this.state.leadsId,
+	                approachId: this.state.add.approachId,
+	                summary: this.state.add.summary
+	            }).done(function () {
+	                _this3.setState({
+	                    add: {
+	                        approachId: '',
+	                        summary: ''
+	                    }
+	                });
+
+	                (0, _api.contactList)(_this3.state.leadsId).done(function (list) {
+	                    _this3.setState({ list: list });
+	                    loading.close();
+	                    success.open();
+	                });
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
+	            });
+	        }
+	    }, {
+	        key: 'editContact',
+	        value: function editContact(event, item) {
+	            var _this4 = this;
+
+	            var target = event.target;
+
+	            if (this.state.edit.id) {
+	                (function () {
+	                    var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	                    var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
+	                    var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
+	                    loading.open();
+	                    (0, _api.contactMod)(_this4.state.edit).done(function () {
+	                        _this4.setState({
+	                            edit: {
+	                                id: '',
+	                                approachId: '',
+	                                summary: ''
+	                            }
+	                        });
+
+	                        hideEdit(target);
+
+	                        (0, _api.contactList)(_this4.state.leadsId).done(function (list) {
+	                            _this4.setState({ list: list });
+	                            loading.close();
+	                            success.open();
+	                        });
+	                    }).fail(function () {
+	                        loading.close();
+	                        fail.open();
+	                    });
+	                })();
+	            } else {
+	                showEdit(target);
+	                this.setState({
+	                    edit: item
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'renderAddContact',
+	        value: function renderAddContact() {
+	            var _this5 = this;
+
+	            if (this.state.canEditd === true) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    null,
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        '--'
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement(
+	                            'select',
+	                            { value: this.state.add.approachId, onChange: function onChange(event) {
+	                                    _this5.changeApproach(event, 'add');
+	                                }, className: 'form-control' },
+	                            _react2.default.createElement(
+	                                'option',
+	                                { value: '' },
+	                                '\u8BF7\u9009\u62E9'
+	                            ),
+	                            this.state.approach.map(function (item) {
+	                                return _react2.default.createElement(
+	                                    'option',
+	                                    { key: item.id, value: item.id },
+	                                    item.name
+	                                );
+	                            })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        '--'
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        this.state.operator.org
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        this.state.operator.name
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement('input', { onChange: function onChange(event) {
+	                                _this5.changeSummary(event, 'add');
+	                            }, type: 'text', className: 'form-control', value: this.state.add.summary })
+	                    ),
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        _react2.default.createElement(
+	                            'button',
+	                            {
+	                                type: 'button',
+	                                className: 'btn btn-primary',
+	                                disabled: this.state.add.approachId && this.state.add.summary ? false : true,
+	                                onClick: this.addContact
+	                            },
+	                            '\u4FDD\u5B58'
+	                        )
+	                    )
+	                );
+	            } else {
+	                return null;
+	            }
+	        }
+	    }, {
+	        key: 'renderItem',
+	        value: function renderItem() {
+	            var _this6 = this;
+
+	            var list = [];
+
+	            if (this.state.list.length) {
+	                list = this.state.list.map(function (item, i) {
+	                    return _react2.default.createElement(
+	                        'tr',
+	                        { key: item.id },
+	                        tableTitle(_this6.state.canEditd).map(function (attr, j) {
+	                            var content = void 0;
+
+	                            switch (attr.key) {
+	                                case 'index':
+	                                    content = i + 1;
+	                                    break;
+	                                case 'approachName':
+	                                    if (_this6.state.canEditd === true) {
+	                                        content = _react2.default.createElement(
+	                                            'div',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                item[attr.key]
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'select',
+	                                                { value: _this6.state.edit.approachId, onChange: function onChange(event) {
+	                                                        _this6.changeApproach(event, 'edit');
+	                                                    }, className: 'form-control hide' },
+	                                                _react2.default.createElement(
+	                                                    'option',
+	                                                    { value: '' },
+	                                                    '\u8BF7\u9009\u62E9'
+	                                                ),
+	                                                _this6.state.approach.map(function (approach) {
+	                                                    return _react2.default.createElement(
+	                                                        'option',
+	                                                        { key: approach.id, value: approach.id },
+	                                                        approach.name
+	                                                    );
+	                                                })
+	                                            )
+	                                        );
+	                                    } else {
+	                                        content = item[attr.key];
+	                                    }
+	                                    break;
+	                                case 'datetime':
+	                                    content = (0, _formatDate2.default)(item[attr.key]);
+	                                    break;
+	                                case 'summary':
+	                                    if (_this6.state.canEditd === true) {
+	                                        content = _react2.default.createElement(
+	                                            'div',
+	                                            null,
+	                                            _react2.default.createElement(
+	                                                'span',
+	                                                null,
+	                                                item[attr.key]
+	                                            ),
+	                                            _react2.default.createElement('input', { type: 'text', onChange: function onChange(event) {
+	                                                    _this6.changeSummary(event, 'edit');
+	                                                }, className: 'form-control hide', value: _this6.state.edit.summary })
+	                                        );
+	                                    } else {
+	                                        content = item[attr.key];
+	                                    }
+	                                    break;
+	                                case 'action':
+	                                    content = _react2.default.createElement(
+	                                        'button',
+	                                        {
+	                                            onClick: function onClick(event) {
+	                                                _this6.editContact(event, { id: item.id, approachId: item.approachId, summary: item.summary });
+	                                            },
+	                                            type: 'button',
+	                                            className: 'btn btn-primary'
+	                                        },
+	                                        '\u7F16\u8F91'
+	                                    );
+	                                    break;
+	                                default:
+	                                    content = item[attr.key];
+	                            }
+
+	                            return _react2.default.createElement(
+	                                'td',
+	                                { key: j },
+	                                content
+	                            );
+	                        })
+	                    );
+	                });
+	            }
+
+	            return list;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'p',
+	                    { className: 'ht pt-3 pb-3 b-t b-b' },
+	                    '\u6C9F\u901A\u8BB0\u5F55'
+	                ),
+	                _react2.default.createElement(
+	                    'table',
+	                    { className: 'table table-bordered' },
+	                    _react2.default.createElement(
+	                        'thead',
+	                        null,
+	                        _react2.default.createElement(
+	                            'tr',
+	                            null,
+	                            tableTitle(this.state.canEditd).map(function (item, index) {
+	                                return _react2.default.createElement(
+	                                    'th',
+	                                    { key: index },
+	                                    item.name
+	                                );
+	                            })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'tbody',
+	                        null,
+	                        this.renderAddContact(),
+	                        this.renderItem()
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return List;
+	}(_react2.default.Component);
+
+	exports.default = List;
+
+/***/ },
+
+/***/ 678:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(679);
+
+/***/ },
+
+/***/ 679:
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule update
+	 */
+
+	/* global hasOwnProperty:true */
+
+	'use strict';
+
+	var _assign = __webpack_require__(17);
+
+	var keyOf = __webpack_require__(34);
+	var invariant = __webpack_require__(15);
+	var hasOwnProperty = {}.hasOwnProperty;
+
+	function shallowCopy(x) {
+	  if (Array.isArray(x)) {
+	    return x.concat();
+	  } else if (x && typeof x === 'object') {
+	    return _assign(new x.constructor(), x);
+	  } else {
+	    return x;
+	  }
+	}
+
+	var COMMAND_PUSH = keyOf({ $push: null });
+	var COMMAND_UNSHIFT = keyOf({ $unshift: null });
+	var COMMAND_SPLICE = keyOf({ $splice: null });
+	var COMMAND_SET = keyOf({ $set: null });
+	var COMMAND_MERGE = keyOf({ $merge: null });
+	var COMMAND_APPLY = keyOf({ $apply: null });
+
+	var ALL_COMMANDS_LIST = [COMMAND_PUSH, COMMAND_UNSHIFT, COMMAND_SPLICE, COMMAND_SET, COMMAND_MERGE, COMMAND_APPLY];
+
+	var ALL_COMMANDS_SET = {};
+
+	ALL_COMMANDS_LIST.forEach(function (command) {
+	  ALL_COMMANDS_SET[command] = true;
+	});
+
+	function invariantArrayCase(value, spec, command) {
+	  !Array.isArray(value) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): expected target of %s to be an array; got %s.', command, value) : invariant(false) : void 0;
+	  var specValue = spec[command];
+	  !Array.isArray(specValue) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): expected spec of %s to be an array; got %s. ' + 'Did you forget to wrap your parameter in an array?', command, specValue) : invariant(false) : void 0;
+	}
+
+	function update(value, spec) {
+	  !(typeof spec === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): You provided a key path to update() that did not contain one ' + 'of %s. Did you forget to include {%s: ...}?', ALL_COMMANDS_LIST.join(', '), COMMAND_SET) : invariant(false) : void 0;
+
+	  if (hasOwnProperty.call(spec, COMMAND_SET)) {
+	    !(Object.keys(spec).length === 1) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Cannot have more than one key in an object with %s', COMMAND_SET) : invariant(false) : void 0;
+
+	    return spec[COMMAND_SET];
+	  }
+
+	  var nextValue = shallowCopy(value);
+
+	  if (hasOwnProperty.call(spec, COMMAND_MERGE)) {
+	    var mergeObj = spec[COMMAND_MERGE];
+	    !(mergeObj && typeof mergeObj === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): %s expects a spec of type \'object\'; got %s', COMMAND_MERGE, mergeObj) : invariant(false) : void 0;
+	    !(nextValue && typeof nextValue === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): %s expects a target of type \'object\'; got %s', COMMAND_MERGE, nextValue) : invariant(false) : void 0;
+	    _assign(nextValue, spec[COMMAND_MERGE]);
+	  }
+
+	  if (hasOwnProperty.call(spec, COMMAND_PUSH)) {
+	    invariantArrayCase(value, spec, COMMAND_PUSH);
+	    spec[COMMAND_PUSH].forEach(function (item) {
+	      nextValue.push(item);
+	    });
+	  }
+
+	  if (hasOwnProperty.call(spec, COMMAND_UNSHIFT)) {
+	    invariantArrayCase(value, spec, COMMAND_UNSHIFT);
+	    spec[COMMAND_UNSHIFT].forEach(function (item) {
+	      nextValue.unshift(item);
+	    });
+	  }
+
+	  if (hasOwnProperty.call(spec, COMMAND_SPLICE)) {
+	    !Array.isArray(value) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Expected %s target to be an array; got %s', COMMAND_SPLICE, value) : invariant(false) : void 0;
+	    !Array.isArray(spec[COMMAND_SPLICE]) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): expected spec of %s to be an array of arrays; got %s. ' + 'Did you forget to wrap your parameters in an array?', COMMAND_SPLICE, spec[COMMAND_SPLICE]) : invariant(false) : void 0;
+	    spec[COMMAND_SPLICE].forEach(function (args) {
+	      !Array.isArray(args) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): expected spec of %s to be an array of arrays; got %s. ' + 'Did you forget to wrap your parameters in an array?', COMMAND_SPLICE, spec[COMMAND_SPLICE]) : invariant(false) : void 0;
+	      nextValue.splice.apply(nextValue, args);
+	    });
+	  }
+
+	  if (hasOwnProperty.call(spec, COMMAND_APPLY)) {
+	    !(typeof spec[COMMAND_APPLY] === 'function') ? process.env.NODE_ENV !== 'production' ? invariant(false, 'update(): expected spec of %s to be a function; got %s.', COMMAND_APPLY, spec[COMMAND_APPLY]) : invariant(false) : void 0;
+	    nextValue = spec[COMMAND_APPLY](nextValue);
+	  }
+
+	  for (var k in spec) {
+	    if (!(ALL_COMMANDS_SET.hasOwnProperty(k) && ALL_COMMANDS_SET[k])) {
+	      nextValue[k] = update(value[k], spec[k]);
+	    }
+	  }
+
+	  return nextValue;
+	}
+
+	module.exports = update;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
+
+/***/ },
+
+/***/ 680:
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	//在读年级
+	var GRADE = exports.GRADE = ['幼儿园', '小学一年级'];
+
+	//与孩子的关系
+	var RELATION = exports.RELATION = ['父亲', '母亲'];
+
+	//课程类别
+	var COURSE_CATEGORY = exports.COURSE_CATEGORY = ['类别1', '类别2'];
+
+	//课程产品
+	var COURSE_PRODUCTS = exports.COURSE_PRODUCTS = ['产品1', '产品2'];
+
+/***/ },
+
+/***/ 681:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(41);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactAddonsUpdate = __webpack_require__(678);
+
+	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
+
+	var _List = __webpack_require__(677);
+
+	var _List2 = _interopRequireDefault(_List);
+
+	var _subTitle = __webpack_require__(252);
+
+	var _subTitle2 = _interopRequireDefault(_subTitle);
+
+	var _SelectUserPanel = __webpack_require__(682);
+
+	var _SelectUserPanel2 = _interopRequireDefault(_SelectUserPanel);
+
+	var _Button = __webpack_require__(248);
+
+	var _command = __webpack_require__(249);
+
+	var _command2 = _interopRequireDefault(_command);
+
+	var _api = __webpack_require__(232);
+
+	var _Dialog = __webpack_require__(234);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+
+	var _DialogTips = __webpack_require__(243);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	var _formatDate = __webpack_require__(250);
+
+	var _formatDate2 = _interopRequireDefault(_formatDate);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7538,12 +8576,16 @@ webpackJsonp([0],{
 
 	        _this.state = {
 	            orgList: [],
-	            selected: null
+	            modalStatus: 'closed'
 	        };
 	        _this.renderCommand = _this.renderCommand.bind(_this);
-	        _this.selectOrg = _this.selectOrg.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
+	        _this.handleModal = _this.handleModal.bind(_this);
+	        _this.handleAssign = _this.handleAssign.bind(_this);
+	        _this.handleConvert = _this.handleConvert.bind(_this);
+	        _this.handleDel = _this.handleDel.bind(_this);
 	        _this.confirmDel = _this.confirmDel.bind(_this);
+	        _this.getModalOption = _this.getModalOption.bind(_this);
 	        return _this;
 	    }
 
@@ -7555,27 +8597,15 @@ webpackJsonp([0],{
 	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            dialogTips.open();
-
-	            (0, _api.orgList)().done(function (data) {
+	            $.when((0, _api.orgList)(), (0, _api.leadsQuery)(this.props.params.id)).done(function (org, data) {
 	                _this2.setState({
-	                    orgList: data.tree,
-	                    selected: {
-	                        id: data.original[0].cId,
-	                        name: data.original[0].cName
-	                    }
+	                    orgList: org.original,
+	                    data: data,
+	                    modalType: null
 	                });
 	            }).always(function () {
 	                dialogTips.close();
 	            });
-	        }
-	    }, {
-	        key: 'selectOrg',
-	        value: function selectOrg(org) {
-	            if (org) {
-	                this.setState({
-	                    selected: org
-	                });
-	            }
 	        }
 	    }, {
 	        key: 'renderCommand',
@@ -7583,39 +8613,178 @@ webpackJsonp([0],{
 	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
-	                    }
+	            commands.map(function (item, index) {
+	                if (item === 'Mod') {
+	                    temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
+	                }
 
-	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel }));
-	                    }
-	                });
-	            }
+	                if (item === 'Del') {
+	                    temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel }));
+	                }
+
+	                if (item === 'Assign') {
+	                    temp.push(_react2.default.createElement(_Button.AssignButton, { key: index, action: _this3.handleAssign }));
+	                }
+
+	                if (item === 'Convert') {
+	                    temp.push(_react2.default.createElement(_Button.ConvertButton, { key: index, action: _this3.handleConvert }));
+	                }
+	            });
 
 	            return temp;
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/sales/edit/' + this.props.params.id;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/leads/edit/' + this.props.params.id;
 
 	            this.props.router.push(editorPath);
 	        }
 	    }, {
+	        key: 'handleModal',
+	        value: function handleModal(selected, modal) {
+	            var _this4 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+	            var data = (0, _reactAddonsUpdate2.default)(this.state.data, {
+	                executiveId: { $set: selected.user.id },
+	                executiveName: { $set: selected.user.name },
+	                orgnizationId: { $set: selected.org.id },
+	                orgnizationName: { $set: selected.org.name }
+	            });
+
+	            loading.open();
+
+	            if (this.state.modalType === 'assign') {
+	                (0, _api.leadsAssign)({ id: this.props.params.id, assigneeId: selected.user.id }).done(function () {
+	                    loading.close();
+	                    success.open();
+
+	                    _this4.setState({
+	                        data: data
+	                    });
+
+	                    setTimeout(function () {
+	                        success.close();
+	                        modal.modal('hide');
+	                    }, 2000);
+	                }).fail(function () {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
+
+	            if (this.state.modalType === 'convert') {
+	                (0, _api.leadsConvert)({ id: this.props.params.id, assigneeId: selected.user.id }).done(function () {
+	                    loading.close();
+	                    success.open();
+
+	                    _this4.setState({
+	                        data: data
+	                    });
+
+	                    setTimeout(function () {
+	                        success.close();
+	                        modal.modal('hide');
+	                    }, 2000);
+	                }).fail(function () {
+	                    loading.close();
+	                    fail.open();
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'getModalOption',
+	        value: function getModalOption() {
+	            return {
+	                org: {
+	                    id: this.state.data.orgnizationId,
+	                    name: this.state.data.orgnizationName
+	                },
+	                user: {
+	                    id: this.state.data.executiveId,
+	                    name: this.state.data.executiveName
+	                },
+	                student: this.state.data.student
+	            };
+	        }
+	    }, {
+	        key: 'handleAssign',
+	        value: function handleAssign() {
+	            this.setState({
+	                modalType: 'assign'
+	            });
+
+	            var div = document.createElement('div');
+	            var option = this.getModalOption();
+
+	            _reactDom2.default.render(_react2.default.createElement(_SelectUserPanel2.default, {
+	                container: div,
+	                orgList: this.state.orgList,
+	                option: option,
+	                action: this.handleModal
+	            }), document.body.appendChild(div));
+	        }
+	    }, {
+	        key: 'handleConvert',
+	        value: function handleConvert() {
+	            this.setState({
+	                modalType: 'convert'
+	            });
+
+	            var div = document.createElement('div');
+	            var option = this.getModalOption();
+
+	            _reactDom2.default.render(_react2.default.createElement(_SelectUserPanel2.default, {
+	                container: div,
+	                orgList: this.state.orgList,
+	                option: option,
+	                action: this.handleModal
+	            }), document.body.appendChild(div));
+	        }
+	    }, {
+	        key: 'handleDel',
+	        value: function handleDel() {
+	            var _this5 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
+	            loading.open();
+	            (0, _api.leadsDel)(this.props.params.id).done(function () {
+	                loading.close();
+	                success.open();
+
+	                setTimeout(function () {
+	                    success.close();
+	                    _this5.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/leads');
+	                }, 2000);
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
+	            });
+	        }
+	    }, {
 	        key: 'confirmDel',
-	        value: function confirmDel() {}
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除此线索 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this4 = this;
+	            var _this6 = this;
 
 	            return _react2.default.createElement(
 	                'div',
@@ -7623,7 +8792,7 @@ webpackJsonp([0],{
 	                _react2.default.createElement(
 	                    'form',
 	                    { ref: function ref(dom) {
-	                            _this4.editorDom = dom;
+	                            _this6.editorDom = dom;
 	                        } },
 	                    _react2.default.createElement(
 	                        'h5',
@@ -7633,7 +8802,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'p',
 	                            { className: 'd-inline text-muted' },
-	                            (0, _subTitle2.default)(this.props.router.params.id, '销售线索')
+	                            this.state.data ? this.state.data.student.name : '--'
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -7657,17 +8826,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'btn-group float-right mr-4', role: 'group' },
-	                            this.renderCommand(),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'btn btn-primary', 'data-toggle': 'modal', 'data-target': '#myModal' },
-	                                '\u8F6C\u5316\u4E3A'
-	                            ),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'btn btn-primary', 'data-toggle': 'modal', 'data-target': '#myModal' },
-	                                '\u5206\u914D\u7ED9'
-	                            )
+	                            this.renderCommand()
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -7693,11 +8852,6 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
 	                                            '\u5B66\u5458\u59D3\u540D'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7706,7 +8860,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.student.name : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7724,7 +8878,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.student.genderText : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7734,11 +8888,6 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
 	                                            '\u5B66\u5458\u5E74\u9F84'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7747,7 +8896,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.student.age : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7765,7 +8914,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.student.classGrade !== 'null' ? this.state.data.student.classGrade : '' : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7783,7 +8932,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.student.schoolName : ''
 	                                            )
 	                                        )
 	                                    )
@@ -7801,11 +8950,6 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
 	                                            '\u5BB6\u957F\u59D3\u540D'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7814,7 +8958,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.parent.name : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7824,11 +8968,6 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
 	                                            '\u4E0E\u5B69\u5B50\u5173\u7CFB'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7837,7 +8976,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.parent.relation : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7847,11 +8986,6 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'label',
 	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
 	                                            '\u8054\u7CFB\u7535\u8BDD'
 	                                        ),
 	                                        _react2.default.createElement(
@@ -7860,7 +8994,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.parent.cellphone : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7878,7 +9012,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.parent.weichat : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7896,7 +9030,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.parent.address : ''
 	                                            )
 	                                        )
 	                                    )
@@ -7922,7 +9056,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.courseType !== 'null' ? this.state.data.courseType : '' : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -7940,7 +9074,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.courseName !== 'null' ? this.state.data.courseName : '' : ''
 	                                            )
 	                                        )
 	                                    )
@@ -7966,7 +9100,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.note : ''
 	                                            )
 	                                        )
 	                                    )
@@ -8001,7 +9135,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.sourceName : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -8016,11 +9150,7 @@ webpackJsonp([0],{
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
+	                                            _react2.default.createElement('p', { className: 'form-control-static' })
 	                                        )
 	                                    )
 	                                )
@@ -8045,7 +9175,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.stageName : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -8063,7 +9193,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.statusName : ''
 	                                            )
 	                                        )
 	                                    )
@@ -8089,7 +9219,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.orgnizationName : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -8107,7 +9237,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.executiveName : ''
 	                                            )
 	                                        )
 	                                    )
@@ -8133,7 +9263,7 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? this.state.data.creatorName : ''
 	                                            )
 	                                        )
 	                                    ),
@@ -8151,195 +9281,14 @@ webpackJsonp([0],{
 	                                            _react2.default.createElement(
 	                                                'p',
 	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
+	                                                this.state.data ? (0, _formatDate2.default)(this.state.data.createTime) : ''
 	                                            )
 	                                        )
 	                                    )
 	                                )
 	                            )
 	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'ht pt-3 pb-3 b-t b-b' },
-	                            '\u6C9F\u901A\u8BB0\u5F55'
-	                        ),
-	                        _react2.default.createElement(
-	                            'table',
-	                            { className: 'table table-bordered table-sm' },
-	                            _react2.default.createElement(
-	                                'thead',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u5E8F\u53F7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6C9F\u901A\u65B9\u5F0F'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u54A8\u8BE2\u65F6\u95F4'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6240\u5C5E\u7EC4\u7EC7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6240\u5C5E\u7528\u6237'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6C9F\u901A\u8BB0\u5F55'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'tbody',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '1'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        'Call in'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '2016-05-05  10:58:35'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u5317\u4EAC\u5206\u516C\u53F8/\u95E8\u5934\u6C9F\u9F99\u6E56\u6821\u533A'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u82D7\u5730'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u5B69\u5B50\u7236\u4EB2\u54A8\u8BE2\u4E86\u6821\u533A\u60C5\u51B5\uFF0C\u8BFE\u7A0B\u60C5\u51B5\uFF0C\u670D\u52A1\u4EF7\u683C\uFF0C\u6BD4\u8F83\u5173\u5FC3\u6559\u5B66\u6548\u679C\u3002\u5DF2\u8BE6\u7EC6\u89E3\u7B54\u5E76\u63A8\u8350\u5173\u6CE8\u5FAE\u4FE1\uFF0C\u6743\u5148\u751F\u6BD4\u8F83\u6EE1\u610F\uFF0C\u8868\u793A\u9700\u8981\u5546\u91CF\u4E00\u4E0B\u3002\u672C\u5468\u672B\u8DDF\u8FDB\u3002'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal fade', id: 'myModal', tabindex: '-1' },
-	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'modal-dialog' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'modal-content' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-header' },
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'h5 modal-title' },
-	                                    '\u5206\u914D\u7ED9\uFF1A\u6743\u5929\u6052'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'close', 'data-dismiss': 'modal' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        '\xD7'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-body' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7EC4\u7EC7'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'btn-group btn-block' },
-	                                                _react2.default.createElement('input', { type: 'text', className: 'form-control', 'data-toggle': 'dropdown', value: this.state.selected ? this.state.selected.name : '', readOnly: true }),
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'dropdown-menu' },
-	                                                    _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                                                )
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7528\u6237'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-footer' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
-	                                    '\u53D6\u6D88'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'btn btn-primary' },
-	                                    '\u786E\u5B9A'
-	                                )
-	                            )
-	                        )
+	                        _react2.default.createElement(_List2.default, { ccanEditd: true, leadsId: this.props.params.id })
 	                    )
 	                )
 	            );
@@ -8353,7 +9302,320 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 677:
+/***/ 682:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(41);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _api = __webpack_require__(232);
+
+	var _DialogTips = __webpack_require__(243);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SelectUserPanel = function (_React$Component) {
+	    _inherits(SelectUserPanel, _React$Component);
+
+	    function SelectUserPanel(props) {
+	        _classCallCheck(this, SelectUserPanel);
+
+	        var _this = _possibleConstructorReturn(this, (SelectUserPanel.__proto__ || Object.getPrototypeOf(SelectUserPanel)).call(this, props));
+
+	        _this.state = {
+	            orgList: _this.props.orgList,
+	            userList: [],
+
+	            defaults: {
+	                oid: _this.props.option.org.id,
+	                oname: _this.props.option.org.name,
+	                uid: _this.props.option.user.id,
+	                uname: _this.props.option.user.name,
+	                studentName: _this.props.option.student.name
+	            },
+	            selectedOrg: {
+	                id: _this.props.option.org.id,
+	                name: _this.props.option.org.name
+	            },
+	            selecteduser: {
+	                id: 'defaults',
+	                name: 'defaults'
+	            }
+	        };
+
+	        _this.closed = _this.closed.bind(_this);
+	        _this.renderListOption = _this.renderListOption.bind(_this);
+	        _this.renderNormalOption = _this.renderNormalOption.bind(_this);
+	        _this.selectOrg = _this.selectOrg.bind(_this);
+	        _this.selectUser = _this.selectUser.bind(_this);
+	        _this.action = _this.action.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(SelectUserPanel, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            (0, _api.userList)(this.state.selectedOrg.id).done(function (data) {
+	                _this2.setState({
+	                    userList: data,
+	                    selecteduser: {
+	                        id: _this2.state.defaults.uid,
+	                        name: _this2.state.defaults.uname
+	                    }
+	                });
+	            });
+	            $(this.panel).modal('show').one('hidden.bs.modal', function () {
+	                _this2.closed();
+	            });
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.body.removeChild(this.props.container);
+	        }
+	    }, {
+	        key: 'closed',
+	        value: function closed() {
+	            _reactDom2.default.unmountComponentAtNode(this.props.container);
+	        }
+	    }, {
+	        key: 'renderListOption',
+	        value: function renderListOption(data) {
+	            var group = [];
+
+	            if (data.length) {
+	                group = data.map(function (item) {
+	                    var content = space(item.level) + item.cName;
+
+	                    return _react2.default.createElement('option', { key: item.cId, value: item.cId, dangerouslySetInnerHTML: { __html: content } });
+	                });
+	            }
+
+	            return group;
+
+	            function space(level) {
+	                var base = '&nbsp;&nbsp;&nbsp;&nbsp;';
+	                var s = '';
+
+	                if (level) {
+	                    for (var i = 0; i < level; i++) {
+	                        s += base;
+	                    }
+	                }
+
+	                return s;
+	            }
+	        }
+	    }, {
+	        key: 'renderNormalOption',
+	        value: function renderNormalOption(data) {
+	            var option = [];
+
+	            if (data.length) {
+	                option = data.map(function (item) {
+	                    return _react2.default.createElement(
+	                        'option',
+	                        { key: item.cId, value: item.cId },
+	                        item.cRealname
+	                    );
+	                });
+	            }
+
+	            return option;
+	        }
+	    }, {
+	        key: 'selectOrg',
+	        value: function selectOrg(event) {
+	            var _this3 = this;
+
+	            var oid = $(event.target).val();
+	            var oname = $(event.target).find('option:selected').html().replace(/&nbsp;/gi, '');
+
+	            this.setState({
+	                selectedOrg: {
+	                    id: oid,
+	                    name: oname
+	                }
+	            });
+
+	            (0, _api.userList)(oid).done(function (user) {
+	                _this3.setState({
+	                    userList: user,
+	                    selecteduser: {
+	                        id: 'defaults',
+	                        name: 'defaults'
+	                    }
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'selectUser',
+	        value: function selectUser(event) {
+	            var uid = event.target.value;
+	            var uname = $(event.target).find('option:selected').html();
+
+	            this.setState({
+	                selecteduser: {
+	                    id: uid,
+	                    name: uname
+	                }
+	            });
+	        }
+	    }, {
+	        key: 'action',
+	        value: function action() {
+	            this.props.action({
+	                org: this.state.selectedOrg,
+	                user: this.state.selecteduser
+	            }, $(this.panel));
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this4 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'modal fade', ref: function ref(dom) {
+	                        _this4.panel = dom;
+	                    }, tabindex: '-1' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'modal-dialog' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'modal-content' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'modal-header' },
+	                            _react2.default.createElement(
+	                                'p',
+	                                { className: 'h5 modal-title' },
+	                                this.state.defaults.studentName
+	                            ),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { type: 'button', className: 'close', 'data-dismiss': 'modal' },
+	                                _react2.default.createElement(
+	                                    'span',
+	                                    null,
+	                                    '\xD7'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'modal-body market' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: 'd-flex' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                        '\u6240\u5C5E\u7EC4\u7EC7'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'flex-cell' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'dropdown' },
+	                                            _react2.default.createElement(
+	                                                'button',
+	                                                { className: 'btn btn-secondary dropdown-toggle d-flex', type: 'button' },
+	                                                _react2.default.createElement(
+	                                                    'span',
+	                                                    { className: 'flex-cell' },
+	                                                    this.state.selectedOrg.name
+	                                                )
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'select',
+	                                                { value: this.state.selectedOrg.id, onChange: this.selectOrg, className: 'form-control opacity', name: 'org' },
+	                                                this.renderListOption(this.state.orgList)
+	                                            )
+	                                        )
+	                                    )
+	                                ),
+	                                _react2.default.createElement(
+	                                    'li',
+	                                    { className: 'd-flex' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                        '\u6240\u5C5E\u7528\u6237'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'flex-cell' },
+	                                        _react2.default.createElement(
+	                                            'select',
+	                                            { value: this.state.selecteduser.id, onChange: this.selectUser, name: 'assigneeId', className: 'form-control' },
+	                                            _react2.default.createElement(
+	                                                'option',
+	                                                { value: 'defaults' },
+	                                                '\u8BF7\u9009\u62E9'
+	                                            ),
+	                                            this.renderNormalOption(this.state.userList)
+	                                        )
+	                                    )
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'modal-footer' },
+	                            _react2.default.createElement(
+	                                'button',
+	                                { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+	                                '\u53D6\u6D88'
+	                            ),
+	                            _react2.default.createElement(
+	                                'button',
+	                                { onClick: this.action, type: 'button', className: 'btn btn-primary', disabled: this.state.selecteduser === 'defaults' ? true : false },
+	                                '\u786E\u5B9A'
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SelectUserPanel;
+	}(_react2.default.Component);
+
+	exports.default = SelectUserPanel;
+
+/***/ },
+
+/***/ 683:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -8731,7 +9993,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 678:
+/***/ 684:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9536,7 +10798,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 679:
+/***/ 685:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10418,7 +11680,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 680:
+/***/ 686:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10581,7 +11843,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 681:
+/***/ 687:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10620,7 +11882,7 @@ webpackJsonp([0],{
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(253);
+	__webpack_require__(254);
 
 	var Editor = function (_React$Component) {
 	    _inherits(Editor, _React$Component);
@@ -11460,7 +12722,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 682:
+/***/ 688:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12273,7 +13535,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 683:
+/***/ 689:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12422,7 +13684,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 684:
+/***/ 690:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13134,7 +14396,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 685:
+/***/ 691:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13528,7 +14790,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 686:
+/***/ 692:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13606,7 +14868,7 @@ webpackJsonp([0],{
 	            dialogTips.open();
 
 	            __webpack_require__.e/* nsure */(2, function (require) {
-	                __webpack_require__(687);
+	                __webpack_require__(693);
 
 	                if (_this2.props.params.id === 'create') {
 	                    (0, _api.orgList)().done(function (data) {
@@ -13678,7 +14940,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'org';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/org';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -13913,7 +15175,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 688:
+/***/ 694:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14275,7 +15537,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 689:
+/***/ 695:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14493,7 +15755,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'role';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/role';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -14732,7 +15994,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 690:
+/***/ 696:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14767,7 +16029,7 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(248);
 
-	var _Alerts = __webpack_require__(691);
+	var _Alerts = __webpack_require__(697);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
@@ -15316,7 +16578,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 691:
+/***/ 697:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15350,7 +16612,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 692:
+/***/ 698:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15827,7 +17089,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 693:
+/***/ 699:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15854,7 +17116,7 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(248);
 
-	var _Alerts = __webpack_require__(691);
+	var _Alerts = __webpack_require__(697);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
@@ -15987,7 +17249,7 @@ webpackJsonp([0],{
 	                event.preventDefault();
 	            };
 
-	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'user';
+	            var successPath = SCHOOLPAL_CONFIG.ROOTPATH + 'sys/user';
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success' });
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
@@ -16253,7 +17515,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 694:
+/***/ 700:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16351,6 +17613,7 @@ webpackJsonp([0],{
 	                        var func = [];
 
 	                        user.name = data.cRealname;
+	                        user.org = data.org.cName;
 	                        user.roles = [];
 	                        user.access = [];
 
@@ -16450,7 +17713,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 695:
+/***/ 701:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16522,7 +17785,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 696:
+/***/ 702:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16577,14 +17840,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 697:
+/***/ 703:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 699:
+/***/ 705:
 /***/ function(module, exports) {
 
 	/*
@@ -16641,7 +17904,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 700:
+/***/ 706:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -16894,23 +18157,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 701:
+/***/ 707:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 704:
+/***/ 710:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(705);
+	var content = __webpack_require__(711);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(700)(content, {});
+	var update = __webpack_require__(706)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -16928,15 +18191,15 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 705:
+/***/ 711:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(699)();
+	exports = module.exports = __webpack_require__(705)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  width: 60px;\n  z-index: 100;\n}\n.aside-bar .btn {\n  padding: 0;\n  height: 54px;\n  border-radius: 0;\n}\n.aside-bar .btn-link {\n  line-height: 54px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.org-panel {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  bottom: 0;\n  right: 0;\n  background: rgba(0, 0, 0, 0.7);\n  z-index: 101;\n}\n.org-panel .org-oanel-content {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 400px;\n  background: #fff;\n  border-right: 2px solid #0275d8;\n  z-index: 102;\n}\n.datepicker {\n  padding: 4px;\n  direction: ltr;\n}\n.datepicker-inline {\n  width: 280px;\n}\n.datepicker.datepicker-rtl {\n  direction: rtl;\n}\n.datepicker.datepicker-rtl table tr td span {\n  float: right;\n}\n.datepicker-dropdown {\n  top: 0;\n  left: 0;\n}\n.datepicker > div {\n  display: none;\n}\n.datepicker.days div.datepicker-days {\n  display: block;\n}\n.datepicker.months div.datepicker-months {\n  display: block;\n}\n.datepicker.years div.datepicker-years {\n  display: block;\n}\n.datepicker table {\n  margin: 0;\n  float: left;\n  border-spacing: 0;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.datepicker td,\n.datepicker th {\n  text-align: center;\n  width: 38px;\n  height: 28px;\n  line-height: 28px;\n}\n.table-striped .datepicker table tr td,\n.table-striped .datepicker table tr th {\n  background-color: transparent;\n}\n.datepicker table tr td.day.focused,\n.datepicker table tr td.day:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.datepicker table tr td.new,\n.datepicker table tr td.old {\n  color: #999;\n}\n.datepicker table tr td.disabled,\n.datepicker table tr td.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td.today,\n.datepicker table tr td.today.disabled,\n.datepicker table tr td.today.disabled:hover,\n.datepicker table tr td.today:hover {\n  /*@todayBackground: lighten(@orange, 30%);\n\t\t\t.button-variant(#000,@todayBackground, spin(@todayBackground, 20));*/\n  color: #f89406;\n}\n.datepicker table tr td.today:hover:hover {\n  color: #f89406;\n}\n.datepicker table tr td.today.active:hover {\n  color: #f89406;\n}\n.datepicker table tr td.range,\n.datepicker table tr td.range.disabled,\n.datepicker table tr td.range.disabled:hover,\n.datepicker table tr td.range:hover {\n  background: #eee;\n}\n.datepicker table tr td.range.today,\n.datepicker table tr td.range.today.disabled,\n.datepicker table tr td.range.today.disabled:hover,\n.datepicker table tr td.range.today:hover {\n  color: #f89406;\n}\n.datepicker table tr td.selected,\n.datepicker table tr td.selected.disabled,\n.datepicker table tr td.selected.disabled:hover,\n.datepicker table tr td.selected:hover {\n  background-color: #b3b3b3;\n  border-color: #808080;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td.active,\n.datepicker table tr td.active.disabled,\n.datepicker table tr td.active.disabled:hover,\n.datepicker table tr td.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span {\n  display: block;\n  width: 23%;\n  height: 54px;\n  line-height: 54px;\n  float: left;\n  margin: 1%;\n  cursor: pointer;\n}\n.datepicker table tr td span:hover {\n  background: #eee;\n}\n.datepicker table tr td span.disabled,\n.datepicker table tr td span.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td span.active,\n.datepicker table tr td span.active.disabled,\n.datepicker table tr td span.active.disabled:hover,\n.datepicker table tr td span.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span.new,\n.datepicker table tr td span.old {\n  color: #999;\n}\n.datepicker th.datepicker-switch {\n  width: 145px;\n  font-size: 18px;\n  font-weight: 600;\n  height: 38px;\n}\n.datepicker .next b,\n.datepicker .prev b {\n  display: block;\n  width: 0;\n  height: 0;\n  line-height: 0;\n  border-top: 8px solid transparent;\n  border-bottom: 8px solid transparent;\n  border-left: 8px solid #bcbcbc;\n  border-right: 8px solid #bcbcbc;\n}\n.datepicker .date-header .next:hover,\n.datepicker .date-header .prev:hover {\n  background: transparent;\n}\n.datepicker .prev b {\n  margin-left: 2px;\n  border-left-color: transparent;\n}\n.datepicker .next b {\n  margin-left: 22px;\n  border-right-color: transparent;\n}\n.datepicker .week-content .dow {\n  border-top: 1px solid #e5e5e5;\n  border-bottom: 1px solid #e5e5e5;\n  border-left: none;\n  border-right: none;\n  margin: 0;\n  color: #999;\n  font-weight: 600;\n}\n.datepicker tfoot tr th,\n.datepicker thead tr:first-child th {\n  cursor: pointer;\n}\n.datepicker tfoot tr th:hover,\n.datepicker thead tr:first-child th:hover {\n  background: #eee;\n}\n.datepicker .cw {\n  font-size: 10px;\n  width: 12px;\n  padding: 0 2px 0 5px;\n  vertical-align: middle;\n}\n.datepicker thead tr:first-child th.cw {\n  cursor: default;\n  background-color: transparent;\n}\n.datepicker.dropdown-menu {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 1000;\n  float: left;\n  display: none;\n  min-width: 160px;\n  list-style: none;\n  padding: 0;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  -webkit-background-clip: padding-box;\n  -moz-background-clip: padding;\n  background-clip: padding-box;\n  *border-right-width: 2px;\n  *border-bottom-width: 2px;\n  color: #333333;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  line-height: 18px;\n}\n.datepicker .timepicker-container {\n  float: left;\n  border-left: 1px solid #e5e5e5;\n}\n.datepicker.datepicker-small .datepicker-days td,\n.datepicker.datepicker-small .datepicker-days th {\n  text-align: center;\n  width: 28px;\n  height: 20px;\n  line-height: 20px;\n}\n.datepicker.datepicker-small .datepicker-days .next b {\n  margin-left: 2px;\n}\n.datepicker.datepicker-small .datepicker-months td {\n  width: 25px;\n}\n.datepicker.datepicker-small .datepicker-months td span {\n  height: 30px;\n  line-height: 30px;\n}\n.datepicker.datepicker-small .timepicker .picker-con span {\n  height: 24px;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n  border-radius: 0;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.dropdown .form-control {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n}\n.market .dropdown .dropdown-toggle {\n  width: 100%;\n}\n.market .dropdown .dropdown-toggle::after {\n  -webkit-align-self: center!important;\n  -ms-flex-item-align: center!important;\n  -ms-grid-row-align: center!important;\n  align-self: center!important;\n}\n.market .dropdown .dropdown-toggle span {\n  text-align: left;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-t {\n  position: relative;\n}\n.b-t:before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.relative {\n  position: relative;\n}\n.hide {\n  display: none;\n}\n.opacity {\n  opacity: 0;\n}\n.form-control-style {\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: .25rem;\n}\n.w100 {\n  width: 100px;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected {\n  color: #d9534f;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.market dl {\n  overflow: hidden;\n}\n.market dd,\n.market dt {\n  margin: 0;\n  padding: 10px 0;\n  line-height: 1.5;\n}\n.market dt {\n  float: left;\n  padding-right: 10px;\n  width: 150px;\n  text-align: right;\n}\n.market dd {\n  margin-left: 150px;\n  padding-left: 10px;\n}\n.market li,\n.market ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.market li {\n  margin-bottom: 1rem;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 1000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n.chart {\n  width: 300px;\n  height: 400px;\n}\n", ""]);
+	exports.push([module.id, ".aside-bar {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  bottom: 0;\n  width: 60px;\n  z-index: 100;\n}\n.aside-bar .btn {\n  padding: 0;\n  height: 54px;\n  border-radius: 0;\n}\n.aside-bar .btn-link {\n  line-height: 54px;\n}\n.tree {\n  padding: 10px 20px;\n}\n.tree li,\n.tree ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.tree li {\n  position: relative;\n  min-height: 24px;\n  line-height: 24px;\n  font-size: 16px;\n}\n.tree li li {\n  margin-left: 23px;\n}\n.tree li .hd {\n  padding-left: 5px;\n  min-height: 24px;\n  line-height: 24px;\n  margin-bottom: 10px;\n}\n.tree li .hd p {\n  margin-bottom: 0;\n}\n.tree-node {\n  margin-bottom: 0;\n}\n.tree-node:before {\n  content: \"\\F147\";\n  display: inline-block;\n  margin-right: 10px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.tree-node.closed:before {\n  content: \"\\F196\";\n}\n.tree-node.not-child:before {\n  visibility: hidden;\n}\n.org-panel {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  bottom: 0;\n  right: 0;\n  background: rgba(0, 0, 0, 0.7);\n  z-index: 101;\n}\n.org-panel .org-oanel-content {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 400px;\n  background: #fff;\n  border-right: 2px solid #0275d8;\n  z-index: 102;\n}\n.datepicker {\n  padding: 4px;\n  direction: ltr;\n}\n.datepicker-inline {\n  width: 280px;\n}\n.datepicker.datepicker-rtl {\n  direction: rtl;\n}\n.datepicker.datepicker-rtl table tr td span {\n  float: right;\n}\n.datepicker-dropdown {\n  top: 0;\n  left: 0;\n}\n.datepicker > div {\n  display: none;\n}\n.datepicker.days div.datepicker-days {\n  display: block;\n}\n.datepicker.months div.datepicker-months {\n  display: block;\n}\n.datepicker.years div.datepicker-years {\n  display: block;\n}\n.datepicker table {\n  margin: 0;\n  float: left;\n  border-spacing: 0;\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n.datepicker td,\n.datepicker th {\n  text-align: center;\n  width: 38px;\n  height: 28px;\n  line-height: 28px;\n}\n.table-striped .datepicker table tr td,\n.table-striped .datepicker table tr th {\n  background-color: transparent;\n}\n.datepicker table tr td.day.focused,\n.datepicker table tr td.day:hover {\n  background: #eee;\n  cursor: pointer;\n}\n.datepicker table tr td.new,\n.datepicker table tr td.old {\n  color: #999;\n}\n.datepicker table tr td.disabled,\n.datepicker table tr td.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td.today,\n.datepicker table tr td.today.disabled,\n.datepicker table tr td.today.disabled:hover,\n.datepicker table tr td.today:hover {\n  /*@todayBackground: lighten(@orange, 30%);\n\t\t\t.button-variant(#000,@todayBackground, spin(@todayBackground, 20));*/\n  color: #f89406;\n}\n.datepicker table tr td.today:hover:hover {\n  color: #f89406;\n}\n.datepicker table tr td.today.active:hover {\n  color: #f89406;\n}\n.datepicker table tr td.range,\n.datepicker table tr td.range.disabled,\n.datepicker table tr td.range.disabled:hover,\n.datepicker table tr td.range:hover {\n  background: #eee;\n}\n.datepicker table tr td.range.today,\n.datepicker table tr td.range.today.disabled,\n.datepicker table tr td.range.today.disabled:hover,\n.datepicker table tr td.range.today:hover {\n  color: #f89406;\n}\n.datepicker table tr td.selected,\n.datepicker table tr td.selected.disabled,\n.datepicker table tr td.selected.disabled:hover,\n.datepicker table tr td.selected:hover {\n  background-color: #b3b3b3;\n  border-color: #808080;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td.active,\n.datepicker table tr td.active.disabled,\n.datepicker table tr td.active.disabled:hover,\n.datepicker table tr td.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span {\n  display: block;\n  width: 23%;\n  height: 54px;\n  line-height: 54px;\n  float: left;\n  margin: 1%;\n  cursor: pointer;\n}\n.datepicker table tr td span:hover {\n  background: #eee;\n}\n.datepicker table tr td span.disabled,\n.datepicker table tr td span.disabled:hover {\n  background: none;\n  color: #999;\n  cursor: default;\n}\n.datepicker table tr td span.active,\n.datepicker table tr td span.active.disabled,\n.datepicker table tr td span.active.disabled:hover,\n.datepicker table tr td span.active:hover {\n  background-color: #28a3ef;\n  border-color: #2861ef;\n  color: #fff;\n  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);\n}\n.datepicker table tr td span.new,\n.datepicker table tr td span.old {\n  color: #999;\n}\n.datepicker th.datepicker-switch {\n  width: 145px;\n  font-size: 18px;\n  font-weight: 600;\n  height: 38px;\n}\n.datepicker .next b,\n.datepicker .prev b {\n  display: block;\n  width: 0;\n  height: 0;\n  line-height: 0;\n  border-top: 8px solid transparent;\n  border-bottom: 8px solid transparent;\n  border-left: 8px solid #bcbcbc;\n  border-right: 8px solid #bcbcbc;\n}\n.datepicker .date-header .next:hover,\n.datepicker .date-header .prev:hover {\n  background: transparent;\n}\n.datepicker .prev b {\n  margin-left: 2px;\n  border-left-color: transparent;\n}\n.datepicker .next b {\n  margin-left: 22px;\n  border-right-color: transparent;\n}\n.datepicker .week-content .dow {\n  border-top: 1px solid #e5e5e5;\n  border-bottom: 1px solid #e5e5e5;\n  border-left: none;\n  border-right: none;\n  margin: 0;\n  color: #999;\n  font-weight: 600;\n}\n.datepicker tfoot tr th,\n.datepicker thead tr:first-child th {\n  cursor: pointer;\n}\n.datepicker tfoot tr th:hover,\n.datepicker thead tr:first-child th:hover {\n  background: #eee;\n}\n.datepicker .cw {\n  font-size: 10px;\n  width: 12px;\n  padding: 0 2px 0 5px;\n  vertical-align: middle;\n}\n.datepicker thead tr:first-child th.cw {\n  cursor: default;\n  background-color: transparent;\n}\n.datepicker.dropdown-menu {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  z-index: 1000;\n  float: left;\n  display: none;\n  min-width: 160px;\n  list-style: none;\n  padding: 0;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  -webkit-background-clip: padding-box;\n  -moz-background-clip: padding;\n  background-clip: padding-box;\n  *border-right-width: 2px;\n  *border-bottom-width: 2px;\n  color: #333333;\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 13px;\n  line-height: 18px;\n}\n.datepicker .timepicker-container {\n  float: left;\n  border-left: 1px solid #e5e5e5;\n}\n.datepicker.datepicker-small .datepicker-days td,\n.datepicker.datepicker-small .datepicker-days th {\n  text-align: center;\n  width: 28px;\n  height: 20px;\n  line-height: 20px;\n}\n.datepicker.datepicker-small .datepicker-days .next b {\n  margin-left: 2px;\n}\n.datepicker.datepicker-small .datepicker-months td {\n  width: 25px;\n}\n.datepicker.datepicker-small .datepicker-months td span {\n  height: 30px;\n  line-height: 30px;\n}\n.datepicker.datepicker-small .timepicker .picker-con span {\n  height: 24px;\n}\n.show > .dropdown-menu {\n  min-width: 100%;\n}\n.table td,\n.table th {\n  vertical-align: middle;\n}\n.table thead th {\n  white-space: nowrap;\n}\n.navbar {\n  padding: 0;\n}\n.navbar a {\n  padding-left: 1rem;\n  line-height: 54px;\n}\n.navbar a:hover {\n  text-decoration: none;\n}\n.navbar .btn {\n  height: 54px;\n  border-radius: 0;\n}\n.show > .dropdown-menu {\n  min-width: 400px;\n}\n.dropdown .form-control {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n}\n.dropdown .btn {\n  padding: .5rem;\n}\n.market .dropdown .dropdown-toggle {\n  width: 100%;\n}\n.market .dropdown .dropdown-toggle::after {\n  -webkit-align-self: center!important;\n  -ms-flex-item-align: center!important;\n  -ms-grid-row-align: center!important;\n  align-self: center!important;\n}\n.market .dropdown .dropdown-toggle span {\n  text-align: left;\n}\n.b-l {\n  position: relative;\n}\n.b-l:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-r {\n  position: relative;\n}\n.b-r:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-t {\n  position: relative;\n}\n.b-t:before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  top: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-b {\n  position: relative;\n}\n.b-b:after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.b-lr {\n  position: relative;\n}\n.b-lr:before {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.b-lr:after {\n  content: \"\";\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  width: 1px;\n  background: #eceeef;\n}\n.relative {\n  position: relative;\n}\n.hide {\n  display: none;\n}\n.opacity {\n  opacity: 0;\n}\n.form-control-style {\n  border: 1px solid rgba(0, 0, 0, 0.15);\n  border-radius: .25rem;\n}\n.w100 {\n  width: 100px;\n}\n.w200 {\n  width: 200px;\n}\n.w300 {\n  width: 300px;\n}\n.w400 {\n  width: 400px;\n}\n.w500 {\n  width: 500px;\n}\n.minw210 {\n  min-width: 210px;\n}\n.flex-cell {\n  -webkit-box-flex: 1;\n  -webkit-flex: 1;\n  -ms-flex: 1;\n  flex: 1;\n  width: 0;\n  -webkit-flex-basis: 0;\n  -ms-flex-preferred-size: 0;\n  flex-basis: 0;\n  max-width: 100%;\n  display: block;\n  position: relative;\n}\n.select {\n  display: inline-block;\n  cursor: pointer;\n}\n.select:before {\n  content: \"\\F096\";\n  display: inline-block;\n  margin-right: 5px;\n  min-width: 20px;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.select.selected {\n  color: #d9534f;\n}\n.select.selected:before {\n  content: \"\\F046\";\n}\n.main {\n  position: absolute;\n  top: 54px;\n  left: 60px;\n  right: 0;\n  bottom: 0;\n}\n.main h5 {\n  position: relative;\n  margin-bottom: 1rem;\n  padding: 1rem 20px;\n  line-height: 38px;\n}\n.main h5:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  height: 1px;\n  background: #eceeef;\n}\n.main h5 p {\n  font-size: .8em;\n  font-weight: normal;\n}\n.main .main-container {\n  margin: 0 20px 20px;\n}\n.login {\n  position: absolute;\n  top: 54px;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n.login .login-form {\n  margin: 50px auto;\n  padding: 0 20px;\n  width: 600px;\n  height: 370px;\n  background: #fff;\n}\n.login .login-form h5 {\n  position: relative;\n  margin-bottom: 0;\n  padding: 20px 0;\n  font-size: 30px;\n  font-weight: normal;\n}\n.login .login-form li,\n.login .login-form ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.login .login-form li {\n  margin-top: 30px;\n  border-bottom: 1px solid #eceeef;\n}\n.login .login-form input {\n  display: block;\n  padding: 0 10px;\n  width: 100%;\n  font-size: 30px;\n  border: 0;\n  outline: none;\n  -webkit-appearance: none;\n}\n.login .login-form .login-submit {\n  float: right;\n  margin-top: 70px;\n  cursor: pointer;\n}\n.login .login-form .login-submit:hover {\n  text-decoration: none;\n}\n.login .login-form .login-submit i,\n.login .login-form .login-submit span {\n  vertical-align: middle;\n}\n.login .login-form .login-submit span {\n  margin-left: 10px;\n  font-size: 24px;\n}\n.market dl {\n  overflow: hidden;\n}\n.market dd,\n.market dt {\n  margin: 0;\n  padding: 10px 0;\n  line-height: 1.5;\n}\n.market dt {\n  float: left;\n  padding-right: 10px;\n  width: 150px;\n  text-align: right;\n}\n.market dd {\n  margin-left: 150px;\n  padding-left: 10px;\n}\n.market li,\n.market ul {\n  margin: 0;\n  padding: 0;\n  list-style: none;\n}\n.market li {\n  margin-bottom: 1rem;\n}\n.dialog-tips {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  overflow: hidden;\n  z-index: 10000;\n}\n.dialog-tips .content {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  margin-left: -50px;\n  width: 100px;\n  height: 100px;\n  background: rgba(0, 0, 0, 0.7);\n  color: #fff;\n  text-align: center;\n  border-radius: 5px;\n}\n.dialog-tips .content i {\n  display: inline-block;\n  margin: 15px 0 5px;\n}\n.dialog-tips .content span {\n  display: block;\n}\n.chart {\n  width: 300px;\n  height: 400px;\n}\n", ""]);
 
 	// exports
 

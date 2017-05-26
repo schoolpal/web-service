@@ -60,7 +60,7 @@ function insertOrg(rootData, data) {
     } else {
         if (rootData.children && rootData.children.length) {
             $.each(rootData.children, function (i, item) {
-                insertTree(item, data);
+                insertOrg(item, data);
             })
         };
     }

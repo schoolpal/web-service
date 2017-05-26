@@ -52,6 +52,7 @@ export default class Login extends React.Component {
                     let func = []
 
                     user.name = data.cRealname
+                    user.org = data.org.cName
                     user.roles = []
                     user.access = []
 
