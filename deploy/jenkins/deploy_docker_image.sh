@@ -12,5 +12,5 @@ NAME=$4
 
 docker rm -f ${NAME}
 docker pull ${DOCKER_HUB}/${IMAGE}:latest
-docker run -d --restart=always -p ${PORT}:${PORT} --name ${NAME} ${DOCKER_HUB}/${IMAGE}:latest
+docker run -d --restart=always -p ${PORT} --name ${NAME} ${DOCKER_HUB}/${IMAGE}:latest
 docker ps -a
