@@ -197,6 +197,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>spring.xml</include>
+                    <include>spring-shiro.xml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
