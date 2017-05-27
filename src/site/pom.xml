@@ -192,7 +192,6 @@
 					<include>**/*.xml</include>
                     <include>**/*.properties</include>
 				</includes>
-				<filtering>true</filtering>
 			</resource>
             <resource>
                 <directory>src/main/resources</directory>
