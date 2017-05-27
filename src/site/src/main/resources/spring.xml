@@ -14,6 +14,14 @@
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver}" />
         <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.user}" />
+        <property name="password" value="${jdbc.pass}" />
+	    <property name="connectionProperties">
+	        <props>
+	            <prop key="characterEncoding">${jdbc.encoding}</prop>
+	            <prop key="useUnicode">${jdbc.unicode}</prop>
+	        </props>
+	    </property>
     </bean>
 
     <bean id="transactionManager"
