@@ -76,8 +76,6 @@ fi
 	FLUSH PRIVILEGES ;
 EOSQL
 
-#mysql+=( -p"${PASS}" )
-
 if ! kill -s TERM "$pid" || ! wait "$pid"; then
 	echo >&2 'MySQL init process failed.'
 	exit 1
@@ -86,3 +84,13 @@ fi
 echo "export PATH=\$PATH:${HOME}/bin" > /etc/profile.d/mysql.sh
 chmod a+x /etc/profile.d/mysql.sh
 
+########################## Create supervisor config ###############################
+SUPERVISORD_DIR=/etc/supervisor.d
+SUPERVISORD_CONF=${SUPERVISORD_DIR}/mariadb.conf
+mkdir -p ${SUPERVISORD_DIR}
+cat > ${SUPERVISORD_CONF} <<EOD
+[supervisord]
+nodaemon=false
+[program:mariadb]
+command=${HOME}/bin/mysqld_safe --defaults-file=${CONF} --user=${USER}
+EOD

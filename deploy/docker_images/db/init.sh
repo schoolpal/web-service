@@ -39,20 +39,13 @@ for SQL in /tmp/data/*.sql; do
 	echo "source ${SQL}" | "${mysql[@]}"
 done
 
+"${mysql[@]}" <<-EOSQL
+	CREATE USER 'schoolpal'@'%' IDENTIFIED BY 'schoolpal' ;
+	GRANT ALL ON schoolpal.* TO 'schoolpal'@'%' ;
+	FLUSH PRIVILEGES ;
+EOSQL
+
 if ! kill -s TERM "$pid" || ! wait "$pid"; then
 	echo >&2 'MySQL init process failed.'
 	exit 1
 fi
-
-echo "`ls -al /mariadb/data`"
-
-########################## Create supervisor config ###############################
-SUPERVISORD_DIR=/etc/supervisor.d
-SUPERVISORD_CONF=${SUPERVISORD_DIR}/mariadb.conf
-mkdir -p ${SUPERVISORD_DIR}
-cat > ${SUPERVISORD_CONF} <<EOD
-[supervisord]
-nodaemon=false
-[program:mariadb]
-command=${HOME}/bin/mysqld_safe --defaults-file=${CONF} --user=${USER}
-EOD
