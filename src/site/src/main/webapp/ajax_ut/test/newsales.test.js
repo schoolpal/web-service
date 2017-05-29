@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-describe('/ajax/sales/renew/ APIs', function() {
+describe('/ajax/sales/new/ APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';
