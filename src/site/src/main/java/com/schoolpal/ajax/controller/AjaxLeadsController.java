@@ -162,6 +162,7 @@ public class AjaxLeadsController {
 			}
 			
 			TUser user = userServ.getCachedUser();
+			leads.setTypeId(1);
 			if(leadsServ.add(leads, student, parent, user.getcId()) == null){
 				res.setCode(500);
 				res.setDetail("Failed to add leads");
@@ -208,6 +209,7 @@ public class AjaxLeadsController {
 				break;
 			}
 
+			leads.setTypeId(null);
 			if (!leadsServ.mod(leads, student, parent)){
 				res.setCode(500);
 				res.setDetail("Failed to mod leads");

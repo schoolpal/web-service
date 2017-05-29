@@ -150,7 +150,6 @@ public class LeadsService {
 				break;
 			}
 			
-			leads.setTypeId(1);
 			leads.setCreatorId(creatorId);	
 			leads.setStudentId(student.getId());
 			leads.setParentId(parent.getId());

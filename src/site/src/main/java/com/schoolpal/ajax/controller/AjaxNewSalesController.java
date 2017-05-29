@@ -17,9 +17,6 @@ import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
-import com.schoolpal.db.model.TLeadsSource;
-import com.schoolpal.db.model.TLeadsStage;
-import com.schoolpal.db.model.TLeadsStatus;
 import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LeadsService;
@@ -165,26 +162,8 @@ public class AjaxNewSalesController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-			
-			student.setCreatorId(user.getcId());
-			if (leadsServ.addStudent(student) == null){
-				res.setCode(501);
-				res.setDetail("Failed to add student");
-				break;
-			}
-			
-			parent.setCreatorId(user.getcId());
-			if (leadsServ.addParent(parent) == null){
-				res.setCode(502);
-				res.setDetail("Failed to add parent");
-				break;
-			}
-			
 			leads.setTypeId(2);
-			leads.setCreatorId(user.getcId());	
-			leads.setStudentId(student.getId());
-			leads.setParentId(parent.getId());
-			if (leadsServ.addLeads(leads) == null){
+			if(leadsServ.add(leads, student, parent, user.getcId()) == null){
 				res.setCode(500);
 				res.setDetail("Failed to add leads");
 				break;
@@ -230,21 +209,8 @@ public class AjaxNewSalesController {
 				break;
 			}
 			
-			student.setId(leads.getStudentId());
-			if (!leadsServ.modStudent(student)){
-				res.setCode(501);
-				res.setDetail("Failed to mod student");
-				break;
-			}
-			
-			parent.setId(leads.getParentId());
-			if (!leadsServ.modParent(parent)){
-				res.setCode(502);
-				res.setDetail("Failed to mod parent");
-				break;
-			}
-			
-			if (!leadsServ.modLeads(leads)){
+			leads.setTypeId(null);
+			if (!leadsServ.mod(leads, student, parent)){
 				res.setCode(500);
 				res.setDetail("Failed to mod leads");
 				break;
@@ -273,7 +239,7 @@ public class AjaxNewSalesController {
 				break;
 			}
 			
-			if (!leadsServ.delLeadsById(id) || !leadsServ.delParentByLeadsId(id) || !leadsServ.delStudentByLeadsId(id)){
+			if (!leadsServ.delById(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del leads");
 				break;
@@ -302,7 +268,7 @@ public class AjaxNewSalesController {
 				break;
 			}
 			if (StringUtils.isEmpty(assigneeId)) {
-				res.setCode(401);
+				res.setCode(402);
 				res.setDetail("Assignee id cannot be empty");
 				break;
 			}
@@ -312,95 +278,6 @@ public class AjaxNewSalesController {
 				res.setDetail("Failed to assign leads");
 				break;
 			}
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-	
-	@RequestMapping(value = "convert.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String convert(String id, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionByMappedPath(
-					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			if (StringUtils.isEmpty(id)) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
-			
-			if (!leadsServ.convertToOpportunityById(id)){
-				res.setCode(500);
-				res.setDetail("Failed to assign leads");
-				break;
-			}
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-	
-	@RequestMapping(value = "listSources.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listSources() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TLeadsSource> sources = null;
-			sources = leadsServ.queryLeadsSourcesByTypeId(2);
-			res.setData(sources);
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "listStages.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listStages() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TLeadsStage> stages = null;
-			stages = leadsServ.queryLeadsStagesByTypeId(2);
-			res.setData(stages);
-
-		} while (false);
-
-		return gson.toJson(res);
-	}
-
-	@RequestMapping(value = "listStatus.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String listStatus() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TLeadsStatus> status = null;
-			status = leadsServ.queryLeadsStatusByTypeId(2);
-			res.setData(status);
 
 		} while (false);
 
