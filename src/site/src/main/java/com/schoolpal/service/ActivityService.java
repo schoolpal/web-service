@@ -119,4 +119,16 @@ public class ActivityService {
 		}
 		return ret;
 	}
+	
+	public boolean updateLeadsCountsById(String id){
+		boolean ret = false;
+		try{
+			ret = activityDao.updateLeadsCountsById(id) > 0;
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+
 }

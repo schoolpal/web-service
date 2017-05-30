@@ -27,5 +27,6 @@ public interface TActivityMapper {
     
     int insertOne(TActivity record);
     int updateOneById(TActivity record);
+    int updateLeadsCountsById(String id);
     int deleteOneById(String id);
 }
