@@ -69,6 +69,13 @@
     FROM t_activity AS a
     WHERE id=#{id,jdbcType=CHAR}
   </select>
+  <update id="updateLeadsCountsById">
+  	UPDATE t_activity as a LEFT JOIN t_leads as l ON l.channel_id = a.id
+	SET 
+		a.leads = (SELECT COUNT(*) FROM t_leads WHERE channel_id = a.id and type_id = 1),
+		a.opportunities = (SELECT COUNT(*) FROM t_leads WHERE channel_id = a.id and type_id > 1)
+	WHERE a.id = #{id,jdbcType=CHAR}
+  </update>
   <insert id="insertOne" parameterType="com.schoolpal.db.model.TActivity" useGeneratedKeys="true" keyProperty="id">
     insert into t_activity
     <trim prefix="(" suffix=")" suffixOverrides=",">

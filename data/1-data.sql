@@ -61,17 +61,29 @@ INSERT INTO `t_function` VALUES
 ('2-1-1','2','2-1','','新建','/ajax/sales/new/add.do',3,1,'',1),
 ('2-1-2','2','2-1','','编辑','/ajax/sales/new/mod.do',3,2,'',2),
 ('2-1-3','2','2-1','','删除','/ajax/sales/new/del.do',3,3,'',3),
-/*--('2-1-4','2','2-1','','导入','/ajax/sales/import.do',3,4,'',6),*/
 ('2-1-5','2','2-1','','分配','/ajax/sales/new/assign.do',3,5,'',7),
 ('2-1-6','2','2-1','','创建合同','/ajax/sales/new/sign.do',3,6,'',9),
 ('2-2','2','2','','续报销售机会','/ajax/sales/renew/',2,1,'',NULL),
 ('2-2-1','2','2-2','','新建','/ajax/sales/renew/add.do',3,1,'',1),
 ('2-2-2','2','2-2','','编辑','/ajax/sales/renew/mod.do',3,2,'',2),
 ('2-2-3','2','2-2','','删除','/ajax/sales/renew/del.do',3,3,'',3),
-/*--('2-2-4','2','2-2','','导入','/ajax/mkt/sales/import.do',3,4,'',6),*/
 ('2-2-5','2','2-2','','分配','/ajax/sales/renew/assign.do',3,5,'',7),
 ('2-2-6','2','2-2','','创建合同','/ajax/sales/renew/sign.do',3,6,'',9),
+('2-3','2','2-3','','我的合同','/ajax/sales/contract/',2,1,'',NULL),
+('2-3-1','2','2-3','','新建合同','/ajax/sales/contract/add.do',3,1,'',1),
+('2-3-2','2','2-3','','编辑合同','/ajax/sales/contract/mod.do',3,2,'',2),
+('2-4','2','2-4','','我的学员','/ajax/sales/customer/',2,1,'',NULL),
+('2-4-1','2','2-4','','编辑学员信息','/ajax/sales/customer/student/mod.do',3,1,'',2),
+('2-4-2','2','2-4','','编辑家长信息','/ajax/sales/customer/parent/mod.do',3,2,'',2),
 ('3','3','3','客服','客户服务','/ajax/service',1,3,'',NULL),
+('3-1','3','3','','合同管理','/ajax/service/contract/',2,1,'',NULL),
+('3-1-1','3','3-1','','编辑合同','/ajax/service/contract/mod.do',3,1,'',2),
+('3-1-2','3','3-1','','删除合同','/ajax/service/contract/del.do',3,2,'',2),
+('3-2','3','3','','学员管理','/ajax/service/customer/',2,1,'',NULL),
+('3-2-1','3','3-2','','编辑学员信息','/ajax/service/customer/student/mod.do',3,1,'',2),
+('3-2-2','3','3-2','','删除学员信息','/ajax/service/customer/student/del.do',3,2,'',2),
+('3-2-3','3','3-2','','编辑家长信息','/ajax/service/customer/parent/mod.do',3,3,'',2),
+('3-2-4','3','3-2','','删除家长信息','/ajax/service/customer/parent/del.do',3,4,'',2),
 ('4','4','4','财务','财务管理','/ajax/finance',1,4,'',NULL),
 ('5','5','5','教务','教务管理','/ajax/academy',1,5,'',NULL),
 ('6','6','6','教学','教学管理','/ajax/education',1,6,'',NULL),
@@ -256,7 +268,9 @@ INSERT INTO `t_leads_stage` VALUES
 (9,2,'体验（已承诺，已体验）'),
 (10,2,'签约（已体验，未签约）'),
 (11,2,'签约（已体验，定金）'),
-(12,2,'已签约');
+(12,2,'已签约'),
+(13,3,'未分配'),
+(14,3,'已分配');
 /*!40000 ALTER TABLE `t_leads_stage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -274,7 +288,11 @@ INSERT INTO `t_leads_status` VALUES
 (5,2,'新机会（未处理）'),
 (6,2,'进程中（处理中）'),
 (7,2,'已签约（合同）'),
-(8,2,'已关闭（无效信息）');
+(8,2,'已关闭（无效信息）'),
+(9,3,'新机会（未处理）'),
+(10,3,'进程中（处理中）'),
+(11,3,'已签约（合同）'),
+(12,3,'已关闭（已流失）');
 /*!40000 ALTER TABLE `t_leads_status` ENABLE KEYS */;
 UNLOCK TABLES;
 

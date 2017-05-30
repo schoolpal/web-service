@@ -19,6 +19,7 @@ import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
 import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.db.model.TUser;
+import com.schoolpal.service.ActivityService;
 import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 
@@ -28,6 +29,8 @@ public class AjaxLeadsController {
 	
 	@Autowired
 	private UserService userServ;
+	@Autowired
+	private ActivityService actServ;
 	@Autowired
 	private LeadsService leadsServ;
 	
@@ -162,11 +165,13 @@ public class AjaxLeadsController {
 			}
 			
 			TUser user = userServ.getCachedUser();
+			leads.setTypeId(1);
 			if(leadsServ.add(leads, student, parent, user.getcId()) == null){
 				res.setCode(500);
 				res.setDetail("Failed to add leads");
 				break;
 			}
+			actServ.updateLeadsCountsById(leads.getChannelId());
 			res.setData(leads.getId());
 			
 		} while (false);
@@ -208,10 +213,23 @@ public class AjaxLeadsController {
 				break;
 			}
 
+			TLeads target = leadsServ.queryLeadsById(leads.getId());
+			if(target == null){
+				res.setCode(412);
+				res.setDetail("Leads cannot find");
+				break;
+			}
+			
+			leads.setTypeId(null);
 			if (!leadsServ.mod(leads, student, parent)){
 				res.setCode(500);
 				res.setDetail("Failed to mod leads");
 				break;
+			}
+			
+			if (leads.getChannelId() != target.getChannelId()){
+				actServ.updateLeadsCountsById(target.getChannelId());
+				actServ.updateLeadsCountsById(leads.getChannelId());
 			}
 						
 		} while (false);
@@ -237,11 +255,19 @@ public class AjaxLeadsController {
 				break;
 			}
 			
+			TLeads target = leadsServ.queryLeadsById(id);
+			if(target == null){
+				res.setCode(412);
+				res.setDetail("Leads cannot find");
+				break;
+			}
+			
 			if (!leadsServ.delById(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del leads");
 				break;
 			}
+			actServ.updateLeadsCountsById(target.getChannelId());
 
 		} while (false);
 

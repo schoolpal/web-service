@@ -103,8 +103,10 @@ public class LeadsService {
 		boolean ret = false;
 		try{
 			leads.setLastUpdate(new Date());
+			if(leadsDao.updateOne(leads) > 0){
+				ret = true;
+			}
 			
-			ret = leadsDao.updateOne(leads) > 0;
 			
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -117,7 +119,7 @@ public class LeadsService {
 		boolean ret = false;
 		try{
 			
-			TLeads leads = leadsDao.selectStudentAndParentById(id);
+			TLeads leads = leadsDao.selectOneById(id);
 			if (leads == null){
 				throw new Exception("Leads not exists");
 			}
@@ -128,7 +130,9 @@ public class LeadsService {
 			if (!StringUtils.isEmpty(leads.getStudentId())){
 				studentDao.deleteOneById(leads.getStudentId());
 			}
-			ret = leadsDao.deleteOneById(id) > 0;
+			if (leadsDao.deleteOneById(id) > 0){
+				ret = true;
+			}
 			
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
@@ -150,7 +154,6 @@ public class LeadsService {
 				break;
 			}
 			
-			leads.setTypeId(1);
 			leads.setCreatorId(creatorId);	
 			leads.setStudentId(student.getId());
 			leads.setParentId(parent.getId());
