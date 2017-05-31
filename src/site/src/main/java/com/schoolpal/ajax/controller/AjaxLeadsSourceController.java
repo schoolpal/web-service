@@ -22,11 +22,11 @@ public class AjaxLeadsSourceController {
 
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list() {
+	public String list(int typeId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			List<TLeadsSource> sources = null;
-			sources = leadsServ.queryLeadsSourcesByTypeId(1);
+			sources = leadsServ.queryLeadsSourcesByTypeId(typeId);
 			res.setData(sources);
 
 		} while (false);

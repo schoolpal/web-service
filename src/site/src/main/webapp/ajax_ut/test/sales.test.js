@@ -1,10 +1,11 @@
 /// <reference path="../typings/index.d.ts" />
 
-describe('/ajax/sales/new/ APIs', function() {
+describe('/ajax/sales/oppor/ APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';
-	var leads_path = '/web/ajax/sales/new/';
+	var leads_path = '/web/ajax/mkt/leads/';
+	var oppor_path = '/web/ajax/sales/oppor/';
 
 	var user = 'sp-crm';
 	var pass = '123456';
@@ -56,12 +57,15 @@ describe('/ajax/sales/new/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
-	it('source/list.do', function() {
+	it('source/list.do - new', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, leads_path, 'source/list.do'),
 			dataType : 'json',
+			data : {
+				typeId : 2,
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -72,12 +76,34 @@ describe('/ajax/sales/new/ APIs', function() {
 		expect(jsonData.data).to.not.empty;
 	});
 
-	it('stage/list.do', function() {
+//	it('source/list.do - renew', function() {
+//		var xhr = $.ajax({
+//			async : false,
+//			method : 'POST',
+//			url : buildUrl(host, leads_path, 'source/list.do'),
+//			dataType : 'json',
+//			data : {
+//				typeId : 3,
+//			}
+//		});
+//
+//		expect(xhr.status).to.be.equal(200);
+//		var jsonData = xhr.responseJSON;
+//		resDump('source/list.do', jsonData);
+//		expect(jsonData.code).to.be.equal(200);
+//		expect(jsonData.detail).to.be.equal('Ok');
+//		expect(jsonData.data).to.not.empty;
+//	});
+
+	it('stage/list.do - new', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, leads_path, 'stage/list.do'),
 			dataType : 'json',
+			data : {
+				typeId : 2,
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -88,12 +114,53 @@ describe('/ajax/sales/new/ APIs', function() {
 		expect(jsonData.data).to.not.empty;
 	});
 
-	it('status/list.do', function() {
+	it('stage/list.do - renew', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'stage/list.do'),
+			dataType : 'json',
+			data : {
+				typeId : 3,
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('stage/list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	it('status/list.do - new', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, leads_path, 'status/list.do'),
 			dataType : 'json',
+			data : {
+				typeId : 2,
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('status/list.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.detail).to.be.equal('Ok');
+		expect(jsonData.data).to.not.empty;
+	});
+
+	it('status/list.do - renew', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, leads_path, 'status/list.do'),
+			dataType : 'json',
+			data : {
+				typeId : 3,
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -108,9 +175,10 @@ describe('/ajax/sales/new/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'add.do'),
+			url : buildUrl(host, oppor_path, 'add.do'),
 			dataType : 'json',
 			data : {
+				typeId : 2,
 				orgnizationId: org_val,
 				sourceId: 1,
 				channelId: '16122700000076',
@@ -145,7 +213,7 @@ describe('/ajax/sales/new/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'query.do'),
+			url : buildUrl(host, oppor_path, 'query.do'),
 			dataType : 'json',
 			data: {
 				id: leads_id_val
@@ -167,7 +235,7 @@ describe('/ajax/sales/new/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'list.do'),
+			url : buildUrl(host, oppor_path, 'list.do'),
 			dataType : 'json',
 			data: {
 				orgId: org_val
@@ -186,7 +254,7 @@ describe('/ajax/sales/new/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'mod.do'),
+			url : buildUrl(host, oppor_path, 'mod.do'),
 			dataType : 'json',
 			data : {
 				id : leads_id_val,
@@ -222,7 +290,7 @@ describe('/ajax/sales/new/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, leads_path, 'assign.do'),
+			url : buildUrl(host, oppor_path, 'assign.do'),
 			dataType : 'json',
 			data: {
 				id: leads_id_val,

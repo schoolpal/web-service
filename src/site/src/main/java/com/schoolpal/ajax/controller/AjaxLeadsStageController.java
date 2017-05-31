@@ -22,11 +22,11 @@ public class AjaxLeadsStageController {
 
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list() {
+	public String list(int typeId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			List<TLeadsStage> stages = null;
-			stages = leadsServ.queryLeadsStagesByTypeId(1);
+			stages = leadsServ.queryLeadsStagesByTypeId(typeId);
 			res.setData(stages);
 
 		} while (false);

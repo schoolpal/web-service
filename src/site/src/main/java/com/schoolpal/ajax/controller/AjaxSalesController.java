@@ -23,8 +23,8 @@ import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
 
 @Controller
-@RequestMapping("/ajax/sales/renew")
-public class AjaxRenewSalesController {
+@RequestMapping("/ajax/sales/oppor")
+public class AjaxSalesController {
 	
 	@Autowired
 	private UserService userServ;
@@ -38,7 +38,7 @@ public class AjaxRenewSalesController {
 	public String list(String orgId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-1")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -64,7 +64,7 @@ public class AjaxRenewSalesController {
 	public String query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-1")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -117,7 +117,7 @@ public class AjaxRenewSalesController {
 				res.setCode(411);
 				res.setDetail("Orgnization id cannot be empty");
 				break;
-			}			
+			}
 			if (leads.getSourceId() == null){
 				res.setCode(412);
 				res.setDetail("Source cannot be empty");
@@ -136,6 +136,11 @@ public class AjaxRenewSalesController {
 			if (leads.getStatusId() == null){
 				res.setCode(415);
 				res.setDetail("Status cannot be empty");
+				break;
+			}
+			if (leads.getTypeId() == null || (leads.getTypeId() != 2 && leads.getTypeId() != 3) ){
+				res.setCode(411);
+				res.setDetail("Type id cannot be empty");
 				break;
 			}
 			
@@ -162,7 +167,6 @@ public class AjaxRenewSalesController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-			leads.setTypeId(3);
 			if(leadsServ.add(leads, student, parent, user.getcId()) == null){
 				res.setCode(500);
 				res.setDetail("Failed to add leads");
@@ -215,7 +219,7 @@ public class AjaxRenewSalesController {
 				res.setDetail("Failed to mod leads");
 				break;
 			}
-		
+			
 		} while (false);
 
 		return gson.toJson(res);
@@ -283,5 +287,5 @@ public class AjaxRenewSalesController {
 
 		return gson.toJson(res);
 	}
-	
+
 }

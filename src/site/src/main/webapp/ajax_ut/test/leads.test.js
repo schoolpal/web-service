@@ -64,6 +64,9 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			method : 'POST',
 			url : buildUrl(host, leads_path, 'source/list.do'),
 			dataType : 'json',
+			data : {
+				typeId : 1,
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -80,6 +83,9 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			method : 'POST',
 			url : buildUrl(host, leads_path, 'stage/list.do'),
 			dataType : 'json',
+			data : {
+				typeId : 1,
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
@@ -96,6 +102,9 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			method : 'POST',
 			url : buildUrl(host, leads_path, 'status/list.do'),
 			dataType : 'json',
+			data : {
+				typeId : 1,
+			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
