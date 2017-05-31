@@ -3,7 +3,7 @@ services:
   nginx:
     image: bj.dinner3000.com:5000/nginx-dev:latest
     ports:
-      - "80:80"
+      - "72:80"
     volumes:
       - /opt/schoolpal/src/site/target:/usr/share/nginx/html:ro
     depends_on:
@@ -11,7 +11,7 @@ services:
   web:
     image: bj.dinner3000.com:5000/web:latest
     ports:
-      - "7180:8080"
+      - "7280:8080"
     depends_on:
       - db
       - redis

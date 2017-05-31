@@ -1,7 +1,7 @@
 #!/bin/sh -x
 
 if [ -z $1 ]; then
-	echo "Usage: $0 [COMPONENT_NAME]"
+	echo "Usage: $0 [COMMAND]"
 	exit 0
 fi
 
@@ -28,15 +28,15 @@ function set_options(){
 	fi
 
 	if [ "$1" = "redis" ]; then
-		PORT="-p 6379:6379"
+		PORT=""
 	elif [ "$1" = "db" ]; then
-		PORT="-p 3306:3306"
+		PORT=""
 		LINK=""
 	elif [ "$1" = "web" ]; then
-		PORT="-p 8080:8080"
+		PORT="-p 7180:8080"
 		LINK="--link db:db --link redis:redis"
 	elif [ "$1" = "nginx" ]; then
-		PORT="-p 80:80"
+		PORT="-p 71:80"
 		LINK="--link web:web"
 	else
 		PORT=""
@@ -44,21 +44,33 @@ function set_options(){
 	fi
 }
 
-function execute(){
-	docker pull ${DOCKERHUB}${IMAGE}:latest
-	docker rm -f ${NAME}
-	docker run -d --restart=always ${PORT} ${LINK} ${VOLUMN} --name ${NAME} ${DOCKERHUB}${IMAGE}:latest
-	docker ps -a
+function deploy(){
+	
 }
 
-if [ "$1" != "all" ]; then 
-	set_options $1
-	execute
-else
+if [ "$1" == "remove" ]; then 
 	for component in redis db web nginx; do
-		set_options ${component}
-		execute
+		docker rm -f ${component}
 	done
+elif [ "$1" == "start" ]; then 
+	for component in redis db web nginx; do
+		docker start ${component}
+	done
+elif [ "$1" == "stop" ]; then 
+	for component in nginx web db redis; do
+		docker stop ${component}
+	done
+elif [ "$1" == "pull" ]; then 
+	for component in redis db web nginx; do
+		docker pull ${DOCKERHUB}${IMAGE}:latest
+	done
+elif [ "$1" == "run" ]; then 
+	for component in redis db web nginx; do
+		docker run -d --restart=always ${PORT} ${LINK} ${VOLUMN} --name ${NAME} ${DOCKERHUB}${IMAGE}:latest
+	done
+else
+	echo "Invalid command"
+	exit 0
 fi
 
 
