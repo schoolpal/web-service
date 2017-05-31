@@ -17,6 +17,8 @@ window.SCHOOLPAL_CONFIG = {
         '1-2-1': { PATH_RULE: /^crm\/market\/leads\/edit\/create(\/)?$/ },
         '1-2-2': { PATH_RULE: /^crm\/market\/leads\/edit\/\w+(\/)?$/ },
 
+        '2-1': { PATH: 'crm/sales/new', PATH_RULE: /^crm\/sales\/new(\/\w+)?(\/)?$/, ICON: 'fa-filter' },
+
         '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
         '7-1-2': { PATH_RULE: /^sys\/org\/\w+(\/)?$/ },
@@ -49,9 +51,9 @@ import Crm from './components/Crm'
 import MarketActivityList from './components/market/activity/List'
 import MarketActivityEditor from './components/market/activity/Editor'
 import MarketActivityView from './components/market/activity/View'
-import MarketChanceList from './components/market/chance/List'
-import MarketChanceEditor from './components/market/chance/Editor'
-import MarketChanceView from './components/market/chance/View'
+import MarketLeadstList from './components/market/leads/List'
+import MarketLeadsEditor from './components/market/leads/Editor'
+import MarketLeadsView from './components/market/leads/View'
 
 import SalesChanceList from './components/sales/chance/List'
 import SalesChanceEditor from './components/sales/chance/Editor'
@@ -96,13 +98,13 @@ ReactDOM.render((
                 <Route path="market/activity/:id" component={MarketActivityView} />
                 <Route path="market/activity/edit/:id" component={MarketActivityEditor} />
 
-                <Route path="market/leads" component={MarketChanceList} />
-                <Route path="market/leads/:id" component={MarketChanceView} />
+                <Route path="market/leads" component={MarketLeadstList} />
+                <Route path="market/leads/:id" component={MarketLeadsView} />
                 <Route path="market/leads/edit/:id" component={MarketChanceEditor} />
 
                 <Route path="sales/chance" component={SalesChanceList} />
                 <Route path="sales/chance/:id" component={SalesChanceView} />
-                <Route path="sales/chance/edit/:id" component={SalesChanceEditor} />
+                <Route path="sales/chance/edit/:id" component={MarketLeadsEditor} />
 
                 <Route path="sales/contract" component={SalesContractList} />
                 <Route path="sales/contract/:id" component={SalesContractView} />

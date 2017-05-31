@@ -1,17 +1,17 @@
 version: '3'
 services:
   nginx:
-    image: bj.dinner3000.com:5000/nginx:latest
+    image: bj.dinner3000.com:5000/nginx-dev:latest
     ports:
-      - "80:80"
+      - "72:80"
     volumes:
-      - ../../src/front/html/:/usr/share/nginx/html/:ro
+      - /Users/wangfan/work/schoolpal/src/front/webapp:/usr/share/nginx/html:ro
     depends_on:
       - web
   web:
     image: bj.dinner3000.com:5000/web:latest
     ports:
-      - "7180:8080"
+      - "7280:8080"
     depends_on:
       - db
       - redis

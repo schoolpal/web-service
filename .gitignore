@@ -7,3 +7,4 @@ src/site/.settings/*
 src/site/target/
 src/front/node_modules
 src/front/html
+deploy/dev-env/docker_compose/docker-compose.yml

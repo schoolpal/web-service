@@ -44,10 +44,6 @@ function set_options(){
 	fi
 }
 
-function deploy(){
-	
-}
-
 if [ "$1" == "remove" ]; then 
 	for component in redis db web nginx; do
 		docker rm -f ${component}
