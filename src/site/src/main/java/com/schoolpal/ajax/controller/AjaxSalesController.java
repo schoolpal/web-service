@@ -35,7 +35,7 @@ public class AjaxSalesController {
 
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(String orgId) {
+	public String list(String orgId, Integer typeId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("2-1")) {
@@ -51,7 +51,7 @@ public class AjaxSalesController {
 			}
 			
 			List<TLeads> leadsList = null;
-			leadsList = leadsServ.queryLeadsListByOrgId(orgId, 2);
+			leadsList = leadsServ.queryLeadsListByOrgId(orgId, typeId);
 			res.setData(leadsList);
 
 		} while (false);

@@ -22,7 +22,7 @@ public class AjaxLeadsStatusController {
 
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(int typeId) {
+	public String list(Integer typeId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			List<TLeadsStatus> status = null;

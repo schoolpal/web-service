@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import command from '../../../utils/command'
 import { CreateButton } from '../../public/Button'
 
 export default class List extends React.Component {
@@ -10,16 +11,14 @@ export default class List extends React.Component {
 
     renderCommand() {
         const path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-        const auth = SCHOOLPAL_CONFIG.commandRules.find((item) => { return item.PATH_RULE.test(path) === true });
+        const commands = command(path);
         let temp = [];
 
-        if (auth) {
-            auth.command.map((item, index) => {
-                if (item === 'Add') {
-                    temp.push(<CreateButton key={index} link={this.props.location.pathname + '/edit/create'} />)
-                };
-            })
-        }
+        commands.map((item, index) => {
+            if (item === 'Add') {
+                temp.push(<CreateButton key={index} link={this.props.location.pathname + '/edit/create'} />)
+            };
+        })
 
         return temp;
     }
@@ -30,7 +29,6 @@ export default class List extends React.Component {
                 <h5>
                     <i className="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;销售线索
                     <div className="btn-group float-right mr-4" role="group">
-                        <button type="button" className="btn btn-success"><i className="fa fa-file-excel-o" aria-hidden="true"></i> 导入</button>
                         {this.renderCommand()}
                     </div>
                 </h5>

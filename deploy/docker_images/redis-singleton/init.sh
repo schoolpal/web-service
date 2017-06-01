@@ -27,17 +27,12 @@ requirepass "123456"
 EOF
 
 #Create redis startup configs
-SUPERVISORD_DIR=/etc/supervisor.d
-SUPERVISORD_CONF=${SUPERVISORD_DIR}/redis-singleton.conf
-mkdir -p ${SUPERVISORD_DIR}
+SUPERVISORD_DIR=/config/init
+SUPERVISORD_CONF=${SUPERVISORD_DIR}/redis.sh
 cat > ${SUPERVISORD_CONF} <<EOF
-[supervisord]
-nodaemon=false
-[program:redis-singleton}]
-command=redis-server ${REDIS_CONF}
-priority=1
-autorestart=unexpected
-stdout_logfile=${REDIS_LOG}
+#!/bin/sh
+
+redis-server ${REDIS_CONF}
 EOF
 
 

@@ -80,6 +80,10 @@ export default class List extends React.Component {
     }
 
     componentDidMount() {
+        if (this.state.leadsId === 'create') {
+            return;
+        }
+
         $.when(
             approachList(),
             contactList(this.state.leadsId)
@@ -307,25 +311,29 @@ export default class List extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <p className="ht pt-3 pb-3 b-t b-b">沟通记录</p>
-                <table className="table table-bordered">
-                    <thead>
-                        <tr>
-                            {
-                                tableTitle(this.state.canEditd).map((item, index) => {
-                                    return <th key={index}>{item.name}</th>
-                                })
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderAddContact()}
-                        {this.renderItem()}
-                    </tbody>
-                </table>
-            </div>
-        )
+        if (this.state.leadsId === 'create') {
+            return null;
+        } else {
+            return (
+                <div>
+                    <p className="ht pt-3 pb-3 b-t b-b">沟通记录</p>
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                {
+                                    tableTitle(this.state.canEditd).map((item, index) => {
+                                        return <th key={index}>{item.name}</th>
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderAddContact()}
+                            {this.renderItem()}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
     }
 }

@@ -17,15 +17,20 @@ window.SCHOOLPAL_CONFIG = {
         '1-2-1': { PATH_RULE: /^crm\/market\/leads\/edit\/create(\/)?$/ },
         '1-2-2': { PATH_RULE: /^crm\/market\/leads\/edit\/\w+(\/)?$/ },
 
-        '2-1': { PATH: 'crm/sales/new', PATH_RULE: /^crm\/sales\/new(\/\w+)?(\/)?$/, ICON: 'fa-filter' },
+        '2-1': { PATH: 'crm/sales/oppor', PATH_RULE: /^crm\/sales\/oppor(\/\w+)?(\/)?$/, ICON: 'fa-filter' },
+        '2-1-1': { PATH_RULE: /^crm\/sales\/oppor\/edit\/create(\/)?$/ },
+        '2-1-2': { PATH_RULE: /^crm\/sales\/oppor\/edit\/\w+(\/)?$/ },
 
         '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
         '7-1-2': { PATH_RULE: /^sys\/org\/\w+(\/)?$/ },
+
         '7-2': { PATH: 'sys/role', PATH_RULE: /^sys\/role(\/)?$/, ICON: 'fa-users' },
         '7-2-1': { PATH_RULE: /^sys\/role\/\w+\/create(\/)?$/ },
         '7-2-2': { PATH_RULE: /^sys\/role\/\w+\/\w+(\/)?$/ },
+
         '7-3': { PATH: 'sys/auth', PATH_RULE: /^sys\/auth(\/)?$/, ICON: 'fa-shield' },
+
         '7-4': { PATH: 'sys/user', PATH_RULE: /^sys\/user(\/)?$/, ICON: 'fa-user' },
         '7-4-1': { PATH_RULE: /^sys\/user\/\w+\/create(\/)?$/ },
         '7-4-2': { PATH_RULE: /^sys\/user\/\w+\/\w+(\/)?$/ },
@@ -55,9 +60,9 @@ import MarketLeadstList from './components/market/leads/List'
 import MarketLeadsEditor from './components/market/leads/Editor'
 import MarketLeadsView from './components/market/leads/View'
 
-import SalesChanceList from './components/sales/chance/List'
-import SalesChanceEditor from './components/sales/chance/Editor'
-import SalesChanceView from './components/sales/chance/View'
+import SalesOpporList from './components/sales/oppor/List'
+import SalesOpporEditor from './components/sales/oppor/Editor'
+import SalesOpporView from './components/sales/oppor/View'
 import SalesContractList from './components/sales/contract/List'
 import SalesContractEditor from './components/sales/contract/Editor'
 import SalesContractView from './components/sales/contract/View'
@@ -100,11 +105,11 @@ ReactDOM.render((
 
                 <Route path="market/leads" component={MarketLeadstList} />
                 <Route path="market/leads/:id" component={MarketLeadsView} />
-                <Route path="market/leads/edit/:id" component={MarketChanceEditor} />
+                <Route path="market/leads/edit/:id" component={MarketLeadsEditor} />
 
-                <Route path="sales/chance" component={SalesChanceList} />
-                <Route path="sales/chance/:id" component={SalesChanceView} />
-                <Route path="sales/chance/edit/:id" component={MarketLeadsEditor} />
+                <Route path="sales/oppor" component={SalesOpporList} />
+                <Route path="sales/oppor/:id" component={SalesOpporView} />
+                <Route path="sales/oppor/edit/:id" component={SalesOpporEditor} />
 
                 <Route path="sales/contract" component={SalesContractList} />
                 <Route path="sales/contract/:id" component={SalesContractView} />

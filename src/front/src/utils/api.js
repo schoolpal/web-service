@@ -629,11 +629,11 @@ export function actQuery(id) {
     return defer.promise();
 }
 
-export function leadsSources() {
+export function leadsSources(id) {
     const defer = $.Deferred();
     const url = 'mkt/leads/source/list.do';
 
-    io({ url: url }, (data) => {
+    io({ url: url, data: { typeId: id } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {
@@ -644,11 +644,11 @@ export function leadsSources() {
     return defer.promise();
 }
 
-export function leadsStages() {
+export function leadsStages(id) {
     const defer = $.Deferred();
     const url = 'mkt/leads/stage/list.do';
 
-    io({ url: url }, (data) => {
+    io({ url: url, data: { typeId: id } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {
@@ -659,11 +659,11 @@ export function leadsStages() {
     return defer.promise();
 }
 
-export function leadsStatus() {
+export function leadsStatus(id) {
     const defer = $.Deferred();
     const url = 'mkt/leads/status/list.do';
 
-    io({ url: url }, (data) => {
+    io({ url: url, data: { typeId: id } }, (data) => {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {
@@ -832,7 +832,7 @@ export function contactList(id) {
     return defer.promise();
 }
 
-export function approachList(){
+export function approachList() {
     const defer = $.Deferred();
     const url = 'contact/approach/list.do';
 
@@ -869,6 +869,37 @@ export function contactMod(data) {
     const settings = $.extend({ url: url }, { data: data });
 
     io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function opporAdd(data) {
+    const defer = $.Deferred();
+    const url = 'sales/oppor/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function opporQuery(id) {
+    const defer = $.Deferred();
+    const url = 'sales/oppor/query.do';
+
+    io({ url: url, data: { id: id } }, function (data) {
         if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
             defer.resolve(data.data);
         } else {
