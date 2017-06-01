@@ -7889,8 +7889,6 @@ webpackJsonp([0],{
 	                name: (0, _userProfile.getProfile)().name,
 	                org: (0, _userProfile.getProfile)().org
 	            },
-	            canEditd: _this.props.canEditd,
-	            leadsId: _this.props.leadsId,
 
 	            list: [],
 	            approach: [],
@@ -7921,16 +7919,32 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            if (this.state.leadsId === 'create') {
-	                return;
-	            }
-
-	            $.when((0, _api.approachList)(), (0, _api.contactList)(this.state.leadsId)).done(function (approach, list) {
+	            (0, _api.approachList)().done(function (approach) {
 	                _this2.setState({
-	                    approach: approach,
-	                    list: list
+	                    approach: approach
 	                });
+
+	                if (_this2.props.leadsId !== 'create') {
+	                    (0, _api.contactList)(_this2.props.leadsId).done(function (list) {
+	                        _this2.setState({
+	                            list: list
+	                        });
+	                    });
+	                }
 	            });
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            var _this3 = this;
+
+	            if (nextProps.leadsId !== 'create' && nextProps.leadsId !== this.props.leadsId) {
+	                (0, _api.contactList)(nextProps.leadsId).done(function (list) {
+	                    _this3.setState({
+	                        list: list
+	                    });
+	                });
+	            }
 	        }
 	    }, {
 	        key: 'changeApproach',
@@ -7973,7 +7987,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'addContact',
 	        value: function addContact() {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 	            var success = (0, _DialogTips2.default)({ type: 'success', autoClose: true });
@@ -7981,19 +7995,19 @@ webpackJsonp([0],{
 
 	            loading.open();
 	            (0, _api.contactAdd)({
-	                leadsId: this.state.leadsId,
+	                leadsId: this.props.leadsId,
 	                approachId: this.state.add.approachId,
 	                summary: this.state.add.summary
 	            }).done(function () {
-	                _this3.setState({
+	                _this4.setState({
 	                    add: {
 	                        approachId: '',
 	                        summary: ''
 	                    }
 	                });
 
-	                (0, _api.contactList)(_this3.state.leadsId).done(function (list) {
-	                    _this3.setState({ list: list });
+	                (0, _api.contactList)(_this4.props.leadsId).done(function (list) {
+	                    _this4.setState({ list: list });
 	                    loading.close();
 	                    success.open();
 	                });
@@ -8005,7 +8019,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'editContact',
 	        value: function editContact(event, item) {
-	            var _this4 = this;
+	            var _this5 = this;
 
 	            var target = event.target;
 
@@ -8016,8 +8030,8 @@ webpackJsonp([0],{
 	                    var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
 	                    loading.open();
-	                    (0, _api.contactMod)(_this4.state.edit).done(function () {
-	                        _this4.setState({
+	                    (0, _api.contactMod)(_this5.state.edit).done(function () {
+	                        _this5.setState({
 	                            edit: {
 	                                id: '',
 	                                approachId: '',
@@ -8027,8 +8041,8 @@ webpackJsonp([0],{
 
 	                        hideEdit(target);
 
-	                        (0, _api.contactList)(_this4.state.leadsId).done(function (list) {
-	                            _this4.setState({ list: list });
+	                        (0, _api.contactList)(_this5.props.leadsId).done(function (list) {
+	                            _this5.setState({ list: list });
 	                            loading.close();
 	                            success.open();
 	                        });
@@ -8047,9 +8061,9 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'renderAddContact',
 	        value: function renderAddContact() {
-	            var _this5 = this;
+	            var _this6 = this;
 
-	            if (this.state.canEditd === true) {
+	            if (this.props.canEditd === true) {
 	                return _react2.default.createElement(
 	                    'tr',
 	                    null,
@@ -8064,7 +8078,7 @@ webpackJsonp([0],{
 	                        _react2.default.createElement(
 	                            'select',
 	                            { value: this.state.add.approachId, onChange: function onChange(event) {
-	                                    _this5.changeApproach(event, 'add');
+	                                    _this6.changeApproach(event, 'add');
 	                                }, className: 'form-control' },
 	                            _react2.default.createElement(
 	                                'option',
@@ -8099,7 +8113,7 @@ webpackJsonp([0],{
 	                        'td',
 	                        null,
 	                        _react2.default.createElement('input', { onChange: function onChange(event) {
-	                                _this5.changeSummary(event, 'add');
+	                                _this6.changeSummary(event, 'add');
 	                            }, type: 'text', className: 'form-control', value: this.state.add.summary })
 	                    ),
 	                    _react2.default.createElement(
@@ -8124,7 +8138,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'renderItem',
 	        value: function renderItem() {
-	            var _this6 = this;
+	            var _this7 = this;
 
 	            var list = [];
 
@@ -8133,7 +8147,7 @@ webpackJsonp([0],{
 	                    return _react2.default.createElement(
 	                        'tr',
 	                        { key: item.id },
-	                        tableTitle(_this6.state.canEditd).map(function (attr, j) {
+	                        tableTitle(_this7.props.canEditd).map(function (attr, j) {
 	                            var content = void 0;
 
 	                            switch (attr.key) {
@@ -8141,7 +8155,7 @@ webpackJsonp([0],{
 	                                    content = i + 1;
 	                                    break;
 	                                case 'approachName':
-	                                    if (_this6.state.canEditd === true) {
+	                                    if (_this7.props.canEditd === true) {
 	                                        content = _react2.default.createElement(
 	                                            'div',
 	                                            null,
@@ -8152,15 +8166,15 @@ webpackJsonp([0],{
 	                                            ),
 	                                            _react2.default.createElement(
 	                                                'select',
-	                                                { value: _this6.state.edit.approachId, onChange: function onChange(event) {
-	                                                        _this6.changeApproach(event, 'edit');
+	                                                { value: _this7.state.edit.approachId, onChange: function onChange(event) {
+	                                                        _this7.changeApproach(event, 'edit');
 	                                                    }, className: 'form-control hide' },
 	                                                _react2.default.createElement(
 	                                                    'option',
 	                                                    { value: '' },
 	                                                    '\u8BF7\u9009\u62E9'
 	                                                ),
-	                                                _this6.state.approach.map(function (approach) {
+	                                                _this7.state.approach.map(function (approach) {
 	                                                    return _react2.default.createElement(
 	                                                        'option',
 	                                                        { key: approach.id, value: approach.id },
@@ -8177,7 +8191,7 @@ webpackJsonp([0],{
 	                                    content = (0, _formatDate2.default)(item[attr.key]);
 	                                    break;
 	                                case 'summary':
-	                                    if (_this6.state.canEditd === true) {
+	                                    if (_this7.props.canEditd === true) {
 	                                        content = _react2.default.createElement(
 	                                            'div',
 	                                            null,
@@ -8187,8 +8201,8 @@ webpackJsonp([0],{
 	                                                item[attr.key]
 	                                            ),
 	                                            _react2.default.createElement('input', { type: 'text', onChange: function onChange(event) {
-	                                                    _this6.changeSummary(event, 'edit');
-	                                                }, className: 'form-control hide', value: _this6.state.edit.summary })
+	                                                    _this7.changeSummary(event, 'edit');
+	                                                }, className: 'form-control hide', value: _this7.state.edit.summary })
 	                                        );
 	                                    } else {
 	                                        content = item[attr.key];
@@ -8199,7 +8213,7 @@ webpackJsonp([0],{
 	                                        'button',
 	                                        {
 	                                            onClick: function onClick(event) {
-	                                                _this6.editContact(event, { id: item.id, approachId: item.approachId, summary: item.summary });
+	                                                _this7.editContact(event, { id: item.id, approachId: item.approachId, summary: item.summary });
 	                                            },
 	                                            type: 'button',
 	                                            className: 'btn btn-primary'
@@ -8226,7 +8240,7 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            if (this.state.leadsId === 'create') {
+	            if (this.props.leadsId === 'create') {
 	                return null;
 	            } else {
 	                return _react2.default.createElement(
@@ -8246,7 +8260,7 @@ webpackJsonp([0],{
 	                            _react2.default.createElement(
 	                                'tr',
 	                                null,
-	                                tableTitle(this.state.canEditd).map(function (item, index) {
+	                                tableTitle(this.props.canEditd).map(function (item, index) {
 	                                    return _react2.default.createElement(
 	                                        'th',
 	                                        { key: index },
@@ -9945,7 +9959,8 @@ webpackJsonp([0],{
 
 	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
 
-	        _this.state = { option: null };
+	        _this.state = { option: null, data: null };
+	        _this.formSubmit = _this.formSubmit.bind(_this);
 	        return _this;
 	    }
 
@@ -9986,7 +10001,11 @@ webpackJsonp([0],{
 	                });
 
 	                if (_this2.props.params.id !== 'create') {
-	                    (0, _api.opporQuery)(_this2.props.params.id).done(function (data) {}).always(function () {
+	                    (0, _api.opporQuery)(_this2.props.params.id).done(function (data) {
+	                        _this2.setState({
+	                            data: data
+	                        });
+	                    }).always(function () {
 	                        loading.close();
 	                    });
 	                } else {
@@ -10007,6 +10026,7 @@ webpackJsonp([0],{
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
 	            query.orgnizationId = this.props.org.id;
+	            query.typeId = 2;
 	            loading.open();
 
 	            if (this.props.params.id !== 'create') {} else {
@@ -10033,8 +10053,10 @@ webpackJsonp([0],{
 	                    title: '\u9500\u552E\u673A\u4F1A',
 	                    subTitle: '\u65B0\u5EFA\u9500\u552E\u673A\u4F1A',
 	                    option: this.state.option ? this.state.option : null,
+	                    data: this.state.data,
 	                    linkedId: this.props.params.id,
-	                    submit: this.formSubmit
+	                    submit: this.formSubmit,
+	                    router: this.props.router
 	                })
 	            );
 	        }
@@ -10173,6 +10195,41 @@ webpackJsonp([0],{
 	    }
 
 	    _createClass(LeadsFrom, [{
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (nextProps.linkedId !== 'create' && nextProps.data) {
+	                $(this.editorDom).find('[name=studentName]').val(nextProps.data.student.name);
+	                $(this.editorDom).find('[name=age]').val(nextProps.data.student.age);
+	                $(this.editorDom).find('[name=schoolName]').val(nextProps.data.student.schoolName);
+	                $(this.editorDom).find('[name=parentName]').val(nextProps.data.parent.name);
+	                $(this.editorDom).find('[name=cellphone]').val(nextProps.data.parent.cellphone);
+	                $(this.editorDom).find('[name=weichat]').val(nextProps.data.parent.weichat);
+	                $(this.editorDom).find('[name=address]').val(nextProps.data.parent.address);
+
+	                $(this.editorDom).find('textarea, select').each(function () {
+	                    var name = $(this).attr('name');
+
+	                    switch (name) {
+	                        case 'classGrade':
+	                            $(this).val(nextProps.data.student.classGrade);
+	                            break;
+	                        case 'studentGender':
+	                            $(this).val(nextProps.data.student.genderText);
+	                            break;
+	                        case 'relation':
+	                            $(this).val(nextProps.data.parent.relation);
+	                            break;
+	                        default:
+	                            $(this).val(nextProps.data[name]);
+	                    }
+
+	                    if (name === 'channelId') {
+	                        $(this).siblings('button').find('span').text(nextProps.data.channelName);
+	                    }
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'editorSubmit',
 	        value: function editorSubmit(event) {
 	            if (this.editorDom.checkValidity() === true) {

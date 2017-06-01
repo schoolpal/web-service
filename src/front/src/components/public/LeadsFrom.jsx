@@ -80,6 +80,40 @@ export default class LeadsFrom extends React.Component {
         this.editorSubmit = this.editorSubmit.bind(this)
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.linkedId !== 'create' && nextProps.data) {
+            $(this.editorDom).find('[name=studentName]').val(nextProps.data.student.name)
+            $(this.editorDom).find('[name=age]').val(nextProps.data.student.age)
+            $(this.editorDom).find('[name=schoolName]').val(nextProps.data.student.schoolName)
+            $(this.editorDom).find('[name=parentName]').val(nextProps.data.parent.name)
+            $(this.editorDom).find('[name=cellphone]').val(nextProps.data.parent.cellphone)
+            $(this.editorDom).find('[name=weichat]').val(nextProps.data.parent.weichat)
+            $(this.editorDom).find('[name=address]').val(nextProps.data.parent.address)
+
+            $(this.editorDom).find('textarea, select').each(function () {
+                const name = $(this).attr('name');
+
+                switch (name) {
+                    case 'classGrade':
+                        $(this).val(nextProps.data.student.classGrade)
+                        break;
+                    case 'studentGender':
+                        $(this).val(nextProps.data.student.genderText)
+                        break;
+                    case 'relation':
+                        $(this).val(nextProps.data.parent.relation)
+                        break;
+                    default:
+                        $(this).val(nextProps.data[name])
+                }
+
+                if (name === 'channelId') {
+                    $(this).siblings('button').find('span').text(nextProps.data.channelName)
+                }
+            })
+        }
+    }
+
     editorSubmit(event) {
         if (this.editorDom.checkValidity() === true) {
             event.preventDefault()

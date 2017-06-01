@@ -7,7 +7,8 @@ export default class Editor extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = { option: null }
+        this.state = { option: null, data: null }
+        this.formSubmit = this.formSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -50,7 +51,9 @@ export default class Editor extends React.Component {
             if (this.props.params.id !== 'create') {
                 opporQuery(this.props.params.id)
                     .done((data) => {
-
+                        this.setState({
+                            data: data
+                        })
                     })
                     .always(() => {
                         loading.close()
@@ -70,6 +73,7 @@ export default class Editor extends React.Component {
         const fail = DialogTips({ type: 'fail', autoClose: true })
 
         query.orgnizationId = this.props.org.id;
+        query.typeId = 2;
         loading.open()
 
         if (this.props.params.id !== 'create') {
@@ -98,8 +102,10 @@ export default class Editor extends React.Component {
                     title='销售机会'
                     subTitle='新建销售机会'
                     option={this.state.option ? this.state.option : null}
+                    data={this.state.data}
                     linkedId={this.props.params.id}
                     submit={this.formSubmit}
+                    router={this.props.router}
                 />
             </div>
         )

@@ -53,8 +53,6 @@ export default class List extends React.Component {
                 name: getProfile().name,
                 org: getProfile().org
             },
-            canEditd: this.props.canEditd,
-            leadsId: this.props.leadsId,
 
             list: [],
             approach: [],
@@ -80,19 +78,32 @@ export default class List extends React.Component {
     }
 
     componentDidMount() {
-        if (this.state.leadsId === 'create') {
-            return;
-        }
+        approachList()
+            .done((approach) => {
+                this.setState({
+                    approach: approach,
+                })
 
-        $.when(
-            approachList(),
-            contactList(this.state.leadsId)
-        ).done((approach, list) => {
-            this.setState({
-                approach: approach,
-                list: list
+                if (this.props.leadsId !== 'create') {
+                    contactList(this.props.leadsId)
+                        .done((list) => {
+                            this.setState({
+                                list: list,
+                            })
+                        })
+                }
             })
-        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.leadsId !== 'create' && nextProps.leadsId !== this.props.leadsId) {
+            contactList(nextProps.leadsId)
+                .done((list) => {
+                    this.setState({
+                        list: list,
+                    })
+                })
+        }
     }
 
     changeApproach(event, type) {
@@ -138,7 +149,7 @@ export default class List extends React.Component {
 
         loading.open()
         contactAdd({
-            leadsId: this.state.leadsId,
+            leadsId: this.props.leadsId,
             approachId: this.state.add.approachId,
             summary: this.state.add.summary
         }).done(() => {
@@ -149,7 +160,7 @@ export default class List extends React.Component {
                 }
             })
 
-            contactList(this.state.leadsId).done((list) => {
+            contactList(this.props.leadsId).done((list) => {
                 this.setState({ list: list })
                 loading.close()
                 success.open()
@@ -181,7 +192,7 @@ export default class List extends React.Component {
 
                     hideEdit(target)
 
-                    contactList(this.state.leadsId).done((list) => {
+                    contactList(this.props.leadsId).done((list) => {
                         this.setState({ list: list })
                         loading.close()
                         success.open()
@@ -200,7 +211,7 @@ export default class List extends React.Component {
     }
 
     renderAddContact() {
-        if (this.state.canEditd === true) {
+        if (this.props.canEditd === true) {
             return (
                 <tr>
                     <td>--</td>
@@ -243,7 +254,7 @@ export default class List extends React.Component {
                 return (
                     <tr key={item.id}>
                         {
-                            tableTitle(this.state.canEditd).map((attr, j) => {
+                            tableTitle(this.props.canEditd).map((attr, j) => {
                                 let content;
 
                                 switch (attr.key) {
@@ -251,7 +262,7 @@ export default class List extends React.Component {
                                         content = i + 1;
                                         break;
                                     case 'approachName':
-                                        if (this.state.canEditd === true) {
+                                        if (this.props.canEditd === true) {
                                             content = (
                                                 <div>
                                                     <span>{item[attr.key]}</span>
@@ -273,7 +284,7 @@ export default class List extends React.Component {
                                         content = formatDate(item[attr.key])
                                         break;
                                     case 'summary':
-                                        if (this.state.canEditd === true) {
+                                        if (this.props.canEditd === true) {
                                             content = (
                                                 <div>
                                                     <span>{item[attr.key]}</span>
@@ -311,7 +322,7 @@ export default class List extends React.Component {
     }
 
     render() {
-        if (this.state.leadsId === 'create') {
+        if (this.props.leadsId === 'create') {
             return null;
         } else {
             return (
@@ -321,7 +332,7 @@ export default class List extends React.Component {
                         <thead>
                             <tr>
                                 {
-                                    tableTitle(this.state.canEditd).map((item, index) => {
+                                    tableTitle(this.props.canEditd).map((item, index) => {
                                         return <th key={index}>{item.name}</th>
                                     })
                                 }
