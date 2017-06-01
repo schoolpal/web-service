@@ -238,7 +238,8 @@ describe('/ajax/sales/oppor/ APIs', function() {
 			url : buildUrl(host, oppor_path, 'list.do'),
 			dataType : 'json',
 			data: {
-				orgId: org_val
+				orgId: org_val,
+				typeId: 2
 			}
 		});
 
