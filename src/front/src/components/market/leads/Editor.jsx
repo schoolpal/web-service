@@ -105,9 +105,9 @@ export default class Editor extends React.Component {
         loading.open()
         $.when(
             mktActList(oid),
-            leadsSources(),
-            leadsStages(),
-            leadsStatus(),
+            leadsSources(1),
+            leadsStages(1),
+            leadsStatus(1),
             genderList(),
             relationList()
         ).done((act, sources, stages, status, gender, relation) => {

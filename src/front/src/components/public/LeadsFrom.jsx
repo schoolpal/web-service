@@ -2,7 +2,7 @@ import React from 'react';
 import ContactList from '../contact/List'
 import { SaveButton, BackButton } from '../public/Button';
 import DialogTips from '../../utils/DialogTips';
-import { GRADE, COURSE_CATEGORY, COURSE_PRODUCTS } from '../../utils/static'
+import { GRADE, COURSE_CATEGORY, COURSE_PRODUCTS, TYPE_ID } from '../../utils/static'
 import changeText from '../../utils/changeText'
 
 function renderListOption(data) {
@@ -145,7 +145,26 @@ export default class LeadsFrom extends React.Component {
             param[item.name] = item.value;
         })
 
+        console.log(param)
+
         this.props.submit(param)
+    }
+
+    renderType(props) {
+        if (props.type === 'oppor') {
+            return (
+                <li className="d-flex">
+                    <label for="name" className="col-form-label d-block w100"><em className="text-danger">*</em>类型</label>
+                    <div className="flex-cell">
+                        <select name="typeId" className="form-control" readOnly={true}>
+                            <option value={props.typeId}>{TYPE_ID[props.typeId]}</option>
+                        </select>
+                    </div>
+                </li>
+            )
+        } else {
+            return null
+        }
     }
 
     render() {
@@ -161,7 +180,7 @@ export default class LeadsFrom extends React.Component {
                 </h5>
 
                 <div className="main-container">
-                    <p className="ht pb-3 b-b">线索信息</p>
+                    <p className="ht pb-3 b-b">{this.props.type.desc}信息</p>
                     <div className="row">
                         <div className="col">
                             <ul>
@@ -285,7 +304,7 @@ export default class LeadsFrom extends React.Component {
                             </ul>
                         </div>
                     </div>
-                    <p className="ht pt-3 pb-3 b-t b-b">线索进程</p>
+                    <p className="ht pt-3 pb-3 b-t b-b">{this.props.type.desc}进程</p>
                     <div className="row">
                         <div className="col">
                             <ul>
@@ -316,8 +335,11 @@ export default class LeadsFrom extends React.Component {
                         </div>
                         <div className="col">
                             <ul>
+                                {
+                                    this.renderType(this.props.type)
+                                }
                                 <li className="d-flex">
-                                    <label for="name" className="col-form-label d-block w100"><em className="text-danger">*</em>线索阶段</label>
+                                    <label for="name" className="col-form-label d-block w100"><em className="text-danger">*</em>阶段</label>
                                     <div className="flex-cell">
                                         <select name="stageId" className="form-control" onChange={(event) => { event.target.setCustomValidity('') }} required={true}>
                                             <option key="null" value="null">请选择</option>
@@ -326,7 +348,7 @@ export default class LeadsFrom extends React.Component {
                                     </div>
                                 </li>
                                 <li className="d-flex">
-                                    <label for="name" className="col-form-label d-block w100"><em className="text-danger">*</em>线索状态</label>
+                                    <label for="name" className="col-form-label d-block w100"><em className="text-danger">*</em>状态</label>
                                     <div className="flex-cell">
                                         <select name="statusId" className="form-control" onChange={(event) => { event.target.setCustomValidity('') }} required={true}>
                                             <option key="null" value="null">请选择</option>

@@ -61,71 +61,71 @@ webpackJsonp([0],{
 
 	var _List6 = _interopRequireDefault(_List5);
 
-	var _Editor5 = __webpack_require__(684);
+	var _Editor5 = __webpack_require__(685);
 
 	var _Editor6 = _interopRequireDefault(_Editor5);
 
-	var _View5 = __webpack_require__(686);
+	var _View5 = __webpack_require__(687);
 
 	var _View6 = _interopRequireDefault(_View5);
 
-	var _List7 = __webpack_require__(687);
+	var _List7 = __webpack_require__(689);
 
 	var _List8 = _interopRequireDefault(_List7);
 
-	var _Editor7 = __webpack_require__(688);
+	var _Editor7 = __webpack_require__(690);
 
 	var _Editor8 = _interopRequireDefault(_Editor7);
 
-	var _View7 = __webpack_require__(689);
+	var _View7 = __webpack_require__(691);
 
 	var _View8 = _interopRequireDefault(_View7);
 
-	var _List9 = __webpack_require__(690);
+	var _List9 = __webpack_require__(692);
 
 	var _List10 = _interopRequireDefault(_List9);
 
-	var _View9 = __webpack_require__(691);
+	var _View9 = __webpack_require__(693);
 
 	var _View10 = _interopRequireDefault(_View9);
 
-	var _List11 = __webpack_require__(692);
+	var _List11 = __webpack_require__(694);
 
 	var _List12 = _interopRequireDefault(_List11);
 
-	var _Editor9 = __webpack_require__(693);
+	var _Editor9 = __webpack_require__(695);
 
 	var _Editor10 = _interopRequireDefault(_Editor9);
 
-	var _List13 = __webpack_require__(695);
+	var _List13 = __webpack_require__(697);
 
 	var _List14 = _interopRequireDefault(_List13);
 
-	var _Editor11 = __webpack_require__(696);
+	var _Editor11 = __webpack_require__(698);
 
 	var _Editor12 = _interopRequireDefault(_Editor11);
 
-	var _List15 = __webpack_require__(697);
+	var _List15 = __webpack_require__(699);
 
 	var _List16 = _interopRequireDefault(_List15);
 
-	var _List17 = __webpack_require__(699);
+	var _List17 = __webpack_require__(701);
 
 	var _List18 = _interopRequireDefault(_List17);
 
-	var _Editor13 = __webpack_require__(700);
+	var _Editor13 = __webpack_require__(702);
 
 	var _Editor14 = _interopRequireDefault(_Editor13);
 
-	var _Login = __webpack_require__(701);
+	var _Login = __webpack_require__(703);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Error = __webpack_require__(702);
+	var _Error = __webpack_require__(704);
 
 	var _Error2 = _interopRequireDefault(_Error);
 
-	var _checkAuth = __webpack_require__(703);
+	var _checkAuth = __webpack_require__(705);
 
 	var _checkAuth2 = _interopRequireDefault(_checkAuth);
 
@@ -170,10 +170,10 @@ webpackJsonp([0],{
 	    }
 	};
 
-	__webpack_require__(704);
-	__webpack_require__(708);
-	__webpack_require__(711);
+	__webpack_require__(706);
+	__webpack_require__(710);
 	__webpack_require__(713);
+	__webpack_require__(715);
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -516,8 +516,11 @@ webpackJsonp([0],{
 	exports.approachList = approachList;
 	exports.contactAdd = contactAdd;
 	exports.contactMod = contactMod;
+	exports.opporList = opporList;
 	exports.opporAdd = opporAdd;
 	exports.opporQuery = opporQuery;
+	exports.opporDel = opporDel;
+	exports.opporAssign = opporAssign;
 
 	var _reactRouter = __webpack_require__(175);
 
@@ -1405,6 +1408,22 @@ webpackJsonp([0],{
 	    return defer.promise();
 	}
 
+	function opporList(data) {
+	    var defer = $.Deferred();
+	    var url = 'sales/oppor/list.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
 	function opporAdd(data) {
 	    var defer = $.Deferred();
 	    var url = 'sales/oppor/add.do';
@@ -1426,6 +1445,37 @@ webpackJsonp([0],{
 	    var url = 'sales/oppor/query.do';
 
 	    io({ url: url, data: { id: id } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function opporDel(id) {
+	    var defer = $.Deferred();
+	    var url = 'sales/oppor/del.do';
+
+	    io({ url: url, data: { id: id } }, function (data) {
+	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+	            defer.resolve(data.data);
+	        } else {
+	            defer.reject(data);
+	        }
+	    });
+
+	    return defer.promise();
+	}
+
+	function opporAssign(data) {
+	    var defer = $.Deferred();
+	    var url = 'sales/oppor/assign.do';
+	    var settings = $.extend({ url: url }, { data: data });
+
+	    io(settings, function (data) {
 	        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
 	            defer.resolve(data.data);
 	        } else {
@@ -3989,6 +4039,7 @@ webpackJsonp([0],{
 	exports.EditorButton = EditorButton;
 	exports.AssignButton = AssignButton;
 	exports.ConvertButton = ConvertButton;
+	exports.SignButton = SignButton;
 	exports.DelButton = DelButton;
 	exports.AuthButton = AuthButton;
 	exports.SaveButton = SaveButton;
@@ -4082,6 +4133,14 @@ webpackJsonp([0],{
 	        'button',
 	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
 	        '\u8F6C\u5316\u4E3A'
+	    );
+	}
+
+	function SignButton(props) {
+	    return _react2.default.createElement(
+	        'button',
+	        { onClick: props.action, type: 'button', className: 'btn btn-primary' },
+	        '\u521B\u5EFA\u5408\u540C'
 	    );
 	}
 
@@ -7167,7 +7226,7 @@ webpackJsonp([0],{
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            loading.open();
-	            $.when((0, _api.mktActList)(oid), (0, _api.leadsSources)(), (0, _api.leadsStages)(), (0, _api.leadsStatus)(), (0, _api.genderList)(), (0, _api.relationList)()).done(function (act, sources, stages, status, gender, relation) {
+	            $.when((0, _api.mktActList)(oid), (0, _api.leadsSources)(1), (0, _api.leadsStages)(1), (0, _api.leadsStatus)(1), (0, _api.genderList)(), (0, _api.relationList)()).done(function (act, sources, stages, status, gender, relation) {
 	                _this2.setState({
 	                    option: {
 	                        act: act,
@@ -8430,7 +8489,7 @@ webpackJsonp([0],{
 	//课程产品
 	var COURSE_PRODUCTS = exports.COURSE_PRODUCTS = ['产品1', '产品2'];
 
-	var TYPE_ID = exports.TYPE_ID = [{ 1: '线索' }, { 2: '新建' }, { 3: '续报' }];
+	var TYPE_ID = exports.TYPE_ID = { 1: '线索', 2: '新建', 3: '续报' };
 
 /***/ },
 
@@ -8584,9 +8643,7 @@ webpackJsonp([0],{
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 	            var data = (0, _reactAddonsUpdate2.default)(this.state.data, {
 	                executiveId: { $set: selected.user.id },
-	                executiveName: { $set: selected.user.name },
-	                orgnizationId: { $set: selected.org.id },
-	                orgnizationName: { $set: selected.org.name }
+	                executiveName: { $set: selected.user.name }
 	            });
 
 	            loading.open();
@@ -9309,13 +9366,9 @@ webpackJsonp([0],{
 	        value: function componentDidMount() {
 	            var _this2 = this;
 
-	            (0, _api.userList)(this.state.selectedOrg.id).done(function (data) {
+	            (0, _api.userList)(this.state.defaults.oid).done(function (data) {
 	                _this2.setState({
-	                    userList: data,
-	                    selecteduser: {
-	                        id: _this2.state.defaults.uid,
-	                        name: _this2.state.defaults.uname
-	                    }
+	                    userList: data
 	                });
 	            });
 	            $(this.panel).modal('show').one('hidden.bs.modal', function () {
@@ -9419,7 +9472,6 @@ webpackJsonp([0],{
 	        key: 'action',
 	        value: function action() {
 	            this.props.action({
-	                org: this.state.selectedOrg,
 	                user: this.state.selecteduser
 	            }, $(this.panel));
 	        }
@@ -9563,11 +9615,21 @@ webpackJsonp([0],{
 
 	var _reactRouter = __webpack_require__(175);
 
+	var _LeadsList = __webpack_require__(684);
+
+	var _LeadsList2 = _interopRequireDefault(_LeadsList);
+
 	var _command = __webpack_require__(249);
 
 	var _command2 = _interopRequireDefault(_command);
 
 	var _Button = __webpack_require__(248);
+
+	var _api = __webpack_require__(232);
+
+	var _DialogTips = __webpack_require__(243);
+
+	var _DialogTips2 = _interopRequireDefault(_DialogTips);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9585,14 +9647,55 @@ webpackJsonp([0],{
 
 	        var _this = _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
 
+	        _this.state = { typeId: 2, new: [], keep: [] };
+	        _this.dataInit = _this.dataInit.bind(_this);
 	        _this.renderCommand = _this.renderCommand.bind(_this);
+	        _this.tabChange = _this.tabChange.bind(_this);
+	        _this.handleCreate = _this.handleCreate.bind(_this);
 	        return _this;
 	    }
 
 	    _createClass(List, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            if (this.props.org) {
+	                this.dataInit(this.props.org.id);
+	            }
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(nextProps) {
+	            if (nextProps.org) {
+	                if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+	                    this.dataInit(nextProps.org.id);
+	                }
+	            }
+	        }
+	    }, {
+	        key: 'dataInit',
+	        value: function dataInit(oid) {
+	            var _this2 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            loading.open();
+	            (0, _api.opporList)({
+	                orgId: oid,
+	                typeId: this.state.typeId
+	            }).done(function (data) {
+	                if (_this2.state.typeId === 2) {
+	                    _this2.setState({ new: data });
+	                } else {
+	                    _this2.setState({ keep: data });
+	                }
+	            }).always(function () {
+	                loading.close();
+	            });
+	        }
+	    }, {
 	        key: 'renderCommand',
 	        value: function renderCommand() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
 	            var commands = (0, _command2.default)(path);
@@ -9600,15 +9703,47 @@ webpackJsonp([0],{
 
 	            commands.map(function (item, index) {
 	                if (item === 'Add') {
-	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, link: _this2.props.location.pathname + '/edit/create' }));
+	                    temp.push(_react2.default.createElement(_Button.CreateButton, { key: index, action: _this3.handleCreate }));
 	                };
 	            });
 
 	            return temp;
 	        }
 	    }, {
+	        key: 'handleCreate',
+	        value: function handleCreate() {
+	            this.props.router.push({
+	                pathname: this.props.location.pathname + '/edit/create',
+	                state: { typeId: this.state.typeId }
+	            });
+	        }
+	    }, {
+	        key: 'tabChange',
+	        value: function tabChange(typeId) {
+	            var _this4 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+
+	            this.setState({ typeId: typeId });
+	            loading.open();
+	            (0, _api.opporList)({
+	                orgId: this.props.org.id,
+	                typeId: typeId
+	            }).done(function (data) {
+	                if (_this4.state.typeId === 2) {
+	                    _this4.setState({ new: data });
+	                } else {
+	                    _this4.setState({ keep: data });
+	                }
+	            }).always(function () {
+	                loading.close();
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this5 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'market' },
@@ -9631,279 +9766,45 @@ webpackJsonp([0],{
 	                        { className: 'nav nav-tabs mb-3' },
 	                        _react2.default.createElement(
 	                            'li',
-	                            { className: 'nav-item' },
+	                            { className: 'nav-item', onClick: function onClick() {
+	                                    _this5.tabChange(2);
+	                                } },
 	                            _react2.default.createElement(
 	                                'a',
-	                                { className: 'nav-link active', href: '#' },
+	                                { className: 'nav-link active', 'data-toggle': 'tab', href: '#new', role: 'tab' },
 	                                '\u65B0\u62DB'
 	                            )
 	                        ),
 	                        _react2.default.createElement(
 	                            'li',
-	                            { className: 'nav-item' },
+	                            { className: 'nav-item', onClick: function onClick() {
+	                                    _this5.tabChange(3);
+	                                } },
 	                            _react2.default.createElement(
 	                                'a',
-	                                { className: 'nav-link', href: '#' },
+	                                { className: 'nav-link', 'data-toggle': 'tab', href: '#keep', role: 'tab' },
 	                                '\u7EED\u62A5'
 	                            )
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        'table',
-	                        { className: 'table table-bordered table-sm' },
+	                        'div',
+	                        { className: 'tab-content' },
 	                        _react2.default.createElement(
-	                            'thead',
-	                            null,
-	                            _react2.default.createElement(
-	                                'tr',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u521B\u5EFA\u4EBA'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u521B\u5EFA\u65F6\u95F4'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u6240\u5C5E\u7EC4\u7EC7'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u6240\u5C5E\u7528\u6237'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u6765\u6E90'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5E02\u573A\u6D3B\u52A8'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u7C7B\u578B'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u9636\u6BB5'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u72B6\u6001'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5B66\u5458\u59D3\u540D'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u6027\u522B'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5E74\u9F84'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5728\u8BFB\u5E74\u7EA7'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u6240\u5728\u5B66\u6821'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5BB6\u957F\u59D3\u540D'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u4E0E\u5B66\u5458\u5173\u7CFB'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u7535\u8BDD\u53F7\u7801'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5FAE\u4FE1\u53F7'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5BB6\u5EAD\u4F4F\u5740'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u8BFE\u7A0B\u7C7B\u522B'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u8BFE\u7A0B\u4EA7\u54C1'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u5907\u6CE8'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'th',
-	                                    null,
-	                                    '\u6C9F\u901A\u8BB0\u5F55'
-	                                )
-	                            )
+	                            'div',
+	                            { className: 'tab-pane active', id: 'new', role: 'tabpanel' },
+	                            _react2.default.createElement(_LeadsList2.default, {
+	                                path: this.props.location.pathname,
+	                                list: this.state.new
+	                            })
 	                        ),
 	                        _react2.default.createElement(
-	                            'tbody',
-	                            null,
-	                            _react2.default.createElement(
-	                                'tr',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u66F9\u78CA'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '2015-05-05 10\uFF1A00'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u95E8\u5934\u6C9F\u9F99\u6E56\u6821\u533A'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u82D7\u5730'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'call in'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u767E\u5EA6\u63A8\u5E7F1\u671F'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u65B0\u62DB'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u5DF2\u8F6C\u5316'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u5DF2\u8F6C\u5316'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: this.props.location.pathname + '/123' },
-	                                        '\u5201\u68A6\u7F18'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u7537'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '3'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u5E7C\u513F\u56ED\u5C0F\u73ED'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u77F3\u666F\u5C71\u7B2C\u4E09\u5E7C\u513F\u56ED'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        _reactRouter.Link,
-	                                        { to: this.props.location.pathname + '/123' },
-	                                        '\u5201\u65ED'
-	                                    )
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u7236\u4EB2'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '13911015199'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'dxyl218106'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '\u77F3\u666F\u5C71\u533A\u6A21\u5F0F\u53E3\u5927\u885760\u53F7\u9662'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'ise-start'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    'pre-k'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '--'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'td',
-	                                    null,
-	                                    '2016-05-10'
-	                                )
-	                            )
+	                            'div',
+	                            { className: 'tab-pane', id: 'keep', role: 'tabpanel' },
+	                            _react2.default.createElement(_LeadsList2.default, {
+	                                path: this.props.location.pathname,
+	                                list: this.state.keep
+	                            })
 	                        )
 	                    )
 	                )
@@ -9933,7 +9834,324 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _LeadsFrom = __webpack_require__(685);
+	var _reactRouter = __webpack_require__(175);
+
+	var _formatDate = __webpack_require__(250);
+
+	var _formatDate2 = _interopRequireDefault(_formatDate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LeadsList = function (_React$Component) {
+	    _inherits(LeadsList, _React$Component);
+
+	    function LeadsList(props) {
+	        _classCallCheck(this, LeadsList);
+
+	        var _this = _possibleConstructorReturn(this, (LeadsList.__proto__ || Object.getPrototypeOf(LeadsList)).call(this, props));
+
+	        _this.renderItem = _this.renderItem.bind(_this);
+	        return _this;
+	    }
+
+	    _createClass(LeadsList, [{
+	        key: 'renderItem',
+	        value: function renderItem(data) {
+	            var _this2 = this;
+
+	            var list = [];
+
+	            if (data.length) {
+	                list = data.map(function (item) {
+	                    return _react2.default.createElement(
+	                        'tr',
+	                        { key: item.id },
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.creatorName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            (0, _formatDate2.default)(item.createTime)
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.orgnizationName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.executiveName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.sourceName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.channelName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.stageName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.statusName
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: _this2.props.path + '/' + item.id },
+	                                item.student.name
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.genderText !== 'null' ? item.student.genderText : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.age !== 'null' ? item.student.age : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.classGrade !== 'null' ? item.student.classGrade : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.student.schoolName ? item.student.schoolName : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: _this2.props.path + '/' + item.id },
+	                                item.parent.name
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.relation ? item.parent.relation : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.cellphone ? item.parent.cellphone : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.weichat ? item.parent.weichat : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.parent.address ? item.parent.address : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.courseType !== 'null' ? item.courseType : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.courseName !== 'null' ? item.courseName : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            item.note ? item.note : '--'
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            '--'
+	                        )
+	                    );
+	                });
+	            }
+
+	            return list;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'table',
+	                { className: 'table table-bordered table-sm' },
+	                _react2.default.createElement(
+	                    'thead',
+	                    null,
+	                    _react2.default.createElement(
+	                        'tr',
+	                        null,
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u521B\u5EFA\u4EBA'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u521B\u5EFA\u65F6\u95F4'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6240\u5C5E\u7EC4\u7EC7'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6240\u5C5E\u7528\u6237'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6765\u6E90'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6E20\u9053'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u9636\u6BB5'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u72B6\u6001'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5B66\u5458\u59D3\u540D'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6027\u522B'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5E74\u9F84'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5728\u8BFB\u5E74\u7EA7'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6240\u5728\u5B66\u6821'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5BB6\u957F\u59D3\u540D'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u4E0E\u5B66\u5458\u5173\u7CFB'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u7535\u8BDD\u53F7\u7801'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5FAE\u4FE1\u53F7'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5BB6\u5EAD\u4F4F\u5740'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u8BFE\u7A0B\u7C7B\u522B'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u8BFE\u7A0B\u4EA7\u54C1'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u5907\u6CE8'
+	                        ),
+	                        _react2.default.createElement(
+	                            'th',
+	                            null,
+	                            '\u6C9F\u901A\u8BB0\u5F55'
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'tbody',
+	                    null,
+	                    this.renderItem(this.props.list)
+	                )
+	            );
+	        }
+	    }]);
+
+	    return LeadsList;
+	}(_react2.default.Component);
+
+	exports.default = LeadsList;
+
+/***/ },
+
+/***/ 685:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _LeadsFrom = __webpack_require__(686);
 
 	var _LeadsFrom2 = _interopRequireDefault(_LeadsFrom);
 
@@ -9959,7 +10177,11 @@ webpackJsonp([0],{
 
 	        var _this = _possibleConstructorReturn(this, (Editor.__proto__ || Object.getPrototypeOf(Editor)).call(this, props));
 
-	        _this.state = { option: null, data: null };
+	        _this.state = {
+	            typeId: _this.props.router.location.state && _this.props.router.location.state.typeId ? _this.props.router.location.state.typeId : 2,
+	            option: null,
+	            data: null
+	        };
 	        _this.formSubmit = _this.formSubmit.bind(_this);
 	        return _this;
 	    }
@@ -9988,7 +10210,7 @@ webpackJsonp([0],{
 	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            loading.open();
-	            $.when((0, _api.mktActList)(oid), (0, _api.leadsSources)(2), (0, _api.leadsStages)(2), (0, _api.leadsStatus)(2), (0, _api.genderList)(), (0, _api.relationList)()).done(function (act, sources, stages, status, gender, relation) {
+	            $.when((0, _api.mktActList)(oid), (0, _api.leadsSources)(this.state.typeId), (0, _api.leadsStages)(this.state.typeId), (0, _api.leadsStatus)(this.state.typeId), (0, _api.genderList)(), (0, _api.relationList)()).done(function (act, sources, stages, status, gender, relation) {
 	                _this2.setState({
 	                    option: {
 	                        act: act,
@@ -10026,7 +10248,7 @@ webpackJsonp([0],{
 	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
 
 	            query.orgnizationId = this.props.org.id;
-	            query.typeId = 2;
+	            //query.typeId = this.state.typeId;
 	            loading.open();
 
 	            if (this.props.params.id !== 'create') {} else {
@@ -10046,12 +10268,20 @@ webpackJsonp([0],{
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var subTitle = this.props.params.id === 'create' ? '新建销售机会' : this.state.data ? this.state.data.student.name : '';
+	            var type = {
+	                type: 'oppor',
+	                typeId: this.state.typeId,
+	                desc: '机会'
+	            };
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'market' },
 	                _react2.default.createElement(_LeadsFrom2.default, {
+	                    type: type,
 	                    title: '\u9500\u552E\u673A\u4F1A',
-	                    subTitle: '\u65B0\u5EFA\u9500\u552E\u673A\u4F1A',
+	                    subTitle: subTitle,
 	                    option: this.state.option ? this.state.option : null,
 	                    data: this.state.data,
 	                    linkedId: this.props.params.id,
@@ -10069,7 +10299,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 685:
+/***/ 686:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10262,7 +10492,44 @@ webpackJsonp([0],{
 	                param[item.name] = item.value;
 	            });
 
+	            console.log(param);
+
 	            this.props.submit(param);
+	        }
+	    }, {
+	        key: 'renderType',
+	        value: function renderType(props) {
+	            if (props.type === 'oppor') {
+	                return _react2.default.createElement(
+	                    'li',
+	                    { className: 'd-flex' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { 'for': 'name', className: 'col-form-label d-block w100' },
+	                        _react2.default.createElement(
+	                            'em',
+	                            { className: 'text-danger' },
+	                            '*'
+	                        ),
+	                        '\u7C7B\u578B'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'flex-cell' },
+	                        _react2.default.createElement(
+	                            'select',
+	                            { name: 'typeId', className: 'form-control', readOnly: true },
+	                            _react2.default.createElement(
+	                                'option',
+	                                { value: props.typeId },
+	                                _static.TYPE_ID[props.typeId]
+	                            )
+	                        )
+	                    )
+	                );
+	            } else {
+	                return null;
+	            }
 	        }
 	    }, {
 	        key: 'render',
@@ -10299,7 +10566,8 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'p',
 	                        { className: 'ht pb-3 b-b' },
-	                        '\u7EBF\u7D22\u4FE1\u606F'
+	                        this.props.type.desc,
+	                        '\u4FE1\u606F'
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -10612,7 +10880,8 @@ webpackJsonp([0],{
 	                    _react2.default.createElement(
 	                        'p',
 	                        { className: 'ht pt-3 pb-3 b-t b-b' },
-	                        '\u7EBF\u7D22\u8FDB\u7A0B'
+	                        this.props.type.desc,
+	                        '\u8FDB\u7A0B'
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -10704,6 +10973,7 @@ webpackJsonp([0],{
 	                            _react2.default.createElement(
 	                                'ul',
 	                                null,
+	                                this.renderType(this.props.type),
 	                                _react2.default.createElement(
 	                                    'li',
 	                                    { className: 'd-flex' },
@@ -10715,7 +10985,7 @@ webpackJsonp([0],{
 	                                            { className: 'text-danger' },
 	                                            '*'
 	                                        ),
-	                                        '\u7EBF\u7D22\u9636\u6BB5'
+	                                        '\u9636\u6BB5'
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'div',
@@ -10745,7 +11015,7 @@ webpackJsonp([0],{
 	                                            { className: 'text-danger' },
 	                                            '*'
 	                                        ),
-	                                        '\u7EBF\u7D22\u72B6\u6001'
+	                                        '\u72B6\u6001'
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'div',
@@ -10782,7 +11052,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 686:
+/***/ 687:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10797,17 +11067,33 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _subTitle = __webpack_require__(252);
+	var _reactDom = __webpack_require__(41);
 
-	var _subTitle2 = _interopRequireDefault(_subTitle);
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _OrgTree = __webpack_require__(246);
+	var _reactAddonsUpdate = __webpack_require__(678);
 
-	var _OrgTree2 = _interopRequireDefault(_OrgTree);
+	var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
 	var _Button = __webpack_require__(248);
 
+	var _LeadsView = __webpack_require__(688);
+
+	var _LeadsView2 = _interopRequireDefault(_LeadsView);
+
+	var _SelectUserPanel = __webpack_require__(682);
+
+	var _SelectUserPanel2 = _interopRequireDefault(_SelectUserPanel);
+
+	var _command = __webpack_require__(249);
+
+	var _command2 = _interopRequireDefault(_command);
+
 	var _api = __webpack_require__(232);
+
+	var _Dialog = __webpack_require__(234);
+
+	var _Dialog2 = _interopRequireDefault(_Dialog);
 
 	var _DialogTips = __webpack_require__(243);
 
@@ -10831,12 +11117,16 @@ webpackJsonp([0],{
 
 	        _this.state = {
 	            orgList: [],
-	            selected: null
+	            data: null,
+	            modalStatus: 'closed'
 	        };
 	        _this.renderCommand = _this.renderCommand.bind(_this);
-	        _this.selectOrg = _this.selectOrg.bind(_this);
 	        _this.handleEditor = _this.handleEditor.bind(_this);
+	        _this.handleModal = _this.handleModal.bind(_this);
+	        _this.handleAssign = _this.handleAssign.bind(_this);
 	        _this.confirmDel = _this.confirmDel.bind(_this);
+	        _this.handleDel = _this.handleDel.bind(_this);
+	        _this.getModalOption = _this.getModalOption.bind(_this);
 	        return _this;
 	    }
 
@@ -10848,27 +11138,14 @@ webpackJsonp([0],{
 	            var dialogTips = (0, _DialogTips2.default)({ type: 'loading' });
 
 	            dialogTips.open();
-
-	            (0, _api.orgList)().done(function (data) {
+	            $.when((0, _api.orgList)(), (0, _api.opporQuery)(this.props.params.id)).done(function (org, data) {
 	                _this2.setState({
-	                    orgList: data.tree,
-	                    selected: {
-	                        id: data.original[0].cId,
-	                        name: data.original[0].cName
-	                    }
+	                    orgList: org.original,
+	                    data: data
 	                });
 	            }).always(function () {
 	                dialogTips.close();
 	            });
-	        }
-	    }, {
-	        key: 'selectOrg',
-	        value: function selectOrg(org) {
-	            if (org) {
-	                this.setState({
-	                    selected: org
-	                });
-	            }
 	        }
 	    }, {
 	        key: 'renderCommand',
@@ -10876,783 +11153,161 @@ webpackJsonp([0],{
 	            var _this3 = this;
 
 	            var path = this.props.location.pathname.replace(SCHOOLPAL_CONFIG.ROOTPATH, '');
-	            var auth = SCHOOLPAL_CONFIG.commandRules.find(function (item) {
-	                return item.PATH_RULE.test(path) === true;
-	            });
+	            var commands = (0, _command2.default)(path);
 	            var temp = [];
 
-	            if (auth) {
-	                auth.command.map(function (item, index) {
-	                    if (item === 'Mod') {
-	                        temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
-	                    }
+	            commands.map(function (item, index) {
+	                if (item === 'Mod') {
+	                    temp.push(_react2.default.createElement(_Button.EditorButton, { key: index, action: _this3.handleEditor }));
+	                }
 
-	                    if (item === 'Del') {
-	                        temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel }));
-	                    }
-	                });
-	            }
+	                if (item === 'Del') {
+	                    temp.push(_react2.default.createElement(_Button.DelButton, { key: index, action: _this3.confirmDel }));
+	                }
+
+	                if (item === 'Assign') {
+	                    temp.push(_react2.default.createElement(_Button.AssignButton, { key: index, action: _this3.handleAssign }));
+	                }
+
+	                if (item === 'Sign') {
+	                    temp.push(_react2.default.createElement(_Button.SignButton, { key: index, link: SCHOOLPAL_CONFIG.ROOTPATH }));
+	                }
+	            });
 
 	            return temp;
 	        }
 	    }, {
 	        key: 'handleEditor',
 	        value: function handleEditor() {
-	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/market/sales/edit/' + this.props.params.id;
+	            var editorPath = SCHOOLPAL_CONFIG.ROOTPATH + 'crm/sales/oppor/edit/' + this.props.params.id;
 
 	            this.props.router.push(editorPath);
 	        }
 	    }, {
+	        key: 'handleModal',
+	        value: function handleModal(selected, modal) {
+	            var _this4 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+	            var data = (0, _reactAddonsUpdate2.default)(this.state.data, {
+	                executiveId: { $set: selected.user.id },
+	                executiveName: { $set: selected.user.name }
+	            });
+
+	            loading.open();
+	            (0, _api.opporAssign)({ id: this.props.params.id, assigneeId: selected.user.id }).done(function () {
+	                loading.close();
+	                success.open();
+
+	                _this4.setState({
+	                    data: data
+	                });
+
+	                setTimeout(function () {
+	                    success.close();
+	                    modal.modal('hide');
+	                }, 2000);
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
+	            });
+	        }
+	    }, {
+	        key: 'getModalOption',
+	        value: function getModalOption() {
+	            return {
+	                org: {
+	                    id: this.state.data.orgnizationId,
+	                    name: this.state.data.orgnizationName
+	                },
+	                user: {
+	                    id: this.state.data.executiveId,
+	                    name: this.state.data.executiveName
+	                },
+	                student: this.state.data.student
+	            };
+	        }
+	    }, {
+	        key: 'handleAssign',
+	        value: function handleAssign() {
+	            var div = document.createElement('div');
+	            var option = this.getModalOption();
+
+	            _reactDom2.default.render(_react2.default.createElement(_SelectUserPanel2.default, {
+	                container: div,
+	                orgList: this.state.orgList,
+	                option: option,
+	                action: this.handleModal
+	            }), document.body.appendChild(div));
+	        }
+	    }, {
 	        key: 'confirmDel',
-	        value: function confirmDel() {}
+	        value: function confirmDel() {
+	            var div = document.createElement('div');
+
+	            _reactDom2.default.render(_react2.default.createElement(_Dialog2.default, {
+	                container: div,
+	                text: '是否确认删除此线索 ？',
+	                action: this.handleDel
+	            }), document.body.appendChild(div));
+	        }
+	    }, {
+	        key: 'handleDel',
+	        value: function handleDel() {
+	            var _this5 = this;
+
+	            var loading = (0, _DialogTips2.default)({ type: 'loading' });
+	            var success = (0, _DialogTips2.default)({ type: 'success' });
+	            var fail = (0, _DialogTips2.default)({ type: 'fail', autoClose: true });
+
+	            loading.open();
+	            (0, _api.opporDel)(this.props.params.id).done(function () {
+	                loading.close();
+	                success.open();
+
+	                setTimeout(function () {
+	                    success.close();
+	                    _this5.props.router.replace(SCHOOLPAL_CONFIG.ROOTPATH + 'crm/sales/oppor');
+	                }, 2000);
+	            }).fail(function () {
+	                loading.close();
+	                fail.open();
+	            });
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this4 = this;
-
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'market' },
 	                _react2.default.createElement(
-	                    'form',
-	                    { ref: function ref(dom) {
-	                            _this4.editorDom = dom;
-	                        } },
+	                    'h5',
+	                    null,
+	                    _react2.default.createElement('i', { className: 'fa fa-pie-chart', 'aria-hidden': 'true' }),
+	                    '\xA0\u9500\u552E\u673A\u4F1A\xA0\xA0|\xA0\xA0',
 	                    _react2.default.createElement(
-	                        'h5',
-	                        null,
-	                        _react2.default.createElement('i', { className: 'fa fa-pie-chart', 'aria-hidden': 'true' }),
-	                        '\xA0\u9500\u552E\u7EBF\u7D22\xA0\xA0|\xA0\xA0',
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'd-inline text-muted' },
-	                            (0, _subTitle2.default)(this.props.router.params.id, '销售线索')
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'btn-group float-right mr-4', role: 'group' },
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'btn btn-secondary' },
-	                                '\u4E0A\u4E00\u6761'
-	                            ),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'btn btn-secondary' },
-	                                '\u4E0B\u4E00\u6761'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'btn-group float-right mr-4', role: 'group' },
-	                            _react2.default.createElement(_Button.BackButton, { router: this.props.router })
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'btn-group float-right mr-4', role: 'group' },
-	                            this.renderCommand(),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'btn btn-primary', 'data-toggle': 'modal', 'data-target': '#myModal' },
-	                                '\u521B\u5EFA\u5408\u540C'
-	                            ),
-	                            _react2.default.createElement(
-	                                'button',
-	                                { type: 'button', className: 'btn btn-primary', 'data-toggle': 'modal', 'data-target': '#myModal' },
-	                                '\u5206\u914D\u7ED9'
-	                            )
-	                        )
+	                        'p',
+	                        { className: 'd-inline text-muted' },
+	                        this.state.data ? this.state.data.student.name : '--'
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'main-container' },
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'ht pb-3 b-b' },
-	                            '\u7EBF\u7D22\u4FE1\u606F'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
-	                                            '\u5B66\u5458\u59D3\u540D'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u5B66\u5458\u59D3\u522B'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
-	                                            '\u5B66\u5458\u5E74\u9F84'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u5728\u8BFB\u5E74\u7EA7'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5728\u5B66\u6821'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
-	                                            '\u5BB6\u957F\u59D3\u540D'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
-	                                            '\u4E0E\u5B69\u5B50\u5173\u7CFB'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            _react2.default.createElement(
-	                                                'em',
-	                                                { className: 'text-danger' },
-	                                                '*'
-	                                            ),
-	                                            '\u8054\u7CFB\u7535\u8BDD'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u5FAE\u4FE1\u53F7'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u5BB6\u5EAD\u4F4F\u5740'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u8BFE\u7A0B\u7C7B\u522B'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u8BFE\u7A0B\u4EA7\u54C1'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u5907\u6CE8'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'ht pt-3 pb-3 b-t b-b' },
-	                            '\u7EBF\u7D22\u4FE1\u606F'
-	                        ),
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'row' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u4FE1\u606F\u6765\u6E90'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u5E02\u573A\u6D3B\u52A8'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u7C7B\u578B'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u9636\u6BB5'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u72B6\u6001'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7EC4\u7EC7'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7528\u6237'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u521B\u5EFA\u4EBA'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u521B\u5EFA\u65F6\u95F4'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'p',
-	                                                { className: 'form-control-static' },
-	                                                'xxxxxxxx'
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            { className: 'ht pt-3 pb-3 b-t b-b' },
-	                            '\u6C9F\u901A\u8BB0\u5F55'
-	                        ),
-	                        _react2.default.createElement(
-	                            'table',
-	                            { className: 'table table-bordered table-sm' },
-	                            _react2.default.createElement(
-	                                'thead',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u5E8F\u53F7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6C9F\u901A\u65B9\u5F0F'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u54A8\u8BE2\u65F6\u95F4'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6240\u5C5E\u7EC4\u7EC7'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6240\u5C5E\u7528\u6237'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'th',
-	                                        null,
-	                                        '\u6C9F\u901A\u8BB0\u5F55'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'tbody',
-	                                null,
-	                                _react2.default.createElement(
-	                                    'tr',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '1'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        'Call in'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '2016-05-05  10:58:35'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u5317\u4EAC\u5206\u516C\u53F8/\u95E8\u5934\u6C9F\u9F99\u6E56\u6821\u533A'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u82D7\u5730'
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'td',
-	                                        null,
-	                                        '\u5B69\u5B50\u7236\u4EB2\u54A8\u8BE2\u4E86\u6821\u533A\u60C5\u51B5\uFF0C\u8BFE\u7A0B\u60C5\u51B5\uFF0C\u670D\u52A1\u4EF7\u683C\uFF0C\u6BD4\u8F83\u5173\u5FC3\u6559\u5B66\u6548\u679C\u3002\u5DF2\u8BE6\u7EC6\u89E3\u7B54\u5E76\u63A8\u8350\u5173\u6CE8\u5FAE\u4FE1\uFF0C\u6743\u5148\u751F\u6BD4\u8F83\u6EE1\u610F\uFF0C\u8868\u793A\u9700\u8981\u5546\u91CF\u4E00\u4E0B\u3002\u672C\u5468\u672B\u8DDF\u8FDB\u3002'
-	                                    )
-	                                )
-	                            )
-	                        )
-	                    )
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'modal fade', id: 'myModal', tabindex: '-1' },
+	                        { className: 'btn-group float-right mr-4', role: 'group' },
+	                        _react2.default.createElement(_Button.BackButton, { router: this.props.router })
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'modal-dialog' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'modal-content' },
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-header' },
-	                                _react2.default.createElement(
-	                                    'p',
-	                                    { className: 'h5 modal-title' },
-	                                    '\u5206\u914D\u7ED9\uFF1A\u6743\u5929\u6052'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'close', 'data-dismiss': 'modal' },
-	                                    _react2.default.createElement(
-	                                        'span',
-	                                        null,
-	                                        '\xD7'
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-body' },
-	                                _react2.default.createElement(
-	                                    'ul',
-	                                    null,
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7EC4\u7EC7'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'div',
-	                                                { className: 'btn-group btn-block' },
-	                                                _react2.default.createElement('input', { type: 'text', className: 'form-control', 'data-toggle': 'dropdown', value: this.state.selected ? this.state.selected.name : '', readOnly: true }),
-	                                                _react2.default.createElement(
-	                                                    'div',
-	                                                    { className: 'dropdown-menu' },
-	                                                    _react2.default.createElement(_OrgTree2.default, { data: this.state.orgList, selected: this.selectOrg, defaults: this.state.selected ? this.state.selected.id : null })
-	                                                )
-	                                            )
-	                                        )
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        'li',
-	                                        { className: 'd-flex' },
-	                                        _react2.default.createElement(
-	                                            'label',
-	                                            { 'for': 'name', className: 'col-form-label d-block w100' },
-	                                            '\u6240\u5C5E\u7528\u6237'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'div',
-	                                            { className: 'flex-cell' },
-	                                            _react2.default.createElement(
-	                                                'select',
-	                                                { className: 'form-control', required: true },
-	                                                _react2.default.createElement(
-	                                                    'option',
-	                                                    null,
-	                                                    '\u8BF7\u9009\u62E9'
-	                                                )
-	                                            )
-	                                        )
-	                                    )
-	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'modal-footer' },
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
-	                                    '\u53D6\u6D88'
-	                                ),
-	                                _react2.default.createElement(
-	                                    'button',
-	                                    { type: 'button', className: 'btn btn-primary' },
-	                                    '\u786E\u5B9A'
-	                                )
-	                            )
-	                        )
+	                        { className: 'btn-group float-right mr-4', role: 'group' },
+	                        this.renderCommand()
 	                    )
-	                )
+	                ),
+	                _react2.default.createElement(_LeadsView2.default, {
+	                    type: 'oppor',
+	                    linkedId: this.props.params.id,
+	                    data: this.state.data
+	                })
 	            );
 	        }
 	    }]);
@@ -11664,7 +11319,554 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 687:
+/***/ 688:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _List = __webpack_require__(677);
+
+	var _List2 = _interopRequireDefault(_List);
+
+	var _formatDate = __webpack_require__(250);
+
+	var _formatDate2 = _interopRequireDefault(_formatDate);
+
+	var _static = __webpack_require__(680);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LeadsView = function (_React$Component) {
+	    _inherits(LeadsView, _React$Component);
+
+	    function LeadsView(props) {
+	        _classCallCheck(this, LeadsView);
+
+	        return _possibleConstructorReturn(this, (LeadsView.__proto__ || Object.getPrototypeOf(LeadsView)).call(this, props));
+	    }
+
+	    _createClass(LeadsView, [{
+	        key: 'renderType',
+	        value: function renderType(props) {
+	            if (props.type === 'oppor') {
+	                return _react2.default.createElement(
+	                    'li',
+	                    { className: 'd-flex' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { 'for': 'name', className: 'col-form-label d-block w100' },
+	                        '\u7C7B\u578B'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'flex-cell' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { className: 'form-control-static' },
+	                            props.data ? _static.TYPE_ID[props.data.typeId] : ''
+	                        )
+	                    )
+	                );
+	            } else {
+	                return null;
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'main-container' },
+	                _react2.default.createElement(
+	                    'p',
+	                    { className: 'ht pb-3 b-b' },
+	                    '\u7EBF\u7D22\u4FE1\u606F'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5B66\u5458\u59D3\u540D'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.student.name : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5B66\u5458\u59D3\u522B'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.student.genderText : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5B66\u5458\u5E74\u9F84'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.student.age : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5728\u8BFB\u5E74\u7EA7'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.student.classGrade !== 'null' ? this.props.data.student.classGrade : '' : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u6240\u5728\u5B66\u6821'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.student.schoolName : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5BB6\u957F\u59D3\u540D'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.parent.name : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u4E0E\u5B69\u5B50\u5173\u7CFB'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.parent.relation : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u8054\u7CFB\u7535\u8BDD'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.parent.cellphone : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5FAE\u4FE1\u53F7'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.parent.weichat : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5BB6\u5EAD\u4F4F\u5740'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.parent.address : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u8BFE\u7A0B\u7C7B\u522B'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.courseType !== 'null' ? this.props.data.courseType : '' : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u8BFE\u7A0B\u4EA7\u54C1'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.courseName !== 'null' ? this.props.data.courseName : '' : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5907\u6CE8'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.note : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    { className: 'ht pt-3 pb-3 b-t b-b' },
+	                    '\u7EBF\u7D22\u4FE1\u606F'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u4FE1\u606F\u6765\u6E90'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.sourceName : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u5177\u4F53\u6E20\u9053'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.channelName : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            this.renderType(this.props),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u9636\u6BB5'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.stageName : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u72B6\u6001'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.statusName : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u6240\u5C5E\u7EC4\u7EC7'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.orgnizationName : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u6240\u5C5E\u7528\u6237'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.executiveName : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'col' },
+	                        _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u521B\u5EFA\u4EBA'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? this.props.data.creatorName : ''
+	                                    )
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                'li',
+	                                { className: 'd-flex' },
+	                                _react2.default.createElement(
+	                                    'label',
+	                                    { 'for': 'name', className: 'col-form-label d-block w100' },
+	                                    '\u521B\u5EFA\u65F6\u95F4'
+	                                ),
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'flex-cell' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'form-control-static' },
+	                                        this.props.data ? (0, _formatDate2.default)(this.props.data.createTime) : ''
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2.default.createElement(_List2.default, { canEditd: false, leadsId: this.props.linkedId })
+	            );
+	        }
+	    }]);
+
+	    return LeadsView;
+	}(_react2.default.Component);
+
+	exports.default = LeadsView;
+
+/***/ },
+
+/***/ 689:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -11827,7 +12029,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 688:
+/***/ 690:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -12706,7 +12908,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 689:
+/***/ 691:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13519,7 +13721,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 690:
+/***/ 692:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -13668,7 +13870,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 691:
+/***/ 693:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14380,7 +14582,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 692:
+/***/ 694:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14774,7 +14976,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 693:
+/***/ 695:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -14852,7 +15054,7 @@ webpackJsonp([0],{
 	            dialogTips.open();
 
 	            __webpack_require__.e/* nsure */(2, function (require) {
-	                __webpack_require__(694);
+	                __webpack_require__(696);
 
 	                if (_this2.props.params.id === 'create') {
 	                    (0, _api.orgList)().done(function (data) {
@@ -15159,7 +15361,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 695:
+/***/ 697:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15521,7 +15723,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 696:
+/***/ 698:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15978,7 +16180,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 697:
+/***/ 699:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16013,7 +16215,7 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(248);
 
-	var _Alerts = __webpack_require__(698);
+	var _Alerts = __webpack_require__(700);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
@@ -16562,7 +16764,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 698:
+/***/ 700:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -16596,7 +16798,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 699:
+/***/ 701:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17073,7 +17275,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 700:
+/***/ 702:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17100,7 +17302,7 @@ webpackJsonp([0],{
 
 	var _Button = __webpack_require__(248);
 
-	var _Alerts = __webpack_require__(698);
+	var _Alerts = __webpack_require__(700);
 
 	var _Alerts2 = _interopRequireDefault(_Alerts);
 
@@ -17499,7 +17701,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 701:
+/***/ 703:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17697,7 +17899,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 702:
+/***/ 704:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17769,7 +17971,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 703:
+/***/ 705:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17824,14 +18026,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 704:
+/***/ 706:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 706:
+/***/ 708:
 /***/ function(module, exports) {
 
 	/*
@@ -17888,7 +18090,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 707:
+/***/ 709:
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -18141,23 +18343,23 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 708:
+/***/ 710:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 711:
+/***/ 713:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(712);
+	var content = __webpack_require__(714);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(707)(content, {});
+	var update = __webpack_require__(709)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -18175,10 +18377,10 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 712:
+/***/ 714:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(706)();
+	exports = module.exports = __webpack_require__(708)();
 	// imports
 
 

@@ -7,7 +7,11 @@ export default class Editor extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = { option: null, data: null }
+        this.state = {
+            typeId: (this.props.router.location.state && this.props.router.location.state.typeId) ? this.props.router.location.state.typeId : 2,
+            option: null,
+            data: null
+        }
         this.formSubmit = this.formSubmit.bind(this)
     }
 
@@ -31,9 +35,9 @@ export default class Editor extends React.Component {
         loading.open()
         $.when(
             mktActList(oid),
-            leadsSources(2),
-            leadsStages(2),
-            leadsStatus(2),
+            leadsSources(this.state.typeId),
+            leadsStages(this.state.typeId),
+            leadsStatus(this.state.typeId),
             genderList(),
             relationList()
         ).done((act, sources, stages, status, gender, relation) => {
@@ -73,7 +77,7 @@ export default class Editor extends React.Component {
         const fail = DialogTips({ type: 'fail', autoClose: true })
 
         query.orgnizationId = this.props.org.id;
-        query.typeId = 2;
+        //query.typeId = this.state.typeId;
         loading.open()
 
         if (this.props.params.id !== 'create') {
@@ -96,11 +100,19 @@ export default class Editor extends React.Component {
     }
 
     render() {
+        const subTitle = this.props.params.id === 'create' ? '新建销售机会' : this.state.data ? this.state.data.student.name : '';
+        const type = {
+            type: 'oppor',
+            typeId: this.state.typeId,
+            desc: '机会'
+        }
+
         return (
             <div className="market">
                 <LeadsFrom
+                    type={type}
                     title='销售机会'
-                    subTitle='新建销售机会'
+                    subTitle={subTitle}
                     option={this.state.option ? this.state.option : null}
                     data={this.state.data}
                     linkedId={this.props.params.id}

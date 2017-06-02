@@ -1,12 +1,52 @@
 import React from 'react'
 import { Link } from 'react-router'
+import LeadsList from '../../public/LeadsList'
 import command from '../../../utils/command'
 import { CreateButton } from '../../public/Button'
+import { opporList } from '../../../utils/api'
+import DialogTips from '../../../utils/DialogTips';
 
 export default class List extends React.Component {
     constructor(props) {
         super(props)
+
+        this.state = { typeId: 2, new: [], keep: [] }
+        this.dataInit = this.dataInit.bind(this)
         this.renderCommand = this.renderCommand.bind(this)
+        this.tabChange = this.tabChange.bind(this)
+        this.handleCreate = this.handleCreate.bind(this)
+    }
+
+    componentDidMount() {
+        if (this.props.org) {
+            this.dataInit(this.props.org.id)
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.org) {
+            if (!this.props.org || this.props.org.id !== nextProps.org.id) {
+                this.dataInit(nextProps.org.id)
+            }
+        }
+    }
+
+    dataInit(oid) {
+        const loading = DialogTips({ type: 'loading' })
+
+        loading.open()
+        opporList({
+            orgId: oid,
+            typeId: this.state.typeId
+        }).done((data) => {
+            if (this.state.typeId === 2) {
+                this.setState({ new: data })
+            } else {
+                this.setState({ keep: data })
+            }
+        }).always(() => {
+            loading.close()
+        })
     }
 
     renderCommand() {
@@ -16,11 +56,37 @@ export default class List extends React.Component {
 
         commands.map((item, index) => {
             if (item === 'Add') {
-                temp.push(<CreateButton key={index} link={this.props.location.pathname + '/edit/create'} />)
+                temp.push(<CreateButton key={index} action={this.handleCreate} />)
             };
         })
 
         return temp;
+    }
+
+    handleCreate() {
+        this.props.router.push({
+            pathname: this.props.location.pathname + '/edit/create',
+            state: { typeId: this.state.typeId }
+        })
+    }
+
+    tabChange(typeId) {
+        const loading = DialogTips({ type: 'loading' })
+
+        this.setState({ typeId: typeId })
+        loading.open()
+        opporList({
+            orgId: this.props.org.id,
+            typeId: typeId
+        }).done((data) => {
+            if (this.state.typeId === 2) {
+                this.setState({ new: data })
+            } else {
+                this.setState({ keep: data })
+            }
+        }).always(() => {
+            loading.close()
+        })
     }
 
     render() {
@@ -35,74 +101,28 @@ export default class List extends React.Component {
 
                 <div className="main-container">
                     <ul className="nav nav-tabs mb-3">
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">新招</a>
+                        <li className="nav-item" onClick={() => { this.tabChange(2) }}>
+                            <a className="nav-link active" data-toggle="tab" href="#new" role="tab">新招</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">续报</a>
+                        <li className="nav-item" onClick={() => { this.tabChange(3) }}>
+                            <a className="nav-link" data-toggle="tab" href="#keep" role="tab">续报</a>
                         </li>
                     </ul>
 
-                    <table className='table table-bordered table-sm'>
-                        <thead>
-                            <tr>
-                                <th>创建人</th>
-                                <th>创建时间</th>
-                                <th>所属组织</th>
-                                <th>所属用户</th>
-                                <th>来源</th>
-                                <th>市场活动</th>
-                                <th>类型</th>
-                                <th>阶段</th>
-                                <th>状态</th>
-                                <th>学员姓名</th>
-                                <th>性别</th>
-                                <th>年龄</th>
-                                <th>在读年级</th>
-                                <th>所在学校</th>
-                                <th>家长姓名</th>
-                                <th>与学员关系</th>
-                                <th>电话号码</th>
-                                <th>微信号</th>
-                                <th>家庭住址</th>
-                                <th>课程类别</th>
-                                <th>课程产品</th>
-                                <th>备注</th>
-                                <th>沟通记录</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>曹磊</td>
-                                <td>2015-05-05 10：00</td>
-                                <td>门头沟龙湖校区</td>
-                                <td>苗地</td>
-                                <td>call in</td>
-                                <td>百度推广1期</td>
-                                <td>新招</td>
-                                <td>已转化</td>
-                                <td>已转化</td>
-                                <td>
-                                    <Link to={this.props.location.pathname + '/123'}>刁梦缘</Link>
-                                </td>
-                                <td>男</td>
-                                <td>3</td>
-                                <td>幼儿园小班</td>
-                                <td>石景山第三幼儿园</td>
-                                <td>
-                                    <Link to={this.props.location.pathname + '/123'}>刁旭</Link>
-                                </td>
-                                <td>父亲</td>
-                                <td>13911015199</td>
-                                <td>dxyl218106</td>
-                                <td>石景山区模式口大街60号院</td>
-                                <td>ise-start</td>
-                                <td>pre-k</td>
-                                <td>--</td>
-                                <td>2016-05-10</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div className="tab-content">
+                        <div className="tab-pane active" id="new" role="tabpanel">
+                            <LeadsList
+                                path={this.props.location.pathname}
+                                list={this.state.new}
+                            />
+                        </div>
+                        <div className="tab-pane" id="keep" role="tabpanel">
+                            <LeadsList
+                                path={this.props.location.pathname}
+                                list={this.state.keep}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         )

@@ -86,8 +86,6 @@ export default class Editor extends React.Component {
         const data = update(this.state.data, {
             executiveId: { $set: selected.user.id },
             executiveName: { $set: selected.user.name },
-            orgnizationId: { $set: selected.org.id },
-            orgnizationName: { $set: selected.org.name },
         })
 
         loading.open()

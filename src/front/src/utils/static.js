@@ -10,4 +10,4 @@ export const COURSE_CATEGORY = ['类别1', '类别2']
 //课程产品
 export const COURSE_PRODUCTS = ['产品1', '产品2']
 
-export const TYPE_ID = [{ 1: '线索' }, { 2: '新建' }, { 3: '续报' }]
+export const TYPE_ID = { 1: '线索', 2: '新建', 3: '续报' }
