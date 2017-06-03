@@ -3,15 +3,14 @@ package com.schoolpal.db.inf;
 import com.schoolpal.db.model.TStudent;
 
 public interface TStudentMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteOneById(String id);
+    int deleteOneByCode(String code);
 
-    int insert(TStudent record);
+    int insertOne(TStudent record);
 
-    int insertSelective(TStudent record);
+    TStudent selectOneById(String id);
+    TStudent selectOneByCode(String code);
 
-    TStudent selectByPrimaryKey(String id);
+    int updateOne(TStudent record);
 
-    int updateByPrimaryKeySelective(TStudent record);
-
-    int updateByPrimaryKey(TStudent record);
 }

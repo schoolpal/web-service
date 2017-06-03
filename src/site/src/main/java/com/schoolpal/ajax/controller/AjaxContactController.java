@@ -217,7 +217,7 @@ public class AjaxContactController {
 				break;
 			}
 			
-			if (!contactServ.modConact(contact)){
+			if (!contactServ.modContact(contact)){
 				res.setCode(500);
 				res.setDetail("Failed to mod activity");
 				break;

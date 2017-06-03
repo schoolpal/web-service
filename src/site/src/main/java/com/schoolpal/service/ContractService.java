@@ -1,20 +1,19 @@
 package com.schoolpal.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.schoolpal.db.inf.TContactApproachMapper;
-import com.schoolpal.db.inf.TContactMapper;
+import com.schoolpal.db.inf.TContractMapper;
 import com.schoolpal.db.inf.TIndexMapper;
-import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TContactApproach;
+import com.schoolpal.db.model.TContract;
 import com.schoolpal.web.consts.LogLevel;
 
 @Service
-public class ContactService {
+public class ContractService {
 
 	@Autowired
 	private LogService logServ;
@@ -22,14 +21,14 @@ public class ContactService {
 	@Autowired
 	private TIndexMapper idxDao; 
 	@Autowired
-	private TContactMapper contactDao; 
+	private TContractMapper contractDao; 
 	@Autowired
 	private TContactApproachMapper approachDao; 
 
-	public TContact queryContactById(String id){
-		TContact ret = null;
+	public TContract queryContactById(String id){
+		TContract ret = null;
 		try{			
-			ret = contactDao.selectOneById(id);
+			ret = contractDao.selectOneById(id);
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
@@ -37,27 +36,13 @@ public class ContactService {
 		return ret;
 	}
 	
-	public List<TContact> queryContactsByLeadsId(String leadsId){
-		List<TContact> ret = null;
-		try{
-			ret = contactDao.selectManyByLeadsId(leadsId);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;		
-	}
-
-	public String addContact(TContact contact){
+	public String addContract(TContract contract){
 		String ret = null;
 		try{
-			String id = idxDao.selectNextId("t_contact");
-			contact.setId(id);
-			if(contact.getDatetime() == null){
-				contact.setDatetime(new Date());
-			}
-			if (contactDao.insertOne(contact) > 0){
-				ret = contact.getId();
+			String id = idxDao.selectNextId("t_contract");
+			contract.setId(id);
+			if (contractDao.insertOne(contract) > 0){
+				ret = contract.getId();
 			}
 			
 		}catch(Exception e){
@@ -67,13 +52,10 @@ public class ContactService {
 		return ret;
 	}
 	
-	public boolean modContact(TContact contact){
+	public boolean modContract(TContract contract){
 		boolean ret = false;
 		try{
-			if(contact.getDatetime() == null){
-				contact.setDatetime(new Date());
-			}
-			ret = contactDao.updateOne(contact) > 0;
+			ret = contractDao.updateOne(contract) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
@@ -81,10 +63,10 @@ public class ContactService {
 		return ret;
 	}
 	
-	public boolean delContactById(String id){
+	public boolean delContractById(String id){
 		boolean ret = false;
 		try{
-			ret = contactDao.deleteOneById(id) > 0;
+			ret = contractDao.deleteOneById(id) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());

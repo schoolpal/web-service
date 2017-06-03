@@ -3,15 +3,11 @@ package com.schoolpal.db.inf;
 import com.schoolpal.db.model.TContract;
 
 public interface TContractMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteOneById(String id);
 
-    int insert(TContract record);
+    int insertOne(TContract record);
 
-    int insertSelective(TContract record);
+    TContract selectOneById(String id);
 
-    TContract selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(TContract record);
-
-    int updateByPrimaryKey(TContract record);
+    int updateOne(TContract record);
 }

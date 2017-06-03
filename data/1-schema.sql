@@ -49,51 +49,6 @@ CREATE TABLE `t_activity` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `t_contract`
---
-
-DROP TABLE IF EXISTS `t_contract`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_contract` (
-  `id` char(50) NOT NULL,
-  `type` varchar(45) DEFAULT NULL,
-  `code` varchar(45) DEFAULT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `ori_price` decimal(16,2) DEFAULT NULL,
-  `disc_price` decimal(16,2) DEFAULT NULL,
-  `final_price` decimal(16,2) DEFAULT NULL,
-  `paid` decimal(16,2) DEFAULT NULL,
-  `course_type` varchar(45) DEFAULT NULL,
-  `course_ori_id` int(1) DEFAULT NULL,
-  `course_ses_id` int(1) DEFAULT NULL,
-  `course_hours` varchar(45) DEFAULT NULL,
-  `course_times` varchar(45) DEFAULT NULL,
-  `stu_id` char(50) DEFAULT NULL,
-  `stu_name` varchar(45) DEFAULT NULL,
-  `stu_gender` int(1) DEFAULT NULL,
-  `stu_id_type` int(1) DEFAULT NULL,
-  `stu_id_code` varchar(45) DEFAULT NULL,
-  `stu_birthday` varchar(45) DEFAULT NULL,
-  `stu_grade` varchar(45) DEFAULT NULL,
-  `stu_school_name` varchar(45) DEFAULT NULL,
-  `par_id` char(50) DEFAULT NULL,
-  `par_name` varchar(45) DEFAULT NULL,
-  `par_cellphone` varchar(45) DEFAULT NULL,
-  `par_weichat` varchar(45) DEFAULT NULL,
-  `par_email` varchar(45) DEFAULT NULL,
-  `par_address` varchar(200) DEFAULT NULL,
-  `relation` varchar(45) DEFAULT NULL,
-  `org_id` char(50) DEFAULT NULL,
-  `creator_id` char(50) DEFAULT NULL,
-  `executive_id` char(50) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `t_course_type`
 --
 
@@ -340,7 +295,6 @@ CREATE TABLE `t_leads_student` (
   `create_time` datetime NOT NULL,
   `last_update` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_type_code` (`id_type`,`id_code`),
   KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -369,7 +323,6 @@ CREATE TABLE `t_leads_parent` (
   `relation` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `c_cellphone` (`cellphone`),
-  KEY `id_type_code_idx` (`id_type`,`id_code`),
   KEY `creator_id_idx` (`creator_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -403,8 +356,65 @@ CREATE TABLE `t_contact` (
   `executive_id` char(50) DEFAULT NULL,
   `summary` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_t_contact_t_user1_idx` (`executive_id`),
-  KEY `fk_t_contact_t_leads1_idx` (`leads_id`)
+  KEY `executive_id` (`executive_id`),
+  KEY `leads_id` (`leads_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_contract`
+--
+
+DROP TABLE IF EXISTS `t_contract`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_contract` (
+  `id` char(50) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `code` varchar(45) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `ori_price` decimal(16,2) DEFAULT NULL,
+  `disc_price` decimal(16,2) DEFAULT NULL,
+  `final_price` decimal(16,2) DEFAULT NULL,
+  `paid` decimal(16,2) DEFAULT NULL,
+  `course_type` varchar(45) DEFAULT NULL,
+  `course_ori_id` int(1) DEFAULT NULL,
+  `course_ses_id` int(1) DEFAULT NULL,
+  `course_hours` varchar(45) DEFAULT NULL,
+  `course_times` varchar(45) DEFAULT NULL,
+  `stu_id` char(50) DEFAULT NULL,
+  `stu_name` varchar(45) DEFAULT NULL,
+  `stu_gender` int(1) DEFAULT NULL,
+  `stu_id_type` int(1) DEFAULT NULL,
+  `stu_id_code` varchar(45) DEFAULT NULL,
+  `stu_birthday` varchar(45) DEFAULT NULL,
+  `stu_grade` varchar(45) DEFAULT NULL,
+  `stu_school_name` varchar(45) DEFAULT NULL,
+  `par_id` char(50) DEFAULT NULL,
+  `par_name` varchar(45) DEFAULT NULL,
+  `par_cellphone` varchar(45) DEFAULT NULL,
+  `par_weichat` varchar(45) DEFAULT NULL,
+  `par_email` varchar(45) DEFAULT NULL,
+  `par_address` varchar(200) DEFAULT NULL,
+  `relation` varchar(45) DEFAULT NULL,
+  `org_id` char(50) DEFAULT NULL,
+  `ori_id` char(50) DEFAULT NULL,
+  `creator_id` char(50) DEFAULT NULL,
+  `executive_id` char(50) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`),
+  KEY `type` (`type`),
+  KEY `course_type` (`course_type`),
+  KEY `course_ori_id` (`course_ori_id`),
+  KEY `course_ses_id` (`course_ses_id`),
+  KEY `stu_id` (`stu_id`),
+  KEY `par_id` (`par_id`),
+  KEY `org_id` (`org_id`),
+  KEY `ori_id` (`ori_id`),
+  KEY `creator_id` (`creator_id`),
+  KEY `executive_id` (`executive_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -430,9 +440,8 @@ CREATE TABLE `t_parent` (
   `creator_id` char(50) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `last_update` datetime DEFAULT NULL,
-  `relation` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `c_cellphone_UNIQUE` (`cellphone`),
+  KEY `cellphone_idx` (`cellphone`),
   UNIQUE KEY `id_type_code_UNIQUE` (`id_type`,`id_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -462,6 +471,21 @@ CREATE TABLE `t_student` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`),
   KEY `id_type_code` (`id_type`,`id_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `t_parent`
+--
+
+DROP TABLE IF EXISTS `t_par_stu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t_par_stu` (
+  `par_id` char(50) NOT NULL,
+  `stu_id` char(50) NOT NULL,
+  `relation` varchar(45) NOT NULL,
+  PRIMARY KEY (`par_id`, `stu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

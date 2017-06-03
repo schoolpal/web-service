@@ -30,7 +30,7 @@
 		</sqlMapGenerator>
 		<javaClientGenerator targetPackage="com.schoolpal.db.inf"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		<table schema="schoolpal" tableName="t_student"
+		<table schema="schoolpal" tableName="t_par_stu"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

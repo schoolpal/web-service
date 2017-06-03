@@ -1,49 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TStudentMapper">
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TStudent">
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
-    <result column="id_type" jdbcType="INTEGER" property="idType" />
-    <result column="id_code" jdbcType="VARCHAR" property="idCode" />
-    <result column="birthday" jdbcType="DATE" property="birthday" />
-    <result column="school_grade" jdbcType="VARCHAR" property="schoolGrade" />
-    <result column="class_grade" jdbcType="VARCHAR" property="classGrade" />
-    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
-    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
-    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, code, name, gender, id_type, id_code, birthday, school_grade, class_grade, school_name, 
-    executive_id, creator_id, create_time, last_update
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
     from t_student
     where id = #{id,jdbcType=CHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <select id="selectOneByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_student
+    where id = #{code,jdbcType=CHAR}
+  </select>
+  <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_student
     where id = #{id,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.schoolpal.db.model.TStudent">
-    insert into t_student (id, code, name, 
-      gender, id_type, id_code, 
-      birthday, school_grade, class_grade, 
-      school_name, executive_id, creator_id, 
-      create_time, last_update)
-    values (#{id,jdbcType=CHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=VARCHAR}, #{idType,jdbcType=INTEGER}, #{idCode,jdbcType=VARCHAR}, 
-      #{birthday,jdbcType=DATE}, #{schoolGrade,jdbcType=VARCHAR}, #{classGrade,jdbcType=VARCHAR}, 
-      #{schoolName,jdbcType=VARCHAR}, #{executiveId,jdbcType=CHAR}, #{creatorId,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TStudent">
+  <delete id="deleteOneByCode" parameterType="java.lang.String">
+    delete from t_student
+    where id = #{code,jdbcType=CHAR}
+  </delete>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TStudent">
     insert into t_student
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -134,7 +111,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TStudent">
+  <update id="updateOne" parameterType="com.schoolpal.db.model.TStudent">
     update t_student
     <set>
       <if test="code != null">
@@ -179,21 +156,33 @@
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TStudent">
-    update t_student
-    set code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR},
-      id_type = #{idType,jdbcType=INTEGER},
-      id_code = #{idCode,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      school_grade = #{schoolGrade,jdbcType=VARCHAR},
-      class_grade = #{classGrade,jdbcType=VARCHAR},
-      school_name = #{schoolName,jdbcType=VARCHAR},
-      executive_id = #{executiveId,jdbcType=CHAR},
-      creator_id = #{creatorId,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      last_update = #{lastUpdate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=CHAR}
-  </update>
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TStudent">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="id_type" jdbcType="INTEGER" property="idType" />
+    <result column="id_code" jdbcType="VARCHAR" property="idCode" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="school_grade" jdbcType="VARCHAR" property="schoolGrade" />
+    <result column="class_grade" jdbcType="VARCHAR" property="classGrade" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, gender, id_type, id_code, birthday, school_grade, class_grade, school_name, 
+    executive_id, creator_id, create_time, last_update
+  </sql>
 </mapper>

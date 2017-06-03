@@ -1,85 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TContractMapper">
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TContract">
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="start_date" jdbcType="DATE" property="startDate" />
-    <result column="end_date" jdbcType="DATE" property="endDate" />
-    <result column="ori_price" jdbcType="DECIMAL" property="oriPrice" />
-    <result column="disc_price" jdbcType="DECIMAL" property="discPrice" />
-    <result column="final_price" jdbcType="DECIMAL" property="finalPrice" />
-    <result column="paid" jdbcType="DECIMAL" property="paid" />
-    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
-    <result column="course_ori_id" jdbcType="INTEGER" property="courseOriId" />
-    <result column="course_ses_id" jdbcType="INTEGER" property="courseSesId" />
-    <result column="course_hours" jdbcType="VARCHAR" property="courseHours" />
-    <result column="course_times" jdbcType="VARCHAR" property="courseTimes" />
-    <result column="stu_id" jdbcType="CHAR" property="stuId" />
-    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
-    <result column="stu_gender" jdbcType="INTEGER" property="stuGender" />
-    <result column="stu_id_type" jdbcType="INTEGER" property="stuIdType" />
-    <result column="stu_id_code" jdbcType="VARCHAR" property="stuIdCode" />
-    <result column="stu_birthday" jdbcType="VARCHAR" property="stuBirthday" />
-    <result column="stu_grade" jdbcType="VARCHAR" property="stuGrade" />
-    <result column="stu_school_name" jdbcType="VARCHAR" property="stuSchoolName" />
-    <result column="par_id" jdbcType="CHAR" property="parId" />
-    <result column="par_name" jdbcType="VARCHAR" property="parName" />
-    <result column="par_cellphone" jdbcType="VARCHAR" property="parCellphone" />
-    <result column="par_weichat" jdbcType="VARCHAR" property="parWeichat" />
-    <result column="par_email" jdbcType="VARCHAR" property="parEmail" />
-    <result column="par_address" jdbcType="VARCHAR" property="parAddress" />
-    <result column="relation" jdbcType="VARCHAR" property="relation" />
-    <result column="org_id" jdbcType="CHAR" property="orgId" />
-    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
-    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid, course_type, 
-    course_ori_id, course_ses_id, course_hours, course_times, stu_id, stu_name, stu_gender, 
-    stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name, 
-    par_cellphone, par_weichat, par_email, par_address, relation, org_id, creator_id, 
-    executive_id, create_time
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
+
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
     from t_contract
     where id = #{id,jdbcType=CHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_contract
     where id = #{id,jdbcType=CHAR}
   </delete>
-  <insert id="insert" parameterType="com.schoolpal.db.model.TContract">
-    insert into t_contract (id, type, code, 
-      start_date, end_date, ori_price, 
-      disc_price, final_price, paid, 
-      course_type, course_ori_id, course_ses_id, 
-      course_hours, course_times, stu_id, 
-      stu_name, stu_gender, stu_id_type, 
-      stu_id_code, stu_birthday, stu_grade, 
-      stu_school_name, par_id, par_name, 
-      par_cellphone, par_weichat, par_email, 
-      par_address, relation, org_id, 
-      creator_id, executive_id, create_time
-      )
-    values (#{id,jdbcType=CHAR}, #{type,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
-      #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, #{oriPrice,jdbcType=DECIMAL}, 
-      #{discPrice,jdbcType=DECIMAL}, #{finalPrice,jdbcType=DECIMAL}, #{paid,jdbcType=DECIMAL}, 
-      #{courseType,jdbcType=VARCHAR}, #{courseOriId,jdbcType=INTEGER}, #{courseSesId,jdbcType=INTEGER}, 
-      #{courseHours,jdbcType=VARCHAR}, #{courseTimes,jdbcType=VARCHAR}, #{stuId,jdbcType=CHAR}, 
-      #{stuName,jdbcType=VARCHAR}, #{stuGender,jdbcType=INTEGER}, #{stuIdType,jdbcType=INTEGER}, 
-      #{stuIdCode,jdbcType=VARCHAR}, #{stuBirthday,jdbcType=VARCHAR}, #{stuGrade,jdbcType=VARCHAR}, 
-      #{stuSchoolName,jdbcType=VARCHAR}, #{parId,jdbcType=CHAR}, #{parName,jdbcType=VARCHAR}, 
-      #{parCellphone,jdbcType=VARCHAR}, #{parWeichat,jdbcType=VARCHAR}, #{parEmail,jdbcType=VARCHAR}, 
-      #{parAddress,jdbcType=VARCHAR}, #{relation,jdbcType=VARCHAR}, #{orgId,jdbcType=CHAR}, 
-      #{creatorId,jdbcType=CHAR}, #{executiveId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TContract">
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TContract">
     insert into t_contract
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -284,7 +216,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TContract">
+  <update id="updateOne" parameterType="com.schoolpal.db.model.TContract">
     update t_contract
     <set>
       <if test="type != null">
@@ -386,40 +318,56 @@
     </set>
     where id = #{id,jdbcType=CHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TContract">
-    update t_contract
-    set type = #{type,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR},
-      start_date = #{startDate,jdbcType=DATE},
-      end_date = #{endDate,jdbcType=DATE},
-      ori_price = #{oriPrice,jdbcType=DECIMAL},
-      disc_price = #{discPrice,jdbcType=DECIMAL},
-      final_price = #{finalPrice,jdbcType=DECIMAL},
-      paid = #{paid,jdbcType=DECIMAL},
-      course_type = #{courseType,jdbcType=VARCHAR},
-      course_ori_id = #{courseOriId,jdbcType=INTEGER},
-      course_ses_id = #{courseSesId,jdbcType=INTEGER},
-      course_hours = #{courseHours,jdbcType=VARCHAR},
-      course_times = #{courseTimes,jdbcType=VARCHAR},
-      stu_id = #{stuId,jdbcType=CHAR},
-      stu_name = #{stuName,jdbcType=VARCHAR},
-      stu_gender = #{stuGender,jdbcType=INTEGER},
-      stu_id_type = #{stuIdType,jdbcType=INTEGER},
-      stu_id_code = #{stuIdCode,jdbcType=VARCHAR},
-      stu_birthday = #{stuBirthday,jdbcType=VARCHAR},
-      stu_grade = #{stuGrade,jdbcType=VARCHAR},
-      stu_school_name = #{stuSchoolName,jdbcType=VARCHAR},
-      par_id = #{parId,jdbcType=CHAR},
-      par_name = #{parName,jdbcType=VARCHAR},
-      par_cellphone = #{parCellphone,jdbcType=VARCHAR},
-      par_weichat = #{parWeichat,jdbcType=VARCHAR},
-      par_email = #{parEmail,jdbcType=VARCHAR},
-      par_address = #{parAddress,jdbcType=VARCHAR},
-      relation = #{relation,jdbcType=VARCHAR},
-      org_id = #{orgId,jdbcType=CHAR},
-      creator_id = #{creatorId,jdbcType=CHAR},
-      executive_id = #{executiveId,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=CHAR}
-  </update>
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TContract">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="ori_price" jdbcType="DECIMAL" property="oriPrice" />
+    <result column="disc_price" jdbcType="DECIMAL" property="discPrice" />
+    <result column="final_price" jdbcType="DECIMAL" property="finalPrice" />
+    <result column="paid" jdbcType="DECIMAL" property="paid" />
+    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
+    <result column="course_ori_id" jdbcType="INTEGER" property="courseOriId" />
+    <result column="course_ses_id" jdbcType="INTEGER" property="courseSesId" />
+    <result column="course_hours" jdbcType="VARCHAR" property="courseHours" />
+    <result column="course_times" jdbcType="VARCHAR" property="courseTimes" />
+    <result column="stu_id" jdbcType="CHAR" property="stuId" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="stu_gender" jdbcType="INTEGER" property="stuGender" />
+    <result column="stu_id_type" jdbcType="INTEGER" property="stuIdType" />
+    <result column="stu_id_code" jdbcType="VARCHAR" property="stuIdCode" />
+    <result column="stu_birthday" jdbcType="VARCHAR" property="stuBirthday" />
+    <result column="stu_grade" jdbcType="VARCHAR" property="stuGrade" />
+    <result column="stu_school_name" jdbcType="VARCHAR" property="stuSchoolName" />
+    <result column="par_id" jdbcType="CHAR" property="parId" />
+    <result column="par_name" jdbcType="VARCHAR" property="parName" />
+    <result column="par_cellphone" jdbcType="VARCHAR" property="parCellphone" />
+    <result column="par_weichat" jdbcType="VARCHAR" property="parWeichat" />
+    <result column="par_email" jdbcType="VARCHAR" property="parEmail" />
+    <result column="par_address" jdbcType="VARCHAR" property="parAddress" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+    <result column="org_id" jdbcType="CHAR" property="orgId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid, course_type, 
+    course_ori_id, course_ses_id, course_hours, course_times, stu_id, stu_name, stu_gender, 
+    stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name, 
+    par_cellphone, par_weichat, par_email, par_address, relation, org_id, creator_id, 
+    executive_id, create_time
+  </sql>
 </mapper>

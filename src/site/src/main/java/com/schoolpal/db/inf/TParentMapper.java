@@ -1,17 +1,17 @@
 package com.schoolpal.db.inf;
 
+import java.util.List;
+
 import com.schoolpal.db.model.TParent;
 
 public interface TParentMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteOneById(String id);
 
-    int insert(TParent record);
+    int insertOne(TParent record);
 
-    int insertSelective(TParent record);
+    TParent selectOneById(String id);
+    List<TParent> selectManyByCellphone(String cellphone);
 
-    TParent selectByPrimaryKey(String id);
+    int updateOne(TParent record);
 
-    int updateByPrimaryKeySelective(TParent record);
-
-    int updateByPrimaryKey(TParent record);
 }
