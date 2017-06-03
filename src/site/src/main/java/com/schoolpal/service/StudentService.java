@@ -3,13 +3,13 @@ package com.schoolpal.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.inf.TContractMapper;
 import com.schoolpal.db.inf.TIndexMapper;
-import com.schoolpal.db.model.TContract;
+import com.schoolpal.db.inf.TStudentMapper;
+import com.schoolpal.db.model.TStudent;
 import com.schoolpal.web.consts.LogLevel;
 
 @Service
-public class ContractService {
+public class StudentService {
 
 	@Autowired
 	private LogService logServ;
@@ -17,12 +17,12 @@ public class ContractService {
 	@Autowired
 	private TIndexMapper idxDao; 
 	@Autowired
-	private TContractMapper contractDao; 
+	private TStudentMapper studentDao; 
 
-	public TContract queryContactById(String id){
-		TContract ret = null;
+	public TStudent queryContactById(String id){
+		TStudent ret = null;
 		try{			
-			ret = contractDao.selectOneById(id);
+			ret = studentDao.selectOneById(id);
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
@@ -30,13 +30,13 @@ public class ContractService {
 		return ret;
 	}
 	
-	public String addContract(TContract contract){
+	public String addStudent(TStudent student){
 		String ret = null;
 		try{
-			String id = idxDao.selectNextId("t_contract");
-			contract.setId(id);
-			if (contractDao.insertOne(contract) > 0){
-				ret = contract.getId();
+			String id = idxDao.selectNextId("t_student");
+			student.setId(id);
+			if (studentDao.insertOne(student) > 0){
+				ret = student.getId();
 			}
 			
 		}catch(Exception e){
@@ -46,10 +46,10 @@ public class ContractService {
 		return ret;
 	}
 	
-	public boolean modContract(TContract contract){
+	public boolean modStudent(TStudent student){
 		boolean ret = false;
 		try{
-			ret = contractDao.updateOne(contract) > 0;
+			ret = studentDao.updateOne(student) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
@@ -57,10 +57,10 @@ public class ContractService {
 		return ret;
 	}
 	
-	public boolean delContractById(String id){
+	public boolean delStudentById(String id){
 		boolean ret = false;
 		try{
-			ret = contractDao.deleteOneById(id) > 0;
+			ret = studentDao.deleteOneById(id) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
