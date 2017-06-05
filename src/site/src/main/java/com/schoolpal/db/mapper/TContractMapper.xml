@@ -7,6 +7,11 @@
     from t_contract
     where id = #{id,jdbcType=CHAR}
   </select>
+  <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_contract
+    where executive_id = #{id,jdbcType=CHAR}
+  </select>
   <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_contract
     where id = #{id,jdbcType=CHAR}
@@ -62,8 +67,8 @@
       <if test="stuName != null">
         stu_name,
       </if>
-      <if test="stuGender != null">
-        stu_gender,
+      <if test="stuGenderId != null">
+        stu_gender_id,
       </if>
       <if test="stuIdType != null">
         stu_id_type,
@@ -163,8 +168,8 @@
       <if test="stuName != null">
         #{stuName,jdbcType=VARCHAR},
       </if>
-      <if test="stuGender != null">
-        #{stuGender,jdbcType=INTEGER},
+      <if test="stuGenderId != null">
+        #{stuGenderId,jdbcType=INTEGER},
       </if>
       <if test="stuIdType != null">
         #{stuIdType,jdbcType=INTEGER},
@@ -264,8 +269,8 @@
       <if test="stuName != null">
         stu_name = #{stuName,jdbcType=VARCHAR},
       </if>
-      <if test="stuGender != null">
-        stu_gender = #{stuGender,jdbcType=INTEGER},
+      <if test="stuGenderId != null">
+        stu_gender_id = #{stuGenderId,jdbcType=INTEGER},
       </if>
       <if test="stuIdType != null">
         stu_id_type = #{stuIdType,jdbcType=INTEGER},

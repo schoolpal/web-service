@@ -3,6 +3,8 @@ package com.schoolpal.db.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.schoolpal.web.consts.Gender;
+
 public class TContract {
     private String id;
 
@@ -36,13 +38,13 @@ public class TContract {
 
     private String stuName;
 
-    private Integer stuGender;
+    private Integer stuGenderId;
 
     private Integer stuIdType;
 
     private String stuIdCode;
 
-    private String stuBirthday;
+    private Date stuBirthday;
 
     private String stuGrade;
 
@@ -198,12 +200,18 @@ public class TContract {
         this.stuName = stuName == null ? null : stuName.trim();
     }
 
-    public Integer getStuGender() {
-        return stuGender;
+    public Integer getStuGenderId() {
+        return stuGenderId;
+    }
+    public String getStuGender() {
+        return Gender.valueOf(stuGenderId).getName();
     }
 
-    public void setStuGender(Integer stuGender) {
-        this.stuGender = stuGender;
+    public void setStuGenderId(Integer stuGenderId) {
+        this.stuGenderId = stuGenderId;
+    }
+    public void setStuGender(String stuGender) {
+        this.stuGenderId = Gender.nameOf(stuGender.trim()).getValue();
     }
 
     public Integer getStuIdType() {
@@ -222,11 +230,11 @@ public class TContract {
         this.stuIdCode = stuIdCode == null ? null : stuIdCode.trim();
     }
 
-    public String getStuBirthday() {
+    public Date getStuBirthday() {
         return stuBirthday;
     }
 
-    public void setStuBirthday(String stuBirthday) {
+    public void setStuBirthday(Date stuBirthday) {
         this.stuBirthday = stuBirthday == null ? null : stuBirthday.trim();
     }
 

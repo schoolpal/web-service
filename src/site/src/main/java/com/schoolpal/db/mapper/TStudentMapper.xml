@@ -32,8 +32,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="gender != null">
-        gender,
+      <if test="genderId != null">
+        gender_id,
       </if>
       <if test="idType != null">
         id_type,
@@ -76,8 +76,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        #{gender,jdbcType=VARCHAR},
+      <if test="genderId != null">
+        #{genderId,jdbcType=VARCHAR},
       </if>
       <if test="idType != null">
         #{idType,jdbcType=INTEGER},
@@ -120,8 +120,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="gender != null">
-        gender = #{gender,jdbcType=VARCHAR},
+      <if test="genderId != null">
+        gender_id = #{genderId,jdbcType=VARCHAR},
       </if>
       <if test="idType != null">
         id_type = #{idType,jdbcType=INTEGER},

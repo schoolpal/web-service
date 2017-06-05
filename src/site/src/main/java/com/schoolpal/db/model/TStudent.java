@@ -2,6 +2,8 @@ package com.schoolpal.db.model;
 
 import java.util.Date;
 
+import com.schoolpal.web.consts.Gender;
+
 public class TStudent {
     private String id;
 
@@ -9,7 +11,7 @@ public class TStudent {
 
     private String name;
 
-    private String gender;
+    private Integer genderId;
 
     private Integer idType;
 
@@ -55,12 +57,18 @@ public class TStudent {
         this.name = name == null ? null : name.trim();
     }
 
+    public Integer getGenderId() {
+        return genderId;
+    }
     public String getGender() {
-        return gender;
+        return Gender.valueOf(genderId).getName();
     }
 
+    public void setGenderId(Integer genderId) {
+        this.genderId = genderId == null ? null : genderId;
+    }
     public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+        this.genderId = Gender.nameOf(gender.trim()).getValue();
     }
 
     public Integer getIdType() {
@@ -141,5 +149,12 @@ public class TStudent {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+    
+    public static TStudent ParseFromContract(TContract contract){
+    	
+    	
+		return null;
+    	
     }
 }

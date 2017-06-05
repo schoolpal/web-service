@@ -2,12 +2,14 @@ package com.schoolpal.db.model;
 
 import java.util.Date;
 
+import com.schoolpal.web.consts.Gender;
+
 public class TParent {
     private String id;
 
     private String name;
 
-    private String gender;
+    private Integer genderId;
 
     private String cellphone;
 
@@ -49,12 +51,18 @@ public class TParent {
         this.name = name == null ? null : name.trim();
     }
 
+    public Integer getGenderId() {
+        return genderId;
+    }
     public String getGender() {
-        return gender;
+        return Gender.valueOf(genderId).getName();
     }
 
+    public void setGenderId(Integer genderId) {
+        this.genderId = genderId == null ? null : genderId;
+    }
     public void setGender(String gender) {
-        this.gender = gender == null ? null : gender.trim();
+        this.genderId = Gender.nameOf(gender.trim()).getValue();
     }
 
     public String getCellphone() {

@@ -1,5 +1,7 @@
 package com.schoolpal.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,21 @@ public class ContractService {
 	@Autowired
 	private TContractMapper contractDao; 
 
-	public TContract queryContactById(String id){
+	public TContract queryContractById(String id){
 		TContract ret = null;
 		try{			
 			ret = contractDao.selectOneById(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public List<TContract> queryContractsByExecutiveId(String id){
+		List<TContract> ret = null;
+		try{			
+			ret = contractDao.selectManyByExecutiveId(id);
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
