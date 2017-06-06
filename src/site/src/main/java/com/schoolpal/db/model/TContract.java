@@ -235,7 +235,7 @@ public class TContract {
     }
 
     public void setStuBirthday(Date stuBirthday) {
-        this.stuBirthday = stuBirthday == null ? null : stuBirthday.trim();
+        this.stuBirthday = stuBirthday == null ? null : stuBirthday;
     }
 
     public String getStuGrade() {
