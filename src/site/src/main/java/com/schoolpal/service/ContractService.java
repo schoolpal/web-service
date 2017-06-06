@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class ContractService {
 		try{
 			String id = idxDao.selectNextId("t_contract");
 			contract.setId(id);
+			contract.setCreateTime(new Date());
 			if (contractDao.insertOne(contract) > 0){
 				ret = contract.getId();
 			}

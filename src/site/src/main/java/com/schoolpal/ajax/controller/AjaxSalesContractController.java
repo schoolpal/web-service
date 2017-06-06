@@ -18,10 +18,14 @@ import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TContract;
 import com.schoolpal.db.model.TLeads;
+import com.schoolpal.db.model.TParent;
+import com.schoolpal.db.model.TStudent;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.ContactService;
 import com.schoolpal.service.ContractService;
 import com.schoolpal.service.LeadsService;
+import com.schoolpal.service.ParentService;
+import com.schoolpal.service.StudentService;
 import com.schoolpal.service.UserService;
 
 @Controller
@@ -32,6 +36,10 @@ public class AjaxSalesContractController {
 	private UserService userServ;
 	@Autowired
 	private ContractService contractServ;
+	@Autowired
+	private StudentService studentServ;
+	@Autowired
+	private ParentService parentServ;
 	
 	private Gson gson = new Gson();
 
@@ -106,11 +114,37 @@ public class AjaxSalesContractController {
 			}
 			
 			TUser user = userServ.getCachedUser();
-			contract.setExecutiveId(user.getcId());
+			if (user == null){
+				res.setCode(500);
+				res.setDetail("Not login");
+				break;
+			}
 			
+			TStudent stu = TStudent.ParseFromContract(contract);
+			stu.setCreatorId(user.getcId());
+			stu.setExecutiveId(user.getcId());
+			if (studentServ.addStudent(stu) == null){
+				res.setCode(500);
+				res.setDetail("Failed to add student");
+				break;
+			}
+			
+			TParent par = TParent.ParseFromContract(contract);
+			par.setCreatorId(user.getcId());
+			par.setExecutiveId(user.getcId());
+			if (parentServ.addParent(par) == null){
+				res.setCode(500);
+				res.setDetail("Failed to add parent");
+				break;
+			}
+			
+			contract.setStuId(stu.getId());
+			contract.setParId(par.getId());
+			contract.setCreatorId(user.getcId());
+			contract.setExecutiveId(user.getcId());
 			if (contractServ.addContract(contract) == null){
 				res.setCode(500);
-				res.setDetail("Failed to add activity");
+				res.setDetail("Failed to add contract");
 				break;
 			}
 			

@@ -152,9 +152,18 @@ public class TStudent {
     }
     
     public static TStudent ParseFromContract(TContract contract){
+    	TStudent stu = new TStudent();
     	
+    	stu.setCode(contract.getCode());
+    	stu.setName(contract.getStuName());
+    	stu.setGenderId(contract.getStuGenderId());
+    	stu.setBirthday(contract.getStuBirthday());
+    	stu.setClassGrade(contract.getStuGrade());
+    	stu.setSchoolName(contract.getStuSchoolName());
+    	stu.setSchoolGrade(contract.getStuGrade());
+    	stu.setIdType(contract.getStuIdType());
+    	stu.setIdCode(contract.getStuIdCode());
     	
-		return null;
-    	
+		return stu;
     }
 }

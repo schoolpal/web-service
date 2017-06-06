@@ -1,5 +1,7 @@
 package com.schoolpal.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,9 @@ public class StudentService {
 		try{
 			String id = idxDao.selectNextId("t_student");
 			student.setId(id);
+			student.setCode(id);
+			student.setCreateTime(new Date());
+			student.setLastUpdate(new Date());
 			if (studentDao.insertOne(student) > 0){
 				ret = student.getId();
 			}
@@ -49,6 +54,7 @@ public class StudentService {
 	public boolean modStudent(TStudent student){
 		boolean ret = false;
 		try{
+			student.setLastUpdate(new Date());
 			ret = studentDao.updateOne(student) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();

@@ -1,5 +1,7 @@
 package com.schoolpal.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,8 @@ public class ParentService {
 		try{
 			String id = idxDao.selectNextId("t_parent");
 			parent.setId(id);
+			parent.setCreateTime(new Date());
+			parent.setLastUpdate(new Date());
 			if (parentDao.insertOne(parent) > 0){
 				ret = parent.getId();
 			}
@@ -49,6 +53,7 @@ public class ParentService {
 	public boolean modParent(TParent parent){
 		boolean ret = false;
 		try{
+			parent.setLastUpdate(new Date());
 			ret = parentDao.updateOne(parent) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
