@@ -7,6 +7,14 @@
     where par_id = #{parId,jdbcType=CHAR}
       and stu_id = #{stuId,jdbcType=CHAR}
   </delete>
+  <delete id="deleteManyByParId">
+    delete from t_par_stu
+    where par_id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteManyByStuId">
+    delete from t_par_stu
+    where stu_id = #{id,jdbcType=CHAR}
+  </delete>
   <insert id="insertOne" parameterType="com.schoolpal.db.model.TParStu">
     insert into t_par_stu (par_id, stu_id, relation
       )

@@ -4,7 +4,9 @@ import com.schoolpal.db.model.TParStu;
 import com.schoolpal.db.model.TParStuKey;
 
 public interface TParStuMapper {
-    int deleteByPrimaryKey(TParStuKey key);
+    int deleteOneByPrimaryKey(TParStuKey key);
+    int deleteManyByParId(String id);
+    int deleteManyByStuId(String id);
 
     int insertOne(TParStu record);
 

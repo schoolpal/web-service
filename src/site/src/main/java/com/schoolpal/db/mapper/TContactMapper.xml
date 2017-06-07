@@ -44,7 +44,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateOneById" parameterType="com.schoolpal.db.model.TContact">
+  <update id="updateOne" parameterType="com.schoolpal.db.model.TContact">
     update t_contact
     <set>
       <if test="leadsId != null">

@@ -14,50 +14,22 @@ import com.schoolpal.db.model.TParent;
 import com.schoolpal.web.consts.LogLevel;
 
 @Service
-public class ParentService {
+public class RelationService {
 
 	@Autowired
 	private LogService logServ;
 	
 	@Autowired
-	private TIndexMapper idxDao; 
-	@Autowired
-	private TParentMapper parentDao; 
+	private TParStuMapper relationDao; 
 
-	public TParent queryParentById(String id){
-		TParent ret = null;
-		try{			
-			ret = parentDao.selectOneById(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public String addParent(TParent parent){
-		String ret = null;
-		try{
-			String id = idxDao.selectNextId("t_parent");
-			parent.setId(id);
-			parent.setCreateTime(new Date());
-			parent.setLastUpdate(new Date());
-			if (parentDao.insertOne(parent) > 0){
-				ret = parent.getId();
-			}
-			
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean modParent(TParent parent){
+	public boolean addRelation(String parId, String stuId, String relationDesc){
 		boolean ret = false;
 		try{
-			parent.setLastUpdate(new Date());
-			ret = parentDao.updateOne(parent) > 0;
+			TParStu relation = new TParStu();
+			relation.setParId(parId);
+			relation.setStuId(stuId);
+			relation.setRelation(relationDesc);
+			ret = relationDao.insertOne(relation) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
@@ -65,10 +37,35 @@ public class ParentService {
 		return ret;
 	}
 	
-	public boolean delParentById(String id){
+	public boolean delRelation(String parId, String stuId){
 		boolean ret = false;
 		try{
-			ret = parentDao.deleteOneById(id) > 0;
+			TParStuKey key = new TParStuKey();
+			key.setParId(parId);
+			key.setStuId(stuId);
+			ret = relationDao.deleteOneByPrimaryKey(key) > 0;
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public boolean delRelationsByParId(String parId){
+		boolean ret = false;
+		try{
+			ret = relationDao.deleteManyByParId(parId) > 0;
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public boolean delRelationsByStuId(String stuId){
+		boolean ret = false;
+		try{
+			ret = relationDao.deleteManyByStuId(stuId) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());

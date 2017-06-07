@@ -141,7 +141,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 
 		expect(xhr.status).to.be.equal(200);
 		var jsonData = xhr.responseJSON;
-		resDump('listGenders.do', jsonData);
+		resDump('relation/list.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.detail).to.be.equal('Ok');
 		expect(jsonData.data).to.not.empty;

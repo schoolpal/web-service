@@ -61,9 +61,6 @@
       <if test="lastUpdate != null">
         last_update,
       </if>
-      <if test="relation != null">
-        relation,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -108,9 +105,6 @@
       <if test="lastUpdate != null">
         #{lastUpdate,jdbcType=TIMESTAMP},
       </if>
-      <if test="relation != null">
-        #{relation,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
   <update id="updateOne" parameterType="com.schoolpal.db.model.TParent">
@@ -154,9 +148,6 @@
       </if>
       <if test="lastUpdate != null">
         last_update = #{lastUpdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="relation != null">
-        relation = #{relation,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=CHAR}

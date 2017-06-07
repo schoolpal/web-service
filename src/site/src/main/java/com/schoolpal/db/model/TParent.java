@@ -33,8 +33,6 @@ public class TParent {
 
     private Date lastUpdate;
 
-    private String relation;
-
     public String getId() {
         return id;
     }
@@ -153,19 +151,10 @@ public class TParent {
         this.lastUpdate = lastUpdate;
     }
 
-    public String getRelation() {
-        return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation == null ? null : relation.trim();
-    }
-    
     public static TParent ParseFromContract(TContract contract){
     	TParent par = new TParent();
     	
     	par.setName(contract.getParName());
-    	par.setRelation(contract.getRelation());
     	par.setCellphone(contract.getParCellphone());
     	par.setWeichat(contract.getParWeichat());
     	par.setEmail(contract.getParEmail());

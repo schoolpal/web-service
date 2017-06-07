@@ -18,6 +18,7 @@ import com.schoolpal.ajax.AuthorizationHelper;
 import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TContract;
 import com.schoolpal.db.model.TLeads;
+import com.schoolpal.db.model.TParStu;
 import com.schoolpal.db.model.TParent;
 import com.schoolpal.db.model.TStudent;
 import com.schoolpal.db.model.TUser;
@@ -25,6 +26,7 @@ import com.schoolpal.service.ContactService;
 import com.schoolpal.service.ContractService;
 import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.ParentService;
+import com.schoolpal.service.RelationService;
 import com.schoolpal.service.StudentService;
 import com.schoolpal.service.UserService;
 
@@ -40,6 +42,8 @@ public class AjaxSalesContractController {
 	private StudentService studentServ;
 	@Autowired
 	private ParentService parentServ;
+	@Autowired
+	private RelationService relationServ;
 	
 	private Gson gson = new Gson();
 
@@ -54,8 +58,7 @@ public class AjaxSalesContractController {
 				break;
 			}
 			
-			if (!AuthorizationHelper.CheckPermissionByMappedPath(
-					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -80,8 +83,7 @@ public class AjaxSalesContractController {
 	public String list(HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionByMappedPath(
-					(String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
+			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
@@ -124,7 +126,7 @@ public class AjaxSalesContractController {
 			stu.setCreatorId(user.getcId());
 			stu.setExecutiveId(user.getcId());
 			if (studentServ.addStudent(stu) == null){
-				res.setCode(500);
+				res.setCode(501);
 				res.setDetail("Failed to add student");
 				break;
 			}
@@ -133,8 +135,14 @@ public class AjaxSalesContractController {
 			par.setCreatorId(user.getcId());
 			par.setExecutiveId(user.getcId());
 			if (parentServ.addParent(par) == null){
-				res.setCode(500);
+				res.setCode(502);
 				res.setDetail("Failed to add parent");
+				break;
+			}
+			
+			if (!relationServ.addRelation(par.getId(), stu.getId(), contract.getRelation())){
+				res.setCode(503);
+				res.setDetail("Failed to add relation");
 				break;
 			}
 			
@@ -143,7 +151,7 @@ public class AjaxSalesContractController {
 			contract.setCreatorId(user.getcId());
 			contract.setExecutiveId(user.getcId());
 			if (contractServ.addContract(contract) == null){
-				res.setCode(500);
+				res.setCode(504);
 				res.setDetail("Failed to add contract");
 				break;
 			}
@@ -235,67 +243,67 @@ public class AjaxSalesContractController {
 			}
 			if (StringUtils.isEmpty(contract.getStuName())){
 				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setDetail(" Student cannot be empty");
 				break;
 			}
-			if (contract.getStuGender() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+			if (contract.getStuGenderId() == null){
+				res.setCode(403);
+				res.setDetail("Student gender cannot be empty");
 				break;
 			}
 			if (contract.getStuBirthday() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setCode(404);
+				res.setDetail("Student birthday cannot be empty");
 				break;
 			}
-			if (contract.getStuGrade() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+			if (StringUtils.isEmpty(contract.getStuGrade())){
+				res.setCode(405);
+				res.setDetail("Student grade cannot be empty");
 				break;
 			}
-			if (contract.getParName() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+			if (StringUtils.isEmpty(contract.getParName())){
+				res.setCode(406);
+				res.setDetail("Parent name cannot be empty");
 				break;
 			}
-			if (contract.getCourseType() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+			if (StringUtils.isEmpty(contract.getCourseType())){
+				res.setCode(407);
+				res.setDetail("Course type cannot be empty");
 				break;
 			}
 			if (contract.getCourseSesId() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setCode(408);
+				res.setDetail("Course session cannot be empty");
 				break;
 			}
 			if (contract.getOriPrice() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setCode(409);
+				res.setDetail("Original price cannot be empty");
 				break;
 			}
 			if (contract.getDiscPrice() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setCode(410);
+				res.setDetail("Discount cannot be empty");
 				break;
 			}
 			if (contract.getFinalPrice() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setCode(412);
+				res.setDetail("Final price cannot be empty");
 				break;
 			}
 			if (contract.getPaid() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+				res.setCode(413);
+				res.setDetail("Paid cannot be empty");
 				break;
 			}
-			if (contract.getCode() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+			if (StringUtils.isEmpty(contract.getCode())){
+				res.setCode(414);
+				res.setDetail("Code cannot be empty");
 				break;
 			}
-			if (contract.getType() == null){
-				res.setCode(402);
-				res.setDetail("cannot be empty");
+			if (StringUtils.isEmpty(contract.getType())){
+				res.setCode(415);
+				res.setDetail("Type cannot be empty");
 				break;
 			}
 			ret = true;
