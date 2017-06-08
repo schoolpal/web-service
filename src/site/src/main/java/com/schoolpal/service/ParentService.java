@@ -1,6 +1,7 @@
 package com.schoolpal.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,17 @@ public class ParentService {
 		TParent ret = null;
 		try{			
 			ret = parentDao.selectOneById(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public List<TParent> queryParentsByExecutiveId(String id){
+		List<TParent> ret = null;
+		try{			
+			ret = parentDao.selectManyByExecutiveId(id);
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());

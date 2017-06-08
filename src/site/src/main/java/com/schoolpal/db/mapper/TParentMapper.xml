@@ -7,6 +7,11 @@
     from t_parent
     where id = #{id,jdbcType=CHAR}
   </select>
+  <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_parent
+    where executive_id = #{id,jdbcType=CHAR}
+  </select>
   <select id="selectManyByCellphone" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from t_parent

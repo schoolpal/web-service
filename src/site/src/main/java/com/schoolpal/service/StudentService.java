@@ -1,6 +1,7 @@
 package com.schoolpal.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,21 @@ public class StudentService {
 	@Autowired
 	private TStudentMapper studentDao; 
 
-	public TStudent queryContactById(String id){
+	public TStudent queryStudentById(String id){
 		TStudent ret = null;
 		try{			
 			ret = studentDao.selectOneById(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
+	public List<TStudent> queryStudentsByExecutiveId(String id){
+		List<TStudent> ret = null;
+		try{			
+			ret = studentDao.selectManyByExectiveId(id);
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());

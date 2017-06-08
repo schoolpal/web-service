@@ -15,28 +15,20 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.google.gson.Gson;
 import com.schoolpal.ajax.AjaxResponse;
 import com.schoolpal.ajax.AuthorizationHelper;
-import com.schoolpal.db.model.TContract;
 import com.schoolpal.db.model.TParent;
-import com.schoolpal.db.model.TStudent;
 import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.ContractService;
 import com.schoolpal.service.ParentService;
 import com.schoolpal.service.RelationService;
-import com.schoolpal.service.StudentService;
 import com.schoolpal.service.UserService;
 
 @Controller
-@RequestMapping("/ajax/sales/contract")
-public class AjaxSalesContractController {
+@RequestMapping("/ajax/sales/customer/parent")
+public class AjaxSalesParentController {
 	
 	@Autowired
 	private UserService userServ;
 	@Autowired
-	private ContractService contractServ;
-	@Autowired
-	private StudentService studentServ;
-	@Autowired
-	private ParentService parentServ;
+	private ParentService parServ;
 	@Autowired
 	private RelationService relationServ;
 	
@@ -53,20 +45,20 @@ public class AjaxSalesContractController {
 				break;
 			}
 			
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-3")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
-			TContract contract = contractServ.queryContractById(id);
-			if (contract == null){
+			TParent parent = parServ.queryParentById(id);
+			if (parent == null){
 				res.setCode(402);
 				res.setDetail("Invalid contact id");
 				break;
 			}
 			
-			res.setData(contract);
+			res.setData(parent);
 
 		} while (false);
 
@@ -78,15 +70,15 @@ public class AjaxSalesContractController {
 	public String list(HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
-			if (!AuthorizationHelper.CheckPermissionById("2-2")) {
+			if (!AuthorizationHelper.CheckPermissionById("2-3")) {
 				res.setCode(400);
 				res.setDetail("No permission");
 				break;
 			}
 			
-			List<TContract> contracts = null;
+			List<TParent> contracts = null;
 			TUser user = userServ.getCachedUser();
-			contracts = contractServ.queryContractsByExecutiveId(user.getcId());
+			contracts = parServ.queryParentsByExecutiveId(user.getcId());
 			res.setData(contracts);
 
 		} while (false);
@@ -96,7 +88,7 @@ public class AjaxSalesContractController {
 
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(TContract contract, HttpServletRequest request) {
+	public String add(TParent parent, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -106,7 +98,7 @@ public class AjaxSalesContractController {
 				break;
 			}
 			
-			if (!this.validateForm(contract, res)){
+			if (!this.validateForm(parent, res)){
 				break;
 			}
 			
@@ -117,41 +109,15 @@ public class AjaxSalesContractController {
 				break;
 			}
 			
-			TStudent stu = TStudent.ParseFromContract(contract);
-			stu.setCreatorId(user.getcId());
-			stu.setExecutiveId(user.getcId());
-			if (studentServ.addStudent(stu) == null){
-				res.setCode(501);
-				res.setDetail("Failed to add student");
-				break;
-			}
-			
-			TParent par = TParent.ParseFromContract(contract);
-			par.setCreatorId(user.getcId());
-			par.setExecutiveId(user.getcId());
-			if (parentServ.addParent(par) == null){
-				res.setCode(502);
-				res.setDetail("Failed to add parent");
-				break;
-			}
-			
-			if (!relationServ.addRelation(par.getId(), stu.getId(), contract.getRelation())){
-				res.setCode(503);
-				res.setDetail("Failed to add relation");
-				break;
-			}
-			
-			contract.setStuId(stu.getId());
-			contract.setParId(par.getId());
-			contract.setCreatorId(user.getcId());
-			contract.setExecutiveId(user.getcId());
-			if (contractServ.addContract(contract) == null){
+			parent.setCreatorId(user.getcId());
+			parent.setExecutiveId(user.getcId());
+			if (parServ.addParent(parent) == null){
 				res.setCode(504);
 				res.setDetail("Failed to add contract");
 				break;
 			}
 			
-			res.setData(contract.getId());
+			res.setData(parent.getId());
 			
 		} while (false);
 
@@ -160,7 +126,7 @@ public class AjaxSalesContractController {
 	
 	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TContract contract, HttpServletRequest request) {
+	public String mod(TParent parent, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -170,18 +136,18 @@ public class AjaxSalesContractController {
 				break;
 			}
 			
-			if (!this.validateForm(contract, res)){
+			if (!this.validateForm(parent, res)){
 				break;
 			}
 
-			TContract target = contractServ.queryContractById(contract.getId());
+			TParent target = parServ.queryParentById(parent.getId());
 			if (target == null){
 				res.setCode(401);
 				res.setDetail("Invalid contact id");
 				break;
 			}
 			
-			if (!contractServ.modContract(contract)){
+			if (!parServ.modParent(parent)){
 				res.setCode(500);
 				res.setDetail("Failed to mod activity");
 				break;
@@ -210,102 +176,45 @@ public class AjaxSalesContractController {
 				break;
 			}
 			
-			TContract target = contractServ.queryContractById(id);
+			TParent target = parServ.queryParentById(id);
 			if (target == null){
 				res.setCode(402);
 				res.setDetail("Invalid contact id");
 				break;
 			}
 			
-			if (!contractServ.delContractById(id)){
+			if (!parServ.delParentById(id)){
 				res.setCode(500);
 				res.setDetail("Failed to del activity");
 				break;
 			}
+			relationServ.delRelationsByParId(id);
 
 		} while (false);
 
 		return gson.toJson(res);
 	}
 	
-	private boolean validateForm(TContract contract, AjaxResponse res){
+	private boolean validateForm(TParent parent, AjaxResponse res){
 		boolean ret = false;
 		do {
-			if (contract == null) {
+			if (parent == null) {
 				res.setCode(401);
 				res.setDetail("From data cannot be empty");
 				break;
 			}
-			if (StringUtils.isEmpty(contract.getStuName())){
-				res.setCode(402);
-				res.setDetail(" Student cannot be empty");
-				break;
-			}
-			if (contract.getStuGenderId() == null){
-				res.setCode(403);
-				res.setDetail("Student gender cannot be empty");
-				break;
-			}
-			if (contract.getStuBirthday() == null){
-				res.setCode(404);
-				res.setDetail("Student birthday cannot be empty");
-				break;
-			}
-			if (StringUtils.isEmpty(contract.getStuGrade())){
-				res.setCode(405);
-				res.setDetail("Student grade cannot be empty");
-				break;
-			}
-			if (StringUtils.isEmpty(contract.getParName())){
+
+			if (StringUtils.isEmpty(parent.getName())){
 				res.setCode(406);
 				res.setDetail("Parent name cannot be empty");
 				break;
 			}
-			if (StringUtils.isEmpty(contract.getParCellphone())){
+			if (StringUtils.isEmpty(parent.getCellphone())){
 				res.setCode(407);
-				res.setDetail("Parent cellphone cannot be empty");
-				break;
-			}
-			if (StringUtils.isEmpty(contract.getCourseType())){
-				res.setCode(408);
 				res.setDetail("Course type cannot be empty");
 				break;
 			}
-			if (contract.getCourseSesId() == null){
-				res.setCode(409);
-				res.setDetail("Course session cannot be empty");
-				break;
-			}
-			if (contract.getOriPrice() == null){
-				res.setCode(410);
-				res.setDetail("Original price cannot be empty");
-				break;
-			}
-			if (contract.getDiscPrice() == null){
-				res.setCode(411);
-				res.setDetail("Discount cannot be empty");
-				break;
-			}
-			if (contract.getFinalPrice() == null){
-				res.setCode(412);
-				res.setDetail("Final price cannot be empty");
-				break;
-			}
-			if (contract.getPaid() == null){
-				res.setCode(413);
-				res.setDetail("Paid cannot be empty");
-				break;
-			}
-			if (StringUtils.isEmpty(contract.getCode())){
-				res.setCode(414);
-				res.setDetail("Code cannot be empty");
-				break;
-			}
-			if (StringUtils.isEmpty(contract.getType())){
-				res.setCode(415);
-				res.setDetail("Type cannot be empty");
-				break;
-			}
+
 			ret = true;
 		}while(false);
 		return ret;

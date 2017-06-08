@@ -12,6 +12,11 @@
     from t_student
     where id = #{code,jdbcType=CHAR}
   </select>
+  <select id="selectManyByExectiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_student
+    where executive_id = #{id,jdbcType=CHAR}
+  </select>
   <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_student
     where id = #{id,jdbcType=CHAR}
