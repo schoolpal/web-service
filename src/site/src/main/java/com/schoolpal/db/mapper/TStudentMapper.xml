@@ -174,7 +174,7 @@
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
     <result column="id_type" jdbcType="INTEGER" property="idType" />
     <result column="id_code" jdbcType="VARCHAR" property="idCode" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
@@ -187,7 +187,7 @@
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, code, name, gender, id_type, id_code, birthday, school_grade, class_grade, school_name, 
+    id, code, name, gender_id, id_type, id_code, birthday, school_grade, class_grade, school_name, 
     executive_id, creator_id, create_time, last_update
   </sql>
 </mapper>

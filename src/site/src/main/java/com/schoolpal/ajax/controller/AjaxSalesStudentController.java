@@ -136,13 +136,19 @@ public class AjaxSalesStudentController {
 				break;
 			}
 			
+			if (StringUtils.isEmpty(student.getId())){
+				res.setCode(411);
+				res.setDetail("Invalid contact id");
+				break;
+			}
+			
 			if (!this.validateForm(student, res)){
 				break;
 			}
 
 			TStudent target = stuServ.queryStudentById(student.getId());
 			if (target == null){
-				res.setCode(401);
+				res.setCode(412);
 				res.setDetail("Invalid contact id");
 				break;
 			}

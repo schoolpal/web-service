@@ -64,6 +64,9 @@
       <if test="stuId != null">
         stu_id,
       </if>
+      <if test="stuCode != null">
+        stu_code,
+      </if>
       <if test="stuName != null">
         stu_name,
       </if>
@@ -94,8 +97,8 @@
       <if test="parCellphone != null">
         par_cellphone,
       </if>
-      <if test="parWeichat != null">
-        par_weichat,
+      <if test="parWechat != null">
+        par_wechat,
       </if>
       <if test="parEmail != null">
         par_email,
@@ -165,6 +168,9 @@
       <if test="stuId != null">
         #{stuId,jdbcType=CHAR},
       </if>
+      <if test="stuCode != null">
+        #{stuCode,jdbcType=CHAR},
+      </if>
       <if test="stuName != null">
         #{stuName,jdbcType=VARCHAR},
       </if>
@@ -195,8 +201,8 @@
       <if test="parCellphone != null">
         #{parCellphone,jdbcType=VARCHAR},
       </if>
-      <if test="parWeichat != null">
-        #{parWeichat,jdbcType=VARCHAR},
+      <if test="parWechat != null">
+        #{parWechat,jdbcType=VARCHAR},
       </if>
       <if test="parEmail != null">
         #{parEmail,jdbcType=VARCHAR},
@@ -266,6 +272,9 @@
       <if test="stuId != null">
         stu_id = #{stuId,jdbcType=CHAR},
       </if>
+      <if test="stuCode != null">
+        stu_code = #{stuCode,jdbcType=CHAR},
+      </if>
       <if test="stuName != null">
         stu_name = #{stuName,jdbcType=VARCHAR},
       </if>
@@ -296,8 +305,8 @@
       <if test="parCellphone != null">
         par_cellphone = #{parCellphone,jdbcType=VARCHAR},
       </if>
-      <if test="parWeichat != null">
-        par_weichat = #{parWeichat,jdbcType=VARCHAR},
+      <if test="parWechat != null">
+        par_wechat = #{parWechat,jdbcType=VARCHAR},
       </if>
       <if test="parEmail != null">
         par_email = #{parEmail,jdbcType=VARCHAR},
@@ -349,6 +358,7 @@
     <result column="course_hours" jdbcType="VARCHAR" property="courseHours" />
     <result column="course_times" jdbcType="VARCHAR" property="courseTimes" />
     <result column="stu_id" jdbcType="CHAR" property="stuId" />
+    <result column="stu_code" jdbcType="CHAR" property="stuCode" />
     <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
     <result column="stu_gender" jdbcType="INTEGER" property="stuGender" />
     <result column="stu_id_type" jdbcType="INTEGER" property="stuIdType" />
@@ -359,7 +369,7 @@
     <result column="par_id" jdbcType="CHAR" property="parId" />
     <result column="par_name" jdbcType="VARCHAR" property="parName" />
     <result column="par_cellphone" jdbcType="VARCHAR" property="parCellphone" />
-    <result column="par_weichat" jdbcType="VARCHAR" property="parWeichat" />
+    <result column="par_wechat" jdbcType="VARCHAR" property="parWechat" />
     <result column="par_email" jdbcType="VARCHAR" property="parEmail" />
     <result column="par_address" jdbcType="VARCHAR" property="parAddress" />
     <result column="relation" jdbcType="VARCHAR" property="relation" />
@@ -370,9 +380,9 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid, course_type, 
-    course_ori_id, course_ses_id, course_hours, course_times, stu_id, stu_name, stu_gender, 
+    course_ori_id, course_ses_id, course_hours, course_times, stu_id, stu_code, stu_name, stu_gender, 
     stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name, 
-    par_cellphone, par_weichat, par_email, par_address, relation, org_id, creator_id, 
+    par_cellphone, par_wechat, par_email, par_address, relation, org_id, creator_id, 
     executive_id, create_time
   </sql>
 </mapper>

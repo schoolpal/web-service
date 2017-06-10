@@ -36,6 +36,8 @@ public class TContract {
 
     private String stuId;
 
+    private String stuCode;
+
     private String stuName;
 
     private Integer stuGenderId;
@@ -56,7 +58,7 @@ public class TContract {
 
     private String parCellphone;
 
-    private String parWeichat;
+    private String parWechat;
 
     private String parEmail;
 
@@ -192,7 +194,15 @@ public class TContract {
         this.stuId = stuId == null ? null : stuId.trim();
     }
 
-    public String getStuName() {
+    public String getStuCode() {
+		return stuCode;
+	}
+
+	public void setStuCode(String stuCode) {
+		this.stuCode = stuCode;
+	}
+
+	public String getStuName() {
         return stuName;
     }
 
@@ -278,12 +288,12 @@ public class TContract {
         this.parCellphone = parCellphone == null ? null : parCellphone.trim();
     }
 
-    public String getParWeichat() {
-        return parWeichat;
+    public String getParWechat() {
+        return parWechat;
     }
 
-    public void setParWeichat(String parWeichat) {
-        this.parWeichat = parWeichat == null ? null : parWeichat.trim();
+    public void setParWechat(String parWechat) {
+        this.parWechat = parWechat == null ? null : parWechat.trim();
     }
 
     public String getParEmail() {

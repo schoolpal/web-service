@@ -1,10 +1,10 @@
 /// <reference path="../typings/index.d.ts" />
 
-describe('/ajax/sales/contract/ APIs', function() {
+describe('/ajax/sales/customer/parent APIs', function() {
 
 	var host = window.location.protocol + "//" + window.location.host;
 	var path = '/web/ajax/user/';
-	var act_path = '/web/ajax/sales/contract/';
+	var act_path = '/web/ajax/sales/customer/parent/';
 
 	var user = 'sp-crm';
 	var pass = '123456';
@@ -63,32 +63,15 @@ describe('/ajax/sales/contract/ APIs', function() {
 			url : buildUrl(host, act_path, 'add.do'),
 			dataType : 'json',
 			data : {
-				code: codeVal,
-				type: '新招',
-			    startDate: new Date(2016,6,6),
-			    endDate: new Date(2017,7,7),
-			    oriPrice: 100000.79,
-			    discPrice: 88888.61,
-			    finalPrice: 88888.68,
-			    paid: 88888.68,
-			    courseType: 'course type', 
-			    courseOriId: 1, 
-			    courseSesId: 2, 
-			    courseHours: 10, 
-			    courseTimes: 5, 
-			    stuName: 'student name', 
-			    stuCode: codeVal, 
-			    stuGenderId: 1, 
-			    stuBirthday:  new Date(2017,7,7), 
-			    stuGrade: 'grade', 
-			    stuSchool_name: 'school name', 
-			    parName: 'parent name', 
-			    parCellphone: '13800010002', 
-			    parWechat: '123456', 
-			    parEmail: 'parent mail', 
-			    parAddress: 'parent addr', 
-			    relation: '父子',
-			    orgId: org_val,
+			    name: 'parent name', 
+			    genderId: 1, 
+			    cellphone: '13800010002', 
+			    wechat: '123456', 
+			    email: 'parent mail', 
+			    address: 'parent addr', 
+			    idType: 1,
+			    idCode: codeVal,
+			    birthday: new Date(1981,12,12),
 			}
 		});
 
@@ -146,33 +129,16 @@ describe('/ajax/sales/contract/ APIs', function() {
 			url : buildUrl(host, act_path, 'mod.do'),
 			dataType : 'json',
 			data : {
-				id : id_val,
-				code: codeVal + '_mod',
-				type: '新招',
-			    startDate: new Date(2016,6,6),
-			    endDate: new Date(2017,7,7),
-			    oriPrice: 100000.79,
-			    discPrice: 88888.61,
-			    finalPrice: 88888.68,
-			    paid: 88888.68,
-			    courseType: 'course type mod', 
-			    courseOriId: 1, 
-			    courseSesId: 2, 
-			    courseHours: 10, 
-			    courseTimes: 5, 
-			    stuName: 'student name mod', 
-			    stuCode: codeVal + '_mod', 
-			    stuGenderId: 1, 
-			    stuBirthday:  new Date(2017,7,7), 
-			    stuGrade: 'grade', 
-			    stuSchool_name: 'school name', 
-			    parName: 'parent name mod', 
-			    parCellphone: '13800010002', 
-			    parWechat: '123456', 
-			    parEmail: 'parent mail', 
-			    parAddress: 'parent addr', 
-			    relation: '父子',
-			    orgId: org_val,
+			    id: id_val,
+				name: 'parent name mode', 
+			    genderId: 2, 
+			    cellphone: '13800010002 mod', 
+			    wechat: '123456 mod', 
+			    email: 'parent mail mod', 
+			    address: 'parent addr mod', 
+			    idType: 2,
+			    idCode: codeVal + ' mod',
+			    birthday: new Date(1981,12,12),
 			}
 		});
 

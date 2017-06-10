@@ -17,7 +17,7 @@
     from t_parent
     where id = #{cellphone,jdbcType=CHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_parent
     where id = #{id,jdbcType=CHAR}
   </delete>
@@ -36,8 +36,8 @@
       <if test="cellphone != null">
         cellphone,
       </if>
-      <if test="weichat != null">
-        weichat,
+      <if test="wechat != null">
+        wechat,
       </if>
       <if test="email != null">
         email,
@@ -80,8 +80,8 @@
       <if test="cellphone != null">
         #{cellphone,jdbcType=VARCHAR},
       </if>
-      <if test="weichat != null">
-        #{weichat,jdbcType=VARCHAR},
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -124,8 +124,8 @@
       <if test="cellphone != null">
         cellphone = #{cellphone,jdbcType=VARCHAR},
       </if>
-      <if test="weichat != null">
-        weichat = #{weichat,jdbcType=VARCHAR},
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -171,9 +171,9 @@
   <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TParent">
     <id column="id" jdbcType="CHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
     <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
-    <result column="weichat" jdbcType="VARCHAR" property="weichat" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="id_type" jdbcType="INTEGER" property="idType" />
@@ -183,10 +183,9 @@
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
-    <result column="relation" jdbcType="VARCHAR" property="relation" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, gender, cellphone, weichat, email, address, id_type, id_code, birthday, 
-    executive_id, creator_id, create_time, last_update, relation
+    id, name, gender_id, cellphone, wechat, email, address, id_type, id_code, birthday, 
+    executive_id, creator_id, create_time, last_update
   </sql>
 </mapper>

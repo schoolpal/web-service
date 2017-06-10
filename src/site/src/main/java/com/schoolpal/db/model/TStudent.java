@@ -154,7 +154,7 @@ public class TStudent {
     public static TStudent ParseFromContract(TContract contract){
     	TStudent stu = new TStudent();
     	
-    	stu.setCode(contract.getCode());
+    	stu.setCode(contract.getStuCode());
     	stu.setName(contract.getStuName());
     	stu.setGenderId(contract.getStuGenderId());
     	stu.setBirthday(contract.getStuBirthday());

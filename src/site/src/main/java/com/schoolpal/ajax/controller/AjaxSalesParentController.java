@@ -136,6 +136,12 @@ public class AjaxSalesParentController {
 				break;
 			}
 			
+			if (StringUtils.isEmpty(parent.getId())) {
+				res.setCode(404);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+			
 			if (!this.validateForm(parent, res)){
 				break;
 			}
@@ -171,14 +177,14 @@ public class AjaxSalesParentController {
 			}
 			
 			if (StringUtils.isEmpty(id)) {
-				res.setCode(401);
+				res.setCode(411);
 				res.setDetail("Id cannot be empty");
 				break;
 			}
 			
 			TParent target = parServ.queryParentById(id);
 			if (target == null){
-				res.setCode(402);
+				res.setCode(412);
 				res.setDetail("Invalid contact id");
 				break;
 			}
@@ -205,12 +211,12 @@ public class AjaxSalesParentController {
 			}
 
 			if (StringUtils.isEmpty(parent.getName())){
-				res.setCode(406);
+				res.setCode(402);
 				res.setDetail("Parent name cannot be empty");
 				break;
 			}
 			if (StringUtils.isEmpty(parent.getCellphone())){
-				res.setCode(407);
+				res.setCode(403);
 				res.setDetail("Course type cannot be empty");
 				break;
 			}
