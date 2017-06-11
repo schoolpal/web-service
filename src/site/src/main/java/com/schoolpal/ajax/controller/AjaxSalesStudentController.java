@@ -65,6 +65,37 @@ public class AjaxSalesStudentController {
 		return gson.toJson(res);
 	}
 	
+	@RequestMapping(value = "queryByCode.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String queryByCode(String code, HttpServletRequest request) {
+		AjaxResponse res = new AjaxResponse(200);
+		do {
+			if (StringUtils.isEmpty(code)) {
+				res.setCode(401);
+				res.setDetail("Id cannot be empty");
+				break;
+			}
+			
+			if (!AuthorizationHelper.CheckPermissionById("2-3")) {
+				res.setCode(400);
+				res.setDetail("No permission");
+				break;
+			}
+			
+			TStudent target = stuServ.queryStudentByCode(code);
+			if (target == null){
+				res.setCode(402);
+				res.setDetail("Invalid student code");
+				break;
+			}
+			
+			res.setData(target);
+
+		} while (false);
+
+		return gson.toJson(res);
+	}
+	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String list(HttpServletRequest request) {

@@ -103,6 +103,25 @@ describe('/ajax/sales/customer/student APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 	
+	it('queryByCode.do', function() {
+		var xhr = $.ajax({
+			async : false,
+			method : 'POST',
+			url : buildUrl(host, act_path, 'queryByCode.do'),
+			dataType : 'json',
+			data : {
+				code: codeVal,
+			}
+		});
+
+		expect(xhr.status).to.be.equal(200);
+		var jsonData = xhr.responseJSON;
+		resDump('queryByCode.do', jsonData);
+		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.data).to.not.empty;
+		expect(jsonData.detail).to.be.equal('Ok');
+	});
+	
 	it('list.do', function() {
 		var xhr = $.ajax({
 			async : false,

@@ -33,6 +33,17 @@ public class StudentService {
 		return ret;
 	}
 	
+	public TStudent queryStudentByCode(String code){
+		TStudent ret = null;
+		try{			
+			ret = studentDao.selectOneByCode(code);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+	
 	public List<TStudent> queryStudentsByExecutiveId(String id){
 		List<TStudent> ret = null;
 		try{			
@@ -49,7 +60,6 @@ public class StudentService {
 		try{
 			String id = idxDao.selectNextId("t_student");
 			student.setId(id);
-			student.setCode(id);
 			student.setCreateTime(new Date());
 			student.setLastUpdate(new Date());
 			if (studentDao.insertOne(student) > 0){

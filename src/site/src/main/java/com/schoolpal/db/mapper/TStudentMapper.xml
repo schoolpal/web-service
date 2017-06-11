@@ -10,7 +10,7 @@
   <select id="selectOneByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
     from t_student
-    where id = #{code,jdbcType=CHAR}
+    where code = #{code,jdbcType=CHAR}
   </select>
   <select id="selectManyByExectiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select *
