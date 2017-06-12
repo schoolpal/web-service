@@ -63,7 +63,7 @@ INSERT INTO `t_function` VALUES
 ('2-1-3','2','2-1','','删除','/ajax/sales/oppor/del.do',3,3,'',3),
 ('2-1-5','2','2-1','','分配','/ajax/sales/oppor/assign.do',3,5,'',7),
 ('2-1-6','2','2-1','','创建合同','/ajax/sales/oppor/sign.do',3,6,'',9),
-('2-2','2','2-2','','我的合同','/ajax/sales/contract/',2,1,'',NULL),
+('2-2','2','2','','我的合同','/ajax/sales/contract/',2,1,'',NULL),
 ('2-2-1','2','2-2','','新建合同','/ajax/sales/contract/add.do',3,1,'',1),
 ('2-2-2','2','2-2','','编辑合同','/ajax/sales/contract/mod.do',3,2,'',2),
 ('2-2-3','2','2-2','','删除合同','/ajax/sales/contract/del.do',3,3,'',3),
