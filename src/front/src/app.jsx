@@ -21,6 +21,10 @@ window.SCHOOLPAL_CONFIG = {
         '2-1-1': { PATH_RULE: /^crm\/sales\/oppor\/edit\/create(\/)?$/ },
         '2-1-2': { PATH_RULE: /^crm\/sales\/oppor\/edit\/\w+(\/)?$/ },
 
+        '2-2': { PATH: 'crm/sales/contract', PATH_RULE: /^crm\/sales\/contract(\/\w+)?(\/)?$/, ICON: 'fa-filter' },
+        '2-1-1': { PATH_RULE: /^crm\/sales\/contract\/edit\/create\/\w+(\/)?$/ },
+        '2-1-2': { PATH_RULE: /^crm\/sales\/contract\/edit\/\w+(\/)?$/ },
+
         '7-1': { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' },
         '7-1-1': { PATH_RULE: /^sys\/org\/create(\/)?$/ },
         '7-1-2': { PATH_RULE: /^sys\/org\/\w+(\/)?$/ },
@@ -82,9 +86,22 @@ import Error from './components/Error';
 
 import checkAuth from './utils/checkAuth';
 
+class WxSpread extends React.Component {
+    componentDidMount() {
+        const url = '//mp.weixin.qq.com/s?__biz=MzU1NjA0MDU3MA==&tempkey=%2FVColhIPW3bS1mNK8dgX2jhgO3QlL5crR5XlH29MpibwHGxYI0PFtopu5pDrq6JYjxt9kCJelORcvfSWM8iW5nd8YN3C1foKAM1Bjd32b%2B9ECHH46i9NCpakFkzYIV6PY4YPsiX5r5lu0nWx4koGxg%3D%3D&chksm=7bca69164cbde00092484585196ad931590f2c7a7bedea5cc3e22ef023c8ae88153387442167##'
+
+        window.location.replace(url)
+    }
+
+    render() {
+        return <p>{this.props.params.id}</p>
+    }
+}
+
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'login'} component={Login} />
+        <Route path={SCHOOLPAL_CONFIG.ROOTPATH + 'wx/:id'} component={WxSpread} />
 
         <Route path={SCHOOLPAL_CONFIG.ROOTPATH} component={App}>
 
@@ -113,7 +130,7 @@ ReactDOM.render((
 
                 <Route path="sales/contract" component={SalesContractList} />
                 <Route path="sales/contract/:id" component={SalesContractView} />
-                <Route path="sales/contract/edit/:id" component={SalesContractEditor} />
+                <Route path="sales/contract/edit/:id(/:opporid)" component={SalesContractEditor} />
 
                 <Route path="sales/student" component={SalesStudentList} />
                 <Route path="sales/student/:id" component={SalesStudentView} />

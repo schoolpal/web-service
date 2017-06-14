@@ -72,7 +72,7 @@ export function ConvertButton(props) {
 
 export function SignButton(props) {
     return (
-        <button onClick={props.action} type="button" className="btn btn-primary">创建合同</button>
+        <Link to={props.link} className="btn btn-primary">创建合同</Link>
     )
 }
 

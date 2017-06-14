@@ -956,3 +956,49 @@ export function opporAssign(data) {
 
     return defer.promise();
 }
+
+export function contractList(id) {
+    const defer = $.Deferred();
+    const url = 'sales/contract/list.do';
+
+    io({ url: url, data: { orgnizationId: id } }, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function contractAdd(data) {
+    const defer = $.Deferred();
+    const url = 'sales/contract/add.do';
+    const settings = $.extend({ url: url }, { data: data });
+
+    io(settings, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}
+
+export function contractQuery(id) {
+    const defer = $.Deferred();
+    const url = 'sales/contract/query.do';
+
+    io({ url: url, data: { id: id } }, function (data) {
+        if (data.type === SCHOOLPAL_CONFIG.XHR_DONE) {
+            defer.resolve(data.data);
+        } else {
+            defer.reject(data);
+        }
+    });
+
+    return defer.promise();
+}

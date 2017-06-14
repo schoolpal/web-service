@@ -64,7 +64,7 @@ export default class Editor extends React.Component {
             }
 
             if (item === 'Sign') {
-                temp.push(<SignButton key={index} link={SCHOOLPAL_CONFIG.ROOTPATH} />)
+                temp.push(<SignButton key={index} link={SCHOOLPAL_CONFIG.ROOTPATH + 'crm/sales/contract/edit/create/' + this.props.params.id} />)
             }
         })
 

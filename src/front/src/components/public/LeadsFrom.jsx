@@ -145,8 +145,6 @@ export default class LeadsFrom extends React.Component {
             param[item.name] = item.value;
         })
 
-        console.log(param)
-
         this.props.submit(param)
     }
 
