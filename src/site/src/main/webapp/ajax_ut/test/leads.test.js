@@ -141,7 +141,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 
 		expect(xhr.status).to.be.equal(200);
 		var jsonData = xhr.responseJSON;
-		resDump('listGenders.do', jsonData);
+		resDump('relation/list.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.detail).to.be.equal('Ok');
 		expect(jsonData.data).to.not.empty;
@@ -167,8 +167,8 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			    parentName: 'parent name',
 			    relation: 'father',
 			    cellphone: 1,
-			    weichat: '',
-			    address: '',
+			    wechat: 'wechat',
+			    address: 'addr',
 			    courseType: null,
 			    courseName: null,
 			    note: ''
@@ -246,7 +246,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
 			    parentName: 'parent name mod',
 			    relation: 'father mod',
 			    cellphone: 1,
-			    weichat: 'mod',
+			    wechat: 'mod',
 			    address: 'mod',
 			    courseType: null,
 			    courseName: null,

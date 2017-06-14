@@ -67,13 +67,13 @@ public class ContactService {
 		return ret;
 	}
 	
-	public boolean modConact(TContact contact){
+	public boolean modContact(TContact contact){
 		boolean ret = false;
 		try{
 			if(contact.getDatetime() == null){
 				contact.setDatetime(new Date());
 			}
-			ret = contactDao.updateOneById(contact) > 0;
+			ret = contactDao.updateOne(contact) > 0;
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());

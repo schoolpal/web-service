@@ -37,14 +37,10 @@ export default class SelectUserPanel extends React.Component {
     }
 
     componentDidMount() {
-        userList(this.state.selectedOrg.id)
+        userList(this.state.defaults.oid)
             .done((data) => {
                 this.setState({
-                    userList: data,
-                    selecteduser: {
-                        id: this.state.defaults.uid,
-                        name: this.state.defaults.uname
-                    }
+                    userList: data
                 })
             })
         $(this.panel)
@@ -138,7 +134,6 @@ export default class SelectUserPanel extends React.Component {
 
     action() {
         this.props.action({
-            org: this.state.selectedOrg,
             user: this.state.selecteduser
         }, $(this.panel))
     }

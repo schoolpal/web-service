@@ -180,7 +180,7 @@
         l.channel_id, l.stage_id, l.status_id, l.org_id, 
         l.executive_id, l.creator_id, l.create_time, l.note, 
         s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
-        p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
+        p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
         uc.c_realname AS creator_name,
         ue.c_realname AS executive_name,
         src.name AS source_name,
@@ -205,7 +205,7 @@
         l.channel_id, l.stage_id, l.status_id, l.org_id, 
         l.executive_id, l.creator_id, l.create_time, l.note, 
         s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
-        p.name AS parent_name, p.cellphone, p.weichat, p.address, p.relation,
+        p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
         uc.c_realname AS creator_name,
         ue.c_realname AS executive_name,
         src.name AS source_name,
@@ -265,7 +265,7 @@
         <id column="parent_id" jdbcType="CHAR" property="id" />
         <result column="parent_name" jdbcType="VARCHAR" property="name" />
         <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
-        <result column="weichat" jdbcType="VARCHAR" property="weichat" />
+        <result column="wechat" jdbcType="VARCHAR" property="wechat" />
         <result column="address" jdbcType="VARCHAR" property="address" />
         <result column="relation" jdbcType="VARCHAR" property="relation" />
     </association>

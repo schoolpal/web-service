@@ -5,8 +5,7 @@ services:
     ports:
       - "72:80"
     volumes:
-      - /opt/schoolpal/src/site/target:/usr/share/nginx/html:ro
-      - /opt/schoolpal/deploy/docker_images/nginx-dev/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /Users/wangfan/work/schoolpal/src/front/webapp:/usr/share/nginx/html:ro
     depends_on:
       - web
   web:

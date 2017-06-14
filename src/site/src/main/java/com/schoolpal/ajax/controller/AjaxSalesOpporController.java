@@ -24,7 +24,7 @@ import com.schoolpal.service.UserService;
 
 @Controller
 @RequestMapping("/ajax/sales/oppor")
-public class AjaxSalesController {
+public class AjaxSalesOpporController {
 	
 	@Autowired
 	private UserService userServ;

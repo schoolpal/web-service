@@ -82,7 +82,6 @@ export default class Editor extends React.Component {
             orgList: [],
             selected: null,
         }
-        this.record = this.record.bind(this)
         this.editorSubmit = this.editorSubmit.bind(this)
     }
 
@@ -106,9 +105,9 @@ export default class Editor extends React.Component {
         loading.open()
         $.when(
             mktActList(oid),
-            leadsSources(),
-            leadsStages(),
-            leadsStatus(),
+            leadsSources(1),
+            leadsStages(1),
+            leadsStatus(1),
             genderList(),
             relationList()
         ).done((act, sources, stages, status, gender, relation) => {
@@ -169,63 +168,6 @@ export default class Editor extends React.Component {
         }).fail(() => {
             loading.close()
         })
-    }
-
-    record() {
-        if (this.props.params.id === 'create') {
-            return null
-        }
-
-        return (
-            <div>
-                <p className="ht pt-3 pb-3 b-t b-b">沟通记录</p>
-                <table className="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>沟通方式</th>
-                            <th>咨询时间</th>
-                            <th>所属组织</th>
-                            <th>所属用户</th>
-                            <th>沟通记录</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <select className="form-control">
-                                    <option>请选择</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" className="form-control" name="name" />
-                            </td>
-                            <td>
-                                <div className="btn-group btn-block">
-                                    <input type="text" className="form-control" data-toggle="dropdown" value={this.state.selected ? this.state.selected.name : ''} readOnly />
-                                    <div className="dropdown-menu">
-                                        <OrgTree data={this.state.orgList} selected={this.selectOrg} defaults={this.state.selected ? this.state.selected.id : null} />
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <select className="form-control">
-                                    <option>请选择</option>
-                                </select>
-                            </td>
-                            <td>
-                                <input type="text" className="form-control" name="name" />
-                            </td>
-                            <td>
-                                <button type="submit" className="btn btn-primary">保存</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        )
     }
 
     editorSubmit(event) {

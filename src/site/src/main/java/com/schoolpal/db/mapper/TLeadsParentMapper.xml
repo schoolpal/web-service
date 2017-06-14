@@ -17,8 +17,8 @@
       <if test="cellphone != null">
         cellphone,
       </if>
-      <if test="weichat != null">
-        weichat,
+      <if test="wechat != null">
+        wechat,
       </if>
       <if test="email != null">
         email,
@@ -61,8 +61,8 @@
       <if test="cellphone != null">
         #{cellphone,jdbcType=VARCHAR},
       </if>
-      <if test="weichat != null">
-        #{weichat,jdbcType=VARCHAR},
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -105,8 +105,8 @@
       <if test="cellphone != null">
         cellphone = #{cellphone,jdbcType=VARCHAR},
       </if>
-      <if test="weichat != null">
-        weichat = #{weichat,jdbcType=VARCHAR},
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -177,7 +177,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
     <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
-    <result column="weichat" jdbcType="VARCHAR" property="weichat" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="id_type" jdbcType="INTEGER" property="idType" />

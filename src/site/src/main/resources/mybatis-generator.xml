@@ -3,12 +3,12 @@
 "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
-	<properties resource="config.properties" />
+	<properties resource="config-default.properties" />
 
-<!--	<classPathEntry
-		location="C:\Users\Gary\.m2\repository\mysql\mysql-connector-java\5.1.37\mysql-connector-java-5.1.37.jar" /> -->
-     <classPathEntry
-        location="/Users/Gary/.m2/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar" />
+	<classPathEntry
+		location="C:\Users\Gary\.m2\repository\mysql\mysql-connector-java\5.1.37\mysql-connector-java-5.1.37.jar" />
+<!--      <classPathEntry
+        location="/Users/Gary/.m2/repository/mysql/mysql-connector-java/5.1.37/mysql-connector-java-5.1.37.jar" /> -->
 
 	<context id="schoolpalContext">
 		<commentGenerator>
@@ -16,7 +16,9 @@
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection connectionURL="${jdbc.url}"
-			driverClass="${jdbc.driver}" />
+			userId="schoolpal" password="schoolpal"
+			driverClass="${jdbc.driver}" >
+		</jdbcConnection>
 		<javaModelGenerator targetPackage="com.schoolpal.db.model"
 			targetProject="src/main/java">
 			<property name="enableSubPackages" value="false" />
@@ -28,7 +30,7 @@
 		</sqlMapGenerator>
 		<javaClientGenerator targetPackage="com.schoolpal.db.inf"
 			targetProject="src/main/java" type="XMLMAPPER" />
-		<table schema="schoolpal" tableName="t_contact_approach"
+		<table schema="schoolpal" tableName="t_par_stu"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">

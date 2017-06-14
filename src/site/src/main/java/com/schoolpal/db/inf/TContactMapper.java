@@ -12,6 +12,6 @@ public interface TContactMapper {
     TContact selectOneById(String id);
     List<TContact> selectManyByLeadsId(String leadsId);
 
-    int updateOneById(TContact record);
+    int updateOne(TContact record);
 
 }

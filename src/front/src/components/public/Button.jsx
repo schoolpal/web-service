@@ -70,6 +70,12 @@ export function ConvertButton(props) {
     )
 }
 
+export function SignButton(props) {
+    return (
+        <Link to={props.link} className="btn btn-primary">创建合同</Link>
+    )
+}
+
 export function DelButton(props) {
     const text = props.loading === true ? '' : ' 删除';
 

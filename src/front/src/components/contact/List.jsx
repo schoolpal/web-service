@@ -53,8 +53,6 @@ export default class List extends React.Component {
                 name: getProfile().name,
                 org: getProfile().org
             },
-            canEditd: this.props.canEditd,
-            leadsId: this.props.leadsId,
 
             list: [],
             approach: [],
@@ -80,15 +78,32 @@ export default class List extends React.Component {
     }
 
     componentDidMount() {
-        $.when(
-            approachList(),
-            contactList(this.state.leadsId)
-        ).done((approach, list) => {
-            this.setState({
-                approach: approach,
-                list: list
+        approachList()
+            .done((approach) => {
+                this.setState({
+                    approach: approach,
+                })
+
+                if (this.props.leadsId !== 'create') {
+                    contactList(this.props.leadsId)
+                        .done((list) => {
+                            this.setState({
+                                list: list,
+                            })
+                        })
+                }
             })
-        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.leadsId !== 'create' && nextProps.leadsId !== this.props.leadsId) {
+            contactList(nextProps.leadsId)
+                .done((list) => {
+                    this.setState({
+                        list: list,
+                    })
+                })
+        }
     }
 
     changeApproach(event, type) {
@@ -134,7 +149,7 @@ export default class List extends React.Component {
 
         loading.open()
         contactAdd({
-            leadsId: this.state.leadsId,
+            leadsId: this.props.leadsId,
             approachId: this.state.add.approachId,
             summary: this.state.add.summary
         }).done(() => {
@@ -145,7 +160,7 @@ export default class List extends React.Component {
                 }
             })
 
-            contactList(this.state.leadsId).done((list) => {
+            contactList(this.props.leadsId).done((list) => {
                 this.setState({ list: list })
                 loading.close()
                 success.open()
@@ -177,7 +192,7 @@ export default class List extends React.Component {
 
                     hideEdit(target)
 
-                    contactList(this.state.leadsId).done((list) => {
+                    contactList(this.props.leadsId).done((list) => {
                         this.setState({ list: list })
                         loading.close()
                         success.open()
@@ -196,7 +211,7 @@ export default class List extends React.Component {
     }
 
     renderAddContact() {
-        if (this.state.canEditd === true) {
+        if (this.props.canEditd === true) {
             return (
                 <tr>
                     <td>--</td>
@@ -239,7 +254,7 @@ export default class List extends React.Component {
                 return (
                     <tr key={item.id}>
                         {
-                            tableTitle(this.state.canEditd).map((attr, j) => {
+                            tableTitle(this.props.canEditd).map((attr, j) => {
                                 let content;
 
                                 switch (attr.key) {
@@ -247,7 +262,7 @@ export default class List extends React.Component {
                                         content = i + 1;
                                         break;
                                     case 'approachName':
-                                        if (this.state.canEditd === true) {
+                                        if (this.props.canEditd === true) {
                                             content = (
                                                 <div>
                                                     <span>{item[attr.key]}</span>
@@ -269,7 +284,7 @@ export default class List extends React.Component {
                                         content = formatDate(item[attr.key])
                                         break;
                                     case 'summary':
-                                        if (this.state.canEditd === true) {
+                                        if (this.props.canEditd === true) {
                                             content = (
                                                 <div>
                                                     <span>{item[attr.key]}</span>
@@ -307,25 +322,29 @@ export default class List extends React.Component {
     }
 
     render() {
-        return (
-            <div>
-                <p className="ht pt-3 pb-3 b-t b-b">沟通记录</p>
-                <table className="table table-bordered">
-                    <thead>
-                        <tr>
-                            {
-                                tableTitle(this.state.canEditd).map((item, index) => {
-                                    return <th key={index}>{item.name}</th>
-                                })
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.renderAddContact()}
-                        {this.renderItem()}
-                    </tbody>
-                </table>
-            </div>
-        )
+        if (this.props.leadsId === 'create') {
+            return null;
+        } else {
+            return (
+                <div>
+                    <p className="ht pt-3 pb-3 b-t b-b">沟通记录</p>
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                {
+                                    tableTitle(this.props.canEditd).map((item, index) => {
+                                        return <th key={index}>{item.name}</th>
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderAddContact()}
+                            {this.renderItem()}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
     }
 }

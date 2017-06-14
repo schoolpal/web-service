@@ -8,3 +8,4 @@ src/site/target/
 src/front/node_modules
 src/front/html
 deploy/dev-env/docker_compose/docker-compose.yml
+deploy/docker_compose/sp-dev/docker-compose.yml

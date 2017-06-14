@@ -13,7 +13,7 @@ public class TLeadsParent {
 
     private String cellphone;
 
-    private String weichat;
+    private String wechat;
 
     private String email;
 
@@ -79,12 +79,12 @@ public class TLeadsParent {
         this.cellphone = cellphone == null ? null : cellphone.trim();
     }
 
-    public String getWeichat() {
-        return weichat;
+    public String getWechat() {
+        return wechat;
     }
 
-    public void setWeichat(String weichat) {
-        this.weichat = weichat == null ? null : weichat.trim();
+    public void setWechat(String wechat) {
+        this.wechat = wechat == null ? null : wechat.trim();
     }
 
     public String getEmail() {
