@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TActivityMapper">
+
+  <resultMap id="selectManyResultMap" type="com.schoolpal.db.model.TActivity">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="root_id" jdbcType="CHAR" property="rootId" />
+    <result column="parent_id" jdbcType="CHAR" property="parentId" />
+    <result column="parent_name" jdbcType="CHAR" property="parentName" />
+    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="budget" jdbcType="DECIMAL" property="budget" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="exective_id" jdbcType="CHAR" property="exectiveId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="creator_name" jdbcType="CHAR" property="creatorName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
+    <result column="leads" jdbcType="INTEGER" property="leads" />
+    <result column="opportunities" jdbcType="INTEGER" property="opportunities" />
+    <result column="contracts" jdbcType="INTEGER" property="contracts" />
+    <result column="total_amount" jdbcType="INTEGER" property="totalAmount" />
+    <result column="children" jdbcType="INTEGER" property="children" />
+  </resultMap>
+  <select id="selectManyByParentId" resultMap="selectManyResultMap">
+<!--     SELECT a.*, b.cnt 
+    FROM (SELECT * FROM t_activity WHERE parent_id = 5) AS a
+    LEFT JOIN 
+    (SELECT parent_id, COUNT(*) AS cnt FROM t_activity 
+        WHERE parent_id IN (SELECT id FROM t_activity WHERE parent_id = 5)
+        GROUP BY parent_id) AS b
+    ON a.id = b.parent_id -->
+	SELECT a.*,
+	(
+	  SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id = a.id
+	) AS children
+	FROM t_activity AS a 
+	WHERE a.parent_id=#{id,jdbcType=CHAR} AND a.id != a.parent_id
+  </select>
+  <select id="selectManyByTopLevel" resultMap="selectManyResultMap">
+    SELECT a.*,
+    (
+      SELECT COUNT(*) FROM t_activity AS b WHERE b.parent_id = a.id
+    ) AS children
+    FROM t_activity AS a 
+    WHERE a.id=a.root_id
+  </select>
+  <select id="selectManyByOrgId" resultMap="selectManyResultMap">
+    SELECT *, u.c_realname AS creator_name
+    FROM t_activity AS a
+    LEFT JOIN t_user AS u ON a.creator_id = u.c_id
+    WHERE a.org_id=#{id,jdbcType=CHAR}
+  </select>
+  <select id="selectAll" resultMap="selectManyResultMap">
+    SELECT a.*, u.c_realname AS creator_name
+    FROM t_activity AS a
+    LEFT JOIN t_user AS u ON a.creator_id = u.c_id
+  </select>
+  <select id="selectOneById" resultMap="selectManyResultMap">
+    SELECT a.*,
+    (
+      SELECT name FROM t_activity AS b WHERE b.id = a.parent_id
+    ) AS parent_name, 
+    (
+      SELECT c_realname FROM t_user AS u WHERE u.c_id = a.creator_id
+    ) AS creator_name 
+    FROM t_activity AS a
+    WHERE id=#{id,jdbcType=CHAR}
+  </select>
+  <update id="updateLeadsCountsById">
+  	UPDATE t_activity as a LEFT JOIN t_leads as l ON l.channel_id = a.id
+	SET 
+		a.leads = (SELECT COUNT(*) FROM t_leads WHERE channel_id = a.id and type_id = 1),
+		a.opportunities = (SELECT COUNT(*) FROM t_leads WHERE channel_id = a.id and type_id > 1)
+	WHERE a.id = #{id,jdbcType=CHAR}
+  </update>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TActivity" useGeneratedKeys="true" keyProperty="id">
+    insert into t_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rootId != null">
+        root_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="orgnizationId != null">
+        org_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="budget != null">
+        budget,
+      </if>
+      <if test="cost != null">
+        cost,
+      </if>
+      <if test="exectiveId != null">
+        exective_id,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="rootId != null">
+        #{rootId,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="orgnizationId != null">
+        #{orgnizationId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="budget != null">
+        #{budget,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="exectiveId != null">
+        #{exectiveId,jdbcType=CHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateOneById" parameterType="com.schoolpal.db.model.TActivity">
+    update t_activity
+    <set>
+      <if test="rootId != null">
+        root_id = #{rootId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="orgnizationId != null">
+        org_id = #{orgnizationId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="budget != null">
+        budget = #{budget,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null">
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="exectiveId != null">
+        exective_id = #{exectiveId,jdbcType=CHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteOneById">
+    delete from t_activity
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TActivity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="root_id" jdbcType="INTEGER" property="rootId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="budget" jdbcType="DECIMAL" property="budget" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="exective_id" jdbcType="CHAR" property="exectiveId" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update" jdbcType="CHAR" property="lastUpdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, root_id, parent_id, name, start_date, end_date, budget, cost, exective_id, creator_id, 
+    create_time, last_update
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TActivity">
+    insert into t_activity (id, root_id, parent_id, 
+      name, start_date, end_date, 
+      budget, cost, exective_id, 
+      creator_id, create_time, last_update
+      )
+    values (#{id,jdbcType=INTEGER}, #{rootId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{startDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, 
+      #{budget,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, #{exectiveId,jdbcType=CHAR}, 
+      #{creatorId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastUpdate,jdbcType=CHAR}
+      )
+  </insert>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TActivity">
+    update t_activity
+    set root_id = #{rootId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      budget = #{budget,jdbcType=DECIMAL},
+      cost = #{cost,jdbcType=DECIMAL},
+      exective_id = #{exectiveId,jdbcType=CHAR},
+      creator_id = #{creatorId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update = #{lastUpdate,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

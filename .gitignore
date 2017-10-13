@@ -1,9 +1,7 @@
-src/site/.classpath
-src/site/.gitignore
-src/site/.project
-src/site/.settings/*
+.classpath
+.gitignore
+.project
+.settings
 *.bak
 .DS_Store
-src/site/target/
-src/front/node_modules
-src/front/html
+target

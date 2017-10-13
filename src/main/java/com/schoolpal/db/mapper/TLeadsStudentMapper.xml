@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TLeadsStudentMapper">
+
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TLeadsStudent">
+    insert into t_leads_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="genderId != null">
+        gender_id,
+      </if>
+      <if test="idType != null">
+        id_type,
+      </if>
+      <if test="idCode != null">
+        id_code,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="schoolGrade != null">
+        school_grade,
+      </if>
+      <if test="classGrade != null">
+        class_grade,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="genderId != null">
+        #{genderId,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="idCode != null">
+        #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="schoolGrade != null">
+        #{schoolGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="classGrade != null">
+        #{classGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateOne" parameterType="com.schoolpal.db.model.TLeadsStudent">
+    update t_leads_student
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="genderId != null">
+        gender_id = #{genderId,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        id_type = #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="idCode != null">
+        id_code = #{idCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="schoolGrade != null">
+        school_grade = #{schoolGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="classGrade != null">
+        class_grade = #{classGrade,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <delete id="deleteOneById" parameterType="java.lang.String">
+    delete from t_leads_student
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteManyByLeadsId" parameterType="java.lang.String">
+    delete from t_leads_student
+    where leads_id = #{leadsId,jdbcType=CHAR}
+  </delete>
+
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from t_leads_student
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectIdsByLeadsId" parameterType="java.lang.String" resultType="java.lang.String">
+    select id
+    from t_leads_student
+    where leads_id = #{leadsId,jdbcType=CHAR}
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeadsStudent">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
+    <result column="id_type" jdbcType="INTEGER" property="idType" />
+    <result column="id_code" jdbcType="VARCHAR" property="idCode" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="school_grade" jdbcType="VARCHAR" property="schoolGrade" />
+    <result column="class_grade" jdbcType="VARCHAR" property="classGrade" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
+  </resultMap>
+</mapper>

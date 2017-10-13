@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TOrgMapper">
+	<resultMap id="OrgResultMap" type="com.schoolpal.db.model.TOrg">
+		<id column="c_id" jdbcType="CHAR" property="cId" />
+		<result column="c_code" jdbcType="VARCHAR" property="cCode" />
+		<result column="c_name" jdbcType="VARCHAR" property="cName" />
+		<result column="c_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+        <result column="c_state" jdbcType="VARCHAR" property="cState" />
+		<result column="c_city" jdbcType="VARCHAR" property="cCity" />
+		<result column="c_county" jdbcType="VARCHAR" property="cCounty" />
+        <result column="c_address" jdbcType="VARCHAR" property="cAddress" />
+        <result column="c_state_code" jdbcType="VARCHAR" property="cStateCode" />
+        <result column="c_city_code" jdbcType="VARCHAR" property="cCityCode" />
+        <result column="c_county_code" jdbcType="VARCHAR" property="cCountyCode" />
+		<result column="c_owner" jdbcType="VARCHAR" property="cOwner" />
+		<result column="c_owner_phone" jdbcType="VARCHAR" property="cOwnerPhone" />
+		<result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+		<result column="c_root_id" jdbcType="CHAR" property="cRootId" />
+		<result column="c_creator" jdbcType="CHAR" property="cCreator" />
+		<result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+		<result column="c_modifier" jdbcType="VARCHAR" property="cModifier" />
+		<result column="c_modify_time" jdbcType="TIMESTAMP" property="cModifyTime" />
+		<result column="c_available" jdbcType="BIT" property="cAvailable" />
+		<result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
+		<association property="parentOrg" javaType="com.schoolpal.db.model.TOrg">
+			<id column="po_id" jdbcType="CHAR" property="cId" />
+			<result column="po_code" jdbcType="VARCHAR" property="cCode" />
+			<result column="po_name" jdbcType="VARCHAR" property="cName" />
+			<result column="po_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+		</association>
+		<association property="rootOrg" javaType="com.schoolpal.db.model.TOrg">
+			<id column="ro_id" jdbcType="CHAR" property="cId" />
+			<result column="ro_code" jdbcType="VARCHAR" property="cCode" />
+			<result column="ro_name" jdbcType="VARCHAR" property="cName" />
+			<result column="ro_name_abbr" jdbcType="VARCHAR" property="cNameAbbr" />
+		</association>
+	</resultMap>
+    <resultMap id="selectOneResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_code" jdbcType="VARCHAR" property="cCode" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+        <result column="c_address" jdbcType="VARCHAR" property="cAddress" />
+        <result column="c_state" jdbcType="VARCHAR" property="cState" />
+        <result column="c_city" jdbcType="VARCHAR" property="cCity" />
+        <result column="c_county" jdbcType="VARCHAR" property="cCounty" />
+        <result column="c_state_code" jdbcType="VARCHAR" property="cStateCode" />
+        <result column="c_city_code" jdbcType="VARCHAR" property="cCityCode" />
+        <result column="c_county_code" jdbcType="VARCHAR" property="cCountyCode" />
+        <result column="c_owner" jdbcType="VARCHAR" property="cOwner" />
+        <result column="c_owner_phone" jdbcType="VARCHAR" property="cOwnerPhone" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+        <result column="c_root_id" jdbcType="CHAR" property="cRootId" />
+    </resultMap>
+	<select id="selectOneById" parameterType="java.lang.String" resultMap="selectOneResultMap">
+        SELECT o.c_id, o.c_name, o.c_code, o.c_state, o.c_city, o.c_county, 
+            o.c_state_code, o.c_city_code, o.c_county_code, o.c_address, 
+            o.c_owner, o.c_owner_phone, o.c_parent_id, o.c_root_id, 
+            po.c_id AS po_id, po.c_code AS po_code, 
+            po.c_name AS po_name, po.c_name_abbr AS po_name_abbr,
+            ro.c_id AS ro_id, ro.c_code
+            AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
+            AS ro_name_abbr
+        FROM
+            t_org AS o
+            LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
+            LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
+		WHERE o.c_id = #{cId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectOneByCode" parameterType="java.lang.String" resultMap="selectOneResultMap">
+        SELECT o.c_id, o.c_name, o.c_code, o.c_state, o.c_city, o.c_county, 
+            o.c_state_code, o.c_city_code, o.c_county_code, o.c_address, 
+            o.c_owner, o.c_owner_phone, o.c_parent_id,
+	        po.c_id AS po_id, po.c_code AS po_code, 
+	        po.c_name AS po_name, po.c_name_abbr AS po_name_abbr,
+	        ro.c_id AS ro_id, ro.c_code
+	        AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr
+	        AS ro_name_abbr
+        FROM
+            t_org AS o
+	        LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
+	        LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
+		WHERE o.c_code = #{cCode,jdbcType=VARCHAR}
+	</select>
+    <select id="selectOneByCodeWithExcludeId" parameterType="String" resultMap="OrgResultMap">
+        SELECT o.*,
+        po.c_id AS po_id, po.c_code AS po_code, po.c_name AS po_name, po.c_name_abbr AS po_name_abbr, 
+        ro.c_id AS ro_id, ro.c_code AS ro_code, ro.c_name AS ro_name, ro.c_name_abbr AS ro_name_abbr
+        FROM
+        t_org AS o
+        LEFT JOIN t_org AS po ON po.c_id = o.c_parent_id
+        LEFT JOIN t_org AS ro ON ro.c_id = o.c_root_id
+        WHERE o.c_code = #{arg0} and o.c_id != #{arg1}
+    </select>
+    <resultMap id="selectAllResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+        <result column="c_address" jdbcType="VARCHAR" property="cAddress" />
+        <result column="c_state" jdbcType="VARCHAR" property="cState" />
+        <result column="c_city" jdbcType="VARCHAR" property="cCity" />
+        <result column="c_county" jdbcType="VARCHAR" property="cCounty" />
+        <result column="c_owner" jdbcType="VARCHAR" property="cOwner" />
+        <result column="c_owner_phone" jdbcType="VARCHAR" property="cOwnerPhone" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+        <result column="c_root_id" jdbcType="CHAR" property="cRootId" />
+    </resultMap>
+	<select id="selectAll" resultMap="selectAllResultMap">
+		SELECT c_id, c_name, c_state, c_city, c_county, c_address, 
+		      c_owner, c_owner_phone, c_root_id, c_parent_id
+		FROM t_org
+		WHERE
+		c_available = 1
+	</select>
+    <resultMap id="selectAllLiteResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_name" jdbcType="VARCHAR" property="cName" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+        <result column="c_root_id" jdbcType="CHAR" property="cRootId" />
+    </resultMap>
+    <select id="selectAllLite" resultMap="selectAllLiteResultMap">
+        SELECT c_id, c_name, c_root_id, c_parent_id
+        FROM t_org
+        WHERE
+        c_available = 1
+    </select>
+    <select id="selectOneByIdLite" resultMap="selectAllLiteResultMap">
+        SELECT c_id, c_name, c_root_id, c_parent_id
+        FROM t_org
+        WHERE
+        c_available = 1 and c_id = #{cId,jdbcType=CHAR}
+    </select>
+    <resultMap id="selectAllIdsResultMap" type="com.schoolpal.db.model.TOrg">
+        <id column="c_id" jdbcType="CHAR" property="cId" />
+        <result column="c_parent_id" jdbcType="CHAR" property="cParentId" />
+    </resultMap>
+    <select id="selectAllIds" resultMap="selectAllIdsResultMap">
+        SELECT c_id, c_parent_id
+        FROM t_org
+        WHERE c_available = 1
+    </select>
+	<delete id="deleteOneById" parameterType="java.lang.String">
+		delete from t_org
+		where
+		c_id = #{cId,jdbcType=CHAR}
+	</delete>
+	<delete id="deleteOneByCode" parameterType="java.lang.String">
+		delete from t_org
+		where c_code = #{cCode,jdbcType=CHAR}
+	</delete>
+    <insert id="insertOne" parameterType="com.schoolpal.db.model.TOrg">
+        insert into t_org
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cId != null"> c_id, </if>
+            <if test="cCode != null"> c_code, </if>
+            <if test="cName != null"> c_name, </if>
+            <if test="cNameAbbr != null"> c_name_abbr, </if>
+            <if test="cAddress != null"> c_address, </if>
+            <if test="cState != null"> c_state, </if>
+            <if test="cCity != null"> c_city, </if>
+            <if test="cCounty != null"> c_county, </if>
+            <if test="cStateCode != null"> c_state_code, </if>
+            <if test="cCityCode != null"> c_city_code, </if>
+            <if test="cCountyCode != null"> c_county_code, </if>
+            <if test="cOwner != null"> c_owner, </if>
+            <if test="cOwnerPhone != null"> c_owner_phone, </if>
+            <if test="cParentId != null"> c_parent_id,  </if>
+            <if test="cRootId != null"> c_root_id, </if>
+            <if test="cCreator != null"> c_creator, </if>
+            <if test="cCreateTime != null"> c_create_time, </if>
+            <if test="cModifier != null"> c_modifier, </if>
+            <if test="cModifyTime != null"> c_modify_time, </if>
+            <if test="cAvailable != null"> c_available, </if>
+            <if test="cOrderNum != null"> c_order_num, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cId != null"> #{cId,jdbcType=CHAR}, </if>
+            <if test="cCode != null"> #{cCode,jdbcType=VARCHAR}, </if>
+            <if test="cName != null"> #{cName,jdbcType=VARCHAR}, </if>
+            <if test="cNameAbbr != null">#{cNameAbbr,jdbcType=VARCHAR}, </if>
+            <if test="cAddress != null"> #{cAddress,jdbcType=VARCHAR},  </if>
+            <if test="cState != null"> #{cState,jdbcType=VARCHAR}, </if>
+            <if test="cCity != null"> #{cCity,jdbcType=VARCHAR}, </if>
+            <if test="cCounty != null"> #{cCounty,jdbcType=VARCHAR}, </if>
+            <if test="cStateCode != null"> #{cStateCode,jdbcType=VARCHAR}, </if>
+            <if test="cCityCode != null"> #{cCityCode,jdbcType=VARCHAR}, </if>
+            <if test="cCountyCode != null"> #{cCountyCode,jdbcType=VARCHAR}, </if>
+            <if test="cOwner != null"> #{cOwner,jdbcType=VARCHAR}, </if>
+            <if test="cOwnerPhone != null"> #{cOwnerPhone,jdbcType=VARCHAR}, </if>
+            <if test="cParentId != null">#{cParentId,jdbcType=CHAR}, </if>
+            <if test="cRootId != null"> #{cRootId,jdbcType=CHAR}, </if>
+            <if test="cCreator != null"> #{cCreator,jdbcType=CHAR}, </if>
+            <if test="cCreateTime != null"> #{cCreateTime,jdbcType=TIMESTAMP}, </if>
+            <if test="cModifier != null"> #{cModifier,jdbcType=VARCHAR}, </if>
+            <if test="cModifyTime != null"> #{cModifyTime,jdbcType=TIMESTAMP}, </if>
+            <if test="cAvailable != null"> #{cAvailable,jdbcType=BIT}, </if>
+            <if test="cOrderNum != null"> #{cOrderNum,jdbcType=INTEGER}, </if>
+        </trim>
+    </insert>
+    <update id="updateOneById" parameterType="com.schoolpal.db.model.TOrg">
+        update t_org
+        <set>
+            <if test="cCode != null"> c_code = #{cCode,jdbcType=VARCHAR}, </if>
+            <if test="cName != null"> c_name = #{cName,jdbcType=VARCHAR}, </if>
+            <if test="cNameAbbr != null"> c_name_abbr = #{cNameAbbr,jdbcType=VARCHAR}, </if>
+            <if test="cAddress != null"> c_address = #{cAddress,jdbcType=VARCHAR}, </if>
+            <if test="cState != null"> c_state = #{cState,jdbcType=VARCHAR}, </if>
+            <if test="cCity != null"> c_city = #{cCity,jdbcType=VARCHAR}, </if>
+            <if test="cCounty != null"> c_county = #{cCounty,jdbcType=VARCHAR}, </if>
+            <if test="cStateCode != null"> c_state_code = #{cStateCode,jdbcType=VARCHAR}, </if>
+            <if test="cCityCode != null"> c_city_code = #{cCityCode,jdbcType=VARCHAR}, </if>
+            <if test="cCountyCode != null"> c_county_code = #{cCountyCode,jdbcType=VARCHAR}, </if>
+            <if test="cOwner != null"> c_owner = #{cOwner,jdbcType=VARCHAR}, </if>
+            <if test="cOwnerPhone != null"> c_owner_phone = #{cOwnerPhone,jdbcType=VARCHAR}, </if>
+            <if test="cParentId != null"> c_parent_id = #{cParentId,jdbcType=CHAR}, </if>
+            <if test="cRootId != null"> c_root_id = #{cRootId,jdbcType=CHAR}, </if>
+            <if test="cCreator != null"> c_creator = #{cCreator,jdbcType=CHAR}, </if>
+            <if test="cCreateTime != null"> c_create_time = #{cCreateTime,jdbcType=TIMESTAMP}, </if>
+            <if test="cModifier != null"> c_modifier = #{cModifier,jdbcType=VARCHAR}, </if>
+            <if test="cModifyTime != null"> c_modify_time = #{cModifyTime,jdbcType=TIMESTAMP}, </if>
+            <if test="cAvailable != null"> c_available = #{cAvailable,jdbcType=BIT}, </if>
+            <if test="cOrderNum != null"> c_order_num = #{cOrderNum,jdbcType=INTEGER}, </if>
+        </set>
+        where c_id = #{cId,jdbcType=CHAR}
+    </update>
+</mapper>

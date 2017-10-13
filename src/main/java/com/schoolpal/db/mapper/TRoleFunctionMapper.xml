@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TRoleFunctionMapper">
+  <resultMap id="FuncResultMap" type="com.schoolpal.db.model.TFunction">
+    <id column="c_id" jdbcType="CHAR" property="cId" />
+    <result column="c_root_id" jdbcType="VARCHAR" property="cRootId" />
+    <result column="c_parent_id" jdbcType="VARCHAR" property="cParentId" />
+    <result column="c_name_short" jdbcType="VARCHAR" property="cNameShort" />
+    <result column="c_name_long" jdbcType="VARCHAR" property="cNameLong" />
+    <result column="c_action" jdbcType="VARCHAR" property="cAction" />
+    <result column="c_widget_type_id" jdbcType="INTEGER" property="cWidgetTypeId" />
+    <result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
+    <result column="c_icon" jdbcType="VARCHAR" property="cIcon" />
+    <result column="widget_name" jdbcType="VARCHAR" property="WidgetType" />
+    <result column="command_code" jdbcType="VARCHAR" property="CommandCode" />
+    <result column="command_name" jdbcType="VARCHAR" property="CommandName" />
+  </resultMap>
+  <select id="selectAllFuncsByRoleId" parameterType="java.lang.String" resultMap="FuncResultMap">
+    SELECT f.*, 
+        wt.c_name AS widget_name, 
+        ct.c_code AS command_code, ct.c_name AS command_name,
+        rfe.c_function_id AS exclude_func_id
+    FROM t_role_function AS rf
+        INNER JOIN t_function AS f on f.c_root_id = rf.c_function_root_id 
+        LEFT JOIN t_role_function_exclude AS rfe on rf.c_role_id = rfe.c_role_id AND f.c_id = rfe.c_function_id
+        LEFT JOIN t_widget_type wt on f.c_widget_type_id = wt.c_id
+        LEFT JOIN t_command_type ct on f.c_command_type_id = ct.c_id
+    WHERE rf.c_role_id = #{cId,jdbcType=CHAR}
+    HAVING exclude_func_id is null
+    ORDER BY f.c_id
+  </select>
+  <select id="selectRootFuncsByRoleId" parameterType="java.lang.String" resultMap="FuncResultMap">
+    SELECT f.*, 
+        wt.c_name AS widget_name, 
+        ct.c_code AS command_code, ct.c_name AS command_name
+    FROM t_role_function rf
+        INNER JOIN t_function f on rf.c_function_root_id = f.c_id
+        LEFT JOIN t_widget_type wt on f.c_widget_type_id = wt.c_id
+        LEFT JOIN t_command_type ct on f.c_command_type_id = ct.c_id
+    WHERE rf.c_role_id = #{cId,jdbcType=CHAR} and #{cId,jdbcType=CHAR} = #{cRootId,jdbcType=CHAR}
+    ORDER BY f.c_id
+  </select>
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TRoleFunction">
+    <id column="c_role_id" jdbcType="CHAR" property="cRoleId" />
+    <id column="c_function_root_id" jdbcType="CHAR" property="cFunctionRootId" />
+    <result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_role_id, c_function_root_id, c_order_num
+  </sql>
+  <select id="selectOneByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_role_function
+    where c_role_id = #{arg0}
+      and c_function_root_id = #{arg1}
+  </select>
+  <select id="selectManyByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_role_function
+    where c_role_id = #{cRoleId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteOneByPrimaryKey" parameterType="java.lang.String">
+    delete from t_role_function
+    where c_role_id = #{arg0}
+      and c_function_root_id = #{arg1}
+  </delete>
+  <delete id="deleteManyByRoleId" parameterType="java.lang.String">
+    delete from t_role_function
+    where c_role_id = #{cRoleId,jdbcType=CHAR}
+  </delete>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TRoleFunction">
+    insert into t_role_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cRoleId != null">
+        c_role_id,
+      </if>
+      <if test="cFunctionRootId != null">
+        c_function_root_id,
+      </if>
+      <if test="cOrderNum != null">
+        c_order_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cRoleId != null">
+        #{cRoleId,jdbcType=CHAR},
+      </if>
+      <if test="cFunctionRootId != null">
+        #{cFunctionRootId,jdbcType=CHAR},
+      </if>
+      <if test="cOrderNum != null">
+        #{cOrderNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

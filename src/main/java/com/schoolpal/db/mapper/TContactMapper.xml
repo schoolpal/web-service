@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TContactMapper">
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TContact">
+    insert into t_contact
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="leadsId != null">
+        leads_id,
+      </if>
+      <if test="approachId != null">
+        approach_id,
+      </if>
+      <if test="datetime != null">
+        datetime,
+      </if>
+      <if test="executiveId != null">
+        executive_id,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="leadsId != null">
+        #{leadsId,jdbcType=CHAR},
+      </if>
+      <if test="approachId != null">
+        #{approachId,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executiveId != null">
+        #{executiveId,jdbcType=CHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateOne" parameterType="com.schoolpal.db.model.TContact">
+    update t_contact
+    <set>
+      <if test="leadsId != null">
+        leads_id = #{leadsId,jdbcType=CHAR},
+      </if>
+      <if test="approachId != null">
+        approach_id = #{approachId,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null">
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="executiveId != null">
+        executive_id = #{executiveId,jdbcType=CHAR},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <delete id="deleteOneById" parameterType="java.lang.String">
+    delete from t_contact
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, leads_id, approach_id, datetime, executive_id, summary
+    from t_contact
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <select id="selectManyByLeadsId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, leads_id, 
+    (select org_id from t_leads where id = c.leads_id) AS org_id,
+    (select c_name from t_org where c_id = org_id) AS org_name,
+    approach_id, 
+    (select name from t_contact_approach where id = c.approach_id) AS approach_name,
+    datetime, executive_id, 
+    (select c_realname from t_user where c_id = c.executive_id) AS executive_name,
+    summary
+    from t_contact AS c
+    where leads_id = #{leadsId,jdbcType=CHAR}
+  </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TContact">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="leads_id" jdbcType="CHAR" property="leadsId" />
+    <result column="approach_id" jdbcType="VARCHAR" property="approachId" />
+    <result column="approach_name" jdbcType="VARCHAR" property="approachName" />
+    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="org_id" jdbcType="CHAR" property="orgId" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, leads_id, approach_id, datetime, executive_id, summary
+  </sql>
+</mapper>

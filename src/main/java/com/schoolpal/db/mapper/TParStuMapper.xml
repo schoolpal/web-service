@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TParStuMapper">
+
+  <delete id="deleteOneByPrimaryKey" parameterType="com.schoolpal.db.model.TParStuKey">
+    delete from t_par_stu
+    where par_id = #{parId,jdbcType=CHAR}
+      and stu_id = #{stuId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteManyByParId">
+    delete from t_par_stu
+    where par_id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteManyByStuId">
+    delete from t_par_stu
+    where stu_id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TParStu">
+    insert into t_par_stu (par_id, stu_id, relation
+      )
+    values (#{parId,jdbcType=CHAR}, #{stuId,jdbcType=CHAR}, #{relation,jdbcType=VARCHAR}
+      )
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TParStu">
+    <id column="par_id" jdbcType="CHAR" property="parId" />
+    <id column="stu_id" jdbcType="CHAR" property="stuId" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    par_id, stu_id, relation
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.schoolpal.db.model.TParStuKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_par_stu
+    where par_id = #{parId,jdbcType=CHAR}
+      and stu_id = #{stuId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.schoolpal.db.model.TParStuKey">
+    delete from t_par_stu
+    where par_id = #{parId,jdbcType=CHAR}
+      and stu_id = #{stuId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TParStu">
+    insert into t_par_stu (par_id, stu_id, relation
+      )
+    values (#{parId,jdbcType=CHAR}, #{stuId,jdbcType=CHAR}, #{relation,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TParStu">
+    insert into t_par_stu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parId != null">
+        par_id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="relation != null">
+        relation,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parId != null">
+        #{parId,jdbcType=CHAR},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=CHAR},
+      </if>
+      <if test="relation != null">
+        #{relation,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TParStu">
+    update t_par_stu
+    <set>
+      <if test="relation != null">
+        relation = #{relation,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where par_id = #{parId,jdbcType=CHAR}
+      and stu_id = #{stuId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TParStu">
+    update t_par_stu
+    set relation = #{relation,jdbcType=VARCHAR}
+    where par_id = #{parId,jdbcType=CHAR}
+      and stu_id = #{stuId,jdbcType=CHAR}
+  </update>
+</mapper>

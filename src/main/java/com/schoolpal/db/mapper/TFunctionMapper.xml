@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TFunctionMapper">
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TFunction">
+    <id column="c_id" jdbcType="CHAR" property="cId" />
+    <result column="c_root_id" jdbcType="VARCHAR" property="cRootId" />
+    <result column="c_parent_id" jdbcType="VARCHAR" property="cParentId" />
+    <result column="c_name_short" jdbcType="VARCHAR" property="cNameShort" />
+    <result column="c_name_long" jdbcType="VARCHAR" property="cNameLong" />
+    <result column="c_action" jdbcType="VARCHAR" property="cAction" />
+    <result column="c_widget_type_id" jdbcType="INTEGER" property="cWidgetTypeId" />
+    <result column="c_order_num" jdbcType="INTEGER" property="cOrderNum" />
+    <result column="c_icon" jdbcType="VARCHAR" property="cIcon" />
+    <result column="c_command_type_id" jdbcType="INTEGER" property="cCommandTypeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, c_root_id, c_parent_id, c_name_short, c_name_long, c_action, c_widget_type_id, 
+    c_order_num, c_icon, c_command_type_id
+  </sql>
+  <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+    where c_id = #{cId,jdbcType=CHAR}
+  </select>
+  <select id="selectIdByAction" parameterType="java.lang.String" resultType="java.lang.String">
+    select c_id
+    from t_function
+    where c_action = #{cAction,jdbcType=CHAR}
+    limit 1
+  </select>
+  <select id="selectAllRoots" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+    where c_id = c_root_id
+    ORDER BY c_id
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+    ORDER BY c_id
+  </select>
+  <select id="selectManyByRootId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_function
+    where c_root_id = #{cId,jdbcType=CHAR}
+    ORDER BY c_id
+  </select>
+  <select id="selectIdsByRootId" parameterType="java.lang.String" resultType="java.lang.String">
+    select c_id
+    from t_function
+    where c_root_id = #{cId,jdbcType=CHAR}
+    ORDER BY c_id
+  </select>
+  <select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from t_function
+    where c_id = #{cId,jdbcType=CHAR}
+  </select>
+<!--   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_function
+    where c_id = #{cId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.schoolpal.db.model.TFunction">
+    insert into t_function (c_id, c_root_id, c_parent_id, 
+      c_name_short, c_name_long, c_action, 
+      c_widget_type_id, c_order_num, c_icon, 
+      c_command_type_id)
+    values (#{cId,jdbcType=CHAR}, #{cRootId,jdbcType=VARCHAR}, #{cParentId,jdbcType=VARCHAR}, 
+      #{cNameShort,jdbcType=VARCHAR}, #{cNameLong,jdbcType=VARCHAR}, #{cAction,jdbcType=VARCHAR}, 
+      #{cWidgetTypeId,jdbcType=INTEGER}, #{cOrderNum,jdbcType=INTEGER}, #{cIcon,jdbcType=VARCHAR}, 
+      #{cCommandTypeId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.schoolpal.db.model.TFunction">
+    insert into t_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cRootId != null">
+        c_root_id,
+      </if>
+      <if test="cParentId != null">
+        c_parent_id,
+      </if>
+      <if test="cNameShort != null">
+        c_name_short,
+      </if>
+      <if test="cNameLong != null">
+        c_name_long,
+      </if>
+      <if test="cAction != null">
+        c_action,
+      </if>
+      <if test="cWidgetTypeId != null">
+        c_widget_type_id,
+      </if>
+      <if test="cOrderNum != null">
+        c_order_num,
+      </if>
+      <if test="cIcon != null">
+        c_icon,
+      </if>
+      <if test="cCommandTypeId != null">
+        c_command_type_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=CHAR},
+      </if>
+      <if test="cRootId != null">
+        #{cRootId,jdbcType=VARCHAR},
+      </if>
+      <if test="cParentId != null">
+        #{cParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="cNameShort != null">
+        #{cNameShort,jdbcType=VARCHAR},
+      </if>
+      <if test="cNameLong != null">
+        #{cNameLong,jdbcType=VARCHAR},
+      </if>
+      <if test="cAction != null">
+        #{cAction,jdbcType=VARCHAR},
+      </if>
+      <if test="cWidgetTypeId != null">
+        #{cWidgetTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="cOrderNum != null">
+        #{cOrderNum,jdbcType=INTEGER},
+      </if>
+      <if test="cIcon != null">
+        #{cIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="cCommandTypeId != null">
+        #{cCommandTypeId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TFunction">
+    update t_function
+    <set>
+      <if test="cRootId != null">
+        c_root_id = #{cRootId,jdbcType=VARCHAR},
+      </if>
+      <if test="cParentId != null">
+        c_parent_id = #{cParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="cNameShort != null">
+        c_name_short = #{cNameShort,jdbcType=VARCHAR},
+      </if>
+      <if test="cNameLong != null">
+        c_name_long = #{cNameLong,jdbcType=VARCHAR},
+      </if>
+      <if test="cAction != null">
+        c_action = #{cAction,jdbcType=VARCHAR},
+      </if>
+      <if test="cWidgetTypeId != null">
+        c_widget_type_id = #{cWidgetTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="cOrderNum != null">
+        c_order_num = #{cOrderNum,jdbcType=INTEGER},
+      </if>
+      <if test="cIcon != null">
+        c_icon = #{cIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="cCommandTypeId != null">
+        c_command_type_id = #{cCommandTypeId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TFunction">
+    update t_function
+    set c_root_id = #{cRootId,jdbcType=VARCHAR},
+      c_parent_id = #{cParentId,jdbcType=VARCHAR},
+      c_name_short = #{cNameShort,jdbcType=VARCHAR},
+      c_name_long = #{cNameLong,jdbcType=VARCHAR},
+      c_action = #{cAction,jdbcType=VARCHAR},
+      c_widget_type_id = #{cWidgetTypeId,jdbcType=INTEGER},
+      c_order_num = #{cOrderNum,jdbcType=INTEGER},
+      c_icon = #{cIcon,jdbcType=VARCHAR},
+      c_command_type_id = #{cCommandTypeId,jdbcType=INTEGER}
+    where c_id = #{cId,jdbcType=CHAR}
+  </update> -->
+</mapper>

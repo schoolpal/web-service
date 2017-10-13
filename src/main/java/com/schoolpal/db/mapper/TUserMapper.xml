@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TUserMapper">
+	<resultMap id="UserResultMap" type="com.schoolpal.db.model.TUser">
+		<id column="c_id" jdbcType="CHAR" property="cId" />
+		<result column="c_loginname" jdbcType="VARCHAR" property="cLoginname" />
+		<result column="c_loginpass" jdbcType="VARCHAR" property="cLoginpass" />
+		<result column="c_realname" jdbcType="VARCHAR" property="cRealname" />
+		<result column="c_nickname" jdbcType="VARCHAR" property="cNickname" />
+		<result column="c_phone" jdbcType="VARCHAR" property="cPhone" />
+		<result column="c_email" jdbcType="VARCHAR" property="cEmail" />
+		<result column="c_qq" jdbcType="VARCHAR" property="cQq" />
+		<result column="c_available" jdbcType="BIT" property="cAvailable" />
+		<result column="c_org_id" jdbcType="CHAR" property="cOrgId" />
+		<result column="c_org_root_id" jdbcType="CHAR" property="cOrgRootId" />
+		<result column="c_creator" jdbcType="CHAR" property="cCreator" />
+		<result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+		<result column="c_last_visit_time" jdbcType="TIMESTAMP" property="cLastVisitTime" />
+		<result column="c_last_visit_ip" jdbcType="VARCHAR" property="cLastVisitIp" />
+	</resultMap>
+	<select id="selectOneById" parameterType="java.lang.String" resultMap="UserResultMap">
+		SELECT *
+		FROM t_user
+		WHERE c_id = #{cId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectOneByLoginName" parameterType="java.lang.String" resultMap="UserResultMap">
+		SELECT *
+		FROM t_user
+		WHERE c_loginname = #{cName,jdbcType=VARCHAR}
+	</select>
+    <select id="selectManyByOrgId" parameterType="java.lang.String" resultMap="UserResultMap">
+        SELECT *
+        FROM t_user
+        WHERE c_org_id = #{cId,jdbcType=VARCHAR}
+    </select>
+	<select id="ifExistsById" parameterType="java.lang.String" resultType="java.lang.Boolean">
+		SELECT count(*)
+		FROM t_user
+		WHERE c_id = #{cId,jdbcType=CHAR}
+	</select>
+    <select id="ifExistsByName" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT count(*)
+        FROM t_user
+        WHERE c_loginname = #{cName,jdbcType=CHAR}
+    </select>
+	<select id="selectPasswordByLoginName" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT c_loginpass
+		FROM t_user
+		WHERE c_loginname = #{cName,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteOneById" parameterType="java.lang.String">
+		delete from t_user
+		where c_id = #{cId,jdbcType=CHAR}
+	</delete>
+	<insert id="insertOne" parameterType="com.schoolpal.db.model.TUser">
+		insert into t_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cId != null">
+				c_id,
+			</if>
+			<if test="cLoginname != null">
+				c_loginname,
+			</if>
+			<if test="cLoginpass != null">
+				c_loginpass,
+			</if>
+			<if test="cRealname != null">
+				c_realname,
+			</if>
+			<if test="cNickname != null">
+				c_nickname,
+			</if>
+			<if test="cPhone != null">
+				c_phone,
+			</if>
+			<if test="cEmail != null">
+				c_email,
+			</if>
+			<if test="cQq != null">
+				c_qq,
+			</if>
+			<if test="cAvailable != null">
+				c_available,
+			</if>
+			<if test="cOrgId != null">
+				c_org_id,
+			</if>
+			<if test="cOrgRootId != null">
+				c_org_root_id,
+			</if>
+			<if test="cCreator != null">
+				c_creator,
+			</if>
+			<if test="cCreateTime != null">
+				c_create_time,
+			</if>
+			<if test="cLastVisitTime != null">
+				c_last_visit_time,
+			</if>
+			<if test="cLastVisitIp != null">
+				c_last_visit_ip,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cId != null">
+				#{cId,jdbcType=CHAR},
+			</if>
+			<if test="cLoginname != null">
+				#{cLoginname,jdbcType=VARCHAR},
+			</if>
+			<if test="cLoginpass != null">
+				#{cLoginpass,jdbcType=VARCHAR},
+			</if>
+			<if test="cRealname != null">
+				#{cRealname,jdbcType=VARCHAR},
+			</if>
+			<if test="cNickname != null">
+				#{cNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="cPhone != null">
+				#{cPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="cEmail != null">
+				#{cEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="cQq != null">
+				#{cQq,jdbcType=VARCHAR},
+			</if>
+			<if test="cAvailable != null">
+				#{cAvailable,jdbcType=BIT},
+			</if>
+			<if test="cOrgId != null">
+				#{cOrgId,jdbcType=CHAR},
+			</if>
+			<if test="cOrgRootId != null">
+				#{cOrgRootId,jdbcType=CHAR},
+			</if>
+			<if test="cCreator != null">
+				#{cCreator,jdbcType=CHAR},
+			</if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+			<if test="cLastVisitTime != null">
+				#{cLastVisitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cLastVisitIp != null">
+				#{cLastVisitIp,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateOneById" parameterType="com.schoolpal.db.model.TUser">
+		update t_user
+		<set>
+			<if test="cLoginname != null">
+				c_loginname = #{cLoginname,jdbcType=VARCHAR},
+			</if>
+			<if test="cLoginpass != null">
+				c_loginpass = #{cLoginpass,jdbcType=VARCHAR},
+			</if>
+			<if test="cRealname != null">
+				c_realname = #{cRealname,jdbcType=VARCHAR},
+			</if>
+			<if test="cNickname != null">
+				c_nickname = #{cNickname,jdbcType=VARCHAR},
+			</if>
+			<if test="cPhone != null">
+				c_phone = #{cPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="cEmail != null">
+				c_email = #{cEmail,jdbcType=VARCHAR},
+			</if>
+			<if test="cQq != null">
+				c_qq = #{cQq,jdbcType=VARCHAR},
+			</if>
+			<if test="cAvailable != null">
+				c_available = #{cAvailable,jdbcType=BIT},
+			</if>
+			<if test="cOrgId != null">
+				c_org_id = #{cOrgId,jdbcType=CHAR},
+			</if>
+			<if test="cOrgRootId != null">
+				c_org_root_id = #{cOrgRootId,jdbcType=CHAR},
+			</if>
+			<if test="cCreator != null">
+				c_creator = #{cCreator,jdbcType=CHAR},
+			</if>
+			<if test="cCreateTime != null">
+				c_create_time = #{cCreateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cLastVisitTime != null">
+				c_last_visit_time = #{cLastVisitTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cLastVisitIp != null">
+				c_last_visit_ip = #{cLastVisitIp,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where c_id = #{cId,jdbcType=CHAR}
+	</update>
+	<update id="updateAvaiabilityById">
+		UPDATE
+		t_user
+		SET c_available = #{cAvailable,jdbcType=BIT}
+		WHERE c_id = #{cId,jdbcType=CHAR}
+	</update>
+	<update id="updateLastVisitByLoginName">
+		UPDATE
+		t_user
+		SET c_last_visit_time = now(),
+		c_last_visit_ip = #{cLastVisitIp,jdbcType=VARCHAR}
+		WHERE c_loginname = #{cName,jdbcType=VARCHAR}
+	</update>
+    <update id="updateLoginPassById">
+        UPDATE
+        t_user
+        SET c_loginpass = #{cNewPass,jdbcType=VARCHAR}
+        WHERE c_id = #{cId,jdbcType=CHAR} and c_loginpass = #{cOriPass,jdbcType=VARCHAR}
+    </update>
+</mapper>
