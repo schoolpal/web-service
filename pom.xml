@@ -86,9 +86,9 @@
                     <include>**/*.properties</include>
                 </includes>
                 <excludes>
+                    <exclude>dev/*</exclude>
                     <exclude>test/*</exclude>
-                    <exclude>production/*</exclude>
-                    <exclude>development/*</exclude>
+                    <exclude>docker/*</exclude>
                 </excludes>
             </resource>
             <resource>
