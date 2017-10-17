@@ -43,6 +43,11 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.1</version>
                     <configuration>
@@ -212,7 +217,7 @@
             <version>2.5</version>
         </dependency>
     </dependencies>
-    <pluginRepositories>
+<!--    <pluginRepositories>
         <pluginRepository>
             <id>alfresco-public</id>
             <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
@@ -229,5 +234,5 @@
             <id>beardedgeeks-releases</id>
             <url>http://beardedgeeks.googlecode.com/svn/repository/releases</url>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories>-->
 </project>
