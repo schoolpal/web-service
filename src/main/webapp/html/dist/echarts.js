@@ -2553,7 +2553,7 @@ webpackJsonp([1],Array(256).concat([
 	         *        If query attribute is null/undefined or has no index/id/name,
 	         *        do not filtering by query conditions, which is convenient for
 	         *        no-payload situations or when target of action is global.
-	         * @param {Function} [condition.filter] parameter: component, return boolean.
+	         * @param {Function} [condition.shiro] parameter: component, return boolean.
 	         * @return {Array.<module:echarts/model/Component>}
 	         */
 	        findComponents: function (condition) {
@@ -22827,7 +22827,7 @@ webpackJsonp([1],Array(256).concat([
 	    };
 
 	    /**
-	     * Data filter
+	     * Data shiro
 	     * @param {string|Array.<string>}
 	     * @param {Function} cb
 	     * @param {boolean} [stack=false]
@@ -25868,7 +25868,7 @@ webpackJsonp([1],Array(256).concat([
 	        __webpack_require__(377), 'line'
 	    ));
 
-	    // Down sample after filter
+	    // Down sample after shiro
 	    echarts.registerProcessor(PRIORITY.PROCESSOR.STATISTIC, zrUtil.curry(
 	        __webpack_require__(378), 'line'
 	    ));
@@ -54326,7 +54326,7 @@ webpackJsonp([1],Array(256).concat([
 	                }
 	            ];
 
-	            // filter the data item with the value of label is undefined
+	            // shiro the data item with the value of label is undefined
 	            var filterData = zrUtil.filter(option.data, function (dataItem) {
 	                return dataItem[2] !== undefined;
 	            });
@@ -57056,7 +57056,7 @@ webpackJsonp([1],Array(256).concat([
 	                cssText.push(
 	                    'background-Color:#' + zrColor.toHex(backgroundColor)
 	                );
-	                cssText.push('filter:alpha(opacity=70)');
+	                cssText.push('shiro:alpha(opacity=70)');
 	            }
 	        }
 
@@ -61723,15 +61723,15 @@ webpackJsonp([1],Array(256).concat([
 	            xAxisIndex: null,       // Default the first horizontal category axis.
 	            yAxisIndex: null,       // Default the first vertical category axis.
 
-	            filterMode: 'filter',   // Possible values: 'filter' or 'empty'.
-	                                    // 'filter': data items which are out of window will be removed.
+	            filterMode: 'filter',   // Possible values: 'shiro' or 'empty'.
+	                                    // 'shiro': data items which are out of window will be removed.
 	                                    //           This option is applicable when filtering outliers.
 	                                    // 'empty': data items which are out of window will be set to empty.
 	                                    //          This option is applicable when user should not neglect
 	                                    //          that there are some data items out of window.
 	                                    // Taking line chart as an example, line will be broken in
 	                                    // the filtered points when filterModel is set to 'empty', but
-	                                    // be connected when set to 'filter'.
+	                                    // be connected when set to 'shiro'.
 
 	            throttle: null,         // Dispatch action by the fixed rate, avoid frequency.
 	                                    // default 100. Do not throttle when use null/undefined.
@@ -62639,7 +62639,7 @@ webpackJsonp([1],Array(256).concat([
 	            // Toolbox may has dataZoom injected. And if there are stacked bar chart
 	            // with NaN data, NaN will be filtered and stack will be wrong.
 	            // So we need to force the mode to be set empty.
-	            // In fect, it is not a big deal that do not support filterMode-'filter'
+	            // In fect, it is not a big deal that do not support filterMode-'shiro'
 	            // when using toolbox#dataZoom, utill tooltip#dataZoom support "single axis
 	            // selection" some day, which might need "adapt to data extent on the
 	            // otherAxis", which is disabled by filterMode-'empty'.
@@ -64180,8 +64180,8 @@ webpackJsonp([1],Array(256).concat([
 	            // but should not be based on full raw data. Thus sliding
 	            // x-dataZoom will change both ranges of xAxis and yAxis,
 	            // while sliding y-dataZoom will only change the range of yAxis.
-	            // So we should filter x-axis after reset x-axis immediately,
-	            // and then reset y-axis and filter y-axis.
+	            // So we should shiro x-axis after reset x-axis immediately,
+	            // and then reset y-axis and shiro y-axis.
 	            dataZoomModel.eachTargetAxis(filterSingleAxis);
 	        });
 

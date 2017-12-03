@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
+import com.schoolpal.ajax.model.AjaxResponse;
+import com.schoolpal.ajax.helper.AuthorizationHelper;
 import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TUser;
@@ -36,7 +36,7 @@ public class AjaxContactController {
 
 	@RequestMapping(value = "query.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String query(String id) {
+	public AjaxResponse query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (StringUtils.isEmpty(id)) {
@@ -63,12 +63,12 @@ public class AjaxContactController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(String leadsId) {
+	public AjaxResponse list(String leadsId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (StringUtils.isEmpty(leadsId)){
@@ -90,7 +90,7 @@ public class AjaxContactController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	private String getQueryPermIdByLeadsId(String id){
@@ -143,7 +143,7 @@ public class AjaxContactController {
 	
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(TContact contact, HttpServletRequest request) {
+	public AjaxResponse add(TContact contact, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (contact == null) {
@@ -183,12 +183,12 @@ public class AjaxContactController {
 			
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TContact contact, HttpServletRequest request) {
+	public AjaxResponse mod(TContact contact, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (contact == null) {
@@ -225,12 +225,12 @@ public class AjaxContactController {
 						
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String del(String id, HttpServletRequest request) {
+	public AjaxResponse del(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (StringUtils.isEmpty(id)) {
@@ -261,7 +261,7 @@ public class AjaxContactController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 }

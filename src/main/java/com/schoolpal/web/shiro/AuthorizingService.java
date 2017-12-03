@@ -1,4 +1,4 @@
-package com.schoolpal.service;
+package com.schoolpal.web.shiro;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -17,7 +17,7 @@ import com.schoolpal.db.model.*;
 import com.schoolpal.web.consts.*;
 import com.schoolpal.web.util.MD5;
 
-public class RealmService extends AuthorizingRealm {
+public class AuthorizingService extends AuthorizingRealm {
 
 	private final static String REALM_NAME = "SchoolPal_ShiroRealm";
 
@@ -25,7 +25,7 @@ public class RealmService extends AuthorizingRealm {
 	private TUserMapper userDAO;
 	private Gson gson = new Gson();
 
-	public RealmService() {
+	public AuthorizingService() {
 		setName(REALM_NAME);
 	}
 

@@ -8,7 +8,7 @@ public class LoginForm {
 	public String getLoginName() {
 		return loginName;
 	}
-	public void setLoginname(String loginName) {
+	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
 	public String getMixedPWD() {

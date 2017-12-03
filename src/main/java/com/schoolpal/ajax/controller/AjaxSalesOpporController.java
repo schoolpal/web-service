@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
+import com.schoolpal.ajax.model.AjaxResponse;
+import com.schoolpal.ajax.helper.AuthorizationHelper;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
 import com.schoolpal.db.model.TLeadsStudent;
@@ -35,7 +35,7 @@ public class AjaxSalesOpporController {
 
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(String orgId, Integer typeId) {
+	public AjaxResponse list(String orgId, Integer typeId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("2-1")) {
@@ -56,12 +56,12 @@ public class AjaxSalesOpporController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "query.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String query(String id) {
+	public AjaxResponse query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("2-1")) {
@@ -82,12 +82,12 @@ public class AjaxSalesOpporController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
+	public AjaxResponse add(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -176,12 +176,12 @@ public class AjaxSalesOpporController {
 			
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
+	public AjaxResponse mod(TLeads leads, TLeadsStudent student, TLeadsParent parent, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -222,12 +222,12 @@ public class AjaxSalesOpporController {
 			
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String del(String id, HttpServletRequest request) {
+	public AjaxResponse del(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -251,12 +251,12 @@ public class AjaxSalesOpporController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "assign.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String assign(String id, String assigneeId, HttpServletRequest request) {
+	public AjaxResponse assign(String id, String assigneeId, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -285,7 +285,7 @@ public class AjaxSalesOpporController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 }

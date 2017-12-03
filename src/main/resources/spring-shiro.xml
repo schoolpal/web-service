@@ -19,7 +19,7 @@
  		<property name="filters">
 			<util:map>
                 <entry key="ajaxc">  
-                    <bean class="com.schoolpal.ajax.AjaxAuthenticationFilter"></bean>  
+                    <bean class="com.schoolpal.web.shiro.AuthenticationFilter"></bean>
                 </entry>
 			</util:map>
 		</property>
@@ -38,7 +38,7 @@
 		<property name="sessionManager" ref="sessionManager" />
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
-	<bean id="realmService" class="com.schoolpal.service.RealmService" />
+	<bean id="realmService" class="com.schoolpal.web.shiro.AuthorizingService" />
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<property name="globalSessionTimeout" value="1800000" />
 		<property name="sessionDAO" ref="redisSessionDAO" />

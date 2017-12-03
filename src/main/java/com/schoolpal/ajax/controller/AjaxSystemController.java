@@ -4,13 +4,14 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.schoolpal.ajax.helper.AuthorizationHelper;
+import com.schoolpal.ajax.model.AjaxResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.*;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
 import com.schoolpal.web.model.*;
@@ -34,7 +35,7 @@ public class AjaxSystemController {
 
 	@RequestMapping(value = "org/list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listOrgs() {
+	public AjaxResponse listOrgs() {
 		
 		AjaxResponse res = new AjaxResponse(200);
 		do {
@@ -51,12 +52,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "org/add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String addOrg(OrgForm form, HttpServletRequest request) {
+	public AjaxResponse addOrg(OrgForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null) {
@@ -104,12 +105,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "org/mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String modOrg(OrgForm form, HttpServletRequest request) {
+	public AjaxResponse modOrg(OrgForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null || form.getId() == null || form.getId().isEmpty()) {
@@ -167,12 +168,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "org/del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String delOrg(String id, HttpServletRequest request) {
+	public AjaxResponse delOrg(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (id == null || id.isEmpty()) {
@@ -210,12 +211,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "role/list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listRoles(String id) {
+	public AjaxResponse listRoles(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			TUser user = userServ.getCachedUser();
@@ -256,12 +257,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "role/add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String addRole(RoleForm form, HttpServletRequest request) {
+	public AjaxResponse addRole(RoleForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null) {
@@ -315,12 +316,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "role/mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String modRole(RoleForm form, HttpServletRequest request) {
+	public AjaxResponse modRole(RoleForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null || form.getId() == null || form.getId().isEmpty()) {
@@ -386,12 +387,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "role/del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String delRole(String id, HttpServletRequest request) {
+	public AjaxResponse delRole(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (id == null || id.isEmpty()) {
@@ -437,12 +438,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "role/auth.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String addRoleFunc(String id, String funcIds, HttpServletRequest request) {
+	public AjaxResponse addRoleFunc(String id, String funcIds, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			// Validate param
@@ -513,12 +514,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "user/checkName.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String checkLoginname(String loginName, HttpServletRequest request) {
+	public AjaxResponse checkLoginname(String loginName, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (loginName == null || loginName.isEmpty()) {
@@ -536,12 +537,12 @@ public class AjaxSystemController {
 			res.setData(exists);
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "user/add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String addUser(UserForm form, HttpServletRequest request) {
+	public AjaxResponse addUser(UserForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null) {
@@ -614,12 +615,12 @@ public class AjaxSystemController {
 			res.setData(id);
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "user/mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String modUser(UserForm form, HttpServletRequest request) {
+	public AjaxResponse modUser(UserForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (form == null) {
@@ -698,12 +699,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "user/del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String delUser(String id, HttpServletRequest request) {
+	public AjaxResponse delUser(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (id == null || id.isEmpty()) {
@@ -738,12 +739,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "user/enable.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String enableUser(String id, boolean enabled, HttpServletRequest request) {
+	public AjaxResponse enableUser(String id, boolean enabled, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (id == null || id.isEmpty()) {
@@ -784,12 +785,12 @@ public class AjaxSystemController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "user/query.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String queryUser(String id, HttpServletRequest request) {
+	public AjaxResponse queryUser(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (id == null || id.isEmpty()) {
@@ -822,7 +823,7 @@ public class AjaxSystemController {
 			res.setData(targetUser);
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	public TUser userFormToTUser(UserForm form){
@@ -842,31 +843,31 @@ public class AjaxSystemController {
 	
 	@RequestMapping(value = "func/add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String addFunc(OrgForm form, HttpServletRequest request) {
+	public AjaxResponse addFunc(OrgForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "func/mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String modFunc(OrgForm form, HttpServletRequest request) {
+	public AjaxResponse modFunc(OrgForm form, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "func/del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String delFunc(String id, HttpServletRequest request) {
+	public AjaxResponse delFunc(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 }

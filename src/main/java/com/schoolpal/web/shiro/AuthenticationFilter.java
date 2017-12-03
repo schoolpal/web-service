@@ -1,11 +1,11 @@
-package com.schoolpal.ajax;
+package com.schoolpal.web.shiro;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 
-public class AjaxAuthenticationFilter extends FormAuthenticationFilter {
+public class AuthenticationFilter extends FormAuthenticationFilter {
 
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {

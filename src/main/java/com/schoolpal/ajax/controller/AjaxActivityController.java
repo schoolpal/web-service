@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
+import com.schoolpal.ajax.model.AjaxResponse;
+import com.schoolpal.ajax.helper.AuthorizationHelper;
 import com.schoolpal.db.model.TActivity;
 import com.schoolpal.db.model.TOrg;
 import com.schoolpal.db.model.TUser;
@@ -34,11 +34,9 @@ public class AjaxActivityController {
 	@Autowired
 	private OrgService orgServ;
 	
-	private Gson gson = new Gson();
-
 	@RequestMapping(value = "query.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String query(String id) {
+	public AjaxResponse query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
@@ -63,12 +61,12 @@ public class AjaxActivityController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(String orgnizationId) {
+	public AjaxResponse list(String orgnizationId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("1-1")) {
@@ -89,7 +87,7 @@ public class AjaxActivityController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	protected class listTreeResponse{
@@ -101,9 +99,10 @@ public class AjaxActivityController {
 			this.actListMap = actListMap;
 		}
 	}
+
 	@RequestMapping(value = "listTree.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listTree(String orgId) {
+	public AjaxResponse listTree(String orgId) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("1")) {
@@ -131,12 +130,12 @@ public class AjaxActivityController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(TActivity act, HttpServletRequest request) {
+	public AjaxResponse add(TActivity act, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -192,12 +191,12 @@ public class AjaxActivityController {
 			
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TActivity act, HttpServletRequest request) {
+	public AjaxResponse mod(TActivity act, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -251,12 +250,12 @@ public class AjaxActivityController {
 						
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String del(String id, HttpServletRequest request) {
+	public AjaxResponse del(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -280,7 +279,7 @@ public class AjaxActivityController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 }

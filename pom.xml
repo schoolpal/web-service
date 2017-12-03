@@ -87,17 +87,14 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
+                    <include>*</include>
                 </includes>
-                <excludes>
-                    <exclude>dev/*</exclude>
-                    <exclude>test/*</exclude>
-                    <exclude>docker/*</exclude>
-                </excludes>
             </resource>
             <resource>
                 <directory>src/main/resources/${profiles.active}</directory>
+                <includes>
+                    <include>*</include>
+                </includes>
             </resource>
         </resources>
     </build>

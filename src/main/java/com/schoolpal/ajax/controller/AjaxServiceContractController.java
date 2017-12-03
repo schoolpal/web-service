@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
-import com.schoolpal.ajax.AuthorizationHelper;
+import com.schoolpal.ajax.model.AjaxResponse;
+import com.schoolpal.ajax.helper.AuthorizationHelper;
 import com.schoolpal.db.model.TContract;
 import com.schoolpal.db.model.TParent;
 import com.schoolpal.db.model.TStudent;
@@ -44,7 +44,7 @@ public class AjaxServiceContractController {
 
 	@RequestMapping(value = "query.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String query(String id, HttpServletRequest request) {
+	public AjaxResponse query(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (StringUtils.isEmpty(id)) {
@@ -70,12 +70,12 @@ public class AjaxServiceContractController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "list.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String list(HttpServletRequest request) {
+	public AjaxResponse list(HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionById("3-1")) {
@@ -91,12 +91,12 @@ public class AjaxServiceContractController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String add(TContract contract, HttpServletRequest request) {
+	public AjaxResponse add(TContract contract, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -155,12 +155,12 @@ public class AjaxServiceContractController {
 			
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String mod(TContract contract, HttpServletRequest request) {
+	public AjaxResponse mod(TContract contract, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -189,12 +189,12 @@ public class AjaxServiceContractController {
 						
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "del.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String del(String id, HttpServletRequest request) {
+	public AjaxResponse del(String id, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (!AuthorizationHelper.CheckPermissionByMappedPath(
@@ -225,7 +225,7 @@ public class AjaxServiceContractController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	private boolean validateForm(TContract contract, AjaxResponse res){

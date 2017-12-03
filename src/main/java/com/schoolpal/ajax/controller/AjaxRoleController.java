@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
+import com.schoolpal.ajax.model.AjaxResponse;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
 
@@ -30,7 +30,7 @@ public class AjaxRoleController {
 
 	@RequestMapping(value = "query.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String query(String id) {
+	public AjaxResponse query(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			TUser user = userServ.getCachedUser();
@@ -66,12 +66,12 @@ public class AjaxRoleController {
 			
 		} while (false);
 		
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "ranks.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String ranks() {
+	public AjaxResponse ranks() {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			List<TRank> rankList = null;
@@ -87,7 +87,7 @@ public class AjaxRoleController {
 			
 		} while (false);
 		
-		return gson.toJson(res);
+		return res;
 	}
 
 }

@@ -23,11 +23,11 @@
 		<from>/rewrite-status</from>
 		<to>/test/status/</to>
 	</outbound-rule> -->
-	<!-- INSTALLATION in your web.xml add... <filter> <filter-name>UrlRewriteFilter</filter-name> 
-		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class> 
+	<!-- INSTALLATION in your web.xml add... <shiro> <shiro-name>UrlRewriteFilter</shiro-name>
+		<shiro-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</shiro-class>
 		<init-param> <param-name>logLevel</param-name> <param-value>WARN</param-value> 
-		</init-param> </filter> <filter-mapping> <filter-name>UrlRewriteFilter</filter-name> 
-		<url-pattern>/*</url-pattern> </filter-mapping> EXAMPLES Redirect one url 
+		</init-param> </shiro> <shiro-mapping> <shiro-name>UrlRewriteFilter</shiro-name>
+		<url-pattern>/*</url-pattern> </shiro-mapping> EXAMPLES Redirect one url
 		<rule> <from>/some/old/page.html</from> <to type="redirect">/very/new/page.html</to> 
 		</rule> Redirect a directory <rule> <from>/some/olddir/(.*)</from> <to type="redirect">/very/newdir/$1</to> 
 		</rule> Clean a url <rule> <from>/products/([0-9]+)</from> <to>/products/index.jsp?product_id=$1</to> 

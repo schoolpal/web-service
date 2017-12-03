@@ -1,4 +1,4 @@
-package com.schoolpal.ajax;
+package com.schoolpal.ajax.model;
 
 public class AjaxResponse {
 	private int code = 200;

@@ -58,7 +58,7 @@ public class UserService {
 		return true;
 	}
 
-	public void cacheUser(String username) {
+	public TUser cacheUser(String username) {
 		TUser user = this.queryUserByLoginName(username);
 
 		String jsonUser = gson.toJson(user);
@@ -68,6 +68,8 @@ public class UserService {
 
 		logServ.log(username, LogLevel.TRACE, "UserService.cacheUserData(String)", "",
 				"SESSION_KEY_CURRENT_USER: " + jsonUser);
+
+		return user;
 	}
 
 	public TUser getCachedUser() {

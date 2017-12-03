@@ -162,11 +162,11 @@ webpackJsonp([0],{
 	        '1-2-1': { PATH_RULE: /^crm\/market\/leads\/edit\/create(\/)?$/ },
 	        '1-2-2': { PATH_RULE: /^crm\/market\/leads\/edit\/\w+(\/)?$/ },
 
-	        '2-1': { PATH: 'crm/sales/oppor', PATH_RULE: /^crm\/sales\/oppor(\/\w+)?(\/)?$/, ICON: 'fa-filter' },
+	        '2-1': { PATH: 'crm/sales/oppor', PATH_RULE: /^crm\/sales\/oppor(\/\w+)?(\/)?$/, ICON: 'fa-shiro' },
 	        '2-1-1': { PATH_RULE: /^crm\/sales\/oppor\/edit\/create(\/)?$/ },
 	        '2-1-2': { PATH_RULE: /^crm\/sales\/oppor\/edit\/\w+(\/)?$/ },
 
-	        '2-2': { PATH: 'crm/sales/contract', PATH_RULE: /^crm\/sales\/contract(\/\w+)?(\/)?$/, ICON: 'fa-filter' }
+	        '2-2': { PATH: 'crm/sales/contract', PATH_RULE: /^crm\/sales\/contract(\/\w+)?(\/)?$/, ICON: 'fa-shiro' }
 	    }, _defineProperty(_AUTH_DIC, '2-1-1', { PATH_RULE: /^crm\/sales\/contract\/edit\/create\/\w+(\/)?$/ }), _defineProperty(_AUTH_DIC, '2-1-2', { PATH_RULE: /^crm\/sales\/contract\/edit\/\w+(\/)?$/ }), _defineProperty(_AUTH_DIC, '7-1', { PATH: 'sys/org', PATH_RULE: /^sys\/org(\/)?$/, ICON: 'fa-sitemap' }), _defineProperty(_AUTH_DIC, '7-1-1', { PATH_RULE: /^sys\/org\/create(\/)?$/ }), _defineProperty(_AUTH_DIC, '7-1-2', { PATH_RULE: /^sys\/org\/\w+(\/)?$/ }), _defineProperty(_AUTH_DIC, '7-2', { PATH: 'sys/role', PATH_RULE: /^sys\/role(\/)?$/, ICON: 'fa-users' }), _defineProperty(_AUTH_DIC, '7-2-1', { PATH_RULE: /^sys\/role\/\w+\/create(\/)?$/ }), _defineProperty(_AUTH_DIC, '7-2-2', { PATH_RULE: /^sys\/role\/\w+\/\w+(\/)?$/ }), _defineProperty(_AUTH_DIC, '7-3', { PATH: 'sys/auth', PATH_RULE: /^sys\/auth(\/)?$/, ICON: 'fa-shield' }), _defineProperty(_AUTH_DIC, '7-4', { PATH: 'sys/user', PATH_RULE: /^sys\/user(\/)?$/, ICON: 'fa-user' }), _defineProperty(_AUTH_DIC, '7-4-1', { PATH_RULE: /^sys\/user\/\w+\/create(\/)?$/ }), _defineProperty(_AUTH_DIC, '7-4-2', { PATH_RULE: /^sys\/user\/\w+\/\w+(\/)?$/ }), _AUTH_DIC)
 	};
 
@@ -18214,7 +18214,7 @@ webpackJsonp([0],{
 
 	            (0, _api.salt)().done(function (salt) {
 	                (0, _api.login)({
-	                    loginname: username,
+	                    loginName: username,
 	                    mixedPWD: (0, _mixedMD2.default)((0, _mixedMD2.default)((0, _mixedMD2.default)(mixedPWD)) + salt)
 	                }).done(function () {
 	                    (0, _api.profile)().done(function (data) {

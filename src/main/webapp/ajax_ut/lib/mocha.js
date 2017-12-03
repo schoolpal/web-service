@@ -1329,7 +1329,7 @@ function image (name) {
  *   - `slow` milliseconds to wait before considering a test slow
  *   - `ignoreLeaks` ignore global leaks
  *   - `fullTrace` display the full stack-trace on failing
- *   - `grep` string or regexp to filter tests with
+ *   - `grep` string or regexp to shiro tests with
  *
  * @param {Object} options
  * @api public
@@ -5286,7 +5286,7 @@ Runner.prototype.run = function (fn) {
   var self = this;
   var rootSuite = this.suite;
 
-  // If there is an `only` filter
+  // If there is an `only` shiro
   if (this.hasOnly) {
     filterOnly(rootSuite);
   }
@@ -5362,8 +5362,8 @@ function filterOnly (suite) {
     // Otherwise, do not run any of the tests in this suite.
     suite.tests = [];
     utils.forEach(suite._onlySuites, function (onlySuite) {
-      // If there are other `only` tests/suites nested in the current `only` suite, then filter that `only` suite.
-      // Otherwise, all of the tests on this `only` suite should be run, so don't filter it.
+      // If there are other `only` tests/suites nested in the current `only` suite, then shiro that `only` suite.
+      // Otherwise, all of the tests on this `only` suite should be run, so don't shiro it.
       if (hasOnly(onlySuite)) {
         filterOnly(onlySuite);
       }
@@ -6078,7 +6078,7 @@ var reduce = exports.reduce = function (arr, fn, val) {
 };
 
 /**
- * Array#filter (<=IE8)
+ * Array#shiro (<=IE8)
  *
  * @api private
  * @param {Array} arr
@@ -6684,7 +6684,7 @@ exports.getError = function (err) {
  * @summary
  * This Filter based on `mocha-clean` module.(see: `github.com/rstacruz/mocha-clean`)
  * @description
- * When invoking this function you get a filter function that get the Error.stack as an input,
+ * When invoking this function you get a shiro function that get the Error.stack as an input,
  * and return a prettify output.
  * (i.e: strip Mocha and internal node functions from stack trace).
  * @returns {Function}
@@ -10430,7 +10430,7 @@ module.exports = Array.isArray || function (arr) {
                 // Simple serialization test. FF 3.1b1 uses Unicode escape sequences
                 // where character escape codes are expected (e.g., `\b` => `\u0008`).
                 stringify({ "a": [value, true, false, null, "\x00\b\n\f\r\t"] }) == serialized &&
-                // FF 3.1b1 and b2 ignore the `filter` and `width` arguments.
+                // FF 3.1b1 and b2 ignore the `shiro` and `width` arguments.
                 stringify(null, value) === "1" &&
                 stringify([1, 2], null, 1) == "[\n 1,\n 2\n]" &&
                 // JSON 2, Prototype <= 1.7, and older WebKit builds incorrectly
@@ -10631,7 +10631,7 @@ module.exports = Array.isArray || function (arr) {
       };
 
       // Public: Serializes a JavaScript `value` as a JSON string. The optional
-      // `filter` argument may specify either a function that alters how object and
+      // `shiro` argument may specify either a function that alters how object and
       // array members are serialized, or an array of strings and numbers that
       // indicates which properties should be serialized. The optional `width`
       // argument may be either a string or number that specifies the indentation
@@ -13732,7 +13732,7 @@ function indexOf(xs, x) {
 }).call(this,require('_process'))
 },{"./_stream_duplex":69,"./internal/streams/BufferList":74,"_process":67,"buffer":44,"buffer-shims":43,"core-util-is":45,"events":48,"inherits":51,"isarray":53,"process-nextick-args":66,"string_decoder/":80,"util":40}],72:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
-// something with the data.  Sometimes it's called a "filter",
+// something with the data.  Sometimes it's called a "shiro",
 // but that's not a great name for it, since that implies a thing where
 // some bits pass through, and others are simply ignored.  (That would
 // be a valid example of a transform, of course.)
@@ -15186,7 +15186,7 @@ function formatValue(ctx, value, recurseTimes) {
       isFunction(value.inspect) &&
       // Filter out the util module, it's inspect function is special
       value.inspect !== exports.inspect &&
-      // Also filter out any prototype objects using the circular check.
+      // Also shiro out any prototype objects using the circular check.
       !(value.constructor && value.constructor.prototype === value)) {
     var ret = value.inspect(recurseTimes, ctx);
     if (!isString(ret)) {

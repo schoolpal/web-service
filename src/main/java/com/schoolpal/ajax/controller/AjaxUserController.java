@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.AjaxResponse;
+import com.schoolpal.ajax.model.AjaxResponse;
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
 import com.schoolpal.web.consts.*;
@@ -28,16 +28,12 @@ public class AjaxUserController {
 	private UserService userServ;
 	@Autowired
 	private OrgService orgServ;
-//	@Autowired
-//	private RoleService roleServ;
-//	@Autowired
-//	private FunctionService funcServ;
 
 	private Gson gson = new Gson();
 
 	@RequestMapping(value = "salt.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String salt() {
+	public AjaxResponse salt() {
 		//
 		// Generate a number between 1000 and 9999.
 		//
@@ -54,12 +50,12 @@ public class AjaxUserController {
 		AjaxResponse res = new AjaxResponse(200);
 		res.setData(salt);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(LoginForm login) {
+	public AjaxResponse login(LoginForm login) {
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession(true);
 		logServ.log(login.getLoginName(), LogLevel.TRACE, "AjaxUserController.login()", "",
@@ -86,12 +82,12 @@ public class AjaxUserController {
 		logServ.log(login.getLoginName(), LogLevel.DEBUG, "AjaxUserController.login()", "",
 				"Error: " + res.getDetail());
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String logout() {
+	public AjaxResponse logout() {
 		Subject currentUser = SecurityUtils.getSubject();
 		AjaxResponse res = new AjaxResponse(200);
 		if (null != currentUser && null != currentUser.getPrincipal()) {
@@ -108,12 +104,12 @@ public class AjaxUserController {
 			logServ.log("", LogLevel.WARNING, "AjaxUserController.logout()", "Illegal access!");
 		}
 
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "changePassword.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String changePassword(String oriPass, String newPass, HttpServletRequest request) {
+	public AjaxResponse changePassword(String oriPass, String newPass, HttpServletRequest request) {
 		AjaxResponse res = new AjaxResponse(200);
 		do {
 			if (oriPass == null || oriPass.isEmpty()) {
@@ -134,7 +130,7 @@ public class AjaxUserController {
 
 			Subject currentUser = SecurityUtils.getSubject();
 			if (currentUser == null || currentUser.getPrincipal() == null) {
-				// Since shiro filter will intercept if not login, this code should
+				// Since shiro shiro will intercept if not login, this code should
 				// never be reached
 				res.setCode(401);
 				res.setDetail("Not login");
@@ -151,46 +147,46 @@ public class AjaxUserController {
 			res.setData(result);
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 	
 	@RequestMapping(value = "status.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String status() {
+	public AjaxResponse status() {
 		Subject currentUser = SecurityUtils.getSubject();
 		AjaxResponse res = new AjaxResponse(200);
 		if (currentUser == null || currentUser.getPrincipal() == null) {
-			// Since shiro filter will intercept if not login, this code should
+			// Since shiro shiro will intercept if not login, this code should
 			// never be reached
 			res.setCode(401);
 			res.setDetail("Not login");
 		}
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "profile.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String profile() {
+	public AjaxResponse profile() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
+			// Since shiro shiro will intercept if not login, this code should
 			// never be reached
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
 		} else {
 			res.setData(user);
 		}
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listOrgs() {
+	public AjaxResponse listOrgs() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
+			// Since shiro shiro will intercept if not login, this code should
 			// never be reached
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
@@ -198,16 +194,16 @@ public class AjaxUserController {
 			List<TOrg> orgList = orgServ.queryOrgListByRootIdLite(user.getcOrgId());
 			res.setData(orgList);
 		}
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listRoles() {
+	public AjaxResponse listRoles() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
+			// Since shiro shiro will intercept if not login, this code should
 			// never be reached
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
@@ -215,16 +211,16 @@ public class AjaxUserController {
 			List<TRole> roleList = user.getRoles();
 			res.setData(roleList);
 		}
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "listFuncs.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listFuncs() {
+	public AjaxResponse listFuncs() {
 		TUser user = userServ.getCachedUser();
 		AjaxResponse res = new AjaxResponse(200);
 		if (user == null) {
-			// Since shiro filter will intercept if not login, this code should
+			// Since shiro shiro will intercept if not login, this code should
 			// never be reached
 			res.setCode(500);
 			res.setDetail("Cannot find cached profile data, not login?");
@@ -235,12 +231,12 @@ public class AjaxUserController {
 			}
 			res.setData(funcList);
 		}
-		return gson.toJson(res);
+		return res;
 	}
 
 	@RequestMapping(value = "listFuncsByRole.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String listFuncsByRole(String id) {
+	public AjaxResponse listFuncsByRole(String id) {
 		AjaxResponse res = new AjaxResponse(200);
 
 		do {
@@ -262,7 +258,7 @@ public class AjaxUserController {
 
 		} while (false);
 
-		return gson.toJson(res);
+		return res;
 	}
 
 }
