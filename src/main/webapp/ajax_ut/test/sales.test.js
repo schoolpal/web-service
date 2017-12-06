@@ -44,7 +44,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
 			url : buildUrl(host, path, 'login.do'),
 			dataType : 'json',
 			data : {
-				loginname : user,
+				loginName : user,
 				mixedPWD : MD5(MD5(MD5(pass)) + salt)
 			}
 		});

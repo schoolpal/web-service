@@ -43,7 +43,7 @@ describe('/ajax/org/ APIs', function() {
 			url : buildUrl(host, user_path, 'login.do'),
 			dataType : 'json',
 			data : {
-				loginname : user,
+				loginName : user,
 				mixedPWD : MD5(MD5(MD5(pass)) + salt)
 			}
 		});
