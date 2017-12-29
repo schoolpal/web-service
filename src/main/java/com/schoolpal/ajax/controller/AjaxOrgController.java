@@ -136,6 +136,7 @@ public class AjaxOrgController {
 					res.setDetail("Cannot find orgnization");
 					break;
 				}
+				org.setParentOrg(orgServ.queryOrgById(org.getcId()));
 			} catch (Exception e) {
 				res.setCode(500);
 				res.setDetail("Unexpect error");
