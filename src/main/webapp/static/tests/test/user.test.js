@@ -38,7 +38,22 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('login.do', function() {
+    it('login.do - Empty data', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, path, 'login.do'),
+            dataType : 'json',
+            data : {
+                loginName : '',
+                mixedPWD : ''
+            }
+        });
+
+        expect(xhr.status).to.be.equal(400);
+    });
+
+    it('login.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',

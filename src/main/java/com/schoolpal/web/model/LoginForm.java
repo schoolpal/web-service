@@ -1,8 +1,13 @@
 package com.schoolpal.web.model;
 
+import javax.validation.constraints.NotEmpty;
+
 public class LoginForm {
-	
+
+	@NotEmpty
 	private String loginName;
+
+	@NotEmpty
 	private String mixedPWD;
 	
 	public String getLoginName() {
