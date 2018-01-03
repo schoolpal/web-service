@@ -1,21 +1,37 @@
 package com.schoolpal.web.controller.ajax.advice;
 
+import com.schoolpal.web.controller.ajax.exception.AjaxException;
 import com.schoolpal.web.controller.ajax.model.AjaxResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@ControllerAdvice(basePackages = {"com.schoolpal.web.controller.ajax.controller"})
-public class DefaultControllerAdvice {
+@RestControllerAdvice(basePackages = {"com.schoolpal.web.controller.ajax.controller"})
+public class DefaultControllerAdvice implements ResponseBodyAdvice {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Override
+    public boolean supports(MethodParameter methodParameter, Class aClass) {
+        return true;
+    }
+
+    @Override
+    public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        logger.debug("###MyResponseBodyAdvice - beforeBodyWrite()");
+        AjaxResponse res = new AjaxResponse();
+        res.setData(o);
+        return res;
+    }
 
 /*
     @ModelAttribute
@@ -49,6 +65,15 @@ public class DefaultControllerAdvice {
         return response;
     }
 
+    @ExceptionHandler(AjaxException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Object handleAjaxException(AjaxException e){
+        logger.debug("###MyControllerAdvice - handleException()");
+        AjaxResponse response = new AjaxResponse(e.getCode(), e.getMessage());
+        return response;
+    }
+
     //For
     // 1. Wrongly submitting serialized (json/xml) data
     // 2. Submitting invalid form data
@@ -71,4 +96,5 @@ public class DefaultControllerAdvice {
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getBindingResult().getAllErrors());
         return response;
     }
+
 }
