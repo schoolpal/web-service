@@ -7,4 +7,15 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
+    <bean id="ajaxControllerAdvice" class="com.schoolpal.aop.AjaxControllerAdvice"/>
+    <aop:config>
+        <aop:pointcut id="ajaxControllerPointcut"
+                      expression="execution(* com.schoolpal.web.ajax.controller..*(..))"></aop:pointcut>
+        <aop:aspect id="ajaxControllerAspect" ref="ajaxControllerAdvice">
+            <!--<aop:before method="before" pointcut-ref="ajaxControllerPointcut"></aop:before>-->
+            <!--<aop:after method="after" pointcut-ref="ajaxControllerPointcut"></aop:after>-->
+            <aop:around method="around" pointcut-ref="ajaxControllerPointcut"></aop:around>
+            <!--<aop:after-returning method="afterReturning" pointcut-ref="ajaxControllerPointcut" returning="retVal"></aop:after-returning>-->
+        </aop:aspect>
+    </aop:config>
 </beans>

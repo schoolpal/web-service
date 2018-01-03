@@ -1,7 +1,7 @@
 package com.schoolpal.web.controller;
 
 import com.google.gson.Gson;
-import com.schoolpal.web.controller.ajax.model.AjaxResponse;
+import com.schoolpal.web.ajax.model.AjaxResponse;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LogService;
 import com.schoolpal.service.OrgService;
