@@ -1,7 +1,10 @@
 package com.schoolpal.web.model;
 
+import com.schoolpal.validation.annotation.Passwords;
+
 import javax.validation.constraints.NotEmpty;
 
+@Passwords
 public class PasswordsForm {
 
     @NotEmpty

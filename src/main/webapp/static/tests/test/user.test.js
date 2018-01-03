@@ -30,7 +30,6 @@ describe('/ajax/user/ APIs', function() {
 
 		expect(xhr.status).to.be.equal(200);
 		var jsonData = xhr.responseJSON;
-		resDump('salt.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data.length).to.be.equal(4);
@@ -38,7 +37,7 @@ describe('/ajax/user/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-    it('login.do - Empty data', function() {
+    it('login.do - Empty values', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
@@ -50,7 +49,26 @@ describe('/ajax/user/ APIs', function() {
             }
         });
 
-        expect(xhr.status).to.be.equal(400);
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(400);
+    });
+
+    it('login.do - Wrong credential', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, path, 'login.do'),
+            dataType : 'json',
+            data : {
+                loginName : 'aaa',
+                mixedPWD : 'bbb'
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(401);
     });
 
     it('login.do', function() {
@@ -67,7 +85,6 @@ describe('/ajax/user/ APIs', function() {
 
 		expect(xhr.status).to.be.equal(200);
 		jsonData = xhr.responseJSON;
-		resDump('login.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.be.empty;
 		expect(jsonData.detail).to.be.equal('Ok');
@@ -83,13 +100,46 @@ describe('/ajax/user/ APIs', function() {
 
 		expect(xhr.status).to.be.equal(200);
 		jsonData = xhr.responseJSON;
-		resDump('status.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.be.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('changePassword.do', function() {
+    it('changePassword.do - empty values', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, path, 'changePassword.do'),
+            dataType : 'json',
+            data : {
+                oriPass: '',
+                newPass: '',
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(400);
+    });
+
+    it('changePassword.do - same values', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, path, 'changePassword.do'),
+            dataType : 'json',
+            data : {
+                oriPass: MD5(MD5(pass)),
+                newPass: MD5(MD5(pass)),
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(400);
+    });
+
+    it('changePassword.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',

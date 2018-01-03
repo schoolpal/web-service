@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 import com.schoolpal.web.model.RoleForm;
 
 @Service

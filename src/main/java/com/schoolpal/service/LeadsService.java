@@ -20,7 +20,7 @@ import com.schoolpal.db.model.TLeadsSource;
 import com.schoolpal.db.model.TLeadsStage;
 import com.schoolpal.db.model.TLeadsStatus;
 import com.schoolpal.db.model.TLeadsStudent;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 
 @Service
 public class LeadsService {

@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.Gson;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
-import com.schoolpal.web.consts.*;
-import com.schoolpal.web.util.MD5;
+import com.schoolpal.consts.*;
+import com.schoolpal.util.MD5;
 
 public class AuthorizingService extends AuthorizingRealm {
 

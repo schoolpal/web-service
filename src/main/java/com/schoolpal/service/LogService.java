@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.schoolpal.db.LogDB;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 
 @Service
 public class LogService {

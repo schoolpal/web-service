@@ -11,7 +11,7 @@ import com.schoolpal.db.inf.TContactMapper;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TContactApproach;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 
 @Service
 public class ContactService {

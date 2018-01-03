@@ -1,13 +1,13 @@
 package com.schoolpal.web.controller;
 
 import com.google.gson.Gson;
-import com.schoolpal.ajax.model.AjaxResponse;
+import com.schoolpal.web.controller.ajax.model.AjaxResponse;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LogService;
 import com.schoolpal.service.OrgService;
 import com.schoolpal.service.UserService;
-import com.schoolpal.web.consts.Const;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.Const;
+import com.schoolpal.consts.LogLevel;
 import com.schoolpal.web.model.LoginForm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;

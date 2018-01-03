@@ -1,17 +1,12 @@
 package com.schoolpal.service;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TParStuMapper;
-import com.schoolpal.db.inf.TParentMapper;
 import com.schoolpal.db.model.TParStu;
 import com.schoolpal.db.model.TParStuKey;
-import com.schoolpal.db.model.TParent;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 
 @Service
 public class RelationService {

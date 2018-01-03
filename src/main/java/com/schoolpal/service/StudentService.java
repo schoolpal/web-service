@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TStudentMapper;
 import com.schoolpal.db.model.TStudent;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 
 @Service
 public class StudentService {

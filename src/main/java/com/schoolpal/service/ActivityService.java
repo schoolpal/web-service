@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.schoolpal.db.inf.TActivityMapper;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.model.TActivity;
-import com.schoolpal.web.consts.LogLevel;
+import com.schoolpal.consts.LogLevel;
 
 @Service
 public class ActivityService {

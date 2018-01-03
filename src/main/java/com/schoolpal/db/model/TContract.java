@@ -3,7 +3,7 @@ package com.schoolpal.db.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.schoolpal.web.consts.Gender;
+import com.schoolpal.consts.Gender;
 
 public class TContract {
     private String id;
