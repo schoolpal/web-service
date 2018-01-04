@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice(basePackages = {"com.schoolpal.web.ajax.controller"})
 public class AjaxExceptionHandleAdvice {
-//    public class AjaxControllerAdvice implements ResponseBodyAdvice {
+//    public class AjaxControllerResponseBodyAdvice implements ResponseBodyAdvice {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

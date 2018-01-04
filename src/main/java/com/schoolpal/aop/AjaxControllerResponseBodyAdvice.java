@@ -6,20 +6,20 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AjaxControllerAdvice {
+public class AjaxControllerResponseBodyAdvice {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     public void before(JoinPoint joinPoint){
-        logger.debug("###AjaxControllerAdvice - before()");
+        logger.debug("###AjaxControllerResponseBodyAdvice - before()");
     }
 
     public void after(JoinPoint joinPoint){
-        logger.debug("###AjaxControllerAdvice - after()");
+        logger.debug("###AjaxControllerResponseBodyAdvice - after()");
     }
 
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        logger.debug("###AjaxControllerAdvice - around() - before");
+        logger.debug("###AjaxControllerResponseBodyAdvice - around() - before");
 
         Object retVal = proceedingJoinPoint.proceed();
 
@@ -29,11 +29,15 @@ public class AjaxControllerAdvice {
             retVal = res;
         }
 
-        logger.debug("###AjaxControllerAdvice - around() - after");
+        logger.debug("###AjaxControllerResponseBodyAdvice - around() - after");
         return retVal;
     }
 
     public void afterReturning(JoinPoint joinPoint, Object retVal){
-        logger.debug("###AjaxControllerAdvice - afterReturning()");
+        logger.debug("###AjaxControllerResponseBodyAdvice - afterReturning()");
+    }
+
+    public void afterThrowing(JoinPoint joinPoint, Throwable e){
+        logger.debug("###AjaxControllerResponseBodyAdvice - afterThrowing()");
     }
 }

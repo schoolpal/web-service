@@ -7,15 +7,28 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-    <bean id="ajaxControllerAdvice" class="com.schoolpal.aop.AjaxControllerAdvice"/>
+    <bean id="ajaxControllerResponseBodyAdvice" class="com.schoolpal.aop.AjaxControllerResponseBodyAdvice"/>
     <aop:config>
-        <aop:pointcut id="ajaxControllerPointcut"
-                      expression="execution(* com.schoolpal.web.ajax.controller..*(..))"></aop:pointcut>
-        <aop:aspect id="ajaxControllerAspect" ref="ajaxControllerAdvice">
-            <!--<aop:before method="before" pointcut-ref="ajaxControllerPointcut"></aop:before>-->
-            <!--<aop:after method="after" pointcut-ref="ajaxControllerPointcut"></aop:after>-->
-            <aop:around method="around" pointcut-ref="ajaxControllerPointcut"></aop:around>
-            <!--<aop:after-returning method="afterReturning" pointcut-ref="ajaxControllerPointcut" returning="retVal"></aop:after-returning>-->
+        <aop:pointcut id="ajaxControllerResponseBodyPointcut" expression="execution(* com.schoolpal.web.ajax.controller..*(..))"></aop:pointcut>
+        <aop:aspect id="ajaxControllerResponseBodyAspect" ref="ajaxControllerResponseBodyAdvice">
+            <!--<aop:before method="before" pointcut-ref="ajaxControllerResponseBodyPointcut"></aop:before>-->
+            <!--<aop:after method="after" pointcut-ref="ajaxControllerResponseBodyPointcut"></aop:after>-->
+            <aop:around method="around" pointcut-ref="ajaxControllerResponseBodyPointcut"></aop:around>
+            <!--<aop:after-returning method="afterReturning" pointcut-ref="ajaxControllerResponseBodyPointcut" returning="retVal"></aop:after-returning>-->
+            <!--<aop:after-throwing method="afterThrowing" pointcut-ref="ajaxControllerResponseBodyPointcut" throwing="e"></aop:after-throwing>-->
         </aop:aspect>
     </aop:config>
+
+    <bean id="ajaxControllerLogAdvice" class="com.schoolpal.aop.AjaxControllerLogAdvice"/>
+    <aop:config>
+        <aop:pointcut id="ajaxControllerLogPointcut" expression="execution(* com.schoolpal.web.ajax.controller..*(..)) and @annotation(com.schoolpal.aop.AjaxControllerLog)"></aop:pointcut>
+        <aop:aspect id="ajaxControllerResponseBodyAspect" ref="ajaxControllerLogAdvice">
+            <!--<aop:before method="before" pointcut-ref="ajaxControllerLogPointcut"></aop:before>-->
+            <!--<aop:after method="after" pointcut-ref="ajaxControllerLogPointcut"></aop:after>-->
+            <!--<aop:around method="around" pointcut-ref="ajaxControllerLogPointcut"></aop:around>-->
+            <aop:after-returning method="afterReturning" pointcut-ref="ajaxControllerLogPointcut" returning="retVal"></aop:after-returning>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="ajaxControllerLogPointcut" throwing="e"></aop:after-throwing>
+        </aop:aspect>
+    </aop:config>
+
 </beans>

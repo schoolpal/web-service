@@ -5,6 +5,7 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import com.schoolpal.web.model.PasswordsForm;
 import org.apache.shiro.SecurityUtils;
@@ -29,8 +30,7 @@ public class AjaxUserController {
     @Autowired
     private OrgService orgServ;
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
+    @AjaxControllerLog
     @RequestMapping(value = "salt.do", method = RequestMethod.POST, produces = "application/json")
     public Object salt() {
 
