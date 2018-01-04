@@ -2,6 +2,7 @@ package com.schoolpal.web.ajax.advice;
 
 import com.schoolpal.web.ajax.exception.AjaxException;
 import com.schoolpal.web.ajax.model.AjaxResponse;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @RestControllerAdvice(basePackages = {"com.schoolpal.web.ajax.controller"})
@@ -65,6 +67,15 @@ public class AjaxExceptionHandleAdvice {
     public Object handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e){
         logger.debug("###MyControllerAdvice - handleHttpMediaTypeNotSupportedException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        return response;
+    }
+
+    @ExceptionHandler({UnauthorizedException.class})
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Object handleUnauthorizedException(NativeWebRequest request, UnauthorizedException e) {
+        logger.debug("###MyControllerAdvice - handleUnauthorizedException()");
+        AjaxResponse response = new AjaxResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         return response;
     }
 

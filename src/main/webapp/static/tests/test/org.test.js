@@ -104,13 +104,29 @@ describe('/ajax/org/ APIs', function() {
 
 		expect(xhr.status).to.be.equal(200);
 		jsonData = xhr.responseJSON;
-		resDump('list.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('add.do', function() {
+    it('add.do - empty values', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, sys_org_path, 'add.do'),
+            dataType : 'json',
+            data : {
+                code: '',
+                parentId: ''
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(400);
+    });
+
+    it('add.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
@@ -165,6 +181,24 @@ describe('/ajax/org/ APIs', function() {
 		expect(jsonData.data.cCountyCode).to.be.equal("000000");
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
+
+    it('mod.do - empty values', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, sys_org_path, 'mod.do'),
+            dataType : 'json',
+            data : {
+                id: '',
+                code: '',
+                parentId: ''
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(400);
+    });
 
 	it('mod.do', function() {
 		xhr = $.ajax({

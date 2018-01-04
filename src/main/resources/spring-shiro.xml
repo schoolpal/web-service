@@ -1,55 +1,58 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
         ">
 
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/index.html" />
-		<property name="unauthorizedUrl" value="/index.html" />
- 		<property name="filters">
-			<util:map>
-                <entry key="ajaxc">  
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/index.html"/>
+        <property name="unauthorizedUrl" value="/index.html"/>
+        <property name="filters">
+            <util:map>
+                <entry key="ajaxc">
                     <bean class="com.schoolpal.web.shiro.AuthenticationFilter"></bean>
                 </entry>
-			</util:map>
-		</property>
- 		<property name="filterChainDefinitions">
-			<value>
+            </util:map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
                 /ajax/user/salt.do = anon
                 /ajax/user/login.do = anon
                 /ajax/user/logout.do = anon
-				/ajax/** = ajaxc
-				/** = anon
-			</value>
-		</property>
-	</bean>
-	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm" ref="realmService" />
-		<property name="sessionManager" ref="sessionManager" />
-		<property name="cacheManager" ref="cacheManager" />
-	</bean>
-	<bean id="realmService" class="com.schoolpal.web.shiro.AuthorizingService" />
-	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-		<property name="globalSessionTimeout" value="1800000" />
-		<property name="sessionDAO" ref="redisSessionDAO" />
-	</bean>
-	<bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
-		<property name="redisManager" ref="redisManager" />
-	</bean>
-	<bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
-		<property name="redisManager" ref="redisManager" />
-	</bean>
-	<bean id="redisManager" class="org.crazycake.shiro.RedisManager">
-		<property name="host" value="${redis.host}" />
-		<property name="port" value="${redis.port}" />
-		<property name="password" value="${redis.pass}" />
-		<property name="expire" value="1800" />
-	</bean>
+                /ajax/** = ajaxc
+                /** = anon
+            </value>
+        </property>
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="realmService"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+    <bean id="realmService" class="com.schoolpal.web.shiro.AuthorizingService"/>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="globalSessionTimeout" value="1800000"/>
+        <property name="sessionDAO" ref="redisSessionDAO"/>
+    </bean>
+    <bean id="cacheManager" class="org.crazycake.shiro.RedisCacheManager">
+        <property name="redisManager" ref="redisManager"/>
+    </bean>
+    <bean id="redisSessionDAO" class="org.crazycake.shiro.RedisSessionDAO">
+        <property name="redisManager" ref="redisManager"/>
+    </bean>
+    <bean id="redisManager" class="org.crazycake.shiro.RedisManager">
+        <property name="host" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="password" value="${redis.pass}"/>
+        <property name="expire" value="1800"/>
+    </bean>
 
 </beans>

@@ -1,10 +1,18 @@
 package com.schoolpal.web.model;
 
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+
+import javax.validation.constraints.NotEmpty;
+
 public class OrgForm {
-	
+
+	@NotEmpty(groups = {AjaxControllerMod.class})
 	private String id;
 	private String name;
+	@NotEmpty(groups = {AjaxControllerAdd.class, AjaxControllerMod.class})
 	private String code;
+	@NotEmpty(groups = {AjaxControllerAdd.class, AjaxControllerMod.class})
 	private String parentId;
 	private String parentName;
 	private String state;
