@@ -20,8 +20,6 @@ import com.schoolpal.web.model.*;
 @RequestMapping("/ajax/sys/")
 public class AjaxSystemController {
 
-	// @Autowired
-	// private LogService logServ;
 	@Autowired
 	private UserService userServ;
 	@Autowired

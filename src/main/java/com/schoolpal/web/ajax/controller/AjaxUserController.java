@@ -45,6 +45,7 @@ public class AjaxUserController {
         return salt;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     public Object login(@Valid LoginForm login) throws AjaxException {
 
@@ -65,6 +66,7 @@ public class AjaxUserController {
         return null;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     public Object logout() throws AjaxException {
 
@@ -81,8 +83,9 @@ public class AjaxUserController {
         return null;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "changePassword.do", method = RequestMethod.POST)
-    public Object changePassword(@Valid PasswordsForm form, HttpServletRequest request) throws AjaxException {
+    public Object changePassword(@Valid PasswordsForm form) throws AjaxException {
         boolean result = false;
 
         Subject currentUser = SecurityUtils.getSubject();
@@ -95,17 +98,20 @@ public class AjaxUserController {
         return result;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "status.do", method = RequestMethod.POST)
     public Object status() {
         return null;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "profile.do", method = RequestMethod.POST)
     public Object profile() {
         TUser user = userServ.getCachedUser();
         return user;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
     public Object listOrgs() {
         TUser user = userServ.getCachedUser();
@@ -114,6 +120,7 @@ public class AjaxUserController {
         return orgList;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
     public Object listRoles() {
         TUser user = userServ.getCachedUser();
@@ -122,6 +129,7 @@ public class AjaxUserController {
         return roleList;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "listFuncs.do", method = RequestMethod.POST)
     public Object listFuncs() {
 
@@ -134,6 +142,7 @@ public class AjaxUserController {
         return funcList;
     }
 
+    @AjaxControllerLog
     @RequestMapping(value = "listFuncsByRole.do", method = RequestMethod.POST)
     public Object listFuncsByRole(String id) throws AjaxException {
 
