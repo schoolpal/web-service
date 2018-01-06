@@ -1,13 +1,13 @@
 package com.schoolpal.web.controller;
 
 import com.google.gson.Gson;
-import com.schoolpal.web.ajax.model.AjaxResponse;
+import com.schoolpal.consts.Const;
+import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.LogService;
 import com.schoolpal.service.OrgService;
 import com.schoolpal.service.UserService;
-import com.schoolpal.consts.Const;
-import com.schoolpal.consts.LogLevel;
+import com.schoolpal.web.ajax.model.AjaxResponse;
 import com.schoolpal.web.model.LoginForm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -93,9 +93,9 @@ public class AuthenticationController {
 
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser && null != currentUser.getPrincipal()) {
-			String username = userServ.getCachedUser().getcLoginname();
+			String username = userServ.getCachedUser().getcLoginName();
 			Session session = currentUser.getSession();
-			logServ.log(userServ.getCachedUser().getcLoginname(), LogLevel.TRACE, "AjaxUserController.logout()", "",
+			logServ.log(userServ.getCachedUser().getcLoginName(), LogLevel.TRACE, "AjaxUserController.logout()", "",
 					"SESSION_KEY_CURRENT_USER: " + gson.toJson(session.getAttribute(Const.SESSION_KEY_CURRENT_USER)));
 
 			currentUser.logout();

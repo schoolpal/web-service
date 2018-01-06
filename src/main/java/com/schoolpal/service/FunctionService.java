@@ -1,12 +1,11 @@
 package com.schoolpal.service;
 
-import java.util.List;
-
+import com.schoolpal.db.inf.TFunctionMapper;
+import com.schoolpal.db.model.TFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.inf.TFunctionMapper;
-import com.schoolpal.db.model.TFunction;
+import java.util.List;
 
 @Service
 public class FunctionService {

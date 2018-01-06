@@ -1,8 +1,8 @@
 package com.schoolpal.db.model;
 
-import java.util.Date;
-
 import com.schoolpal.consts.Gender;
+
+import java.util.Date;
 
 public class TParent {
     private String id;

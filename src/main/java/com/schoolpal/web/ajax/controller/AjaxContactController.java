@@ -1,9 +1,14 @@
 package com.schoolpal.web.ajax.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.gson.Gson;
+import com.schoolpal.db.model.TContact;
+import com.schoolpal.db.model.TLeads;
+import com.schoolpal.db.model.TUser;
+import com.schoolpal.service.ContactService;
+import com.schoolpal.service.LeadsService;
+import com.schoolpal.service.UserService;
+import com.schoolpal.web.ajax.model.AjaxResponse;
+import com.schoolpal.web.helper.AuthorizationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -11,15 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-import com.schoolpal.web.ajax.model.AjaxResponse;
-import com.schoolpal.web.helper.AuthorizationHelper;
-import com.schoolpal.db.model.TContact;
-import com.schoolpal.db.model.TLeads;
-import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.ContactService;
-import com.schoolpal.service.LeadsService;
-import com.schoolpal.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/ajax/contact")

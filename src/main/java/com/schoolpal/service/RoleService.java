@@ -1,14 +1,16 @@
 package com.schoolpal.service;
 
-import java.util.List;
-
+import com.schoolpal.consts.LogLevel;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.TRank;
+import com.schoolpal.db.model.TRole;
+import com.schoolpal.db.model.TRoleFunction;
+import com.schoolpal.db.model.TRoleFunctionExclude;
+import com.schoolpal.web.model.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.inf.*;
-import com.schoolpal.db.model.*;
-import com.schoolpal.consts.LogLevel;
-import com.schoolpal.web.model.RoleForm;
+import java.util.List;
 
 @Service
 public class RoleService {

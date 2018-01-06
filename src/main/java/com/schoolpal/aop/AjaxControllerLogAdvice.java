@@ -2,7 +2,6 @@ package com.schoolpal.aop;
 
 import com.google.gson.Gson;
 import com.schoolpal.model.AjaxControllerLogRecord;
-import com.schoolpal.web.ajax.model.AjaxResponse;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;

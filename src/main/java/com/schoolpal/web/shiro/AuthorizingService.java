@@ -1,21 +1,22 @@
 package com.schoolpal.web.shiro;
 
-import java.security.NoSuchAlgorithmException;
-
+import com.google.gson.Gson;
+import com.schoolpal.consts.Const;
+import com.schoolpal.db.inf.TUserMapper;
+import com.schoolpal.db.model.TRole;
+import com.schoolpal.db.model.TUser;
+import com.schoolpal.util.MD5;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.gson.Gson;
-import com.schoolpal.db.inf.*;
-import com.schoolpal.db.model.*;
-import com.schoolpal.consts.*;
-import com.schoolpal.util.MD5;
+import java.security.NoSuchAlgorithmException;
 
 public class AuthorizingService extends AuthorizingRealm {
 

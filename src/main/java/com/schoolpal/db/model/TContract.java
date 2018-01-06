@@ -1,9 +1,9 @@
 package com.schoolpal.db.model;
 
+import com.schoolpal.consts.Gender;
+
 import java.math.BigDecimal;
 import java.util.Date;
-
-import com.schoolpal.consts.Gender;
 
 public class TContract {
     private String id;

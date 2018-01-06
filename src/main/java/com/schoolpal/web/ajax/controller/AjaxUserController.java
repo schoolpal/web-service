@@ -1,25 +1,28 @@
 package com.schoolpal.web.ajax.controller;
 
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import com.schoolpal.aop.AjaxControllerLog;
+import com.schoolpal.consts.Const;
+import com.schoolpal.db.model.TFunction;
+import com.schoolpal.db.model.TOrg;
+import com.schoolpal.db.model.TRole;
+import com.schoolpal.db.model.TUser;
+import com.schoolpal.service.OrgService;
+import com.schoolpal.service.UserService;
 import com.schoolpal.web.ajax.exception.AjaxException;
+import com.schoolpal.web.model.LoginForm;
 import com.schoolpal.web.model.PasswordsForm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.schoolpal.db.model.*;
-import com.schoolpal.service.*;
-import com.schoolpal.consts.*;
-import com.schoolpal.web.model.LoginForm;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @RestController()
 @RequestMapping("/ajax/user")
@@ -72,7 +75,7 @@ public class AjaxUserController {
 
         Subject currentUser = SecurityUtils.getSubject();
         if (null != currentUser && null != currentUser.getPrincipal()) {
-            String username = userServ.getCachedUser().getcLoginname();
+            String username = userServ.getCachedUser().getcLoginName();
 
             currentUser.logout();
             userServ.clearUserCache(username);
@@ -90,7 +93,7 @@ public class AjaxUserController {
 
         Subject currentUser = SecurityUtils.getSubject();
         TUser user = userServ.getCachedUser(currentUser);
-        if (!form.getOriPass().equals(userServ.queryLoginPassByName(user.getcLoginname()))) {
+        if (!form.getOriPass().equals(userServ.queryLoginPassByName(user.getcLoginName()))) {
             throw new AjaxException(405, "Wrong original password");
         }
         result = userServ.changeLoginPassById(user.getcId(), form.getOriPass(), form.getNewPass());

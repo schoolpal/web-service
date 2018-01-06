@@ -1,8 +1,8 @@
 package com.schoolpal.db.inf;
 
-import java.util.List;
-
 import com.schoolpal.db.model.TContract;
+
+import java.util.List;
 
 public interface TContractMapper {
     int deleteOneById(String id);

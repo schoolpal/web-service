@@ -1,26 +1,14 @@
 package com.schoolpal.service;
 
-import java.util.Date;
-import java.util.List;
-
+import com.schoolpal.consts.LogLevel;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.schoolpal.db.inf.TIndexMapper;
-import com.schoolpal.db.inf.TLeadsMapper;
-import com.schoolpal.db.inf.TLeadsParentMapper;
-import com.schoolpal.db.inf.TLeadsSourceMapper;
-import com.schoolpal.db.inf.TLeadsStageMapper;
-import com.schoolpal.db.inf.TLeadsStatusMapper;
-import com.schoolpal.db.inf.TLeadsStudentMapper;
-import com.schoolpal.db.model.TLeads;
-import com.schoolpal.db.model.TLeadsParent;
-import com.schoolpal.db.model.TLeadsSource;
-import com.schoolpal.db.model.TLeadsStage;
-import com.schoolpal.db.model.TLeadsStatus;
-import com.schoolpal.db.model.TLeadsStudent;
-import com.schoolpal.consts.LogLevel;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class LeadsService {

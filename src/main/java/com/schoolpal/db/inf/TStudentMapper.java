@@ -1,8 +1,8 @@
 package com.schoolpal.db.inf;
 
-import java.util.List;
-
 import com.schoolpal.db.model.TStudent;
+
+import java.util.List;
 
 public interface TStudentMapper {
     int deleteOneById(String id);

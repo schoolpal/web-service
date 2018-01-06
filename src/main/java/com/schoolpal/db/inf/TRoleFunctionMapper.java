@@ -1,9 +1,9 @@
 package com.schoolpal.db.inf;
 
-import java.util.List;
-
 import com.schoolpal.db.model.TFunction;
 import com.schoolpal.db.model.TRoleFunction;
+
+import java.util.List;
 
 public interface TRoleFunctionMapper {
 	

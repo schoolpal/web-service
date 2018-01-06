@@ -3,10 +3,10 @@
 <mapper namespace="com.schoolpal.db.inf.TUserMapper">
 	<resultMap id="UserResultMap" type="com.schoolpal.db.model.TUser">
 		<id column="c_id" jdbcType="CHAR" property="cId" />
-		<result column="c_loginname" jdbcType="VARCHAR" property="cLoginname" />
-		<result column="c_loginpass" jdbcType="VARCHAR" property="cLoginpass" />
-		<result column="c_realname" jdbcType="VARCHAR" property="cRealname" />
-		<result column="c_nickname" jdbcType="VARCHAR" property="cNickname" />
+		<result column="c_loginname" jdbcType="VARCHAR" property="cLoginName" />
+		<result column="c_loginpass" jdbcType="VARCHAR" property="cLoginPass" />
+		<result column="c_realname" jdbcType="VARCHAR" property="cRealName" />
+		<result column="c_nickname" jdbcType="VARCHAR" property="cNickName" />
 		<result column="c_phone" jdbcType="VARCHAR" property="cPhone" />
 		<result column="c_email" jdbcType="VARCHAR" property="cEmail" />
 		<result column="c_qq" jdbcType="VARCHAR" property="cQq" />
@@ -59,16 +59,16 @@
 			<if test="cId != null">
 				c_id,
 			</if>
-			<if test="cLoginname != null">
+			<if test="cLoginName != null">
 				c_loginname,
 			</if>
-			<if test="cLoginpass != null">
+			<if test="cLoginPass != null">
 				c_loginpass,
 			</if>
-			<if test="cRealname != null">
+			<if test="cRealName != null">
 				c_realname,
 			</if>
-			<if test="cNickname != null">
+			<if test="cNickName != null">
 				c_nickname,
 			</if>
 			<if test="cPhone != null">
@@ -106,17 +106,17 @@
 			<if test="cId != null">
 				#{cId,jdbcType=CHAR},
 			</if>
-			<if test="cLoginname != null">
-				#{cLoginname,jdbcType=VARCHAR},
+			<if test="cLoginName != null">
+				#{cLoginName,jdbcType=VARCHAR},
 			</if>
-			<if test="cLoginpass != null">
-				#{cLoginpass,jdbcType=VARCHAR},
+			<if test="cLoginPass != null">
+				#{cLoginPass,jdbcType=VARCHAR},
 			</if>
-			<if test="cRealname != null">
-				#{cRealname,jdbcType=VARCHAR},
+			<if test="cRealName != null">
+				#{cRealName,jdbcType=VARCHAR},
 			</if>
-			<if test="cNickname != null">
-				#{cNickname,jdbcType=VARCHAR},
+			<if test="cNickName != null">
+				#{cNickName,jdbcType=VARCHAR},
 			</if>
 			<if test="cPhone != null">
 				#{cPhone,jdbcType=VARCHAR},
@@ -153,17 +153,17 @@
 	<update id="updateOneById" parameterType="com.schoolpal.db.model.TUser">
 		update t_user
 		<set>
-			<if test="cLoginname != null">
-				c_loginname = #{cLoginname,jdbcType=VARCHAR},
+			<if test="cLoginName != null">
+				c_loginname = #{cLoginName,jdbcType=VARCHAR},
 			</if>
-			<if test="cLoginpass != null">
-				c_loginpass = #{cLoginpass,jdbcType=VARCHAR},
+			<if test="cLoginPass != null">
+				c_loginpass = #{cLoginPass,jdbcType=VARCHAR},
 			</if>
-			<if test="cRealname != null">
-				c_realname = #{cRealname,jdbcType=VARCHAR},
+			<if test="cRealName != null">
+				c_realname = #{cRealName,jdbcType=VARCHAR},
 			</if>
-			<if test="cNickname != null">
-				c_nickname = #{cNickname,jdbcType=VARCHAR},
+			<if test="cNickName != null">
+				c_nickname = #{cNickName,jdbcType=VARCHAR},
 			</if>
 			<if test="cPhone != null">
 				c_phone = #{cPhone,jdbcType=VARCHAR},

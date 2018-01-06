@@ -1,12 +1,11 @@
 package com.schoolpal.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.TParStuMapper;
 import com.schoolpal.db.model.TParStu;
 import com.schoolpal.db.model.TParStuKey;
-import com.schoolpal.consts.LogLevel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RelationService {

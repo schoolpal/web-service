@@ -1,9 +1,10 @@
 package com.schoolpal.service;
 
-import java.util.Date;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-
+import com.google.gson.Gson;
+import com.schoolpal.consts.Const;
+import com.schoolpal.consts.LogLevel;
+import com.schoolpal.db.inf.*;
+import com.schoolpal.db.model.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -11,10 +12,9 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.Gson;
-import com.schoolpal.db.inf.*;
-import com.schoolpal.db.model.*;
-import com.schoolpal.consts.*;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -113,7 +113,7 @@ public class UserService {
 		return user;
 	}
 
-	public boolean checkLoginnameExists(String loginname) {
+	public boolean checkLoginNameExists(String loginname) {
 		return userDao.ifExistsByName(loginname);
 	}
 

@@ -1,14 +1,15 @@
 package com.schoolpal.web.ajax.controller;
 
+import com.google.gson.Gson;
+import com.schoolpal.consts.ParentRelation;
+import com.schoolpal.web.ajax.model.AjaxResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import com.google.gson.Gson;
-import com.schoolpal.web.ajax.model.AjaxResponse;
-import com.schoolpal.consts.ParentRelation;
 
 @Controller
 @RequestMapping("/ajax/mkt/relation")

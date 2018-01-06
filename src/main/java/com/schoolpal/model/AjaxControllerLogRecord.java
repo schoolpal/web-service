@@ -3,7 +3,6 @@ package com.schoolpal.model;
 import com.google.gson.Gson;
 import com.schoolpal.consts.Const;
 import com.schoolpal.db.model.TUser;
-import com.schoolpal.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -131,6 +130,6 @@ public class AjaxControllerLogRecord {
         Gson gson = new Gson();
         TUser user = gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
         this.setUserId(user.getcId());
-        this.setUserName(user.getcLoginname());
+        this.setUserName(user.getcLoginName());
     }
 }

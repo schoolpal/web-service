@@ -1,11 +1,10 @@
 package com.schoolpal.web.helper;
 
+import com.schoolpal.service.FunctionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.schoolpal.service.FunctionService;
 
 @Component
 public class AuthorizationHelper {

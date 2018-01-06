@@ -5,6 +5,6 @@
     <title>Status</title>
 </head>
 <body>
-Welcome ${profile.cLoginname}
+Welcome ${profile.cLoginName}
 </body>
 </html>

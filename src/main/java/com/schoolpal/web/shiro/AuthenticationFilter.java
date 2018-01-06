@@ -1,9 +1,10 @@
 package com.schoolpal.web.shiro;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter extends FormAuthenticationFilter {
 

@@ -1,8 +1,8 @@
 package com.schoolpal.db.inf;
 
-import java.util.List;
-
 import com.schoolpal.db.model.TLeadsStatus;
+
+import java.util.List;
 
 public interface TLeadsStatusMapper {
     List<TLeadsStatus> selectManyByTypeId(Integer typeId);

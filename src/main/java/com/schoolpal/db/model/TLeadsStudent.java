@@ -1,9 +1,9 @@
 package com.schoolpal.db.model;
 
+import com.schoolpal.consts.Gender;
+
 import java.util.Calendar;
 import java.util.Date;
-
-import com.schoolpal.consts.Gender;
 
 public class TLeadsStudent {
 

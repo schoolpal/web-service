@@ -1,15 +1,14 @@
 package com.schoolpal.service;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TParentMapper;
 import com.schoolpal.db.model.TParent;
-import com.schoolpal.consts.LogLevel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ParentService {

@@ -1,12 +1,20 @@
 package com.schoolpal.web.model;
 
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+
+import javax.validation.constraints.NotEmpty;
+
 public class RoleForm {
-	
+
+	@NotEmpty(groups = {AjaxControllerMod.class})
 	private String id;
+	@NotEmpty(groups = {AjaxControllerAdd.class, AjaxControllerMod.class})
 	private String orgId;
 	private String orgHierarchy;
 	private String strFuncIds;
 	private int rankId;
+	@NotEmpty(groups = {AjaxControllerAdd.class})
 	private String name;
 	private String desc;
 	

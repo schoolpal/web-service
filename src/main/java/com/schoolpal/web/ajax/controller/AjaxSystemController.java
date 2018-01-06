@@ -1,27 +1,33 @@
 package com.schoolpal.web.ajax.controller;
 
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
 import com.schoolpal.aop.AjaxControllerLog;
+import com.schoolpal.db.model.TOrg;
+import com.schoolpal.db.model.TRole;
+import com.schoolpal.db.model.TUser;
+import com.schoolpal.service.FunctionService;
+import com.schoolpal.service.OrgService;
+import com.schoolpal.service.RoleService;
+import com.schoolpal.service.UserService;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
-import com.schoolpal.web.helper.AuthorizationHelper;
-import com.schoolpal.web.ajax.model.AjaxResponse;
+import com.schoolpal.web.model.OrgForm;
+import com.schoolpal.web.model.RoleForm;
+import com.schoolpal.web.model.UserForm;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.schoolpal.db.model.*;
-import com.schoolpal.service.*;
-import com.schoolpal.web.model.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/sys/")
@@ -68,7 +74,7 @@ public class AjaxSystemController {
             throw new AjaxException(404, "No permission to add orgnization under parent orgnization");
         }
 
-        String id = orgServ.addOrg(form, parentOrg.getcRootId(), user.getcLoginname());
+        String id = orgServ.addOrg(form, parentOrg.getcRootId(), user.getcLoginName());
         if (id == null) {
             throw new AjaxException(500, "Failed to add orgnization");
         }
@@ -111,676 +117,395 @@ public class AjaxSystemController {
         return true;
     }
 
+    @AjaxControllerLog
+    @RequiresPermissions("7-1-3")
     @RequestMapping(value = "org/del.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse delOrg(String id, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
+    public Object delOrg(@NotEmpty String id) throws AjaxException {
 
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        TUser user = userServ.getCachedUser();
 
-            TUser user = userServ.getCachedUser();
+        if (id == user.getcOrgId()) {
+            throw new AjaxException(402, "Cannot delete self-organization");
+        }
 
-            if (id == user.getcOrgId()) {
-                res.setCode(402);
-                res.setDetail("No permission to del self-orgnization");
-                break;
-            }
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(403, "Cannot delete parent-organization");
+        }
 
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
-                res.setCode(403);
-                res.setDetail("No permission to del parent orgnization");
-                break;
-            }
+        if (!orgServ.delOrgById(id)) {
+            throw new AjaxException(500, "Failed to delete organization");
+        }
 
-            if (!orgServ.delOrgById(id)) {
-                res.setCode(500);
-                res.setDetail("Failed to del orgnization");
-                break;
-            }
-
-        } while (false);
-
-        return res;
+        return true;
     }
 
+    @AjaxControllerLog
+    @RequiresPermissions("7-2")
     @RequestMapping(value = "role/list.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse listRoles(String id) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            TUser user = userServ.getCachedUser();
+    public Object listRoles(@NotEmpty String id) throws AjaxException {
 
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
+        TUser user = userServ.getCachedUser();
 
-            if (!AuthorizationHelper.CheckPermissionById("7-2")) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(500, "No permission to query organization");
+        }
 
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
-                res.setCode(402);
-                res.setDetail("No permission to query orgnization");
-                break;
-            }
+        List<TRole> roles = roleServ.queryRoleListByOrgId(id);
 
-            List<TRole> roles = null;
-            try {
-                roles = roleServ.queryRoleListByOrgId(id);
-                if (roles == null) {
-                    res.setCode(403);
-                    res.setDetail("Cannot find orgnization");
-                    break;
-                }
-            } catch (Exception e) {
-                res.setCode(500);
-                res.setDetail("Unexpect error");
-                break;
-            }
-
-            res.setData(roles);
-
-        } while (false);
-
-        return res;
+        return roles;
     }
 
+    @AjaxControllerLog
+    @RequiresPermissions("7-2-1")
     @RequestMapping(value = "role/add.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse addRole(RoleForm form, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (form == null) {
-                res.setCode(401);
-                res.setDetail("Form data cannot be empty");
-                break;
-            }
+    @Transactional
+    public Object addRole(@Validated({AjaxControllerAdd.class}) RoleForm form) throws AjaxException {
 
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        TUser user = userServ.getCachedUser();
 
-            TUser user = userServ.getCachedUser();
+        TOrg org = orgServ.queryOrgById(form.getOrgId());
+        if (org == null) {
+            throw new AjaxException(402, "Parent organization not exist");
+        }
 
-            TOrg org = orgServ.queryOrgById(form.getOrgId());
-            if (org == null) {
-                res.setCode(402);
-                res.setDetail("Parent orgnization not exist");
-                break;
-            }
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
+            throw new AjaxException(403, "No permission to add role under the parent organization");
+        }
 
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
-                res.setCode(403);
-                res.setDetail("No permission to add role under parent orgnization");
-            }
+        String id = roleServ.addRole(form, user.getcLoginName());
+        if (id == null) {
+            throw new AjaxException(501, "Failed to add role");
+        }
 
-            String id = roleServ.addRole(form, user.getcLoginname());
-            if (id == null) {
-                res.setCode(501);
-                res.setDetail("Failed to add role");
-                break;
-            }
-
-            if (form.getStrFuncIds() != null) {
-                form.setStrFuncIds(form.getStrFuncIds().replaceAll(" ", "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
-                if (!form.getStrFuncIds().isEmpty()) {
-                    String[] funcIds = form.getStrFuncIds().split(",");
-                    if (funcIds.length > 0) {
-                        if (!roleServ.addRoleRootFuncs(id, funcIds)) {
-                            res.setCode(502);
-                            res.setDetail("Failed to add role functions");
-                            break;
-                        }
+        if (form.getStrFuncIds() != null) {
+            form.setStrFuncIds(form.getStrFuncIds()
+                    .replaceAll(" ", "")
+                    .replaceAll(",,", ",")
+                    .replaceAll(",$", "")
+                    .replaceAll("^,", ""));
+            if (!form.getStrFuncIds().isEmpty()) {
+                String[] funcIds = form.getStrFuncIds().split(",");
+                if (funcIds.length > 0) {
+                    if (!roleServ.addRoleRootFuncs(id, funcIds)) {
+                        throw new AjaxException(502, "Failed to add role functions");
                     }
                 }
             }
-            res.setData(id);
+        }
 
-        } while (false);
-
-        return res;
+        return id;
     }
 
+    @AjaxControllerLog
+    @RequiresPermissions("7-2-2")
     @RequestMapping(value = "role/mod.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse modRole(RoleForm form, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (form == null || form.getId() == null || form.getId().isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
+    @Transactional
+    public Object modRole(@Validated({AjaxControllerMod.class}) RoleForm form) throws AjaxException {
 
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        TUser user = userServ.getCachedUser();
 
-            TUser user = userServ.getCachedUser();
+        TOrg org = orgServ.queryOrgById(form.getOrgId());
+        if (org == null) {
+            throw new AjaxException(404, "Organization not exist");
+        }
 
-            if (form.getId() == null || form.getId().isEmpty()) {
-                res.setCode(402);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
+            throw new AjaxException(405, "No permission to move role to the organization");
+        }
 
-            if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
-                res.setCode(403);
-                res.setDetail("Parent orgnization cannot be empty");
-                break;
-            }
+        if (!roleServ.modRoleById(form)) {
+            throw new AjaxException(500, "Failed to mod role");
+        }
 
-            TOrg org = orgServ.queryOrgById(form.getOrgId());
-            if (org == null) {
-                res.setCode(404);
-                res.setDetail("Parent orgnization not exist");
-                break;
-            }
-
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
-                res.setCode(405);
-                res.setDetail("No permission to move orgnization to this parent orgnization");
-                break;
-            }
-
-            if (!roleServ.modRoleById(form)) {
-                res.setCode(500);
-                res.setDetail("Failed to mod orgnization");
-                break;
-            }
-
-            roleServ.delRootFuncsByRoleId(form.getId());
-            if (form.getStrFuncIds() != null) {
-                form.setStrFuncIds(form.getStrFuncIds().replaceAll(" ", "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
-                if (!form.getStrFuncIds().isEmpty()) {
-                    String[] funcIds = form.getStrFuncIds().split(",");
-                    if (funcIds.length > 0) {
-                        if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)) {
-                            res.setCode(502);
-                            res.setDetail("Failed to add role functions");
-                            break;
-                        }
+        roleServ.delRootFuncsByRoleId(form.getId());
+        if (form.getStrFuncIds() != null) {
+            form.setStrFuncIds(form.getStrFuncIds()
+                    .replaceAll(" ", "")
+                    .replaceAll(",,", ",")
+                    .replaceAll(",$", "")
+                    .replaceAll("^,", ""));
+            if (!form.getStrFuncIds().isEmpty()) {
+                String[] funcIds = form.getStrFuncIds().split(",");
+                if (funcIds.length > 0) {
+                    if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)) {
+                        throw new AjaxException(502, "Failed to add role functions");
                     }
                 }
             }
+        }
 
-        } while (false);
-
-        return res;
+        return true;
     }
 
+    @AjaxControllerLog
+    @RequiresPermissions("7-2-3")
     @RequestMapping(value = "role/del.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse delRole(String id, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
+    @Transactional
+    public Object delRole(@NotEmpty String id) throws AjaxException {
 
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        TUser user = userServ.getCachedUser();
 
-            TUser user = userServ.getCachedUser();
+        TRole role = roleServ.queryRoleById(id);
+        if (role == null) {
+            throw new AjaxException(402, "Role not found");
+        }
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), role.getcOrgId())) {
+            throw new AjaxException(403, "No permission to delete the role under the organization");
+        }
 
-            TRole role = null;
-            try {
-                role = roleServ.queryRoleById(id);
-            } catch (Exception e) {
-                res.setCode(502);
-                res.setDetail("Unexpect error");
-                break;
-            }
-            if (role == null) {
-                res.setCode(402);
-                res.setDetail("Cannot find role");
-                break;
-            }
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), role.getcOrgId())) {
-                res.setCode(403);
-                res.setDetail("No permission to del role under parent orgnization");
-            }
+        roleServ.delExcFuncsByRoleId(id);
+        roleServ.delRootFuncsByRoleId(id);
+        if (!roleServ.delRoleById(id)) {
+            throw new AjaxException(500, "Failed to delete the role");
+        }
 
-            roleServ.delExcFuncsByRoleId(id);
-            roleServ.delRootFuncsByRoleId(id);
-            if (!roleServ.delRoleById(id)) {
-                res.setCode(500);
-                res.setDetail("Failed to del orgnization");
-                break;
-            }
-
-        } while (false);
-
-        return res;
+        return true;
     }
 
+    @AjaxControllerLog
+    @RequiresPermissions("7-3-1")
     @RequestMapping(value = "role/auth.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse addRoleFunc(String id, String funcIds, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            // Validate param
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
-            if (funcIds == null) {
-                res.setCode(402);
-                res.setDetail("Func ids cannot be empty");
-                break;
-            }
-            funcIds = funcIds.replaceAll(" ", "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", "");
-            if (funcIds.isEmpty()) {
-                res.setCode(402);
-                res.setDetail("Func ids cannot be empty");
-                break;
-            }
+    @Transactional
+    public Object addRoleFunc(@NotEmpty String id, @NotNull String funcIds) throws AjaxException {
 
-            // Validate permission
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        funcIds = funcIds
+                .replaceAll(" ", "")
+                .replaceAll(",,", ",")
+                .replaceAll(",$", "")
+                .replaceAll("^,", "");
+        if (funcIds.isEmpty()) {
+            throw new AjaxException(402, "Func ids cannot be empty");
+        }
 
-            TUser user = userServ.getCachedUser();
+        TUser user = userServ.getCachedUser();
 
-            // Validate role
-            TRole role = roleServ.queryRoleById(id);
-            if (role == null) {
-                res.setCode(403);
-                res.setDetail("Role not exist");
-                break;
-            }
-            // Validate organization relation
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), role.getcOrgId())) {
-                res.setCode(404);
-                res.setDetail("No permission to access parent orgnization");
-                break;
-            }
+        // Validate role
+        TRole role = roleServ.queryRoleById(id);
+        if (role == null) {
+            throw new AjaxException(403, "Role not exist");
+        }
+        // Validate organization relation
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), role.getcOrgId())) {
+            throw new AjaxException(404, "No permission to mod role");
+        }
 
-            // Get all available function ids for current role
-            List<String> allFuncIdList = new ArrayList<String>();
-            for (String rootFuncId : role.getRootFuncIds()) {
-                allFuncIdList.addAll(funcServ.queryFuncIdListByRootId(rootFuncId));
-            }
+        // Get all available function ids for current role
+        List<String> allFuncIdList = new ArrayList<String>();
+        for (String rootFuncId : role.getRootFuncIds()) {
+            allFuncIdList.addAll(funcServ.queryFuncIdListByRootId(rootFuncId));
+        }
 
-            // Collect submitted functions ids
-            HashSet<String> funcIdList = new HashSet<String>();
-            if (!funcIds.isEmpty()) {
-                funcIdList.addAll(Arrays.asList(funcIds.split(",")));
-            }
+        // Collect submitted functions ids
+        HashSet<String> funcIdList = new HashSet<String>();
+        if (!funcIds.isEmpty()) {
+            funcIdList.addAll(Arrays.asList(funcIds.split(",")));
+        }
 
-            // Work out exclude-function id and insert it
-            roleServ.delExcFuncsByRoleId(id);
-            for (String funcId : allFuncIdList) {
-                if (!funcIdList.contains(funcId)) {
-                    if (!roleServ.addRoleExcFunc(id, funcId, user.getcLoginname())) {
-                        res.setCode(405);
-                        res.setDetail("Failed to authorize to current role");
-                        break;
-                    }
+        // Work out exclude-function id and insert it
+        roleServ.delExcFuncsByRoleId(id);
+        for (String funcId : allFuncIdList) {
+            if (!funcIdList.contains(funcId)) {
+                if (!roleServ.addRoleExcFunc(id, funcId, user.getcLoginName())) {
+                    throw new AjaxException(500, "Failed to authorize to current role");
                 }
             }
+        }
 
-        } while (false);
-
-        return res;
+        return true;
     }
 
-    @RequestMapping(value = "user/checkName.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse checkLoginname(String loginName, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (loginName == null || loginName.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("name cannot be empty");
-                break;
-            }
-            if (!AuthorizationHelper.CheckPermissionById("7-4")) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
-
-            boolean exists = userServ.checkLoginnameExists(loginName);
-            res.setData(exists);
-        } while (false);
-
-        return res;
-    }
-
-    @RequestMapping(value = "user/add.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse addUser(UserForm form, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (form == null) {
-                res.setCode(401);
-                res.setDetail("Form data cannot be empty");
-                break;
-            }
-            if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
-                res.setCode(402);
-                res.setDetail("Org id cannot be empty");
-                break;
-            }
-            form.setRoles(form.getRoles().replaceAll(" ", "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
-            if (form.getRoles() == null && form.getRoles().isEmpty()) {
-                res.setCode(403);
-                res.setDetail("Role ids cannot be empty");
-                break;
-            }
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
-
-            String[] roleIds = form.getRoles().split(",");
-            if (roleIds.length > 1 && roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
-                res.setCode(405);
-                res.setDetail("System role cannot coexist with other roles");
-                break;
-            }
-
-            TUser user = userServ.getCachedUser();
-
-            TOrg org = orgServ.queryOrgById(form.getOrgId());
-            if (org == null) {
-                res.setCode(404);
-                res.setDetail("Parent orgnization not exist");
-                break;
-            }
-
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
-                res.setCode(405);
-                res.setDetail("No permission to add user under parent orgnization");
-                break;
-            }
-
-            TUser newUser = this.userFormToTUser(form);
-            newUser.setcOrgId(org.getcId());
-            newUser.setcOrgRootId(org.getcRootId());
-
-            String id = userServ.addUser(newUser, newUser.getcLoginname());
-            if (id == null) {
-                res.setCode(501);
-                res.setDetail("Failed to add user");
-                break;
-            }
-
-            for (String roleId : roleIds) {
-                if (roleServ.roleExists(roleId)) {
-                    // Add user/role relation
-                    if (!userServ.addUserRole(id, roleId)) {
-                        res.setCode(502);
-                        res.setDetail("Failed to add user-role relation");
-                        break;
-                    }
-                }
-            }
-
-            res.setData(id);
-        } while (false);
-
-        return res;
-    }
-
-    @RequestMapping(value = "user/mod.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse modUser(UserForm form, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (form == null) {
-                res.setCode(401);
-                res.setDetail("Form data cannot be empty");
-                break;
-            }
-            if (form.getUserId() == null || form.getUserId().isEmpty()) {
-                res.setCode(402);
-                res.setDetail("User id cannot be empty");
-                break;
-            }
-            if (form.getOrgId() == null || form.getOrgId().isEmpty()) {
-                res.setCode(403);
-                res.setDetail("Org id cannot be empty");
-                break;
-            }
-            form.setRoles(form.getRoles().replaceAll(" ", "").replaceAll(",,", ",").replaceAll(",$", "").replaceAll("^,", ""));
-            if (form.getRoles() == null && form.getRoles().isEmpty()) {
-                res.setCode(404);
-                res.setDetail("System role cannot coexist with other roles");
-                break;
-            }
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
-
-            String[] roleIds = form.getRoles().split(",");
-            if (roleIds.length > 1 && roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
-                res.setCode(405);
-                res.setDetail("Role ids cannot be empty");
-                break;
-            }
-
-            TUser user = userServ.getCachedUser();
-
-            TOrg org = orgServ.queryOrgById(form.getOrgId());
-            if (org == null) {
-                res.setCode(405);
-                res.setDetail("Parent orgnization not exist");
-                break;
-            }
-
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
-                res.setCode(406);
-                res.setDetail("No permission to add user under parent orgnization");
-                break;
-            }
-
-            TUser newUser = this.userFormToTUser(form);
-            newUser.setcOrgId(org.getcId());
-            newUser.setcOrgRootId(org.getcRootId());
-            //user loginname cannot be modified
-            newUser.setcLoginname(null);
-
-            if (!userServ.modUserById(newUser)) {
-                res.setCode(501);
-                res.setDetail("Failed to add role");
-                break;
-            }
-
-            userServ.delUserRolesByUserId(newUser.getcId());
-            for (String roleId : roleIds) {
-                if (roleServ.roleExists(roleId)) {
-                    // Add user/role relation
-                    if (!userServ.addUserRole(form.getUserId(), roleId)) {
-                        res.setCode(502);
-                        res.setDetail("Failed to add user-role relation");
-                        break;
-                    }
-                }
-            }
-
-        } while (false);
-
-        return res;
-    }
-
-    @RequestMapping(value = "user/del.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse delUser(String id, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
-
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
-
-
-            TUser user = userServ.getCachedUser();
-            TUser targetUser = userServ.queryUserById(id);
-
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
-                res.setCode(406);
-                res.setDetail("No permission to del user under parent orgnization");
-                break;
-            }
-
-            userServ.delUserRolesByUserId(id);
-            if (!userServ.delUserById(id)) {
-                res.setCode(501);
-                res.setDetail("Failed to delete user");
-                break;
-            }
-
-        } while (false);
-
-        return res;
-    }
-
-    @RequestMapping(value = "user/enable.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse enableUser(String id, boolean enabled, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
-
-            if (!AuthorizationHelper.CheckPermissionByMappedPath(
-                    (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE))) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
-
-            TUser user = userServ.getCachedUser();
-            TUser targetUser = userServ.queryUserById(id);
-
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
-                res.setCode(406);
-                res.setDetail("No permission to access user under parent orgnization");
-                break;
-            }
-
-            if (enabled) {
-                if (!userServ.enableUserById(id)) {
-                    res.setCode(501);
-                    res.setDetail("Failed to enable user");
-                    break;
-                }
-            } else {
-                if (!userServ.disableUserById(id)) {
-                    res.setCode(501);
-                    res.setDetail("Failed to disable user");
-                    break;
-                }
-            }
-
-        } while (false);
-
-        return res;
-    }
-
+    @AjaxControllerLog
+    @RequiresPermissions("7-4")
     @RequestMapping(value = "user/query.do", method = RequestMethod.POST)
-    @ResponseBody
-    public AjaxResponse queryUser(String id, HttpServletRequest request) {
-        AjaxResponse res = new AjaxResponse(200);
-        do {
-            if (id == null || id.isEmpty()) {
-                res.setCode(401);
-                res.setDetail("Id cannot be empty");
-                break;
-            }
+    public Object queryUser(String id) throws AjaxException {
 
-            if (!AuthorizationHelper.CheckPermissionById("7-4")) {
-                res.setCode(400);
-                res.setDetail("No permission");
-                break;
-            }
+        TUser user = userServ.getCachedUser();
+        TUser targetUser = userServ.queryUserById(id);
 
-            TUser user = userServ.getCachedUser();
-            TUser targetUser = userServ.queryUserById(id);
+        if (targetUser == null) {
+            throw new AjaxException(501, "User not exist");
+        }
 
-            if (targetUser == null) {
-                res.setCode(501);
-                res.setDetail("Failed to find user");
-                break;
-            }
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
+            throw new AjaxException(406, "No permission to query user under the organization");
+        }
 
-            if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
-                res.setCode(406);
-                res.setDetail("No permission to access user under parent orgnization");
-                break;
-            }
-
-            res.setData(targetUser);
-        } while (false);
-
-        return res;
+        return targetUser;
     }
+
+    @AjaxControllerLog
+    @RequiresPermissions("7-4")
+    @RequestMapping(value = "user/checkName.do", method = RequestMethod.POST)
+    public Object checkLoginName(@NotEmpty String loginName) throws AjaxException {
+
+        boolean exists = userServ.checkLoginNameExists(loginName);
+
+        return exists;
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("7-4-1")
+    @RequestMapping(value = "user/add.do", method = RequestMethod.POST)
+    @Transactional
+    public Object addUser(@Validated({AjaxControllerAdd.class}) UserForm form) throws AjaxException {
+        if (form.getRoles() != null) {
+            form.setRoles(form.getRoles()
+                    .replaceAll(" ", "")
+                    .replaceAll(",,", ",")
+                    .replaceAll(",$", "")
+                    .replaceAll("^,", ""));
+        }
+        TUser user = userServ.getCachedUser();
+
+        TOrg org = orgServ.queryOrgById(form.getOrgId());
+        if (org == null) {
+            throw new AjaxException(404, "Organization not exist");
+        }
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getOrgId())) {
+            throw new AjaxException(405, "No permission to add user under the organization");
+        }
+
+        TUser newUser = this.userFormToTUser(form);
+        newUser.setcOrgId(org.getcId());
+        newUser.setcOrgRootId(org.getcRootId());
+
+        String id = userServ.addUser(newUser, newUser.getcLoginName());
+        if (id == null) {
+            throw new AjaxException(500, "Failed to add user");
+        }
+
+        String[] roleIds = form.getRoles().split(",");
+        if (roleIds.length > 1) {
+            if (roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
+                throw new AjaxException(405, "System role cannot coexist with other roles");
+            }
+
+            for (String roleId : roleIds) {
+                if (roleServ.roleExists(roleId)) {
+                    if (!userServ.addUserRole(id, roleId)) {
+                        throw new AjaxException(500, "Failed to add user-role relation");
+                    }
+                }
+            }
+        }
+
+        return id;
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("7-4-2")
+    @RequestMapping(value = "user/mod.do", method = RequestMethod.POST)
+    @Transactional
+    public Object modUser(@Validated({AjaxControllerMod.class}) UserForm form) throws AjaxException {
+
+        TUser user = userServ.getCachedUser();
+        TUser targetUser = userServ.queryUserById(form.getUserId());
+        if (targetUser == null) {
+            throw new AjaxException(404, "User not exist");
+        }
+
+        TOrg org = orgServ.queryOrgById(form.getOrgId());
+        if (org == null) {
+            throw new AjaxException(405, "Organization not exist");
+        }
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
+            throw new AjaxException(406, "No permission to add user under the organization");
+        }
+
+        TUser modUser = this.userFormToTUser(form);
+        modUser.setcOrgId(org.getcId());
+        modUser.setcOrgRootId(org.getcRootId());
+        modUser.setcLoginName(null);
+
+        if (!userServ.modUserById(modUser)) {
+            throw new AjaxException(500, "Failed to mod user");
+        }
+
+        String[] roleIds = form.getRoles().split(",");
+        if (roleIds.length > 1) {
+            userServ.delUserRolesByUserId(modUser.getcId());
+            if (roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
+                throw new AjaxException(405, "System role cannot coexist with other roles");
+            }
+
+            for (String roleId : roleIds) {
+                if (roleServ.roleExists(roleId)) {
+                    if (!userServ.addUserRole(modUser.getcId(), roleId)) {
+                        throw new AjaxException(500, "Failed to add user-role relation");
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("7-4-3")
+    @RequestMapping(value = "user/del.do", method = RequestMethod.POST)
+    @Transactional
+    public Object delUser(@NotEmpty String id) throws AjaxException {
+
+
+        TUser user = userServ.getCachedUser();
+        TUser targetUser = userServ.queryUserById(id);
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
+            throw new AjaxException(406, "No permission to del user under parent organization");
+        }
+
+        userServ.delUserRolesByUserId(id);
+        if (!userServ.delUserById(id)) {
+            throw new AjaxException(501, "Failed to delete user");
+        }
+
+        return true;
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("7-4-4")
+    @RequestMapping(value = "user/enable.do", method = RequestMethod.POST)
+    public Object enableUser(@NotEmpty String id, @NotNull Boolean enabled) throws AjaxException {
+
+        TUser user = userServ.getCachedUser();
+        TUser targetUser = userServ.queryUserById(id);
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), targetUser.getcOrgId())) {
+            throw new AjaxException(406, "No permission to del user under parent organization");
+        }
+
+        if (enabled) {
+            if (!userServ.enableUserById(id)) {
+                throw new AjaxException(501, "Failed to enable user");
+            }
+        } else {
+            if (!userServ.disableUserById(id)) {
+                throw new AjaxException(502, "Failed to disable user");
+            }
+        }
+
+        return true;
+    }
+
 
     public TUser userFormToTUser(UserForm form) {
         TUser user = new TUser();
         user.setcId(form.getUserId());
-        user.setcLoginname(form.getLoginName());
-        user.setcLoginpass(form.getLoginPass());
-        user.setcNickname(form.getNickName());
+        user.setcLoginName(form.getLoginName());
+        user.setcLoginPass(form.getLoginPass());
+        user.setcNickName(form.getNickName());
         user.setcAvailable(true);
         user.setcOrgId(form.getOrgId());
         user.setcEmail(form.getEmail());
         user.setcPhone(form.getPhone());
         user.setcQq(form.getIm());
-        user.setcRealname(form.getRealName());
+        user.setcRealName(form.getRealName());
         return user;
     }
 
+    /* Not implement yet
     @RequestMapping(value = "func/add.do", method = RequestMethod.POST)
     @ResponseBody
     public AjaxResponse addFunc(OrgForm form, HttpServletRequest request) {
@@ -810,4 +535,5 @@ public class AjaxSystemController {
 
         return res;
     }
+    */
 }

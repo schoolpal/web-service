@@ -1,18 +1,28 @@
 package com.schoolpal.web.model;
 
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+
+import javax.validation.constraints.NotEmpty;
+
 public class UserForm {
-	
+
+	@NotEmpty(groups = {AjaxControllerMod.class})
+	private String userId;
+	@NotEmpty(groups = {AjaxControllerAdd.class})
 	private String orgId;
+	@NotEmpty(groups = {AjaxControllerAdd.class})
 	private String loginName;
+	@NotEmpty(groups = {AjaxControllerAdd.class})
 	private String loginPass;
 	private String realName;
 	private String nickName;
 	private String phone;
 	private String email;
 	private String im;
+	@NotEmpty(groups = {AjaxControllerAdd.class})
 	private String roles;
-	private String userId;
-	
+
 	public String getOrgId() {
 		return orgId;
 	}

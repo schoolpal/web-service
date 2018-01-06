@@ -1,12 +1,11 @@
 package com.schoolpal.service;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.schoolpal.consts.LogLevel;
+import com.schoolpal.db.LogDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.schoolpal.db.LogDB;
-import com.schoolpal.consts.LogLevel;
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class LogService {

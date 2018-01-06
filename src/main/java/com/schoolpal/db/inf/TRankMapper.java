@@ -1,8 +1,8 @@
 package com.schoolpal.db.inf;
 
-import java.util.List;
-
 import com.schoolpal.db.model.TRank;
+
+import java.util.List;
 
 public interface TRankMapper {
     int deleteOneById(Integer cId);

@@ -1,21 +1,17 @@
 package com.schoolpal.db.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TUser {
     private String cId;
 
-    private String cLoginname;
+    private String cLoginName;
 
-    private String cLoginpass;
+    private String cLoginPass;
 
-    private String cRealname;
+    private String cRealName;
 
-    private String cNickname;
+    private String cNickName;
 
     private String cPhone;
 
@@ -67,36 +63,36 @@ public class TUser {
         this.cId = cId == null ? null : cId.trim();
     }
 
-    public String getcLoginname() {
-        return cLoginname;
+    public String getcLoginName() {
+        return cLoginName;
     }
 
-    public void setcLoginname(String cLoginname) {
-        this.cLoginname = cLoginname == null ? null : cLoginname.trim();
+    public void setcLoginName(String cLoginName) {
+        this.cLoginName = cLoginName == null ? null : cLoginName.trim();
     }
 
-    public String getcLoginpass() {
-        return cLoginpass;
+    public String getcLoginPass() {
+        return cLoginPass;
     }
 
-    public void setcLoginpass(String cLoginpass) {
-        this.cLoginpass = cLoginpass == null ? null : cLoginpass.trim();
+    public void setcLoginPass(String cLoginPass) {
+        this.cLoginPass = cLoginPass == null ? null : cLoginPass.trim();
     }
 
-    public String getcRealname() {
-        return cRealname;
+    public String getcRealName() {
+        return cRealName;
     }
 
-    public void setcRealname(String cRealname) {
-        this.cRealname = cRealname == null ? null : cRealname.trim();
+    public void setcRealName(String cRealName) {
+        this.cRealName = cRealName == null ? null : cRealName.trim();
     }
 
-    public String getcNickname() {
-        return cNickname;
+    public String getcNickName() {
+        return cNickName;
     }
 
-    public void setcNickname(String cNickname) {
-        this.cNickname = cNickname == null ? null : cNickname.trim();
+    public void setcNickName(String cNickName) {
+        this.cNickName = cNickName == null ? null : cNickName.trim();
     }
 
     public String getcPhone() {
