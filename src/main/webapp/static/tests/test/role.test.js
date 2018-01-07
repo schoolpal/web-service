@@ -113,7 +113,6 @@ describe('/ajax/role/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('auth.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
 	});
 
 	it('query.do - verify add.do', function() {
@@ -197,8 +196,6 @@ describe('/ajax/role/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('del.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
-		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
 	it('ranks.do', function() {

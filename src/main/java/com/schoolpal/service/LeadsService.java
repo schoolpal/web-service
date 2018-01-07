@@ -154,6 +154,7 @@ public class LeadsService {
 		
 		return ret;
 	}
+
 	public boolean mod(TLeads leads, TLeadsStudent student, TLeadsParent parent){
 		boolean ret = false;
 		do{
@@ -178,10 +179,12 @@ public class LeadsService {
 			if (!this.modLeads(leads)){
 				break;
 			}
+
 			ret = true;
 		}while(false);
 		return ret;
 	}
+
 	public boolean delById(String id){
 		TLeads leads = this.queryLeadsStudentAndParentById(id);
 		if (leads == null){

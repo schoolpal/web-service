@@ -1,14 +1,22 @@
 package com.schoolpal.db.model;
 
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class TContact {
+
+    @NotEmpty(groups = {AjaxControllerMod.class})
     private String id;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String leadsId;
 
-    private String approachName;
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String approachId;
+    private String approachName;
 
     private Date datetime;
 

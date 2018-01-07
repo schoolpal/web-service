@@ -1,33 +1,46 @@
 package com.schoolpal.db.model;
 
 import com.schoolpal.consts.Gender;
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class TContract {
+
+    @NotEmpty(groups = {AjaxControllerMod.class})
     private String id;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String type;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String code;
 
     private Date startDate;
 
     private Date endDate;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private BigDecimal oriPrice;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private BigDecimal discPrice;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private BigDecimal finalPrice;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private BigDecimal paid;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String courseType;
 
     private Integer courseOriId;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer courseSesId;
 
     private String courseHours;
@@ -38,24 +51,30 @@ public class TContract {
 
     private String stuCode;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String stuName;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer stuGenderId;
 
     private Integer stuIdType;
 
     private String stuIdCode;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Date stuBirthday;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String stuGrade;
 
     private String stuSchoolName;
 
     private String parId;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String parName;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String parCellphone;
 
     private String parWechat;

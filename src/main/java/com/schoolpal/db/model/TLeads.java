@@ -1,8 +1,14 @@
 package com.schoolpal.db.model;
 
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class TLeads {
+
+    @NotEmpty(groups = {AjaxControllerMod.class})
     private String id;
 
     private String courseType;
@@ -11,20 +17,25 @@ public class TLeads {
 
     private Integer typeId;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer sourceId;
     private String sourceName;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String channelId;
     private String channelName;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer stageId;
     private String stageName;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer statusId;
     private String statusName;
 
-    private String orgnizationId;
-    private String orgnizationName;
+    @NotEmpty(groups = {AjaxControllerAdd.class})
+    private String organizationId;
+    private String organizationName;
 
     private String executiveId;
     private String executiveName;
@@ -127,12 +138,12 @@ public class TLeads {
         this.statusId = statusId;
     }
 
-    public String getOrgnizationId() {
-        return orgnizationId;
+    public String getOrganizationId() {
+        return organizationId;
     }
 
-    public void setOrgnizationId(String orgnizationId) {
-        this.orgnizationId = orgnizationId == null ? null : orgnizationId.trim();
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId == null ? null : organizationId.trim();
     }
 
     public String getExecutiveId() {
@@ -183,12 +194,12 @@ public class TLeads {
 		this.statusName = statusName;
 	}
 
-	public String getOrgnizationName() {
-		return orgnizationName;
+	public String getOrganizationName() {
+		return organizationName;
 	}
 
-	public void setOrgnizationName(String orgnizationName) {
-		this.orgnizationName = orgnizationName;
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 
 	public String getExecutiveName() {

@@ -6,7 +6,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
     var path = '/web/ajax/user/';
     var act_path = '/web/ajax/mkt/activity/';
 
-    var user = 'rise-01';
+    var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 
@@ -77,7 +77,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
             url: buildUrl(host, act_path, 'add.do'),
             dataType: 'json',
             data: {
-                orgnizationId: org_val,
+                organizationId: org_val,
                 name: 'test_name',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -135,6 +135,40 @@ describe('/ajax/mkt/activity/ APIs', function() {
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
+    it('list.do - null value', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'list.do'),
+            dataType: 'json',
+            data: {
+                organizationId: null
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('list.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+    });
+
+    it('list.do - empty value', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'list.do'),
+            dataType: 'json',
+            data: {
+                organizationId: ''
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('list.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+    });
+
     it('list.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -142,7 +176,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
             url: buildUrl(host, act_path, 'list.do'),
             dataType: 'json',
             data: {
-                orgnizationId: org_val
+                organizationId: org_val
             }
         });
 

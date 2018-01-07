@@ -24,9 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@RestController()
+@RestController
 @RequestMapping("/ajax/user")
-public class AjaxUserController {
+public class AjaxUserController extends AjaxBaseController{
 
     @Autowired
     private UserService userServ;

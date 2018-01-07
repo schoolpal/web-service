@@ -1,20 +1,28 @@
 package com.schoolpal.db.model;
 
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class TActivity {
+
+	@NotEmpty(groups = {AjaxControllerMod.class})
 	private String id;
 
 	private String rootId;
 
 	private String parentId;
 
-	private String orgnizationId;
-
-	private String name;
-
 	private String parentName;
+
+	@NotEmpty(groups = {AjaxControllerAdd.class})
+	private String organizationId;
+
+	@NotEmpty(groups = {AjaxControllerAdd.class})
+	private String name;
 
 	private Date startDate;
 
@@ -76,12 +84,12 @@ public class TActivity {
 		this.parentId = parentId;
 	}
 
-	public String getOrgnizationId() {
-		return orgnizationId;
+	public String getOrganizationId() {
+		return organizationId;
 	}
 
-	public void setOrgnizationId(String orgnization_id) {
-		this.orgnizationId = orgnization_id;
+	public void setOrganizationId(String orgnization_id) {
+		this.organizationId = orgnization_id;
 	}
 
 	public String getName() {

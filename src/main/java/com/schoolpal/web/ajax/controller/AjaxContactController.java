@@ -1,265 +1,174 @@
 package com.schoolpal.web.ajax.controller;
 
-import com.google.gson.Gson;
+import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.db.model.TContact;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.ContactService;
 import com.schoolpal.service.LeadsService;
 import com.schoolpal.service.UserService;
-import com.schoolpal.web.ajax.model.AjaxResponse;
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
+import com.schoolpal.web.ajax.exception.AjaxException;
 import com.schoolpal.web.helper.AuthorizationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/ajax/contact")
-public class AjaxContactController {
-	
-	@Autowired
-	private UserService userServ;
-	@Autowired
-	private LeadsService leadsServ;
-	@Autowired
-	private ContactService contactServ;
-	
-	private Gson gson = new Gson();
+public class AjaxContactController extends AjaxBaseController{
 
-	@RequestMapping(value = "query.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse query(String id) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (StringUtils.isEmpty(id)) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
-			
-			TContact contact = contactServ.queryContactById(id);
-			if (contact == null){
-				res.setCode(402);
-				res.setDetail("Invalid contact id");
-				break;
-			}
-			
-			String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
-			if (!AuthorizationHelper.CheckPermissionById(permId)){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			res.setData(contact);
+    @Autowired
+    private UserService userServ;
+    @Autowired
+    private LeadsService leadsServ;
+    @Autowired
+    private ContactService contactServ;
 
-		} while (false);
+    @AjaxControllerLog
+    @RequestMapping(value = "list.do", method = RequestMethod.POST)
+    public Object list(@NotEmpty String leadsId) throws AjaxException {
 
-		return res;
-	}
-	
-	@RequestMapping(value = "list.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse list(String leadsId) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (StringUtils.isEmpty(leadsId)){
-				res.setCode(401);
-				res.setDetail("Leads id cannot be empty");
-				break;
-			}
-			
-			String permId = this.getQueryPermIdByLeadsId(leadsId);
-			if (!AuthorizationHelper.CheckPermissionById(permId)){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			List<TContact> acts = null;
-			acts = contactServ.queryContactsByLeadsId(leadsId);
-			res.setData(acts);
+        String permId = this.getQueryPermIdByLeadsId(leadsId);
+        if (!AuthorizationHelper.CheckPermissionById(permId)) {
+            throw new AjaxException(401, "No permission to list contacts");
+        }
 
-		} while (false);
+        List<TContact> acts = contactServ.queryContactsByLeadsId(leadsId);
 
-		return res;
-	}
+        return acts;
+    }
 
-	private String getQueryPermIdByLeadsId(String id){
-		String permId = "";
-		
-		TLeads leads = leadsServ.queryLeadsById(id);
-		if (leads != null){		
-			switch (leads.getTypeId()){
-			case 1:
-				permId = "1-2";
-				break;
-			case 2:
-				permId = "2-1";
-				break;
-			case 3:
-				permId = "2-2";
-				break;
-			default:
-				permId = "";
-				break;
-			}
-		}
-		
-		return permId;
-	}
-	
-	private String getModPermIdByLeadsId(String id){
-		String permId = "";
-		
-		TLeads leads = leadsServ.queryLeadsById(id);
-		if (leads != null){		
-			switch (leads.getTypeId()){
-			case 1:
-				permId = "1-2-2";
-				break;
-			case 2:
-				permId = "2-1-2";
-				break;
-			case 3:
-				permId = "2-2-2";
-				break;
-			default:
-				permId = "";
-				break;
-			}
-		}
-		
-		return permId;
-	}
-	
-	@RequestMapping(value = "add.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse add(TContact contact, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (contact == null) {
-				res.setCode(401);
-				res.setDetail("From data cannot be empty");
-				break;
-			}
+    @AjaxControllerLog
+    @RequestMapping(value = "query.do", method = RequestMethod.POST)
+    public Object query(@NotEmpty String id) throws AjaxException {
 
-			if (contact.getLeadsId() == null){
-				res.setCode(402);
-				res.setDetail("Leads id cannot be empty");
-				break;
-			}
-			if (contact.getApproachId() == null){
-				res.setCode(403);
-				res.setDetail("Approach id cannot be empty");
-				break;
-			}
-			
-			String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
-			if (!AuthorizationHelper.CheckPermissionById(permId)){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			TUser user = userServ.getCachedUser();
-			contact.setExecutiveId(user.getcId());
-			
-			if (contactServ.addContact(contact) == null){
-				res.setCode(500);
-				res.setDetail("Failed to add activity");
-				break;
-			}
-			
-			res.setData(contact.getId());
-			
-		} while (false);
+        TContact contact = contactServ.queryContactById(id);
+        if (contact == null) {
+            throw new AjaxException(402, "Invalid contact id");
+        }
 
-		return res;
-	}
-	
-	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse mod(TContact contact, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (contact == null) {
-				res.setCode(401);
-				res.setDetail("From data cannot be empty");
-				break;
-			}
+        String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
+        if (!AuthorizationHelper.CheckPermissionById(permId)) {
+            throw new AjaxException(401, "No permission to query contact");
+        }
 
-			if (StringUtils.isEmpty(contact.getId())) {
-				res.setCode(401);
-				res.setDetail("Contact id cannot be empty");
-				break;
-			}
+        return contact;
+    }
 
-			TContact target = contactServ.queryContactById(contact.getId());
-			if (target == null){
-				res.setCode(401);
-				res.setDetail("Invalid contact id");
-				break;
-			}
-			
-			String permId = this.getModPermIdByLeadsId(target.getLeadsId());
-			if (!AuthorizationHelper.CheckPermissionById(permId)){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			if (!contactServ.modContact(contact)){
-				res.setCode(500);
-				res.setDetail("Failed to mod activity");
-				break;
-			}
-						
-		} while (false);
+    private String getQueryPermIdByLeadsId(String id) {
+        String permId = "";
 
-		return res;
-	}
-	
-	@RequestMapping(value = "del.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse del(String id, HttpServletRequest request) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			if (StringUtils.isEmpty(id)) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
-			
-			TContact contact = contactServ.queryContactById(id);
-			if (contact == null){
-				res.setCode(402);
-				res.setDetail("Invalid contact id");
-				break;
-			}
-			
-			String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
-			if (!AuthorizationHelper.CheckPermissionById(permId)){
-				res.setCode(400);
-				res.setDetail("No permission");
-				break;
-			}
-			
-			if (!contactServ.delContactById(id)){
-				res.setCode(500);
-				res.setDetail("Failed to del activity");
-				break;
-			}
+        TLeads leads = leadsServ.queryLeadsById(id);
+        if (leads != null) {
+            switch (leads.getTypeId()) {
+                case 1:
+                    permId = "1-2";
+                    break;
+                case 2:
+                    permId = "2-1";
+                    break;
+                case 3:
+                    permId = "2-2";
+                    break;
+                default:
+                    permId = "";
+                    break;
+            }
+        }
 
-		} while (false);
+        return permId;
+    }
 
-		return res;
-	}
-	
+    private String getModPermIdByLeadsId(String id) {
+        String permId = "";
+
+        TLeads leads = leadsServ.queryLeadsById(id);
+        if (leads != null) {
+            switch (leads.getTypeId()) {
+                case 1:
+                    permId = "1-2-2";
+                    break;
+                case 2:
+                    permId = "2-1-2";
+                    break;
+                case 3:
+                    permId = "2-2-2";
+                    break;
+                default:
+                    permId = "";
+                    break;
+            }
+        }
+
+        return permId;
+    }
+
+    @AjaxControllerLog
+    @RequestMapping(value = "add.do", method = RequestMethod.POST)
+    public Object add(@Validated({AjaxControllerAdd.class}) TContact contact) throws AjaxException {
+
+        String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
+        if (!AuthorizationHelper.CheckPermissionById(permId)) {
+            throw new AjaxException(401, "No permission to add contact");
+        }
+
+        TUser user = userServ.getCachedUser();
+        contact.setExecutiveId(user.getcId());
+
+        if (contactServ.addContact(contact) == null) {
+            throw new AjaxException(500, "Failed to add activity");
+        }
+
+        return contact.getId();
+    }
+
+    @AjaxControllerLog
+    @RequestMapping(value = "mod.do", method = RequestMethod.POST)
+    public Object mod(@Validated({AjaxControllerMod.class}) TContact contact) throws AjaxException {
+
+        TContact target = contactServ.queryContactById(contact.getId());
+        if (target == null) {
+            throw new AjaxException(402, "Invalid contact id");
+        }
+
+        String permId = this.getModPermIdByLeadsId(target.getLeadsId());
+        if (!AuthorizationHelper.CheckPermissionById(permId)) {
+            throw new AjaxException(401, "No permission to mod contact");
+        }
+
+        if (!contactServ.modContact(contact)) {
+            throw new AjaxException(500, "Failed to mod activity");
+        }
+
+        return true;
+    }
+
+    @AjaxControllerLog
+    @RequestMapping(value = "del.do", method = RequestMethod.POST)
+    public Object del(@NotEmpty String id) throws AjaxException {
+
+        TContact contact = contactServ.queryContactById(id);
+        if (contact == null) {
+            throw new AjaxException(402, "Invalid contact id");
+        }
+
+        String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
+        if (!AuthorizationHelper.CheckPermissionById(permId)) {
+            throw new AjaxException(401, "No permission to del contact");
+        }
+
+        if (!contactServ.delContactById(id)) {
+            throw new AjaxException(500, "Failed to del contact");
+        }
+
+        return true;
+    }
+
 }

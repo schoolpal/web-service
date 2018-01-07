@@ -1,14 +1,17 @@
 package com.schoolpal.db.model;
 
 import com.schoolpal.consts.Gender;
+import com.schoolpal.validation.group.AjaxControllerAdd;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Calendar;
 import java.util.Date;
 
 public class TLeadsStudent {
 
 	private String id;
-    
+
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String name;
 
     private Integer genderId;
@@ -19,7 +22,8 @@ public class TLeadsStudent {
     private String idCode;
 
     private Date birthday;
-    
+
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer age;
 
     private String schoolGrade;

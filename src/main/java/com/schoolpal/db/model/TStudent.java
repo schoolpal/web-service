@@ -1,26 +1,35 @@
 package com.schoolpal.db.model;
 
 import com.schoolpal.consts.Gender;
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class TStudent {
+
+    @NotEmpty(groups = {AjaxControllerMod.class})
     private String id;
 
     private String code;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String name;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Integer genderId;
 
     private Integer idType;
 
     private String idCode;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private Date birthday;
 
     private String schoolGrade;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String classGrade;
 
     private String schoolName;

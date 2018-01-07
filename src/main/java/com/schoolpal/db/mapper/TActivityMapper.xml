@@ -7,7 +7,7 @@
     <result column="root_id" jdbcType="CHAR" property="rootId" />
     <result column="parent_id" jdbcType="CHAR" property="parentId" />
     <result column="parent_name" jdbcType="CHAR" property="parentName" />
-    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="org_id" jdbcType="CHAR" property="organizationId" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="start_date" jdbcType="DATE" property="startDate" />
     <result column="end_date" jdbcType="DATE" property="endDate" />
@@ -88,7 +88,7 @@
       <if test="parentId != null">
         parent_id,
       </if>
-      <if test="orgnizationId != null">
+      <if test="organizationId != null">
         org_id,
       </if>
       <if test="name != null">
@@ -129,8 +129,8 @@
       <if test="parentId != null">
         #{parentId,jdbcType=CHAR},
       </if>
-      <if test="orgnizationId != null">
-        #{orgnizationId,jdbcType=CHAR},
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=CHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -170,8 +170,8 @@
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="orgnizationId != null">
-        org_id = #{orgnizationId,jdbcType=CHAR},
+      <if test="organizationId != null">
+        org_id = #{organizationId,jdbcType=CHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},

@@ -56,26 +56,64 @@ describe('/ajax/org/ APIs', function() {
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('listRoles.do', function() {
+    it('listRoles.do - null value', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, org_path, 'listRoles.do'),
+            dataType : 'json',
+            data : {
+                id: null
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        resDump('listRoles.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+        expect(jsonData.data).to.not.empty;
+        // expect(jsonData.detail).to.be.equal('Ok');
+    });
+/*
+    it('listRoles.do - empty value', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
 			url : buildUrl(host, org_path, 'listRoles.do'),
 			dataType : 'json',
 			data : {
-				id: '16010100000001'
+				id: ''
 			}
 		});
 
 		expect(xhr.status).to.be.equal(200);
 		jsonData = xhr.responseJSON;
 		resDump('listRoles.do', jsonData);
-		expect(jsonData.code).to.be.equal(200);
+		expect(jsonData.code).to.be.equal(400);
 		expect(jsonData.data).to.not.empty;
 		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
-	it('listUsers.do', function() {
+    it('listRoles.do', function() {
+        xhr = $.ajax({
+            async : false,
+            method : 'POST',
+            url : buildUrl(host, org_path, 'listRoles.do'),
+            dataType : 'json',
+            data : {
+                id: '16010100000001'
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        resDump('listRoles.do', jsonData);
+        expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.data).to.not.empty;
+        // expect(jsonData.detail).to.be.equal('Ok');
+    });
+
+    it('listUsers.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
@@ -270,10 +308,8 @@ describe('/ajax/org/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('del.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
-		// expect(jsonData.detail).to.be.equal('Ok');
 	});
-
+*/
 	it('logout.do', function() {
 		xhr = $.ajax({
 			async : false,

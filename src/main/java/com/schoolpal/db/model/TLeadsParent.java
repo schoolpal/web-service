@@ -1,16 +1,21 @@
 package com.schoolpal.db.model;
 
 import com.schoolpal.consts.Gender;
+import com.schoolpal.validation.group.AjaxControllerAdd;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 public class TLeadsParent {
+
     private String id;
-    
+
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String name;
 
     private Integer genderId;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String cellphone;
 
     private String wechat;

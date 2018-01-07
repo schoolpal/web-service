@@ -1,159 +1,90 @@
 package com.schoolpal.web.ajax.controller;
 
-import com.google.gson.Gson;
+import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.db.model.TOrg;
 import com.schoolpal.db.model.TRole;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.OrgService;
 import com.schoolpal.service.RoleService;
 import com.schoolpal.service.UserService;
-import com.schoolpal.web.ajax.model.AjaxResponse;
+import com.schoolpal.web.ajax.exception.AjaxException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/ajax/org")
-public class AjaxOrgController {
+@Validated
+public class AjaxOrgController extends AjaxBaseController{
 
-//	@Autowired
-//	private LogService logServ;
-	@Autowired
-	private UserService userServ;
-	@Autowired
-	private OrgService orgServ;
-	@Autowired
-	private RoleService roleServ;
-//	@Autowired
-//	private FunctionService funcServ;
+    @Autowired
+    private UserService userServ;
+    @Autowired
+    private OrgService orgServ;
+    @Autowired
+    private RoleService roleServ;
 
-	private Gson gson = new Gson();
+    @AjaxControllerLog
+    @RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
+    public Object listRoles(@NotEmpty String id) throws AjaxException {
 
-	@RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse listRoles(String id) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			TUser user = userServ.getCachedUser();
+        TUser user = userServ.getCachedUser();
 
-			if (id == null || id.isEmpty()) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
+        List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+        if (!orgList.contains(id)) {
+            throw new AjaxException(401, "No permission to query organization");
+        }
 
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
-				res.setCode(402);
-				res.setDetail("No permission to query orgnization");
-				break;
-			}
+        List<TRole> roles = roleServ.queryRoleListByOrgIdLite(id);
+        if (roles == null) {
+            throw new AjaxException(500, "Cannot find organization");
+        }
 
-			List<TRole> roles = null;
-			try {
-				roles = roleServ.queryRoleListByOrgIdLite(id);
-				if (roles == null) {
-					res.setCode(403);
-					res.setDetail("Cannot find orgnization");
-					break;
-				}
-			} catch (Exception e) {
-				res.setCode(500);
-				res.setDetail("Unexpect error");
-				break;
-			}
+        return roles;
+    }
 
-			res.setData(roles);
+    @AjaxControllerLog
+    @RequestMapping(value = "listUsers.do", method = RequestMethod.POST)
+    public Object listUsers(@NotEmpty String id) throws AjaxException {
+        TUser user = userServ.getCachedUser();
 
-		} while (false);
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(402, "No permission to query orgnization");
+        }
 
-		return res;
-	}
+        List<TUser> users = userServ.queryUsersByOrgId(id);
+        if (users == null) {
+            throw new AjaxException(500, "Cannot find orgnization");
+        }
 
-	@RequestMapping(value = "listUsers.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse listUsers(String id) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			TUser user = userServ.getCachedUser();
+        return users;
+    }
 
-			if (id == null || id.isEmpty()) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
+    @AjaxControllerLog
+    @RequestMapping(value = "query.do", method = RequestMethod.POST)
+    public Object query(@NotEmpty String id) throws AjaxException {
 
-			if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
-				res.setCode(402);
-				res.setDetail("No permission to query orgnization");
-				break;
-			}
+        TUser user = userServ.getCachedUser();
 
-			List<TUser> users = null;
-			try {
-				users = userServ.queryUsersByOrgId(id);
-				if (users == null) {
-					res.setCode(403);
-					res.setDetail("Cannot find orgnization");
-					break;
-				}
-			} catch (Exception e) {
-				res.setCode(500);
-				res.setDetail("Unexpect error");
-				break;
-			}
+        List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
+        if (!orgList.contains(id)) {
+            throw new AjaxException(402, "No permission to query orgnization");
+        }
 
-			res.setData(users);
+        TOrg org = orgServ.queryOrgById(id);
+        if (org == null) {
+            throw new AjaxException(500, "Cannot find organization");
+        }
+        org.setParentOrg(orgServ.queryOrgById(org.getcId()));
 
-		} while (false);
-
-		return res;
-	}
-
-	@RequestMapping(value = "query.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse query(String id) {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			TUser user = userServ.getCachedUser();
-
-			if (id == null || id.isEmpty()) {
-				res.setCode(401);
-				res.setDetail("Id cannot be empty");
-				break;
-			}
-
-			List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
-			if (!orgList.contains(id)) {
-				res.setCode(402);
-				res.setDetail("No permission to query orgnization");
-			}
-
-			TOrg org = null;
-			try {
-				org = orgServ.queryOrgById(id);
-				if (org == null) {
-					res.setCode(403);
-					res.setDetail("Cannot find orgnization");
-					break;
-				}
-				org.setParentOrg(orgServ.queryOrgById(org.getcId()));
-			} catch (Exception e) {
-				res.setCode(500);
-				res.setDetail("Unexpect error");
-				break;
-			}
-
-			res.setData(org);
-
-		} while (false);
-
-		return res;
-	}
+        return org;
+    }
 
 
 }

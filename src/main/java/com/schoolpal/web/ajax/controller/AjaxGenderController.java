@@ -1,38 +1,28 @@
 package com.schoolpal.web.ajax.controller;
 
-import com.google.gson.Gson;
+import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.consts.Gender;
-import com.schoolpal.web.ajax.model.AjaxResponse;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/ajax/mkt/gender")
-public class AjaxGenderController {
+public class AjaxGenderController extends AjaxBaseController{
 
-	private Gson gson = new Gson();
+    @AjaxControllerLog
+    @RequestMapping(value = "list.do", method = RequestMethod.POST)
+    public Object list() {
+        Map<Integer, String> data = new HashMap<Integer, String>();
+        for (Gender g : Gender.values()) {
+            data.put(g.getValue(), g.getName());
+        }
 
-	@RequestMapping(value = "list.do", method = RequestMethod.POST)
-	@ResponseBody
-	public AjaxResponse list() {
-		AjaxResponse res = new AjaxResponse(200);
-		do {
-			Map<Integer, String> data = new HashMap<Integer, String>();
-			for (Gender g : Gender.values()){
-				data.put(g.getValue(), g.getName());
-			}
-			
-			res.setData(data);
-
-		} while (false);
-
-		return res;
-	}
+        return data;
+    }
 
 }
 

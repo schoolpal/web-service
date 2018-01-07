@@ -352,8 +352,6 @@ describe('/ajax/user/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('mod.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
 	it('enable.do', function() {
@@ -372,8 +370,6 @@ describe('/ajax/user/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('enable.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
 	it('disable.do', function() {
@@ -392,8 +388,6 @@ describe('/ajax/user/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('disable.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
 	it('query.do - verify mod.do', function() {
@@ -429,8 +423,6 @@ describe('/ajax/user/ APIs', function() {
 		jsonData = xhr.responseJSON;
 		resDump('del.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
-		expect(jsonData.data).to.be.empty;
-		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
 

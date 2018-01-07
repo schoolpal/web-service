@@ -15,6 +15,7 @@ import com.schoolpal.web.model.OrgForm;
 import com.schoolpal.web.model.RoleForm;
 import com.schoolpal.web.model.UserForm;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/sys/")
-public class AjaxSystemController {
+public class AjaxSystemController extends AjaxBaseController{
 
     @Autowired
     private UserService userServ;
@@ -129,7 +129,7 @@ public class AjaxSystemController {
         }
 
         if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
-            throw new AjaxException(403, "Cannot delete parent-organization");
+            throw new AjaxException(403, "No permission to delete this organization");
         }
 
         if (!orgServ.delOrgById(id)) {

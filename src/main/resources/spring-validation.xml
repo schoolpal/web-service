@@ -9,6 +9,9 @@
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
 
+    <bean class="org.springframework.validation.beanvalidation.BeanValidationPostProcessor"/>
+    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>

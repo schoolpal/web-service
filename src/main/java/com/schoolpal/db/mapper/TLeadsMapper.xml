@@ -35,7 +35,7 @@
       <if test="statusId != null">
         status_id,
       </if>
-      <if test="orgnizationId != null">
+      <if test="organizationId != null">
         org_id,
       </if>
       <if test="executiveId != null">
@@ -85,8 +85,8 @@
       <if test="statusId != null">
         #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="orgnizationId != null">
-        #{orgnizationId,jdbcType=CHAR},
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=CHAR},
       </if>
       <if test="executiveId != null">
         #{executiveId,jdbcType=CHAR},
@@ -135,8 +135,8 @@
       <if test="statusId != null">
         status_id = #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="orgnizationId != null">
-        org_id = #{orgnizationId,jdbcType=CHAR},
+      <if test="organizationId != null">
+        org_id = #{organizationId,jdbcType=CHAR},
       </if>
       <if test="executiveId != null">
         executive_id = #{executiveId,jdbcType=CHAR},
@@ -245,8 +245,8 @@
     <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
     <result column="status_id" jdbcType="INTEGER" property="statusId" />
     <result column="status_name" jdbcType="VARCHAR" property="statusName" />
-    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
-    <result column="orgnization_name" jdbcType="VARCHAR" property="orgnizationName" />
+    <result column="org_id" jdbcType="CHAR" property="organizationId" />
+    <result column="orgnization_name" jdbcType="VARCHAR" property="organizationName" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
     <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
@@ -291,7 +291,7 @@
     <result column="channel" jdbcType="CHAR" property="channel" />
     <result column="stage" jdbcType="INTEGER" property="stage" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="org_id" jdbcType="CHAR" property="orgnizationId" />
+    <result column="org_id" jdbcType="CHAR" property="organizationId" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
