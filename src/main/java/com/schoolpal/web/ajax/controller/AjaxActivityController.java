@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@Validated
 @RequestMapping("/ajax/mkt/activity")
+@Validated
 public class AjaxActivityController extends AjaxBaseController {
 
     @Autowired

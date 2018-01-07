@@ -4,15 +4,18 @@ import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.db.model.TLeadsSource;
 import com.schoolpal.service.LeadsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/mkt/leads/source")
+@Validated
 public class AjaxLeadsSourceController extends AjaxBaseController{
 
     @Autowired
@@ -20,7 +23,7 @@ public class AjaxLeadsSourceController extends AjaxBaseController{
 
     @AjaxControllerLog
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
-    public Object list(@NotEmpty Integer typeId) {
+    public Object list(@NotNull Integer typeId) {
 
         List<TLeadsSource> sources = leadsServ.queryLeadsSourcesByTypeId(typeId);
 

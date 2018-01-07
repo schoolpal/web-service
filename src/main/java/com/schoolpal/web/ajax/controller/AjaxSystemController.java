@@ -31,6 +31,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/sys/")
+@Validated
 public class AjaxSystemController extends AjaxBaseController{
 
     @Autowired

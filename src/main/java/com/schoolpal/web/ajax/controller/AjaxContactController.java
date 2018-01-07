@@ -22,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/contact")
+@Validated
 public class AjaxContactController extends AjaxBaseController{
 
     @Autowired

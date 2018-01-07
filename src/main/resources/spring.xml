@@ -18,7 +18,7 @@
 
     <import resource="spring-c3p0.xml"/>
     <import resource="spring-transaction.xml"/>
-    <import resource="spring-validation.xml"/>
+    <!--<import resource="spring-validation.xml"/>-->
     <import resource="spring-jdbctemplate.xml"/>
     <import resource="spring-mybatis.xml"/>
     <import resource="spring-shiro.xml"/>

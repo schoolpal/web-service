@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotEmpty;
 
 @RestController
-@Validated
 @RequestMapping("/ajax/mkt/leads")
+@Validated
 public class AjaxLeadsController extends AjaxBaseLeadsController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @AjaxControllerLog
     @RequiresPermissions("1-2")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
-    public Object list(String orgId) throws AjaxException {
+    public Object list(@NotEmpty String orgId) throws AjaxException {
 
         return this.list(orgId, 1);
     }

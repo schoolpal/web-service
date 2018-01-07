@@ -5,6 +5,7 @@ import com.schoolpal.db.model.TFunction;
 import com.schoolpal.service.FunctionService;
 import com.schoolpal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/func")
+@Validated
 public class AjaxFuncController extends AjaxBaseController{
 
     @Autowired

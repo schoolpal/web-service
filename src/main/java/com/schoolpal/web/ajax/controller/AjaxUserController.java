@@ -15,17 +15,20 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @RestController
 @RequestMapping("/ajax/user")
+@Validated
 public class AjaxUserController extends AjaxBaseController{
 
     @Autowired
@@ -147,7 +150,7 @@ public class AjaxUserController extends AjaxBaseController{
 
     @AjaxControllerLog
     @RequestMapping(value = "listFuncsByRole.do", method = RequestMethod.POST)
-    public Object listFuncsByRole(String id) throws AjaxException {
+    public Object listFuncsByRole(@NotEmpty String id) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
 

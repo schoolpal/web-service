@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice(basePackages = {"com.schoolpal.web.ajax.controller"})
 public class AjaxExceptionHandleAdvice {
 //    public class AjaxControllerResponseBodyAdvice implements ResponseBodyAdvice {
@@ -50,7 +52,6 @@ public class AjaxExceptionHandleAdvice {
     }*/
 
     @ExceptionHandler(Exception.class)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object handleException(Exception e){
         logger.debug("###MyControllerAdvice - handleException()");
@@ -60,7 +61,6 @@ public class AjaxExceptionHandleAdvice {
 
     //For wrongly submitting form data to a @RequestBody controller
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e){
         logger.debug("###MyControllerAdvice - handleHttpMediaTypeNotSupportedException()");
@@ -69,7 +69,6 @@ public class AjaxExceptionHandleAdvice {
     }
 
     @ExceptionHandler({UnauthorizedException.class})
-    @ResponseBody
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Object handleUnauthorizedException(NativeWebRequest request, UnauthorizedException e) {
         logger.debug("###MyControllerAdvice - handleUnauthorizedException()");
@@ -78,7 +77,6 @@ public class AjaxExceptionHandleAdvice {
     }
 
     @ExceptionHandler(AjaxException.class)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object handleAjaxException(AjaxException e){
         logger.debug("###MyControllerAdvice - handleException()");
@@ -91,7 +89,6 @@ public class AjaxExceptionHandleAdvice {
     // 2. Submitting invalid form data
     // to a non-@RequestBody controller
     @ExceptionHandler(BindException.class)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object handleBindException(BindException e){
         logger.debug("###MyControllerAdvice - handleBindException()");
@@ -101,11 +98,19 @@ public class AjaxExceptionHandleAdvice {
 
     //For submitting invalid (json/xml) data to a controller
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         logger.debug("###MyControllerAdvice - handleMethodArgumentNotValidException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getBindingResult().getAllErrors());
+        return response;
+    }
+
+    //For submitting invalid (json/xml) data to a controller
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public Object handleConstraintViolationException(ConstraintViolationException e){
+        logger.debug("###MyControllerAdvice - handleMethodArgumentNotValidException()");
+        AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage());
         return response;
     }
 
