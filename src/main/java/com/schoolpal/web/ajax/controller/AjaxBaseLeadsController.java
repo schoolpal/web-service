@@ -10,6 +10,8 @@ import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,7 +25,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     @Autowired
     protected LeadsService leadsServ;
 
-    public Object list(@NotEmpty String orgId, @NotEmpty Integer typeId) {
+    public Object list(@NotEmpty String orgId, @NotNull Integer typeId) {
 
         List<TLeads> leadsList = leadsServ.queryLeadsListByOrgId(orgId, typeId);
 
@@ -37,9 +39,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         return leads;
     }
 
-    public Object add(@Validated({AjaxControllerAdd.class}) TLeads leads,
-                      @Validated({AjaxControllerAdd.class}) TLeadsStudent student,
-                      @Validated({AjaxControllerAdd.class}) TLeadsParent parent) throws AjaxException {
+    public Object add(TLeads leads, TLeadsStudent student, TLeadsParent parent) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
         if (leadsServ.add(leads, student, parent, user.getcId()) == null) {
@@ -49,9 +49,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         return leads.getId();
     }
 
-    public Object mod(@Validated({AjaxControllerMod.class}) TLeads leads,
-                      @Validated({AjaxControllerMod.class}) TLeadsStudent student,
-                      @Validated({AjaxControllerMod.class}) TLeadsParent parent) throws AjaxException {
+    public Object mod(TLeads leads, TLeadsStudent student, TLeadsParent parent) throws AjaxException {
 
         leads.setTypeId(null);
         if (!leadsServ.mod(leads, student, parent)) {

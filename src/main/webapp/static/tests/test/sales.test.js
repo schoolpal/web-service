@@ -7,7 +7,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
     var leads_path = '/web/ajax/mkt/leads/';
     var oppor_path = '/web/ajax/sales/oppor/';
 
-    var user = 'rise-01';
+    var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 
@@ -195,7 +195,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
             dataType: 'json',
             data: {
                 typeId: 2,
-                orgnizationId: org_val,
+                organizationId: org_val,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,
@@ -319,8 +319,6 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var jsonData = xhr.responseJSON;
         resDump('assign.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
-        expect(jsonData.data).to.be.empty;
-        expect(jsonData.detail).to.be.equal('Ok');
     });
 
     it('logout.do', function() {

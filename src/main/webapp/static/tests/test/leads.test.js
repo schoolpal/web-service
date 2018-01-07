@@ -8,7 +8,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
     var leads_path = '/web/ajax/mkt/leads/';
     var contact_path = '/web/ajax/contact/';
 
-    var user = 'rise-01';
+    var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 
@@ -36,6 +36,24 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.data.length).to.be.equal(4);
         salt = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
+    });
+
+    it('login.do - null values', function() {
+        xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, path, 'login.do'),
+            dataType: 'json',
+            data: {
+                loginName: null,
+                mixedPWD: null
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        resDump('login.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
     });
 
     it('login.do', function() {
@@ -170,7 +188,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
             url: buildUrl(host, leads_path, 'add.do'),
             dataType: 'json',
             data: {
-                orgnizationId: org_val,
+                organizationId: org_val,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,
@@ -198,6 +216,23 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
         leads_id_val = jsonData.data;
+    });
+
+    it('query.do - null value', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, leads_path, 'query.do'),
+            dataType: 'json',
+            data: {
+                id: null
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('query.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
     });
 
     it('query.do', function() {
@@ -293,8 +328,6 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var jsonData = xhr.responseJSON;
         resDump('assign.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
-        expect(jsonData.data).to.be.empty;
-        expect(jsonData.detail).to.be.equal('Ok');
     });
 
     it('convert.do', function() {
@@ -313,8 +346,6 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var jsonData = xhr.responseJSON;
         resDump('convert.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
-        expect(jsonData.data).to.be.empty;
-        expect(jsonData.detail).to.be.equal('Ok');
     });
 
     it('contact/approach - list.do', function() {
@@ -429,6 +460,23 @@ describe('/ajax/mkt/leads/ APIs', function() {
         resDump('mod.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.detail).to.be.equal('Ok');
+    });
+
+    it('del.do - null value', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, leads_path, 'del.do'),
+            dataType: 'json',
+            data: {
+                id: null
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('del.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
     });
 
     it('del.do', function() {

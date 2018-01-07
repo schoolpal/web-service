@@ -5,6 +5,8 @@ import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
 import com.schoolpal.db.model.TLeadsStudent;
 import com.schoolpal.service.ActivityService;
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,9 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @RequiresPermissions("1-2-1")
     @RequestMapping(value = "add.do", method = RequestMethod.POST)
     @Override
-    public Object add(TLeads leads, TLeadsStudent student, TLeadsParent parent) throws AjaxException {
+    public Object add(@Validated({AjaxControllerAdd.class}) TLeads leads,
+                      @Validated({AjaxControllerAdd.class}) TLeadsStudent student,
+                      @Validated({AjaxControllerAdd.class}) TLeadsParent parent) throws AjaxException {
 
         leads.setTypeId(1);
         super.add(leads, student, parent);
@@ -57,7 +61,9 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @RequiresPermissions("1-2-2")
     @RequestMapping(value = "mod.do", method = RequestMethod.POST)
     @Override
-    public Object mod(TLeads leads, TLeadsStudent student, TLeadsParent parent) throws AjaxException {
+    public Object mod(@Validated({AjaxControllerMod.class}) TLeads leads,
+                      @Validated({AjaxControllerMod.class}) TLeadsStudent student,
+                      @Validated({AjaxControllerMod.class}) TLeadsParent parent) throws AjaxException {
 
         TLeads target = leadsServ.queryLeadsById(leads.getId());
         if (target == null) {

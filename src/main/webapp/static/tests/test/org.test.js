@@ -74,7 +74,7 @@ describe('/ajax/org/ APIs', function() {
         expect(jsonData.data).to.not.empty;
         // expect(jsonData.detail).to.be.equal('Ok');
     });
-/*
+
     it('listRoles.do - empty value', function() {
 		xhr = $.ajax({
 			async : false,
@@ -309,7 +309,7 @@ describe('/ajax/org/ APIs', function() {
 		resDump('del.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 	});
-*/
+
 	it('logout.do', function() {
 		xhr = $.ajax({
 			async : false,

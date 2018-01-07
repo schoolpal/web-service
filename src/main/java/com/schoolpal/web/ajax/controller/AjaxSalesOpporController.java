@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequestMapping("/ajax/sales/oppor")
@@ -24,7 +25,7 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @RequiresPermissions("2-1")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
     @Override
-    public Object list(@NotEmpty String orgId, @NotEmpty Integer typeId) {
+    public Object list(String orgId, Integer typeId) {
 
         return super.list(orgId, typeId);
     }
@@ -33,7 +34,7 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @RequiresPermissions("2-1")
     @RequestMapping(value = "query.do", method = RequestMethod.POST)
     @Override
-    public Object query(@NotEmpty String id) {
+    public Object query(String id) {
 
         return super.query(id);
     }
@@ -46,7 +47,6 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     public Object add(@Validated({AjaxControllerAdd.class}) TLeads leads,
                       @Validated({AjaxControllerAdd.class}) TLeadsStudent student,
                       @Validated({AjaxControllerAdd.class}) TLeadsParent parent) throws AjaxException {
-
 
         if (leads.getTypeId() != 2 && leads.getTypeId() != 3) {
             throw new AjaxException(411, "Type id cannot be empty");
@@ -72,7 +72,7 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @RequestMapping(value = "del.do", method = RequestMethod.POST)
     @Transactional
     @Override
-    public Object del(@NotEmpty String id) throws AjaxException {
+    public Object del(String id) throws AjaxException {
 
         return super.del(id);
     }
@@ -81,7 +81,7 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @RequiresPermissions("2-1-5")
     @RequestMapping(value = "assign.do", method = RequestMethod.POST)
     @Override
-    public Object assign(@NotEmpty String id, @NotEmpty String assigneeId) throws AjaxException {
+    public Object assign(String id, String assigneeId) throws AjaxException {
 
         return super.assign(id, assigneeId);
     }

@@ -4,6 +4,7 @@ import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class TLeads {
@@ -17,7 +18,7 @@ public class TLeads {
 
     private Integer typeId;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer sourceId;
     private String sourceName;
 
@@ -25,11 +26,11 @@ public class TLeads {
     private String channelId;
     private String channelName;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer stageId;
     private String stageName;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer statusId;
     private String statusName;
 
