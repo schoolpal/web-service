@@ -8,7 +8,8 @@ describe('/ajax/mkt/leads/ APIs', function() {
     var leads_path = '/web/ajax/mkt/leads/';
     var contact_path = '/web/ajax/contact/';
 
-    var user = 'sp-crm';
+    var user = 'rise-01';
+    // var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 

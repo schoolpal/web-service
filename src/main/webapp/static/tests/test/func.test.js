@@ -6,6 +6,7 @@ describe('/ajax/func/ APIs', function() {
 	var func_path = '/web/ajax/func/';
 	var sys_func_path = '/web/ajax/sys/func/';
 
+    // var user = 'rise-01';
 	var user = 'sp-admin';
 	var pass = '123456';
 	var salt = null;

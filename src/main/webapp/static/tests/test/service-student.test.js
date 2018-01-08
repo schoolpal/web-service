@@ -6,8 +6,8 @@ describe('/ajax/service/customer/student APIs', function() {
     var path = '/web/ajax/user/';
     var act_path = '/web/ajax/service/customer/student/';
 
-    // var user = 'rise-01';
-    var user = 'sp-crm';
+    var user = 'rise-01';
+    // var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 

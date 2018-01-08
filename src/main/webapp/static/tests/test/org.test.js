@@ -9,6 +9,7 @@ describe('/ajax/org/ APIs', function() {
 	var org_path = '/web/ajax/org/';
 	var sys_org_path = '/web/ajax/sys/org/';
 
+    // var user = 'rise-01';
 	var user = 'sp-admin';
 	var pass = '123456';
 	var salt = null;

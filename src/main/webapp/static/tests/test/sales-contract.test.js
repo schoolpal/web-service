@@ -6,8 +6,8 @@ describe('/ajax/sales/contract/ APIs', function() {
     var path = '/web/ajax/user/';
     var act_path = '/web/ajax/sales/contract/';
 
-    // var user = 'rise-01';
-    var user = 'sp-crm';
+    var user = 'rise-01';
+    // var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 

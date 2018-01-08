@@ -7,14 +7,14 @@ describe('/ajax/sales/oppor/ APIs', function() {
     var leads_path = '/web/ajax/mkt/leads/';
     var oppor_path = '/web/ajax/sales/oppor/';
 
-    var user = 'sp-crm';
+    var user = 'rise-01';
+    // var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 
     var leads_id_val = "";
     var student_id_val = "";
     var parent_id_val = "";
-    var contact_id_val = "";
     var org_val = 16122700000009;
 
     this.timeout(0);

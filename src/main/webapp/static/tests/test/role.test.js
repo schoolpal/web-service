@@ -7,6 +7,7 @@ describe('/ajax/role/ APIs', function() {
 	var role_path = '/web/ajax/role/';
 	var sys_role_path = '/web/ajax/sys/role/';
 
+    // var user = 'rise-01';
 	var user = 'sp-admin';
 	var pass = '123456';
 	var salt = null;
