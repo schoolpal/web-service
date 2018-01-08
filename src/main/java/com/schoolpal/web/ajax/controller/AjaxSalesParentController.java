@@ -2,8 +2,11 @@ package com.schoolpal.web.ajax.controller;
 
 import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.db.model.TParent;
+import com.schoolpal.validation.group.AjaxControllerAdd;
+import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +37,7 @@ public class AjaxSalesParentController extends AjaxBaseParentController{
     @RequiresPermissions("2-3-4")
     @RequestMapping(value = "add.do", method = RequestMethod.POST)
     @Override
-    public Object add(TParent parent) throws AjaxException {
+    public Object add(@Validated({AjaxControllerAdd.class}) TParent parent) throws AjaxException {
 
         return super.add(parent);
     }
@@ -43,7 +46,7 @@ public class AjaxSalesParentController extends AjaxBaseParentController{
     @RequiresPermissions("2-3-5")
     @RequestMapping(value = "mod.do", method = RequestMethod.POST)
     @Override
-    public Object mod(TParent parent) throws AjaxException {
+    public Object mod(@Validated({AjaxControllerMod.class}) TParent parent) throws AjaxException {
 
         return super.mod(parent);
     }

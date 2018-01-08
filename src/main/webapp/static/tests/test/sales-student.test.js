@@ -6,7 +6,8 @@ describe('/ajax/sales/customer/student APIs', function() {
     var path = '/web/ajax/user/';
     var act_path = '/web/ajax/sales/customer/student/';
 
-    var user = 'rise-01';
+    // var user = 'rise-01';
+    var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 
@@ -34,6 +35,22 @@ describe('/ajax/sales/customer/student APIs', function() {
         expect(jsonData.data.length).to.be.equal(4);
         salt = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
+    });
+
+    it('login.do - null values', function() {
+        xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, path, 'login.do'),
+            dataType: 'json',
+            data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        jsonData = xhr.responseJSON;
+        resDump('login.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
     });
 
     it('login.do', function() {
@@ -72,6 +89,22 @@ describe('/ajax/sales/customer/student APIs', function() {
         org_val = jsonData.data.cOrgId;
     });
 
+    it('add.do - null values', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'add.do'),
+            dataType: 'json',
+            data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('add.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+    });
+
     it('add.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -98,6 +131,22 @@ describe('/ajax/sales/customer/student APIs', function() {
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
         id_val = jsonData.data;
+    });
+
+    it('query.do - null values', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'query.do'),
+            dataType: 'json',
+            data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('query.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
     });
 
     it('query.do', function() {

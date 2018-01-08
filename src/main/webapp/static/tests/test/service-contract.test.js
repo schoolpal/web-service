@@ -6,7 +6,8 @@ describe('/ajax/service/contract/ APIs', function() {
     var path = '/web/ajax/user/';
     var act_path = '/web/ajax/service/contract/';
 
-    var user = 'rise-01';
+    // var user = 'rise-01';
+    var user = 'sp-crm';
     var pass = '123456';
     var salt = null;
 
@@ -72,6 +73,22 @@ describe('/ajax/service/contract/ APIs', function() {
         org_val = jsonData.data.cOrgId;
     });
 
+    it('add.do - null values', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'add.do'),
+            dataType: 'json',
+            data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('add.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+    });
+
     it('add.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -115,6 +132,22 @@ describe('/ajax/service/contract/ APIs', function() {
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
         id_val = jsonData.data;
+    });
+
+    it('query.do - null values', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'query.do'),
+            dataType: 'json',
+            data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('query.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
     });
 
     it('query.do', function() {

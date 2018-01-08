@@ -43,7 +43,7 @@ public abstract class AjaxBaseParentController extends AjaxBaseController{
         return parents;
     }
 
-    public Object add(@Validated({AjaxControllerAdd.class}) TParent parent) throws AjaxException {
+    public Object add(TParent parent) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
 
@@ -56,7 +56,7 @@ public abstract class AjaxBaseParentController extends AjaxBaseController{
         return parent.getId();
     }
 
-    public Object mod(@Validated({AjaxControllerMod.class}) TParent parent) throws AjaxException {
+    public Object mod(TParent parent) throws AjaxException {
 
         TParent target = parServ.queryParentById(parent.getId());
         if (target == null) {

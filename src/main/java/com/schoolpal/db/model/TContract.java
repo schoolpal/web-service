@@ -5,6 +5,7 @@ import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,16 +24,16 @@ public class TContract {
 
     private Date endDate;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private BigDecimal oriPrice;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private BigDecimal discPrice;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private BigDecimal finalPrice;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private BigDecimal paid;
 
     @NotEmpty(groups = {AjaxControllerAdd.class})
@@ -40,7 +41,7 @@ public class TContract {
 
     private Integer courseOriId;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer courseSesId;
 
     private String courseHours;
@@ -54,14 +55,14 @@ public class TContract {
     @NotEmpty(groups = {AjaxControllerAdd.class})
     private String stuName;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer stuGenderId;
 
     private Integer stuIdType;
 
     private String stuIdCode;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Date stuBirthday;
 
     @NotEmpty(groups = {AjaxControllerAdd.class})

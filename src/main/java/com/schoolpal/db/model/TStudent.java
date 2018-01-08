@@ -5,6 +5,7 @@ import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class TStudent {
@@ -17,14 +18,14 @@ public class TStudent {
     @NotEmpty(groups = {AjaxControllerAdd.class})
     private String name;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer genderId;
 
     private Integer idType;
 
     private String idCode;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
+    @NotNull(groups = {AjaxControllerAdd.class})
     private Date birthday;
 
     private String schoolGrade;

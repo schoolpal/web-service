@@ -54,7 +54,7 @@ public abstract class AjaxBaseStudentController extends AjaxBaseController{
         return students;
     }
 
-    public Object add(@Validated({AjaxControllerAdd.class}) TStudent student) throws AjaxException {
+    public Object add(TStudent student) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
 
@@ -67,7 +67,7 @@ public abstract class AjaxBaseStudentController extends AjaxBaseController{
         return student.getId();
     }
 
-    public Object mod(@Validated({AjaxControllerMod.class}) TStudent student) throws AjaxException {
+    public Object mod(TStudent student) throws AjaxException {
 
         TStudent target = stuServ.queryStudentById(student.getId());
         if (target == null) {

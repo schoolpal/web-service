@@ -49,7 +49,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
     }
 
     @Transactional
-    public Object add(@Validated({AjaxControllerAdd.class}) TContract contract) throws AjaxException {
+    public Object add(TContract contract) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
 
@@ -82,7 +82,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
         return contract.getId();
     }
 
-    public Object mod(@Validated({AjaxControllerMod.class}) TContract contract) throws AjaxException {
+    public Object mod(TContract contract) throws AjaxException {
 
         TContract target = contractServ.queryContractById(contract.getId());
         if (target == null) {
