@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
+<configuration status="TRACE">
     <properties>
-        <property name="LOG_HOME">${web:rootDir}/logs</property>
-        <property name="FILE_NAME">run.log</property>
+        <property name="LOG_HOME">${sys:catalina.base}/logs</property>
+        <property name="FILE_NAME">schoolpal.log</property>
     </properties>
+
     <appenders>
-        <Console name="console" target="SYSTEM_OUT">
+        <Console name="CONSOLE_OUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
+
+        <RollingFile name="ROLLING_FILE" fileName="${LOG_HOME}/${FILE_NAME}" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{MM-dd-yyyy}-%i.log" immediateFlush="true">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
     </appenders>
 
     <Loggers>
-        <Root level="Info">
-            <AppenderRef ref="console"/>
+        <Logger name="FILE_LOGGER" level="DEBUG">
+            <AppenderRef ref="ROLLING_FILE" />
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE_OUT"/>
         </Root>
     </Loggers>
 </configuration>

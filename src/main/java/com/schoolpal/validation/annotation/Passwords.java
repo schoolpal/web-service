@@ -21,15 +21,16 @@ public @interface Passwords {
     String message() default "Passwords cannot be same!";
 
     //分组
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
     //负载
-    Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 
     //指定多个时使用
-    @Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
+    @Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
     @Retention(RUNTIME)
     @Documented
     @interface List {
         Passwords[] value();
-    } }
+    }
+}

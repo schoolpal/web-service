@@ -19,7 +19,7 @@
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basenames">
             <list>
-                <value>classpath:ValidationMessages.properties</value>
+                <value>classpath:error-messages.properties</value>
             </list>
         </property>
         <property name="useCodeAsDefaultMessage" value="false"/>
