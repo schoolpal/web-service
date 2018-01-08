@@ -11,6 +11,7 @@
         </Console>
 
         <RollingFile name="ROLLING_FILE" fileName="${LOG_HOME}/${FILE_NAME}" filePattern="${LOG_HOME}/$${date:yyyy-MM}/${FILE_NAME}-%d{MM-dd-yyyy}-%i.log" immediateFlush="true">
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
@@ -20,11 +21,9 @@
     </appenders>
 
     <Loggers>
-        <Logger name="FILE_LOGGER" level="DEBUG">
-            <AppenderRef ref="ROLLING_FILE" />
-        </Logger>
         <Root level="INFO">
             <AppenderRef ref="CONSOLE_OUT"/>
+            <AppenderRef ref="ROLLING_FILE"/>
         </Root>
     </Loggers>
 </configuration>
