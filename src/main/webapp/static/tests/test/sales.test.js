@@ -275,7 +275,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
             dataType: 'json',
             data: {
                 id: leads_id_val,
-                orgnizationId: org_val,
+                organizationId: org_val,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,

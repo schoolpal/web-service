@@ -56,12 +56,12 @@ public class AjaxOrgController extends AjaxBaseController{
         TUser user = userServ.getCachedUser();
 
         if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
-            throw new AjaxException(402, "No permission to query orgnization");
+            throw new AjaxException(402, "No permission to query organization");
         }
 
         List<TUser> users = userServ.queryUsersByOrgId(id);
         if (users == null) {
-            throw new AjaxException(500, "Cannot find orgnization");
+            throw new AjaxException(500, "Cannot find organization");
         }
 
         return users;
@@ -75,7 +75,7 @@ public class AjaxOrgController extends AjaxBaseController{
 
         List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
         if (!orgList.contains(id)) {
-            throw new AjaxException(402, "No permission to query orgnization");
+            throw new AjaxException(402, "No permission to query organization");
         }
 
         TOrg org = orgServ.queryOrgById(id);

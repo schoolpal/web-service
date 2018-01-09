@@ -187,7 +187,7 @@
         a.name AS channel_name,
         stage.name AS stage_name,
         status.name AS status_name,
-        o.c_name AS orgnization_name
+        o.c_name AS organization_name
     from t_leads AS l
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
@@ -212,7 +212,7 @@
         a.name AS channel_name,
         stage.name AS stage_name,
         status.name AS status_name,
-        o.c_name AS orgnization_name
+        o.c_name AS organization_name
     FROM t_leads AS l
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
@@ -246,7 +246,7 @@
     <result column="status_id" jdbcType="INTEGER" property="statusId" />
     <result column="status_name" jdbcType="VARCHAR" property="statusName" />
     <result column="org_id" jdbcType="CHAR" property="organizationId" />
-    <result column="orgnization_name" jdbcType="VARCHAR" property="organizationName" />
+    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
     <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />

@@ -88,8 +88,8 @@ public class TActivity {
 		return organizationId;
 	}
 
-	public void setOrganizationId(String orgnization_id) {
-		this.organizationId = orgnization_id;
+	public void setOrganizationId(String organization_id) {
+		this.organizationId = organization_id;
 	}
 
 	public String getName() {

@@ -72,12 +72,12 @@ public class AjaxSystemController extends AjaxBaseController{
         }
 
         if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), form.getParentId())) {
-            throw new AjaxException(404, "No permission to add orgnization under parent orgnization");
+            throw new AjaxException(404, "No permission to add organization under parent organization");
         }
 
         String id = orgServ.addOrg(form, parentOrg.getcRootId(), user.getcLoginName());
         if (id == null) {
-            throw new AjaxException(500, "Failed to add orgnization");
+            throw new AjaxException(500, "Failed to add organization");
         }
 
         return id;

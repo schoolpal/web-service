@@ -194,7 +194,7 @@ describe('/ajax/sales/customer/student APIs', function() {
             url: buildUrl(host, act_path, 'list.do'),
             dataType: 'json',
             data: {
-                orgnizationId: org_val
+                organizationId: org_val
             }
         });
 
