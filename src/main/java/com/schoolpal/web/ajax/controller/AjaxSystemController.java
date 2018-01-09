@@ -15,7 +15,9 @@ import com.schoolpal.web.model.OrgForm;
 import com.schoolpal.web.model.RoleForm;
 import com.schoolpal.web.model.UserForm;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+
 import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +34,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/ajax/sys/")
 @Validated
-public class AjaxSystemController extends AjaxBaseController{
+public class AjaxSystemController extends AjaxBaseController {
 
     @Autowired
     private UserService userServ;
@@ -367,6 +369,11 @@ public class AjaxSystemController extends AjaxBaseController{
             throw new AjaxException(405, "No permission to add user under the organization");
         }
 
+        String[] roleIds = form.getRoles().split(",");
+        if (roleIds.length > 1 && roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
+            throw new AjaxException(405, "System role cannot coexist with other roles");
+        }
+
         TUser newUser = this.userFormToTUser(form);
         newUser.setcOrgId(org.getcId());
         newUser.setcOrgRootId(org.getcRootId());
@@ -376,17 +383,10 @@ public class AjaxSystemController extends AjaxBaseController{
             throw new AjaxException(500, "Failed to add user");
         }
 
-        String[] roleIds = form.getRoles().split(",");
-        if (roleIds.length > 1) {
-            if (roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
-                throw new AjaxException(405, "System role cannot coexist with other roles");
-            }
-
-            for (String roleId : roleIds) {
-                if (roleServ.roleExists(roleId)) {
-                    if (!userServ.addUserRole(id, roleId)) {
-                        throw new AjaxException(500, "Failed to add user-role relation");
-                    }
+        for (String roleId : roleIds) {
+            if (roleServ.roleExists(roleId)) {
+                if (!userServ.addUserRole(id, roleId)) {
+                    throw new AjaxException(500, "Failed to add user-role relation");
                 }
             }
         }
@@ -399,6 +399,11 @@ public class AjaxSystemController extends AjaxBaseController{
     @RequestMapping(value = "user/mod.do", method = RequestMethod.POST)
     @Transactional
     public Object modUser(@Validated({AjaxControllerMod.class}) UserForm form) throws AjaxException {
+
+        String[] roleIds = form.getRoles().split(",");
+        if (roleIds.length > 1 && roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
+            throw new AjaxException(403, "System role cannot coexist with other roles");
+        }
 
         TUser user = userServ.getCachedUser();
         TUser targetUser = userServ.queryUserById(form.getUserId());
@@ -424,18 +429,11 @@ public class AjaxSystemController extends AjaxBaseController{
             throw new AjaxException(500, "Failed to mod user");
         }
 
-        String[] roleIds = form.getRoles().split(",");
-        if (roleIds.length > 1) {
-            userServ.delUserRolesByUserId(modUser.getcId());
-            if (roleServ.systemRoleCoexistWithOtherRoles(roleIds)) {
-                throw new AjaxException(405, "System role cannot coexist with other roles");
-            }
-
-            for (String roleId : roleIds) {
-                if (roleServ.roleExists(roleId)) {
-                    if (!userServ.addUserRole(modUser.getcId(), roleId)) {
-                        throw new AjaxException(500, "Failed to add user-role relation");
-                    }
+        userServ.delUserRolesByUserId(modUser.getcId());
+        for (String roleId : roleIds) {
+            if (roleServ.roleExists(roleId)) {
+                if (!userServ.addUserRole(modUser.getcId(), roleId)) {
+                    throw new AjaxException(500, "Failed to add user-role relation");
                 }
             }
         }
