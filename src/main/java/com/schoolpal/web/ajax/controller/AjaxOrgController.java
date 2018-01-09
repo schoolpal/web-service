@@ -82,7 +82,7 @@ public class AjaxOrgController extends AjaxBaseController{
         if (org == null) {
             throw new AjaxException(500, "Cannot find organization");
         }
-        org.setParentOrg(orgServ.queryOrgById(org.getcId()));
+        org.setParentOrg(orgServ.queryOrgById(org.getcParentId()));
 
         return org;
     }
