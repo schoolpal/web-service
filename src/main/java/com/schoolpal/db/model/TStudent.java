@@ -20,6 +20,7 @@ public class TStudent {
 
     @NotNull(groups = {AjaxControllerAdd.class})
     private Integer genderId;
+    private String genderText;
 
     private Integer idType;
 
@@ -70,15 +71,18 @@ public class TStudent {
     public Integer getGenderId() {
         return genderId;
     }
-    public String getGender() {
-        return Gender.valueOf(genderId).getName();
-    }
-
     public void setGenderId(Integer genderId) {
         this.genderId = genderId == null ? null : genderId;
+        this.genderText = Gender.valueOf(genderId).getName();
     }
-    public void setGender(String gender) {
-        this.genderId = Gender.nameOf(gender.trim()).getValue();
+
+    public String getGenderText() {
+        return genderText;
+    }
+
+    public void setGenderText(String genderText) {
+        this.genderText = genderText;
+        this.genderId = Gender.nameOf(genderText.trim()).getValue();
     }
 
     public Integer getIdType() {
