@@ -114,7 +114,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
-                stuSchool_name: 'school name',
+                stuSchoolName: 'school name',
                 parName: 'parent name',
                 parCellphone: '13800010002',
                 parWechat: '123456',

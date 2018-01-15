@@ -10,7 +10,10 @@ public interface TContractMapper {
     int insertOne(TContract record);
 
     TContract selectOneById(String id);
-    List<TContract> selectManyByExecutiveId(String id);
+
+    default List<TContract> selectManyByExecutiveId(String id) {
+        return null;
+    }
 
     int updateOne(TContract record);
 }

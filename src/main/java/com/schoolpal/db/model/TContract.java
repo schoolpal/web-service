@@ -87,10 +87,13 @@ public class TContract {
     private String relation;
 
     private String orgId;
+    private String orgName;
 
     private String creatorId;
+    private String creatorName;
 
     private String executiveId;
+    private String executiveName;
 
     private Date createTime;
 
@@ -362,6 +365,30 @@ public class TContract {
 
     public void setExecutiveId(String executiveId) {
         this.executiveId = executiveId == null ? null : executiveId.trim();
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getExecutiveName() {
+        return executiveName;
+    }
+
+    public void setExecutiveName(String executiveName) {
+        this.executiveName = executiveName;
     }
 
     public Date getCreateTime() {
