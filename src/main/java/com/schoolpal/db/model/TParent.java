@@ -16,6 +16,7 @@ public class TParent {
     private String name;
 
     private Integer genderId;
+    private String genderText;
 
     @NotEmpty(groups = {AjaxControllerAdd.class})
     private String cellphone;
@@ -59,17 +60,20 @@ public class TParent {
     public Integer getGenderId() {
         return genderId;
     }
-    public String getGender() {
-        return Gender.valueOf(genderId).getName();
-    }
 
     public void setGenderId(Integer genderId) {
-        this.genderId = genderId == null ? null : genderId;
-    }
-    public void setGender(String gender) {
-        this.genderId = Gender.nameOf(gender.trim()).getValue();
+        this.genderId = genderId;
+        this.genderText = Gender.valueOf(genderId).getName();
     }
 
+    public String getGenderText() {
+        return genderText;
+    }
+
+    public void setGenderText(String genderText) {
+        this.genderText = genderText;
+        this.genderId = Gender.nameOf(genderText.trim()).getValue();
+    }
     public String getCellphone() {
         return cellphone;
     }

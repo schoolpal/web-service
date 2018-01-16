@@ -1,9 +1,6 @@
 package com.schoolpal.web.ajax.controller;
 
-import com.schoolpal.db.model.TContract;
-import com.schoolpal.db.model.TParent;
-import com.schoolpal.db.model.TStudent;
-import com.schoolpal.db.model.TUser;
+import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
@@ -28,6 +25,8 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
     protected ParentService parentServ;
     @Autowired
     protected RelationService relationServ;
+    @Autowired
+    protected CourseSessionService courseSessionServ;
 
     public Object query(@NotEmpty String id) throws AjaxException {
 
@@ -73,6 +72,14 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
         contract.setStuId(stu.getId());
         contract.setParId(par.getId());
+
+        TCourseSession courseSession = courseSessionServ.queryCourseSessionById(contract.getCourseId());
+        if(courseSession == null){
+            throw new AjaxException(504, "Failed to find course session");
+        }
+        contract.setCourseName(courseSession.getName());
+        contract.setCourseType(courseSession.getTypeName());
+
         contract.setCreatorId(user.getcId());
         contract.setExecutiveId(user.getcId());
         if (contractServ.addContract(contract) == null) {

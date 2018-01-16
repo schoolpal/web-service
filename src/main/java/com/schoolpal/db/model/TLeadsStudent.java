@@ -79,9 +79,6 @@ public class TLeadsStudent {
 		this.genderText = genderText;
         this.genderId = Gender.nameOf(genderText.trim()).getValue();
 	}
-    public void setStudentGender(String genderText) {
-    	this.setGenderText(genderText);
-    }
 
 	public Integer getIdType() {
         return idType;

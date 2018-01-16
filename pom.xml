@@ -67,7 +67,13 @@
                         <overwrite>true</overwrite>
                         <configurationFile>${basedir}/src/main/resources/mybatis-generator.xml</configurationFile>
                     </configuration>
-                </plugin>
+                    <dependencies>
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>5.1.37</version>
+                        </dependency>
+                    </dependencies>                </plugin>
                 <plugin>
                     <groupId>org.apache.tomcat.maven</groupId>
                     <artifactId>tomcat7-maven-plugin</artifactId>

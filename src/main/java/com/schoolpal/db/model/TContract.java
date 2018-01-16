@@ -39,14 +39,15 @@ public class TContract {
     @NotEmpty(groups = {AjaxControllerAdd.class})
     private String courseType;
 
-    private Integer courseOriId;
+    @NotEmpty(groups = {AjaxControllerAdd.class})
+    private String courseId;
+    private String courseName;
 
     @NotNull(groups = {AjaxControllerAdd.class})
-    private Integer courseSesId;
+    private Double courseHours;
 
-    private String courseHours;
-
-    private String courseTimes;
+    @NotNull(groups = {AjaxControllerAdd.class})
+    private Integer courseTimes;
 
     private String stuId;
 
@@ -57,6 +58,7 @@ public class TContract {
 
     @NotNull(groups = {AjaxControllerAdd.class})
     private Integer stuGenderId;
+    private String stuGenderText;
 
     private Integer stuIdType;
 
@@ -177,36 +179,36 @@ public class TContract {
         this.courseType = courseType == null ? null : courseType.trim();
     }
 
-    public Integer getCourseOriId() {
-        return courseOriId;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourseOriId(Integer courseOriId) {
-        this.courseOriId = courseOriId;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public Integer getCourseSesId() {
-        return courseSesId;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCourseSesId(Integer courseSesId) {
-        this.courseSesId = courseSesId;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public String getCourseHours() {
+    public Double getCourseHours() {
         return courseHours;
     }
 
-    public void setCourseHours(String courseHours) {
-        this.courseHours = courseHours == null ? null : courseHours.trim();
+    public void setCourseHours(Double courseHours) {
+        this.courseHours = courseHours;
     }
 
-    public String getCourseTimes() {
+    public Integer getCourseTimes() {
         return courseTimes;
     }
 
-    public void setCourseTimes(String courseTimes) {
-        this.courseTimes = courseTimes == null ? null : courseTimes.trim();
+    public void setCourseTimes(Integer courseTimes) {
+        this.courseTimes = courseTimes;
     }
 
     public String getStuId() {
@@ -236,15 +238,18 @@ public class TContract {
     public Integer getStuGenderId() {
         return stuGenderId;
     }
-    public String getStuGender() {
-        return Gender.valueOf(stuGenderId).getName();
-    }
-
     public void setStuGenderId(Integer stuGenderId) {
         this.stuGenderId = stuGenderId;
+        this.stuGenderText = Gender.valueOf(stuGenderId).getName();
     }
-    public void setStuGender(String stuGender) {
-        this.stuGenderId = Gender.nameOf(stuGender.trim()).getValue();
+
+    public String getStuGenderText() {
+        return stuGenderText;
+    }
+
+    public void setStuGenderText(String stuGenderText) {
+        this.stuGenderText = stuGenderText;
+        this.stuGenderId = Gender.nameOf(stuGenderText.trim()).getValue();
     }
 
     public Integer getStuIdType() {

@@ -3,7 +3,7 @@
 <mapper namespace="com.schoolpal.db.inf.TContractMapper">
 
     <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select *, cu.c_loginname as creator_name, eu.c_loginname as executive_name, o.c_name as org_name
+    select *, cu.c_realname as creator_name, eu.c_realname as executive_name, o.c_name as org_name
     from t_contract as c
     left join t_user as cu on c.creator_id = cu.c_id
     left join t_user as eu on c.executive_id = eu.c_id
@@ -11,7 +11,7 @@
     where id = #{id,jdbcType=CHAR}
   </select>
     <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select c.*, cu.c_loginname as creator_name, eu.c_loginname as executive_name, o.c_name as org_name
+    select c.*, cu.c_realname as creator_name, eu.c_realname as executive_name, o.c_name as org_name
     from t_contract as c
     left join t_user as cu on c.creator_id = cu.c_id
     left join t_user as eu on c.executive_id = eu.c_id
@@ -52,14 +52,14 @@
             <if test="paid != null">
                 paid,
             </if>
+            <if test="courseId != null">
+                course_id,
+            </if>
             <if test="courseType != null">
                 course_type,
             </if>
-            <if test="courseOriId != null">
-                course_ori_id,
-            </if>
-            <if test="courseSesId != null">
-                course_ses_id,
+            <if test="courseName != null">
+                course_name,
             </if>
             <if test="courseHours != null">
                 course_hours,
@@ -156,14 +156,14 @@
             <if test="paid != null">
                 #{paid,jdbcType=DECIMAL},
             </if>
+            <if test="courseId != null">
+                #{courseId,jdbcType=VARCHAR},
+            </if>
             <if test="courseType != null">
                 #{courseType,jdbcType=VARCHAR},
             </if>
-            <if test="courseOriId != null">
-                #{courseOriId,jdbcType=INTEGER},
-            </if>
-            <if test="courseSesId != null">
-                #{courseSesId,jdbcType=INTEGER},
+            <if test="courseName != null">
+                #{courseName,jdbcType=VARCHAR},
             </if>
             <if test="courseHours != null">
                 #{courseHours,jdbcType=VARCHAR},
@@ -260,14 +260,14 @@
             <if test="paid != null">
                 paid = #{paid,jdbcType=DECIMAL},
             </if>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=VARCHAR},
+            </if>
             <if test="courseType != null">
                 course_type = #{courseType,jdbcType=VARCHAR},
             </if>
-            <if test="courseOriId != null">
-                course_ori_id = #{courseOriId,jdbcType=INTEGER},
-            </if>
-            <if test="courseSesId != null">
-                course_ses_id = #{courseSesId,jdbcType=INTEGER},
+            <if test="courseName != null">
+                course_Name = #{courseName,jdbcType=VARCHAR},
             </if>
             <if test="courseHours != null">
                 course_hours = #{courseHours,jdbcType=VARCHAR},
@@ -350,9 +350,9 @@
         <result column="disc_price" jdbcType="DECIMAL" property="discPrice"/>
         <result column="final_price" jdbcType="DECIMAL" property="finalPrice"/>
         <result column="paid" jdbcType="DECIMAL" property="paid"/>
+        <result column="course_id" jdbcType="INTEGER" property="courseId"/>
         <result column="course_type" jdbcType="VARCHAR" property="courseType"/>
-        <result column="course_ori_id" jdbcType="INTEGER" property="courseOriId"/>
-        <result column="course_ses_id" jdbcType="INTEGER" property="courseSesId"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
         <result column="course_hours" jdbcType="VARCHAR" property="courseHours"/>
         <result column="course_times" jdbcType="VARCHAR" property="courseTimes"/>
         <result column="stu_id" jdbcType="CHAR" property="stuId"/>
@@ -381,8 +381,8 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid, course_type, 
-    course_ori_id, course_ses_id, course_hours, course_times, stu_id, stu_code, stu_name, stu_gender, 
+    id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid,
+    course_id, course_type, course_name, course_hours, course_times, stu_id, stu_code, stu_name, stu_gender,
     stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name, 
     par_cellphone, par_wechat, par_email, par_address, relation, org_id, creator_id, 
     executive_id, create_time
