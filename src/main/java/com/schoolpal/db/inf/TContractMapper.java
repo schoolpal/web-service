@@ -11,9 +11,8 @@ public interface TContractMapper {
 
     TContract selectOneById(String id);
 
-    default List<TContract> selectManyByExecutiveId(String id) {
-        return null;
-    }
+    List<TContract> selectManyByExecutiveId(String id);
+    List<TContract> selectManyByStuId(String id);
 
     int updateOne(TContract record);
 }

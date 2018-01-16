@@ -42,7 +42,18 @@ public class ContractService {
 		}
 		return ret;
 	}
-	
+
+	public List<TContract> queryContractsByStudentId(String id){
+		List<TContract> ret = null;
+		try{
+			ret = contractDao.selectManyByStuId(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+
 	public String addContract(TContract contract){
 		String ret = null;
 		try{

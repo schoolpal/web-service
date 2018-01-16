@@ -26,6 +26,15 @@ public class AjaxServiceContractController extends AjaxBaseContractController {
 
     @AjaxControllerLog
     @RequiresPermissions("3-1")
+    @RequestMapping(value = "queryListByStudentId.do", method = RequestMethod.POST)
+    @Override
+    public Object queryListByStudentId(String id) {
+
+        return super.list();
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("3-1")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
     @Override
     public Object list() {

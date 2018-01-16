@@ -13,6 +13,7 @@ describe('/ajax/sales/contract/ APIs', function() {
 
     var id_val = 0;
     var org_val = 0;
+    var stu_id_val = 0;
 
     var date = new Date()
     var codeVal = date.getTime();
@@ -165,6 +166,26 @@ describe('/ajax/sales/contract/ APIs', function() {
         expect(xhr.status).to.be.equal(200);
         var jsonData = xhr.responseJSON;
         resDump('query.do', jsonData);
+        expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.data).to.not.empty;
+        expect(jsonData.detail).to.be.equal('Ok');
+        stu_id_val = jsonData.data.stuId;
+    });
+
+    it('queryListByStudentId.do', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, act_path, 'queryListByStudentId.do'),
+            dataType: 'json',
+            data: {
+                id: stu_id_val
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('list.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');

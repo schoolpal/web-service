@@ -3,25 +3,45 @@
 <mapper namespace="com.schoolpal.db.inf.TContractMapper">
 
     <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select *, cu.c_realname as creator_name, eu.c_realname as executive_name, o.c_name as org_name
-    from t_contract as c
-    left join t_user as cu on c.creator_id = cu.c_id
-    left join t_user as eu on c.executive_id = eu.c_id
-    left join t_org as o on c.org_id = o.c_id
-    where id = #{id,jdbcType=CHAR}
-  </select>
+        SELECT
+            c.*,
+            cu.c_realname AS creator_name,
+            eu.c_realname AS executive_name,
+            o.c_name      AS org_name
+        FROM t_contract AS c
+            LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
+            LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
+            LEFT JOIN t_org AS o ON c.org_id = o.c_id
+        WHERE c.id = #{id,jdbcType=CHAR}
+    </select>
     <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select c.*, cu.c_realname as creator_name, eu.c_realname as executive_name, o.c_name as org_name
-    from t_contract as c
-    left join t_user as cu on c.creator_id = cu.c_id
-    left join t_user as eu on c.executive_id = eu.c_id
-    left join t_org as o on c.org_id = o.c_id
-    where executive_id = #{id,jdbcType=CHAR}
-  </select>
+        SELECT
+            c.*,
+            cu.c_realname AS creator_name,
+            eu.c_realname AS executive_name,
+            o.c_name      AS org_name
+        FROM t_contract AS c
+            LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
+            LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
+            LEFT JOIN t_org AS o ON c.org_id = o.c_id
+        WHERE c.executive_id = #{id,jdbcType=CHAR}
+    </select>
+    <select id="selectManyByStuId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+            c.*,
+            cu.c_realname AS creator_name,
+            eu.c_realname AS executive_name,
+            o.c_name      AS org_name
+        FROM t_contract AS c
+            LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
+            LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
+            LEFT JOIN t_org AS o ON c.org_id = o.c_id
+        WHERE c.stu_id = #{id,jdbcType=CHAR}
+    </select>
     <delete id="deleteOneById" parameterType="java.lang.String">
-    delete from t_contract
-    where id = #{id,jdbcType=CHAR}
-  </delete>
+        DELETE FROM t_contract
+        WHERE id = #{id,jdbcType=CHAR}
+    </delete>
     <insert id="insertOne" parameterType="com.schoolpal.db.model.TContract">
         insert into t_contract
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -391,10 +411,10 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid,
-    course_id, course_type, course_name, course_hours, course_times, stu_id, stu_code, stu_name, stu_gender,
-    stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name, 
-    par_cellphone, par_wechat, par_email, par_address, relation, org_id, creator_id, 
-    executive_id, create_time
-  </sql>
+        id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid,
+        course_id, course_type, course_name, course_hours, course_times, stu_id, stu_code, stu_name, stu_gender,
+        stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name,
+        par_cellphone, par_wechat, par_email, par_address, relation, org_id, creator_id,
+        executive_id, create_time
+    </sql>
 </mapper>

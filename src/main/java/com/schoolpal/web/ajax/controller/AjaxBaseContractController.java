@@ -38,6 +38,13 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
         return contract;
     }
 
+    public Object queryListByStudentId(@NotEmpty String id) {
+
+        List<TContract> contracts = contractServ.queryContractsByStudentId(id);
+
+        return contracts;
+    }
+
     public Object list() {
 
         TUser user = userServ.getCachedUser();
