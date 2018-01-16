@@ -118,6 +118,9 @@
             <if test="orgId != null">
                 org_id,
             </if>
+            <if test="oriId != null">
+                ori_id,
+            </if>
             <if test="creatorId != null">
                 creator_id,
             </if>
@@ -221,6 +224,9 @@
             </if>
             <if test="orgId != null">
                 #{orgId,jdbcType=CHAR},
+            </if>
+            <if test="oriId != null">
+                #{oriId,jdbcType=CHAR},
             </if>
             <if test="creatorId != null">
                 #{creatorId,jdbcType=CHAR},
@@ -326,6 +332,9 @@
             <if test="orgId != null">
                 org_id = #{orgId,jdbcType=CHAR},
             </if>
+            <if test="oriId != null">
+                ori_id = #{oriId,jdbcType=CHAR},
+            </if>
             <if test="creatorId != null">
                 creator_id = #{creatorId,jdbcType=CHAR},
             </if>
@@ -373,6 +382,7 @@
         <result column="par_address" jdbcType="VARCHAR" property="parAddress"/>
         <result column="relation" jdbcType="VARCHAR" property="relation"/>
         <result column="org_id" jdbcType="CHAR" property="orgId"/>
+        <result column="ori_id" jdbcType="CHAR" property="oriId"/>
         <result column="creator_id" jdbcType="CHAR" property="creatorId"/>
         <result column="executive_id" jdbcType="CHAR" property="executiveId"/>
         <result column="org_name" jdbcType="CHAR" property="orgName"/>

@@ -91,6 +91,8 @@ public class TContract {
     private String orgId;
     private String orgName;
 
+    private String oriId;
+
     private String creatorId;
     private String creatorName;
 
@@ -378,6 +380,14 @@ public class TContract {
 
     public void setOrgName(String orgName) {
         this.orgName = orgName;
+    }
+
+    public String getOriId() {
+        return oriId;
+    }
+
+    public void setOriId(String oriId) {
+        this.oriId = oriId;
     }
 
     public String getCreatorName() {

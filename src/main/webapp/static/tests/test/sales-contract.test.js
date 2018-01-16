@@ -122,6 +122,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 parAddress: 'parent addr',
                 relation: '父子',
                 orgId: org_val,
+                oriId: '16122700000000',
             }
         });
 
