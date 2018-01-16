@@ -25,6 +25,15 @@ public class AjaxSalesParentController extends AjaxBaseParentController{
     }
 
     @AjaxControllerLog
+    @RequiresPermissions("3-2")
+    @RequestMapping(value = "queryListByStudentId.do", method = RequestMethod.POST)
+    @Override
+    public Object queryListByStudentId(String id) throws AjaxException {
+
+        return super.queryListByStudentId(id);
+    }
+
+    @AjaxControllerLog
     @RequiresPermissions("2-3")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
     @Override

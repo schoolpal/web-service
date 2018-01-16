@@ -35,6 +35,13 @@ public abstract class AjaxBaseParentController extends AjaxBaseController{
         return parent;
     }
 
+    public Object queryListByStudentId(@NotEmpty String id) throws AjaxException {
+
+        List<TParent> parents = parServ.queryParentsByStudentId(id);
+
+        return parents;
+    }
+
     public Object list() throws AjaxException {
 
         TUser user = userServ.getCachedUser();

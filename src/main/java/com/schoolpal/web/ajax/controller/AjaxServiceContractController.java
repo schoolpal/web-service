@@ -30,7 +30,7 @@ public class AjaxServiceContractController extends AjaxBaseContractController {
     @Override
     public Object queryListByStudentId(String id) {
 
-        return super.list();
+        return super.queryListByStudentId(id);
     }
 
     @AjaxControllerLog

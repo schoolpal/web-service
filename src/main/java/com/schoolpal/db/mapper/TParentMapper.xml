@@ -17,6 +17,12 @@
     from t_parent
     where id = #{cellphone,jdbcType=CHAR}
   </select>
+  <select id="selectManyByStudentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select p.*, m.stu_id
+    from t_parent as p
+    right join t_par_stu as m on p.id = m.par_id
+    where m.stu_id = #{id,jdbcType=CHAR}
+  </select>
   <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_parent
     where id = #{id,jdbcType=CHAR}

@@ -12,6 +12,7 @@ public interface TParentMapper {
     TParent selectOneById(String id);
     List<TParent> selectManyByExecutiveId(String id);
     List<TParent> selectManyByCellphone(String cellphone);
+    List<TParent> selectManyByStudentId(String id);
 
     int updateOne(TParent record);
 

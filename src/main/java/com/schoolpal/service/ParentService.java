@@ -42,7 +42,18 @@ public class ParentService {
 		}
 		return ret;
 	}
-	
+
+	public List<TParent> queryParentsByStudentId(String id){
+		List<TParent> ret = null;
+		try{
+			ret = parentDao.selectManyByStudentId(id);
+		}catch(Exception e){
+			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
+			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
+		}
+		return ret;
+	}
+
 	public String addParent(TParent parent){
 		String ret = null;
 		try{
