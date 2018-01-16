@@ -10,6 +10,7 @@ import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -109,6 +110,7 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @AjaxControllerLog
     @RequiresPermissions("1-2-6")
     @RequestMapping(value = "convert.do", method = RequestMethod.POST)
+    @Transactional
     public Object convert(@NotEmpty String id, @NotEmpty String assigneeId) throws AjaxException {
 
         if (!leadsServ.convertToOpportunityById(id)) {

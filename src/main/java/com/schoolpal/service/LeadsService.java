@@ -214,8 +214,15 @@ public class LeadsService {
 	public boolean convertToOpportunityById(String id){
 		boolean ret = false;
 		try{
-			ret = leadsDao.updateTypeById(id, 2) > 0;
-			
+			TLeads leads = leadsDao.selectOneById(id);
+			if(leads != null){
+				leads.setTypeId(2);
+				leads.setSourceId(11);
+				leads.setStageId(5);
+				leads.setStatusId(5);
+				ret = leadsDao.updateOne(leads) > 0;
+			}
+
 		}catch(Exception e){
 			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
 			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
