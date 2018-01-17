@@ -18,7 +18,6 @@ public class TStudent {
     @NotEmpty(groups = {AjaxControllerAdd.class})
     private String name;
 
-    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer genderId;
     private String genderText;
 

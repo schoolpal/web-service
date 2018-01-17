@@ -56,7 +56,6 @@ public class TContract {
     @NotEmpty(groups = {AjaxControllerAdd.class})
     private String stuName;
 
-    @NotNull(groups = {AjaxControllerAdd.class})
     private Integer stuGenderId;
     private String stuGenderText;
 
