@@ -174,7 +174,24 @@ describe('/ajax/service/contract/ APIs', function() {
         resDump('list.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        expect(jsonData.detail).to.be.equal('Ok');
+    });
+
+    it('queryListByStudentId.do', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, serviceParentApiPath, 'queryListByStudentId.do'),
+            dataType: 'json',
+            data: {
+                id: studentIdVal
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('list.do', jsonData);
+        expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.data).to.not.empty;
     });
 
     it('list.do', function() {
