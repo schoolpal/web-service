@@ -12,7 +12,7 @@ public interface TCourseSessionMapper {
     int insertSelective(TCourseSession record);
 
     TCourseSession selectOneById(String id);
-    List<TCourseSession> selectManyByTypeId(String typeId);
+    List<TCourseSession> selectManyByTypeId(Integer typeId);
 
     int updateByPrimaryKeySelective(TCourseSession record);
 

@@ -38,6 +38,10 @@ var serviceContractApiPath = '/web/ajax/service/contract/';
 var serviceStudentApiPath = '/web/ajax/service/customer/student/';
 var serviceParentApiPath = '/web/ajax/service/customer/parent/';
 
+var courseTypeApiPath = '/web/ajax/course/type/';
+var courseSessionApiPath = '/web/ajax/course/session/';
+
+
 var sysLoginIdval = 'sp-admin';
 var crmLoginIdVal = 'rise-01';
 

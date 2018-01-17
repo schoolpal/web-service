@@ -33,7 +33,7 @@ public class CourseSessionService {
 		return ret;
 	}
 
-	public List<TCourseSession> queryCourseSessionListByTypeId(String typeId){
+	public List<TCourseSession> queryCourseSessionListByTypeId(Integer typeId){
 		List<TCourseSession> ret = null;
 		try{
 			ret = courseSessionDao.selectManyByTypeId(typeId);
