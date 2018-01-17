@@ -1,23 +1,16 @@
 /// <reference path="../typings/index.d.ts" />
 
 describe('/ajax/func/ APIs', function() {
-	var host = window.location.protocol + "//" + window.location.host;
-	var user_path = '/web/ajax/user/';
-	var func_path = '/web/ajax/func/';
-	var sys_func_path = '/web/ajax/sys/func/';
 
-    // var user = 'rise-01';
-	var user = 'sp-admin';
-	var pass = '123456';
-	var salt = null;
-	
-	this.timeout(0);
-	
+    this.timeout(0);
+
+    var loginIdVal = sysLoginIdval;
+
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'salt.do'),
+			url : buildUrl(host, userApiPath, 'salt.do'),
 			dataType : 'json'
 		});
 
@@ -27,7 +20,7 @@ describe('/ajax/func/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data.length).to.be.equal(4);
-		salt = jsonData.data;
+		saltVal = jsonData.data;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
@@ -35,11 +28,11 @@ describe('/ajax/func/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'login.do'),
+			url : buildUrl(host, userApiPath, 'login.do'),
 			dataType : 'json',
 			data : {
-				loginName : user,
-				mixedPWD : MD5(MD5(MD5(pass)) + salt)
+				loginName : loginIdVal,
+				mixedPWD : MD5(MD5(MD5(passVal)) + saltVal)
 			}
 		});
 
@@ -55,7 +48,7 @@ describe('/ajax/func/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, func_path, 'listRootFuncs.do'),
+			url : buildUrl(host, funcApiPath, 'listRootFuncs.do'),
 			dataType : 'json'
 		});
 
@@ -71,7 +64,7 @@ describe('/ajax/func/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, func_path, 'listAllFuncs.do'),
+			url : buildUrl(host, funcApiPath, 'listAllFuncs.do'),
 			dataType : 'json'
 		});
 
@@ -87,7 +80,7 @@ describe('/ajax/func/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, func_path, 'list.do'),
+			url : buildUrl(host, funcApiPath, 'list.do'),
 			dataType : 'json',
 			data : {
 				ids : '1,7'
@@ -106,7 +99,7 @@ describe('/ajax/func/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'logout.do'),
+			url : buildUrl(host, userApiPath, 'logout.do'),
 			dataType : 'json'
 		});
 

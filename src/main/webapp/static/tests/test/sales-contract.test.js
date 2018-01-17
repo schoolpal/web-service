@@ -2,29 +2,15 @@
 
 describe('/ajax/sales/contract/ APIs', function() {
 
-    var host = window.location.protocol + "//" + window.location.host;
-    var path = '/web/ajax/user/';
-    var act_path = '/web/ajax/sales/contract/';
-
-    var user = 'rise-01';
-    // var user = 'sp-crm';
-    var pass = '123456';
-    var salt = null;
-
-    var id_val = 0;
-    var org_val = 0;
-    var stu_id_val = 0;
-
-    var date = new Date()
-    var codeVal = date.getTime();
-
     this.timeout(0);
+
+    var loginIdVal = crmLoginIdVal;
 
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'salt.do'),
+            url: buildUrl(host, userApiPath, 'salt.do'),
             dataType: 'json'
         });
 
@@ -34,7 +20,7 @@ describe('/ajax/sales/contract/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.data.length).to.be.equal(4);
-        salt = jsonData.data;
+        saltVal = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
@@ -42,11 +28,11 @@ describe('/ajax/sales/contract/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
-                loginName: user,
-                mixedPWD: MD5(MD5(MD5(pass)) + salt)
+                loginName: loginIdVal,
+                mixedPWD: MD5(MD5(MD5(passVal)) + saltVal)
             }
         });
 
@@ -62,7 +48,7 @@ describe('/ajax/sales/contract/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'profile.do'),
+            url: buildUrl(host, userApiPath, 'profile.do'),
             dataType: 'json'
         });
 
@@ -71,14 +57,14 @@ describe('/ajax/sales/contract/ APIs', function() {
         resDump('profile.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        org_val = jsonData.data.cOrgId;
+        orgIdVal = jsonData.data.cOrgId;
     });
 
     it('add.do - null values', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, salesContractApiPath, 'add.do'),
             dataType: 'json',
             data: {
             }
@@ -94,10 +80,10 @@ describe('/ajax/sales/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, salesContractApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                code: codeVal,
+                code: orgCodeVal,
                 type: '新招',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -111,7 +97,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 courseHours: 10,
                 courseTimes: 5,
                 stuName: 'student name',
-                stuCode: codeVal,
+                stuCode: orgCodeVal,
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
@@ -122,7 +108,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 parEmail: 'parent mail',
                 parAddress: 'parent addr',
                 relation: '父子',
-                orgId: org_val,
+                orgId: orgIdVal,
                 oriId: '16122700000000',
             }
         });
@@ -133,14 +119,14 @@ describe('/ajax/sales/contract/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        id_val = jsonData.data;
+        contractIdVal = jsonData.data;
     });
 
     it('query.do - null values', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, salesContractApiPath, 'query.do'),
             dataType: 'json',
             data: {
             }
@@ -156,10 +142,10 @@ describe('/ajax/sales/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, salesContractApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: id_val,
+                id: contractIdVal,
             }
         });
 
@@ -169,17 +155,17 @@ describe('/ajax/sales/contract/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        stu_id_val = jsonData.data.stuId;
+        studentIdVal = jsonData.data.stuId;
     });
 
     it('queryListByStudentId.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'queryListByStudentId.do'),
+            url: buildUrl(host, salesContractApiPath, 'queryListByStudentId.do'),
             dataType: 'json',
             data: {
-                id: stu_id_val
+                id: studentIdVal
             }
         });
 
@@ -195,10 +181,10 @@ describe('/ajax/sales/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'list.do'),
+            url: buildUrl(host, salesContractApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                organizationId: org_val
+                organizationId: orgIdVal
             }
         });
 
@@ -214,11 +200,11 @@ describe('/ajax/sales/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'mod.do'),
+            url: buildUrl(host, salesContractApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: id_val,
-                code: codeVal + '_mod',
+                id: contractIdVal,
+                code: orgCodeVal + '_mod',
                 type: '新招',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -232,7 +218,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 courseHours: 10,
                 courseTimes: 5,
                 stuName: 'student name mod',
-                stuCode: codeVal + '_mod',
+                stuCode: orgCodeVal + '_mod',
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
@@ -243,7 +229,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 parEmail: 'parent mail',
                 parAddress: 'parent addr',
                 relation: '父子',
-                orgId: org_val,
+                orgId: orgIdVal,
             }
         });
 
@@ -258,10 +244,10 @@ describe('/ajax/sales/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'del.do'),
+            url: buildUrl(host, salesContractApiPath, 'del.do'),
             dataType: 'json',
             data: {
-                id: id_val
+                id: contractIdVal
             }
         });
 
@@ -276,7 +262,7 @@ describe('/ajax/sales/contract/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'logout.do'),
+            url: buildUrl(host, userApiPath, 'logout.do'),
             dataType: 'json'
         });
 

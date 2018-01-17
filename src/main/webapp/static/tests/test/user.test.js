@@ -2,29 +2,18 @@
 
 describe('/ajax/user/ APIs', function() {
 
-	var host = window.location.protocol + "//" + window.location.host;
-	var path = '/web/ajax/user/';
-	var sys_path = '/web/ajax/sys/user/';
+    this.timeout(0);
 
-	var user = 'sp-admin';
-	var pass = '123456';
-	var salt = null;
+    var loginIdVal = sysLoginIdval;
+
+	var loginNameVal = 'testLoginName' + dateNow.getTime();
+	var phoneVal = '139' + dateNow.getTime();
 	
-	var userIdVal = null;
-	var orgIdVal = null;
-	var roleIdVal = null;
-
-	var date = new Date()
-	var loginNameVal = 'testLoginName' + date.getTime();
-	var phoneVal = '139' + date.getTime();
-	
-	this.timeout(0);
-
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'salt.do'),
+			url : buildUrl(host, userApiPath, 'salt.do'),
 			dataType : 'json'
 		});
 
@@ -41,7 +30,7 @@ describe('/ajax/user/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, path, 'login.do'),
+            url : buildUrl(host, userApiPath, 'login.do'),
             dataType : 'json',
             data : {
                 loginName : '',
@@ -58,7 +47,7 @@ describe('/ajax/user/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, path, 'login.do'),
+            url : buildUrl(host, userApiPath, 'login.do'),
             dataType : 'json',
             data : {
                 loginName : 'aaa',
@@ -75,11 +64,11 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'login.do'),
+			url : buildUrl(host, userApiPath, 'login.do'),
 			dataType : 'json',
 			data : {
-				loginName : user,
-				mixedPWD : MD5(MD5(MD5(pass)) + salt)
+				loginName : loginIdVal,
+				mixedPWD : MD5(MD5(MD5(passVal)) + salt)
 			}
 		});
 
@@ -94,7 +83,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'status.do'),
+			url : buildUrl(host, userApiPath, 'status.do'),
 			dataType : 'json'
 		});
 
@@ -109,7 +98,7 @@ describe('/ajax/user/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, path, 'changePassword.do'),
+            url : buildUrl(host, userApiPath, 'changePassword.do'),
             dataType : 'json',
             data : {
                 oriPass: '',
@@ -126,11 +115,11 @@ describe('/ajax/user/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, path, 'changePassword.do'),
+            url : buildUrl(host, userApiPath, 'changePassword.do'),
             dataType : 'json',
             data : {
-                oriPass: MD5(MD5(pass)),
-                newPass: MD5(MD5(pass)),
+                oriPass: MD5(MD5(passVal)),
+                newPass: MD5(MD5(passVal)),
             }
         });
 
@@ -143,11 +132,11 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'changePassword.do'),
+			url : buildUrl(host, userApiPath, 'changePassword.do'),
 			dataType : 'json',
 			data : {
-				oriPass: MD5(MD5(pass)),
-				newPass: MD5(MD5(pass + 'Mod')),
+				oriPass: MD5(MD5(passVal)),
+				newPass: MD5(MD5(passVal + 'Mod')),
 			}
 		});
 
@@ -163,11 +152,11 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'changePassword.do'),
+			url : buildUrl(host, userApiPath, 'changePassword.do'),
 			dataType : 'json',
 			data : {
-				oriPass: MD5(MD5(pass + 'Mod')),
-				newPass: MD5(MD5(pass)),
+				oriPass: MD5(MD5(passVal + 'Mod')),
+				newPass: MD5(MD5(passVal)),
 			}
 		});
 
@@ -183,7 +172,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'profile.do'),
+			url : buildUrl(host, userApiPath, 'profile.do'),
 			dataType : 'json'
 		});
 
@@ -200,7 +189,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'listFuncs.do'),
+			url : buildUrl(host, userApiPath, 'listFuncs.do'),
 			dataType : 'json'
 		});
 
@@ -216,7 +205,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'listOrgs.do'),
+			url : buildUrl(host, userApiPath, 'listOrgs.do'),
 			dataType : 'json'
 		});
 
@@ -232,7 +221,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'listRoles.do'),
+			url : buildUrl(host, userApiPath, 'listRoles.do'),
 			dataType : 'json'
 		});
 
@@ -250,7 +239,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'listFuncsByRole.do'),
+			url : buildUrl(host, userApiPath, 'listFuncsByRole.do'),
 			dataType : 'json',
 			data : {
 				id : roleIdVal
@@ -269,11 +258,11 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'add.do'),
+			url : buildUrl(host, sysUserApiPath, 'add.do'),
 			dataType : 'json',
 			data : {
 				loginName: loginNameVal,
-				loginPass: MD5(MD5(pass)),
+				loginPass: MD5(MD5(passVal)),
 				realName: 'testRealName',
 				nickName: 'testNickName',
 				phone: phoneVal,
@@ -297,7 +286,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'query.do'),
+			url : buildUrl(host, sysUserApiPath, 'query.do'),
 			dataType : 'json',
 			data : {
 				id: userIdVal
@@ -315,7 +304,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'checkName.do'),
+			url : buildUrl(host, sysUserApiPath, 'checkName.do'),
 			dataType : 'json',
 			data : {
 				loginName: loginNameVal
@@ -333,11 +322,11 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'mod.do'),
+			url : buildUrl(host, sysUserApiPath, 'mod.do'),
 			dataType : 'json',
 			data : {
 				userId: userIdVal,
-				loginPass: MD5(MD5(pass)),
+				loginPass: MD5(MD5(passVal)),
 				realName: 'testRealNameMod',
 				nickName: 'testNickNameMod',
 				phone: phoneVal + 'Mod',
@@ -358,7 +347,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'enable.do'),
+			url : buildUrl(host, sysUserApiPath, 'enable.do'),
 			dataType : 'json',
 			data : {
 				id: userIdVal,
@@ -376,7 +365,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'enable.do'),
+			url : buildUrl(host, sysUserApiPath, 'enable.do'),
 			dataType : 'json',
 			data : {
 				id: userIdVal, 
@@ -394,7 +383,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'query.do'),
+			url : buildUrl(host, sysUserApiPath, 'query.do'),
 			dataType : 'json',
 			data : {
 				id: userIdVal
@@ -412,7 +401,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_path, 'del.do'),
+			url : buildUrl(host, sysUserApiPath, 'del.do'),
 			dataType : 'json',
 			data : {
 				id: userIdVal
@@ -430,7 +419,7 @@ describe('/ajax/user/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, path, 'logout.do'),
+			url : buildUrl(host, userApiPath, 'logout.do'),
 			dataType : 'json'
 		});
 

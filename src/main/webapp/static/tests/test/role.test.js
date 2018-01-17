@@ -1,27 +1,17 @@
 /// <reference path="../typings/index.d.ts" />
 
 describe('/ajax/role/ APIs', function() {
-	
-	var host = window.location.protocol + "//" + window.location.host;
-	var user_path = '/web/ajax/user/';
-	var role_path = '/web/ajax/role/';
-	var sys_role_path = '/web/ajax/sys/role/';
 
-    // var user = 'rise-01';
-	var user = 'sp-admin';
-	var pass = '123456';
-	var salt = null;
-	
-	var roleId = null;
-	var orgIdVal = "16010100000001";
+    this.timeout(0);
 
-	this.timeout(0);
+    var loginIdVal = sysLoginIdval;
+    orgIdVal = '16010100000001';
 
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'salt.do'),
+			url : buildUrl(host, userApiPath, 'salt.do'),
 			dataType : 'json'
 		});
 
@@ -31,7 +21,7 @@ describe('/ajax/role/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data.length).to.be.equal(4);
-		salt = jsonData.data;
+		saltVal = jsonData.data;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
@@ -39,11 +29,11 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'login.do'),
+			url : buildUrl(host, userApiPath, 'login.do'),
 			dataType : 'json',
 			data : {
-				loginName : user,
-				mixedPWD : MD5(MD5(MD5(pass)) + salt)
+				loginName : loginIdVal,
+				mixedPWD : MD5(MD5(MD5(passVal)) + saltVal)
 			}
 		});
 
@@ -59,7 +49,7 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_role_path, 'list.do'),
+			url : buildUrl(host, sysRoleApiPath, 'list.do'),
 			dataType : 'json',
 			data : {
 				id: orgIdVal
@@ -78,7 +68,7 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_role_path, 'add.do'),
+			url : buildUrl(host, sysRoleApiPath, 'add.do'),
 			dataType : 'json',
 			data : {
 				id: null,
@@ -95,17 +85,17 @@ describe('/ajax/role/ APIs', function() {
 		resDump('add.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
-		roleId = jsonData.data;
+		roleIdVal = jsonData.data;
 	});
 
 	it('auth.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_role_path, 'auth.do'),
+			url : buildUrl(host, sysRoleApiPath, 'auth.do'),
 			dataType : 'json',
 			data : {
-				id: roleId,
+				id: roleIdVal,
 				funcIds: '1,1-1,1-1-1,1-1-2,1-1-3'
 			}
 		});
@@ -120,10 +110,10 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, role_path, 'query.do'),
+			url : buildUrl(host, roleApiPath, 'query.do'),
 			dataType : 'json',
 			data : {
-				id: roleId
+				id: roleIdVal
 			}
 		});
 
@@ -132,7 +122,7 @@ describe('/ajax/role/ APIs', function() {
 		resDump('query.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
-		expect(jsonData.data.cId).to.be.equal(roleId);
+		expect(jsonData.data.cId).to.be.equal(roleIdVal);
 		expect(jsonData.data.cName).to.be.equal("testName");
 		expect(jsonData.data.cDesc).to.be.equal("testDesc");
 	});
@@ -141,10 +131,10 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_role_path, 'mod.do'),
+			url : buildUrl(host, sysRoleApiPath, 'mod.do'),
 			dataType : 'json',
 			data : {
-				id: roleId,
+				id: roleIdVal,
 				orgId: orgIdVal,
 				strFuncIds: "7",
 				rankId: 4,
@@ -165,10 +155,10 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, role_path, 'query.do'),
+			url : buildUrl(host, roleApiPath, 'query.do'),
 			dataType : 'json',
 			data : {
-				id: roleId
+				id: roleIdVal
 			}
 		});
 
@@ -177,7 +167,7 @@ describe('/ajax/role/ APIs', function() {
 		resDump('query.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
-		expect(jsonData.data.cId).to.be.equal(roleId);
+		expect(jsonData.data.cId).to.be.equal(roleIdVal);
 		expect(jsonData.data.cName).to.be.equal("testNameMod");
 		expect(jsonData.data.cDesc).to.be.equal("testDescMod");
 	});
@@ -186,10 +176,10 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_role_path, 'del.do'),
+			url : buildUrl(host, sysRoleApiPath, 'del.do'),
 			dataType : 'json',
 			data : {
-				id: roleId,
+				id: roleIdVal,
 			}
 		});
 
@@ -203,7 +193,7 @@ describe('/ajax/role/ APIs', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, role_path, 'ranks.do'),
+			url : buildUrl(host, roleApiPath, 'ranks.do'),
 			dataType : 'json'
 		});
 
@@ -218,7 +208,7 @@ describe('/ajax/role/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'logout.do'),
+			url : buildUrl(host, userApiPath, 'logout.do'),
 			dataType : 'json'
 		});
 

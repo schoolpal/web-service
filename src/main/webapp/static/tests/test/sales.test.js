@@ -2,28 +2,15 @@
 
 describe('/ajax/sales/oppor/ APIs', function() {
 
-    var host = window.location.protocol + "//" + window.location.host;
-    var path = '/web/ajax/user/';
-    var leads_path = '/web/ajax/mkt/leads/';
-    var oppor_path = '/web/ajax/sales/oppor/';
-
-    var user = 'rise-01';
-    // var user = 'sp-crm';
-    var pass = '123456';
-    var salt = null;
-
-    var leads_id_val = "";
-    var student_id_val = "";
-    var parent_id_val = "";
-    var org_val = 16122700000009;
-
     this.timeout(0);
+
+    var loginIdVal = crmLoginIdVal;
 
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'salt.do'),
+            url: buildUrl(host, userApiPath, 'salt.do'),
             dataType: 'json'
         });
 
@@ -33,7 +20,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.data.length).to.be.equal(4);
-        salt = jsonData.data;
+        saltVal = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
@@ -41,11 +28,11 @@ describe('/ajax/sales/oppor/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
-                loginName: user,
-                mixedPWD: MD5(MD5(MD5(pass)) + salt)
+                loginName: loginIdVal,
+                mixedPWD: MD5(MD5(MD5(passVal)) + saltVal)
             }
         });
 
@@ -61,7 +48,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'profile.do'),
+            url: buildUrl(host, userApiPath, 'profile.do'),
             dataType: 'json'
         });
 
@@ -70,14 +57,14 @@ describe('/ajax/sales/oppor/ APIs', function() {
         resDump('profile.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        org_val = jsonData.data.cOrgId;
+        orgIdVal = jsonData.data.cOrgId;
     });
 
     it('source/list.do - new', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'source/list.do'),
+            url: buildUrl(host, leadsApiPath, 'source/list.do'),
             dataType: 'json',
             data: {
                 typeId: 2,
@@ -115,7 +102,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'stage/list.do'),
+            url: buildUrl(host, leadsApiPath, 'stage/list.do'),
             dataType: 'json',
             data: {
                 typeId: 2,
@@ -134,7 +121,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'stage/list.do'),
+            url: buildUrl(host, leadsApiPath, 'stage/list.do'),
             dataType: 'json',
             data: {
                 typeId: 3,
@@ -153,7 +140,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'status/list.do'),
+            url: buildUrl(host, leadsApiPath, 'status/list.do'),
             dataType: 'json',
             data: {
                 typeId: 2,
@@ -172,7 +159,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'status/list.do'),
+            url: buildUrl(host, leadsApiPath, 'status/list.do'),
             dataType: 'json',
             data: {
                 typeId: 3,
@@ -191,11 +178,11 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, oppor_path, 'add.do'),
+            url: buildUrl(host, opporApiPath, 'add.do'),
             dataType: 'json',
             data: {
                 typeId: 2,
-                organizationId: org_val,
+                organizationId: orgIdVal,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,
@@ -222,17 +209,17 @@ describe('/ajax/sales/oppor/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        leads_id_val = jsonData.data;
+        leadsIdVal = jsonData.data;
     });
 
     it('query.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, oppor_path, 'query.do'),
+            url: buildUrl(host, opporApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val
+                id: leadsIdVal
             }
         });
 
@@ -242,19 +229,19 @@ describe('/ajax/sales/oppor/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        leads_id_val = jsonData.data.id;
-        parent_id_val = jsonData.data.parentId;
-        student_id_val = jsonData.data.studentId;
+        leadsIdVal = jsonData.data.id;
+        parentIdVal = jsonData.data.parentId;
+        studentIdVal = jsonData.data.studentId;
     });
 
     it('list.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, oppor_path, 'list.do'),
+            url: buildUrl(host, opporApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                orgId: org_val,
+                orgId: orgIdVal,
                 typeId: 2
             }
         });
@@ -271,11 +258,11 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, oppor_path, 'mod.do'),
+            url: buildUrl(host, opporApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val,
-                organizationId: org_val,
+                id: leadsIdVal,
+                organizationId: orgIdVal,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,
@@ -307,10 +294,10 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, oppor_path, 'assign.do'),
+            url: buildUrl(host, opporApiPath, 'assign.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val,
+                id: leadsIdVal,
                 assigneeId: '16122700000036'
             }
         });
@@ -325,7 +312,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'logout.do'),
+            url: buildUrl(host, userApiPath, 'logout.do'),
             dataType: 'json'
         });
 

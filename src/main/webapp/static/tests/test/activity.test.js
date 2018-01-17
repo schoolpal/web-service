@@ -2,25 +2,15 @@
 
 describe('/ajax/mkt/activity/ APIs', function() {
 
-    var host = window.location.protocol + "//" + window.location.host;
-    var path = '/web/ajax/user/';
-    var act_path = '/web/ajax/mkt/activity/';
-
-    var user = 'rise-01';
-    // var user = 'sp-crm';
-    var pass = '123456';
-    var salt = null;
-
-    var id_val = 0;
-    var org_val = 0;
-
     this.timeout(0);
+
+    var loginIdVal = crmLoginIdVal;
 
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'salt.do'),
+            url: buildUrl(host, userApiPath, 'salt.do'),
             dataType: 'json'
         });
 
@@ -30,7 +20,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.data.length).to.be.equal(4);
-        salt = jsonData.data;
+        saltVal = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
@@ -38,11 +28,11 @@ describe('/ajax/mkt/activity/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
-                loginName: user,
-                mixedPWD: MD5(MD5(MD5(pass)) + salt)
+                loginName: loginIdVal,
+                mixedPWD: MD5(MD5(MD5(passVal)) + saltVal)
             }
         });
 
@@ -58,7 +48,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'profile.do'),
+            url: buildUrl(host, userApiPath, 'profile.do'),
             dataType: 'json'
         });
 
@@ -67,7 +57,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
         resDump('profile.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        org_val = jsonData.data.cOrgId;
+        orgIdVal = jsonData.data.cOrgId;
     });
 
 
@@ -75,10 +65,10 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, actApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                organizationId: org_val,
+                organizationId: orgIdVal,
                 name: 'test_name',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -93,17 +83,17 @@ describe('/ajax/mkt/activity/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        id_val = jsonData.data;
+        userIdVal = jsonData.data;
     });
 
     it('query.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, actApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: id_val,
+                id: userIdVal,
             }
         });
 
@@ -119,10 +109,10 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'mod.do'),
+            url: buildUrl(host, actApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: id_val,
+                id: userIdVal,
                 name: 'test_name_mod',
                 startDate: new Date(2015, 5, 5),
                 endDate: new Date(2018, 8, 8)
@@ -140,7 +130,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'list.do'),
+            url: buildUrl(host, actApiPath, 'list.do'),
             dataType: 'json',
             data: {
                 organizationId: null
@@ -157,7 +147,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'list.do'),
+            url: buildUrl(host, actApiPath, 'list.do'),
             dataType: 'json',
             data: {
                 organizationId: ''
@@ -174,10 +164,10 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'list.do'),
+            url: buildUrl(host, actApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                organizationId: org_val
+                organizationId: orgIdVal
             }
         });
 
@@ -193,10 +183,10 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'listTree.do'),
+            url: buildUrl(host, actApiPath, 'listTree.do'),
             dataType: 'json',
             data: {
-                orgId: org_val
+                orgId: orgIdVal
             }
         });
 
@@ -212,10 +202,10 @@ describe('/ajax/mkt/activity/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'del.do'),
+            url: buildUrl(host, actApiPath, 'del.do'),
             dataType: 'json',
             data: {
-                id: id_val
+                id: userIdVal
             }
         });
 
@@ -230,7 +220,7 @@ describe('/ajax/mkt/activity/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'logout.do'),
+            url: buildUrl(host, userApiPath, 'logout.do'),
             dataType: 'json'
         });
 

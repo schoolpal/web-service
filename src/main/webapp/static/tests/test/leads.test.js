@@ -2,22 +2,7 @@
 
 describe('/ajax/mkt/leads/ APIs', function() {
 
-    var host = window.location.protocol + "//" + window.location.host;
-    var path = '/web/ajax/user/';
-    var mkt_path = '/web/ajax/mkt/';
-    var leads_path = '/web/ajax/mkt/leads/';
-    var contact_path = '/web/ajax/contact/';
-
-    var user = 'rise-01';
-    // var user = 'sp-crm';
-    var pass = '123456';
-    var salt = null;
-
-    var leads_id_val = "";
-    var student_id_val = "";
-    var parent_id_val = "";
-    var contact_id_val = "";
-    var org_val = 0;
+    var loginIdVal = crmLoginIdVal;
 
     this.timeout(0);
 
@@ -25,7 +10,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'salt.do'),
+            url: buildUrl(host, userApiPath, 'salt.do'),
             dataType: 'json'
         });
 
@@ -35,7 +20,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.data.length).to.be.equal(4);
-        salt = jsonData.data;
+        saltVal = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
@@ -43,7 +28,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
                 loginName: null,
@@ -61,11 +46,11 @@ describe('/ajax/mkt/leads/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
-                loginName: user,
-                mixedPWD: MD5(MD5(MD5(pass)) + salt)
+                loginName: loginIdVal,
+                mixedPWD: MD5(MD5(MD5(passVal)) + saltVal)
             }
         });
 
@@ -81,7 +66,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'profile.do'),
+            url: buildUrl(host, userApiPath, 'profile.do'),
             dataType: 'json'
         });
 
@@ -90,14 +75,14 @@ describe('/ajax/mkt/leads/ APIs', function() {
         resDump('profile.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        org_val = jsonData.data.cOrgId;
+        orgIdVal = jsonData.data.cOrgId;
     });
 
     it('source/list.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'source/list.do'),
+            url: buildUrl(host, leadsApiPath, 'source/list.do'),
             dataType: 'json',
             data: {
                 typeId: 1,
@@ -116,7 +101,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'stage/list.do'),
+            url: buildUrl(host, leadsApiPath, 'stage/list.do'),
             dataType: 'json',
             data: {
                 typeId: 1,
@@ -135,7 +120,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'status/list.do'),
+            url: buildUrl(host, leadsApiPath, 'status/list.do'),
             dataType: 'json',
             data: {
                 typeId: 1,
@@ -154,7 +139,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, mkt_path, 'gender/list.do'),
+            url: buildUrl(host, mktApiPath, 'gender/list.do'),
             dataType: 'json',
         });
 
@@ -170,7 +155,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, mkt_path, 'relation/list.do'),
+            url: buildUrl(host, mktApiPath, 'relation/list.do'),
             dataType: 'json',
         });
 
@@ -186,10 +171,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'add.do'),
+            url: buildUrl(host, leadsApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                organizationId: org_val,
+                organizationId: orgIdVal,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,
@@ -216,14 +201,14 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        leads_id_val = jsonData.data;
+        leadsIdVal = jsonData.data;
     });
 
     it('query.do - null value', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'query.do'),
+            url: buildUrl(host, leadsApiPath, 'query.do'),
             dataType: 'json',
             data: {
                 id: null
@@ -240,10 +225,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'query.do'),
+            url: buildUrl(host, leadsApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val
+                id: leadsIdVal
             }
         });
 
@@ -253,19 +238,19 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        leads_id_val = jsonData.data.id;
-        parent_id_val = jsonData.data.parentId;
-        student_id_val = jsonData.data.studentId;
+        leadsIdVal = jsonData.data.id;
+        parentIdVal = jsonData.data.parentId;
+        studentIdVal = jsonData.data.studentId;
     });
 
     it('list.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'list.do'),
+            url: buildUrl(host, leadsApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                orgId: org_val
+                orgId: orgIdVal
             }
         });
 
@@ -281,11 +266,11 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'mod.do'),
+            url: buildUrl(host, leadsApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val,
-                organizationId: org_val,
+                id: leadsIdVal,
+                organizationId: orgIdVal,
                 sourceId: 1,
                 channelId: '16122700000076',
                 stageId: 3,
@@ -317,10 +302,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'assign.do'),
+            url: buildUrl(host, leadsApiPath, 'assign.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val,
+                id: leadsIdVal,
                 assigneeId: '16122700000036'
             }
         });
@@ -335,10 +320,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'convert.do'),
+            url: buildUrl(host, leadsApiPath, 'convert.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val,
+                id: leadsIdVal,
                 assigneeId: '16122700000036'
             }
         });
@@ -353,7 +338,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, contact_path + 'approach/', 'list.do'),
+            url: buildUrl(host, contactApiPath + 'approach/', 'list.do'),
             dataType: 'json'
         });
 
@@ -369,10 +354,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, contact_path, 'add.do'),
+            url: buildUrl(host, contactApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                leadsId: leads_id_val,
+                leadsId: leadsIdVal,
                 approachId: '1',
                 datetime: new Date(),
                 summary: 'Summary ... '
@@ -385,17 +370,17 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.detail).to.be.equal('Ok');
         expect(jsonData.data).to.not.empty;
-        contact_id_val = jsonData.data;
+        contactIdVal = jsonData.data;
     });
 
     it('contact - query.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, contact_path, 'query.do'),
+            url: buildUrl(host, contactApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: contact_id_val,
+                id: contactIdVal,
             }
         });
 
@@ -411,10 +396,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, contact_path, 'list.do'),
+            url: buildUrl(host, contactApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                leadsId: leads_id_val,
+                leadsId: leadsIdVal,
             }
         });
 
@@ -430,10 +415,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, contact_path, 'mod.do'),
+            url: buildUrl(host, contactApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: contact_id_val,
+                id: contactIdVal,
                 summary: 'Summary ... mod'
             }
         });
@@ -449,10 +434,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, contact_path, 'del.do'),
+            url: buildUrl(host, contactApiPath, 'del.do'),
             dataType: 'json',
             data: {
-                id: contact_id_val,
+                id: contactIdVal,
             }
         });
 
@@ -467,7 +452,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'del.do'),
+            url: buildUrl(host, leadsApiPath, 'del.do'),
             dataType: 'json',
             data: {
                 id: null
@@ -484,10 +469,10 @@ describe('/ajax/mkt/leads/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leads_path, 'del.do'),
+            url: buildUrl(host, leadsApiPath, 'del.do'),
             dataType: 'json',
             data: {
-                id: leads_id_val
+                id: leadsIdVal
             }
         });
 
@@ -502,7 +487,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'logout.do'),
+            url: buildUrl(host, userApiPath, 'logout.do'),
             dataType: 'json'
         });
 

@@ -1,29 +1,16 @@
 /// <reference path="../typings/index.d.ts" />
 
 describe('/ajax/org/ APIs', function() {
-	
-	var date = new Date()
-	
-	var host = window.location.protocol + "//" + window.location.host;
-	var user_path = '/web/ajax/user/';
-	var org_path = '/web/ajax/org/';
-	var sys_org_path = '/web/ajax/sys/org/';
 
-    // var user = 'rise-01';
-	var user = 'sp-admin';
-	var pass = '123456';
-	var salt = null;
-	
-	var orgId = null;
-	var orgCode = 'test' + date.getTime();
+    this.timeout(0);
 
-	this.timeout(0);
-	
+    var loginIdVal = sysLoginIdval;
+
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'salt.do'),
+			url : buildUrl(host, userApiPath, 'salt.do'),
 			dataType : 'json'
 		});
 
@@ -33,7 +20,7 @@ describe('/ajax/org/ APIs', function() {
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
 		expect(jsonData.data.length).to.be.equal(4);
-		salt = jsonData.data;
+		saltVal = jsonData.data;
 		expect(jsonData.detail).to.be.equal('Ok');
 	});
 
@@ -41,11 +28,11 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'login.do'),
+			url : buildUrl(host, userApiPath, 'login.do'),
 			dataType : 'json',
 			data : {
-				loginName : user,
-				mixedPWD : MD5(MD5(MD5(pass)) + salt)
+				loginName : loginIdVal,
+				mixedPWD : MD5(MD5(MD5(passVal)) + saltVal)
 			}
 		});
 
@@ -61,7 +48,7 @@ describe('/ajax/org/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, org_path, 'listRoles.do'),
+            url : buildUrl(host, orgApiPath, 'listRoles.do'),
             dataType : 'json',
             data : {
                 id: null
@@ -80,7 +67,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'listRoles.do'),
+			url : buildUrl(host, orgApiPath, 'listRoles.do'),
 			dataType : 'json',
 			data : {
 				id: ''
@@ -99,7 +86,7 @@ describe('/ajax/org/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, org_path, 'listRoles.do'),
+            url : buildUrl(host, orgApiPath, 'listRoles.do'),
             dataType : 'json',
             data : {
                 id: '16010100000001'
@@ -118,7 +105,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'listUsers.do'),
+			url : buildUrl(host, orgApiPath, 'listUsers.do'),
 			dataType : 'json',
 			data : {
 				id: '16010100000001'
@@ -137,7 +124,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_org_path, 'list.do'),
+			url : buildUrl(host, sysOrgApiPath, 'list.do'),
 			dataType : 'json'
 		});
 
@@ -152,7 +139,7 @@ describe('/ajax/org/ APIs', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, sys_org_path, 'add.do'),
+            url : buildUrl(host, sysOrgApiPath, 'add.do'),
             dataType : 'json',
             data : {
                 code: '',
@@ -169,12 +156,12 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_org_path, 'add.do'),
+			url : buildUrl(host, sysOrgApiPath, 'add.do'),
 			dataType : 'json',
 			data : {
 				id: null,
 				name: 'testName',
-				code: orgCode,
+				code: orgCodeVal,
 				parentId: '16010100000001',
 				parentName: null,
 				state: 'testState',
@@ -194,18 +181,17 @@ describe('/ajax/org/ APIs', function() {
 		resDump('add.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
-		orgId = jsonData.data;
-		// expect(jsonData.detail).to.be.equal('Ok');
+		orgIdVal = jsonData.data;
 	});
 
 	it('query.do - verify add.do', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'query.do'),
+			url : buildUrl(host, orgApiPath, 'query.do'),
 			dataType : 'json',
 			data : {
-				id: orgId
+				id: orgIdVal
 			}
 		});
 
@@ -214,18 +200,17 @@ describe('/ajax/org/ APIs', function() {
 		resDump('query.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
-		expect(jsonData.data.cId).to.be.equal(orgId);
-		expect(jsonData.data.cCode).to.be.equal(orgCode);
+		expect(jsonData.data.cId).to.be.equal(orgIdVal);
+		expect(jsonData.data.cCode).to.be.equal(orgCodeVal);
 		expect(jsonData.data.cCounty).to.be.equal("testCounty");
 		expect(jsonData.data.cCountyCode).to.be.equal("000000");
-		// expect(jsonData.detail).to.be.equal('Ok');
 	});
 
     it('mod.do - empty values', function() {
         xhr = $.ajax({
             async : false,
             method : 'POST',
-            url : buildUrl(host, sys_org_path, 'mod.do'),
+            url : buildUrl(host, sysOrgApiPath, 'mod.do'),
             dataType : 'json',
             data : {
                 id: '',
@@ -243,12 +228,12 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_org_path, 'mod.do'),
+			url : buildUrl(host, sysOrgApiPath, 'mod.do'),
 			dataType : 'json',
 			data : {
-				id: orgId,
+				id: orgIdVal,
 				name: 'testNameMod',
-				code: orgCode + "Mod",
+				code: orgCodeVal + "Mod",
 				parentId: '16010100000001',
 				parentName: null,
 				state: 'testStateMod',
@@ -275,10 +260,10 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, org_path, 'query.do'),
+			url : buildUrl(host, orgApiPath, 'query.do'),
 			dataType : 'json',
 			data : {
-				id: orgId
+				id: orgIdVal
 			}
 		});
 
@@ -287,8 +272,8 @@ describe('/ajax/org/ APIs', function() {
 		resDump('query.do', jsonData);
 		expect(jsonData.code).to.be.equal(200);
 		expect(jsonData.data).to.not.empty;
-		expect(jsonData.data.cId).to.be.equal(orgId);
-		expect(jsonData.data.cCode).to.be.equal(orgCode + "Mod");
+		expect(jsonData.data.cId).to.be.equal(orgIdVal);
+		expect(jsonData.data.cCode).to.be.equal(orgCodeVal + "Mod");
 		expect(jsonData.data.cCounty).to.be.equal("testCountyMod");
 		expect(jsonData.data.cCountyCode).to.be.equal("000000Mod");
 		// expect(jsonData.detail).to.be.equal('Ok');
@@ -298,10 +283,10 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, sys_org_path, 'del.do'),
+			url : buildUrl(host, sysOrgApiPath, 'del.do'),
 			dataType : 'json',
 			data : {
-				id: orgId,
+				id: orgIdVal,
 			}
 		});
 
@@ -315,7 +300,7 @@ describe('/ajax/org/ APIs', function() {
 		xhr = $.ajax({
 			async : false,
 			method : 'POST',
-			url : buildUrl(host, user_path, 'logout.do'),
+			url : buildUrl(host, userApiPath, 'logout.do'),
 			dataType : 'json'
 		});
 

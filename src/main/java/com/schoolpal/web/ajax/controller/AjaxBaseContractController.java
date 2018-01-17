@@ -114,7 +114,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
         TContract target = contractServ.queryContractById(id);
         if (target == null) {
-            throw new AjaxException(402, "Invalid contact id");
+            throw new AjaxException(402, "Invalid contract id");
         }
 
         if (!contractServ.delContractById(id)) {

@@ -2,28 +2,15 @@
 
 describe('/ajax/sales/customer/student APIs', function() {
 
-    var host = window.location.protocol + "//" + window.location.host;
-    var path = '/web/ajax/user/';
-    var act_path = '/web/ajax/sales/customer/student/';
-
-    var user = 'rise-01';
-    // var user = 'sp-crm';
-    var pass = '123456';
-    var salt = null;
-
-    var id_val = 0;
-    var org_val = 0;
-
-    var date = new Date()
-    var codeVal = date.getTime();
-
     this.timeout(0);
+
+    var loginIdVal = crmLoginIdVal;
 
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'salt.do'),
+            url: buildUrl(host, userApiPath, 'salt.do'),
             dataType: 'json'
         });
 
@@ -33,7 +20,7 @@ describe('/ajax/sales/customer/student APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.data.length).to.be.equal(4);
-        salt = jsonData.data;
+        saltVal = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
@@ -41,7 +28,7 @@ describe('/ajax/sales/customer/student APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
             }
@@ -57,11 +44,11 @@ describe('/ajax/sales/customer/student APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
-                loginName: user,
-                mixedPWD: MD5(MD5(MD5(pass)) + salt)
+                loginName: loginIdVal,
+                mixedPWD: MD5(MD5(MD5(passVal)) + saltVal)
             }
         });
 
@@ -77,7 +64,7 @@ describe('/ajax/sales/customer/student APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'profile.do'),
+            url: buildUrl(host, userApiPath, 'profile.do'),
             dataType: 'json'
         });
 
@@ -86,14 +73,14 @@ describe('/ajax/sales/customer/student APIs', function() {
         resDump('profile.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        org_val = jsonData.data.cOrgId;
+        orgIdVal = jsonData.data.cOrgId;
     });
 
     it('add.do - null values', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, salesStudentApiPath, 'add.do'),
             dataType: 'json',
             data: {
             }
@@ -109,14 +96,14 @@ describe('/ajax/sales/customer/student APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, salesStudentApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                code: codeVal,
+                code: orgCodeVal,
                 name: 'parent name',
                 genderId: 1,
                 idType: 1,
-                idCode: codeVal,
+                idCode: orgCodeVal,
                 birthday: new Date(1981, 12, 12),
                 schoolGrade: 'school grade',
                 classGrade: 'class grade',
@@ -130,14 +117,14 @@ describe('/ajax/sales/customer/student APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        id_val = jsonData.data;
+        userIdVal = jsonData.data;
     });
 
     it('query.do - null values', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, salesStudentApiPath, 'query.do'),
             dataType: 'json',
             data: {
             }
@@ -153,10 +140,10 @@ describe('/ajax/sales/customer/student APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, salesStudentApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: id_val,
+                id: userIdVal,
             }
         });
 
@@ -172,10 +159,10 @@ describe('/ajax/sales/customer/student APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'queryByCode.do'),
+            url: buildUrl(host, salesStudentApiPath, 'queryByCode.do'),
             dataType: 'json',
             data: {
-                code: codeVal,
+                code: orgCodeVal,
             }
         });
 
@@ -191,10 +178,10 @@ describe('/ajax/sales/customer/student APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'list.do'),
+            url: buildUrl(host, salesStudentApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                organizationId: org_val
+                organizationId: orgIdVal
             }
         });
 
@@ -210,15 +197,15 @@ describe('/ajax/sales/customer/student APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'mod.do'),
+            url: buildUrl(host, salesStudentApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: id_val,
-                code: codeVal,
+                id: userIdVal,
+                code: orgCodeVal,
                 name: 'parent name mod',
                 genderId: 1,
                 idType: 1,
-                idCode: codeVal + ' mod',
+                idCode: orgCodeVal + ' mod',
                 birthday: new Date(1981, 12, 14),
                 schoolGrade: 'school grade mod',
                 classGrade: 'class grade mod',
@@ -237,10 +224,10 @@ describe('/ajax/sales/customer/student APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'del.do'),
+            url: buildUrl(host, salesStudentApiPath, 'del.do'),
             dataType: 'json',
             data: {
-                id: id_val
+                id: userIdVal
             }
         });
 
@@ -255,7 +242,7 @@ describe('/ajax/sales/customer/student APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'logout.do'),
+            url: buildUrl(host, userApiPath, 'logout.do'),
             dataType: 'json'
         });
 

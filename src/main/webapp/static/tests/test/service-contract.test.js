@@ -2,28 +2,15 @@
 
 describe('/ajax/service/contract/ APIs', function() {
 
-    var host = window.location.protocol + "//" + window.location.host;
-    var path = '/web/ajax/user/';
-    var act_path = '/web/ajax/service/contract/';
-
-    var user = 'rise-01';
-    // var user = 'sp-crm';
-    var pass = '123456';
-    var salt = null;
-
-    var id_val = 0;
-    var org_val = 0;
-
-    var date = new Date()
-    var codeVal = date.getTime();
-
     this.timeout(0);
+
+    var loginIdVal = crmLoginIdVal;
 
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'salt.do'),
+            url: buildUrl(host, userApiPath, 'salt.do'),
             dataType: 'json'
         });
 
@@ -33,7 +20,7 @@ describe('/ajax/service/contract/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.data.length).to.be.equal(4);
-        salt = jsonData.data;
+        saltVal = jsonData.data;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
@@ -41,11 +28,11 @@ describe('/ajax/service/contract/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'login.do'),
+            url: buildUrl(host, userApiPath, 'login.do'),
             dataType: 'json',
             data: {
-                loginName: user,
-                mixedPWD: MD5(MD5(MD5(pass)) + salt)
+                loginName: loginIdVal,
+                mixedPWD: MD5(MD5(MD5(passVal)) + saltVal)
             }
         });
 
@@ -61,7 +48,7 @@ describe('/ajax/service/contract/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'profile.do'),
+            url: buildUrl(host, userApiPath, 'profile.do'),
             dataType: 'json'
         });
 
@@ -70,14 +57,14 @@ describe('/ajax/service/contract/ APIs', function() {
         resDump('profile.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
-        org_val = jsonData.data.cOrgId;
+        orgIdVal = jsonData.data.cOrgId;
     });
 
     it('add.do - null values', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, serviceContractApiPath, 'add.do'),
             dataType: 'json',
             data: {
             }
@@ -93,10 +80,10 @@ describe('/ajax/service/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'add.do'),
+            url: buildUrl(host, serviceContractApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                code: codeVal,
+                code: orgCodeVal,
                 type: '新招',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -104,13 +91,13 @@ describe('/ajax/service/contract/ APIs', function() {
                 discPrice: 88888.61,
                 finalPrice: 88888.68,
                 paid: 88888.68,
-                courseType: 'course type',
-                courseOriId: 1,
-                courseSesId: 2,
+                courseId: '16122700000002',
+                courseName: '默认产品2018第一期课程',
+                courseType: '默认类型',
                 courseHours: 10,
                 courseTimes: 5,
                 stuName: 'student name',
-                stuCode: codeVal,
+                stuCode: orgCodeVal,
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
@@ -121,7 +108,8 @@ describe('/ajax/service/contract/ APIs', function() {
                 parEmail: 'parent mail',
                 parAddress: 'parent addr',
                 relation: '父子',
-                orgId: org_val,
+                orgId: orgIdVal,
+                oriId: '16122700000000',
             }
         });
 
@@ -131,14 +119,14 @@ describe('/ajax/service/contract/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
-        id_val = jsonData.data;
+        userIdVal = jsonData.data;
     });
 
     it('query.do - null values', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, serviceContractApiPath, 'query.do'),
             dataType: 'json',
             data: {
             }
@@ -154,10 +142,10 @@ describe('/ajax/service/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'query.do'),
+            url: buildUrl(host, serviceContractApiPath, 'query.do'),
             dataType: 'json',
             data: {
-                id: id_val,
+                id: userIdVal,
             }
         });
 
@@ -167,16 +155,36 @@ describe('/ajax/service/contract/ APIs', function() {
         expect(jsonData.code).to.be.equal(200);
         expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
+        studentIdVal = jsonData.data.stuId;
+    });
+
+    it('queryListByStudentId.do', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, serviceContractApiPath, 'queryListByStudentId.do'),
+            dataType: 'json',
+            data: {
+                id: studentIdVal
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('list.do', jsonData);
+        expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.data).to.not.empty;
+        expect(jsonData.detail).to.be.equal('Ok');
     });
 
     it('list.do', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'list.do'),
+            url: buildUrl(host, serviceContractApiPath, 'list.do'),
             dataType: 'json',
             data: {
-                organizationId: org_val
+                organizationId: orgIdVal
             }
         });
 
@@ -192,11 +200,11 @@ describe('/ajax/service/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'mod.do'),
+            url: buildUrl(host, serviceContractApiPath, 'mod.do'),
             dataType: 'json',
             data: {
-                id: id_val,
-                code: codeVal + '_mod',
+                id: userIdVal,
+                code: orgCodeVal + '_mod',
                 type: '新招',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -204,13 +212,13 @@ describe('/ajax/service/contract/ APIs', function() {
                 discPrice: 88888.61,
                 finalPrice: 88888.68,
                 paid: 88888.68,
-                courseType: 'course type mod',
-                courseOriId: 1,
-                courseSesId: 2,
+                courseId: '16122700000002',
+                courseName: '默认产品2018第一期课程',
+                courseType: '默认类型',
                 courseHours: 10,
                 courseTimes: 5,
                 stuName: 'student name mod',
-                stuCode: codeVal + '_mod',
+                stuCode: orgCodeVal + '_mod',
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
@@ -221,7 +229,8 @@ describe('/ajax/service/contract/ APIs', function() {
                 parEmail: 'parent mail',
                 parAddress: 'parent addr',
                 relation: '父子',
-                orgId: org_val,
+                orgId: orgIdVal,
+                oriId: '16122700000000',
             }
         });
 
@@ -236,10 +245,10 @@ describe('/ajax/service/contract/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, act_path, 'del.do'),
+            url: buildUrl(host, serviceContractApiPath, 'del.do'),
             dataType: 'json',
             data: {
-                id: id_val
+                id: userIdVal
             }
         });
 
@@ -254,7 +263,7 @@ describe('/ajax/service/contract/ APIs', function() {
         xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, path, 'logout.do'),
+            url: buildUrl(host, userApiPath, 'logout.do'),
             dataType: 'json'
         });
 
