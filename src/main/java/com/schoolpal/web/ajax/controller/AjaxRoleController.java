@@ -29,7 +29,7 @@ public class AjaxRoleController extends AjaxBaseController{
     @Autowired
     private RoleService roleServ;
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "query.do", method = RequestMethod.POST)
     public Object query(@NotEmpty String id) throws AjaxException {
 
@@ -48,7 +48,7 @@ public class AjaxRoleController extends AjaxBaseController{
         return role;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "ranks.do", method = RequestMethod.POST)
     public Object ranks() throws AjaxException {
         List<TRank> rankList = roleServ.queryRankList();

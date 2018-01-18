@@ -1,10 +1,11 @@
 package com.schoolpal.consts;
 
 public enum LogLevel {
-	
-	DEBUG,
-	TRACE,
-	WARNING, 
-	ERROR
 
+	TRACE,
+	DEBUG,
+	INFO,
+	WARNING,
+	ERROR,
+	FATAL
 }

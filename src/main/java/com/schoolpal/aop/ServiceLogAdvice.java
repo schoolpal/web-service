@@ -1,53 +1,55 @@
 package com.schoolpal.aop;
 
-import com.google.gson.Gson;
-import com.schoolpal.model.AjaxControllerLogRecord;
+import com.schoolpal.consts.LogLevel;
+import com.schoolpal.model.ServiceLogRecord;
+import com.schoolpal.service.LogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AjaxControllerLogAdvice {
+public class ServiceLogAdvice {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    private Gson gson = new Gson();
 
     @Autowired
-    private AjaxControllerLogRecord logRecord;
+    private ServiceLogRecord logRecord;
+    @Autowired
+    private LogService logService;
 
     public void before(JoinPoint joinPoint){
-        logger.debug("###AjaxControllerLogAdvice - before()");
+        logger.debug("###ServiceLogAdvice - before()");
     }
 
     public void after(JoinPoint joinPoint){
-        logger.debug("###AjaxControllerLogAdvice - after()");
+        logger.debug("###ServiceLogAdvice - after()");
     }
 
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        logger.debug("###AjaxControllerLogAdvice - around() - before");
+        logger.debug("###ServiceLogAdvice - around() - before");
 
         Object retVal = proceedingJoinPoint.proceed();
 
-        logger.debug("###AjaxControllerLogAdvice - around() - after");
+        logger.debug("###ServiceLogAdvice - around() - after");
         return retVal;
     }
 
     public void afterReturning(JoinPoint joinPoint, Object retVal){
-        logger.debug("###AjaxControllerLogAdvice - afterReturning()");
+        logger.debug("###ServiceLogAdvice - afterReturning()");
 
         logRecord.loadContextInfo(joinPoint);
-        logRecord.setResponse(retVal);
+        logRecord.setReturnVal(retVal);
 
-        logger.info(gson.toJson(logRecord));
+        logService.log(LogLevel.INFO, "", logRecord);
     }
 
     public void afterThrowing(JoinPoint joinPoint, Throwable e){
-        logger.debug("###AjaxControllerLogAdvice - afterThrowing()");
+        logger.debug("###ServiceLogAdvice - afterThrowing()");
 
         logRecord.loadContextInfo(joinPoint);
-        logRecord.setResponse(null);
+        logRecord.setReturnVal(e.getMessage());
 
-        logger.error(gson.toJson(logRecord));
+        logService.log(LogLevel.ERROR, "", logRecord);
     }
 }

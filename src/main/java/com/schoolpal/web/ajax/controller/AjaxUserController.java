@@ -36,7 +36,7 @@ public class AjaxUserController extends AjaxBaseController{
     @Autowired
     private OrgService orgServ;
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "salt.do", method = RequestMethod.POST, produces = "application/json")
     public Object salt() {
 
@@ -110,14 +110,14 @@ public class AjaxUserController extends AjaxBaseController{
         return null;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "profile.do", method = RequestMethod.POST)
     public Object profile() {
         TUser user = userServ.getCachedUser();
         return user;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
     public Object listOrgs() {
         TUser user = userServ.getCachedUser();
@@ -126,7 +126,7 @@ public class AjaxUserController extends AjaxBaseController{
         return orgList;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
     public Object listRoles() {
         TUser user = userServ.getCachedUser();
@@ -135,7 +135,7 @@ public class AjaxUserController extends AjaxBaseController{
         return roleList;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listFuncs.do", method = RequestMethod.POST)
     public Object listFuncs() {
 
@@ -148,7 +148,7 @@ public class AjaxUserController extends AjaxBaseController{
         return funcList;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listFuncsByRole.do", method = RequestMethod.POST)
     public Object listFuncsByRole(@NotEmpty String id) throws AjaxException {
 

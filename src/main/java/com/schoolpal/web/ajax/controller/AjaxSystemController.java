@@ -45,7 +45,7 @@ public class AjaxSystemController extends AjaxBaseController {
     @Autowired
     private FunctionService funcServ;
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequiresPermissions("7-1")
     @RequestMapping(value = "org/list.do", method = RequestMethod.POST)
     public Object listOrgs() {
@@ -142,7 +142,7 @@ public class AjaxSystemController extends AjaxBaseController {
         return true;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequiresPermissions("7-2")
     @RequestMapping(value = "role/list.do", method = RequestMethod.POST)
     public Object listRoles(@NotEmpty String id) throws AjaxException {
@@ -317,7 +317,7 @@ public class AjaxSystemController extends AjaxBaseController {
         return true;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequiresPermissions("7-4")
     @RequestMapping(value = "user/query.do", method = RequestMethod.POST)
     public Object queryUser(String id) throws AjaxException {

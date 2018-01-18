@@ -10,11 +10,11 @@ public class AjaxControllerResponseBodyAdvice {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    public void before(JoinPoint joinPoint){
+    public void before(JoinPoint joinPoint) {
         logger.debug("###AjaxControllerResponseBodyAdvice - before()");
     }
 
-    public void after(JoinPoint joinPoint){
+    public void after(JoinPoint joinPoint) {
         logger.debug("###AjaxControllerResponseBodyAdvice - after()");
     }
 
@@ -23,21 +23,21 @@ public class AjaxControllerResponseBodyAdvice {
 
         Object retVal = proceedingJoinPoint.proceed();
 
-        if (!(retVal instanceof AjaxResponse)) {
-            AjaxResponse res = new AjaxResponse();
-            res.setData(retVal);
-            retVal = res;
-        }
+//        if (!(retVal instanceof AjaxResponse)) {
+        AjaxResponse res = new AjaxResponse();
+        res.setData(retVal);
+        retVal = res;
+//        }
 
         logger.debug("###AjaxControllerResponseBodyAdvice - around() - after");
         return retVal;
     }
 
-    public void afterReturning(JoinPoint joinPoint, Object retVal){
+    public void afterReturning(JoinPoint joinPoint, Object retVal) {
         logger.debug("###AjaxControllerResponseBodyAdvice - afterReturning()");
     }
 
-    public void afterThrowing(JoinPoint joinPoint, Throwable e){
+    public void afterThrowing(JoinPoint joinPoint, Throwable e) {
         logger.debug("###AjaxControllerResponseBodyAdvice - afterThrowing()");
     }
 }

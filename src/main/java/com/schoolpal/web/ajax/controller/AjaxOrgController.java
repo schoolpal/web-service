@@ -31,7 +31,7 @@ public class AjaxOrgController extends AjaxBaseController{
     @Autowired
     private RoleService roleServ;
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
     public Object listRoles(@NotEmpty String id) throws AjaxException {
 
@@ -50,7 +50,7 @@ public class AjaxOrgController extends AjaxBaseController{
         return roles;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listUsers.do", method = RequestMethod.POST)
     public Object listUsers(@NotEmpty String id) throws AjaxException {
         TUser user = userServ.getCachedUser();

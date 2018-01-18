@@ -24,7 +24,7 @@ public class AjaxFuncController extends AjaxBaseController{
     @Autowired
     private FunctionService funcServ;
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listRootFuncs.do", method = RequestMethod.POST)
     public Object listRootFuncs() {
 
@@ -33,7 +33,7 @@ public class AjaxFuncController extends AjaxBaseController{
         return rootFuncs;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "listAllFuncs.do", method = RequestMethod.POST)
     public Object listAllFuncs() {
 
@@ -42,7 +42,7 @@ public class AjaxFuncController extends AjaxBaseController{
         return rootFuncs;
     }
 
-    @AjaxControllerLog
+//    @AjaxControllerLog
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
     public Object listFuncs(@NotEmpty String ids) {
 

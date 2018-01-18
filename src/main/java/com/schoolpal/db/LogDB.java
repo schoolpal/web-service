@@ -15,7 +15,7 @@ public class LogDB {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	public void add(String ipService, String ipUser, String creator, String type, String title, String desc, String debug) {
+	public void add(String level, String message, String userId, String userName, String invocation, String args, String returnVal, String ip) {
 		
 		//
 		// TODO: log4j
@@ -26,20 +26,17 @@ public class LogDB {
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
-				String sql = " insert into t_log(c_id, c_create_time, c_service_ip, c_user_ip, c_creator, c_type, c_title, c_desc, c_debug) " 
-						   + " values(f_next_id('t_log'), now(), ?, ?, ?, ?, ?, ?, ?) ";
+				String sql = " insert into t_log (`id`, `datetime`, `level`, `message`, `user_id`, `user_name`, `ip`, `invocation`, `args`, `return`) "
+						   + " values(f_next_id('t_log'), now(), ?, ?, ?, ?, ?, ?, ?, ?) ";
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1, ipService);
-				ps.setString(2, ipUser);
-				ps.setString(3, creator);
-				ps.setString(4, type);
-				String safe_title = title;
-				if (title.length() > 49){
-					safe_title = title.substring(0, 49);
-				}
-				ps.setString(5, safe_title);
-				ps.setString(6, desc);
-				ps.setString(7, debug);
+				ps.setString(1, level);
+				ps.setString(2, message);
+				ps.setString(3, userId);
+				ps.setString(4, userName);
+				ps.setString(5, ip);
+				ps.setString(6, invocation);
+				ps.setString(7, args);
+				ps.setString(8, returnVal);
 				return ps;
 			}
 		});
