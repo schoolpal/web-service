@@ -13,7 +13,6 @@ function resDump(id, jsonData) {
 }
 
 var host = window.location.protocol + "//" + window.location.host;
-var dateNow = new Date()
 
 var sysOrgApiPath = '/web/ajax/sys/org/';
 var sysRoleApiPath = '/web/ajax/sys/role/';
@@ -50,7 +49,6 @@ var passVal = '123456';
 var saltVal = null;
 
 var orgIdVal = null;
-var orgCodeVal = dateNow.getTime().toString();
 
 var roleIdVal = null;
 

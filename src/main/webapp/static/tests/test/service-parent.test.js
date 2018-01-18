@@ -6,6 +6,9 @@ describe('/ajax/service/customer/parent APIs', function() {
 
     var loginIdVal = crmLoginIdVal;
 
+    var dateNow = new Date()
+    var idCodeVal = dateNow.getTime().toString();
+
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -90,7 +93,7 @@ describe('/ajax/service/customer/parent APIs', function() {
                 email: 'parent mail',
                 address: 'parent addr',
                 idType: 1,
-                idCode: orgCodeVal,
+                idCode: idCodeVal,
                 birthday: new Date(1981, 12, 12),
             }
         });
@@ -173,7 +176,7 @@ describe('/ajax/service/customer/parent APIs', function() {
                 email: 'parent mail mod',
                 address: 'parent addr mod',
                 idType: 2,
-                idCode: orgCodeVal + ' mod',
+                idCode: idCodeVal + ' mod',
                 birthday: new Date(1981, 12, 12),
             }
         });

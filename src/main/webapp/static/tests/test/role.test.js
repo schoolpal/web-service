@@ -5,7 +5,7 @@ describe('/ajax/role/ APIs', function() {
     this.timeout(0);
 
     var loginIdVal = sysLoginIdval;
-    orgIdVal = '16010100000001';
+    var orgIdVal = '16010100000001';
 
 	it('salt.do', function() {
 		var xhr = $.ajax({

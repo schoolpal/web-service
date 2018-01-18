@@ -6,6 +6,10 @@ describe('/ajax/service/customer/student APIs', function() {
 
     var user = crmLoginIdVal;
 
+    var dateNow = new Date()
+    var studentCodeVal = dateNow.getTime().toString();
+    var idCodeVal = studentCodeVal;
+
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -83,11 +87,11 @@ describe('/ajax/service/customer/student APIs', function() {
             url: buildUrl(host, serviceStudentApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                code: orgCodeVal,
+                code: studentCodeVal,
                 name: 'parent name',
                 genderId: 1,
                 idType: 1,
-                idCode: orgCodeVal,
+                idCode: idCodeVal,
                 birthday: new Date(1981, 12, 12),
                 schoolGrade: 'school grade',
                 classGrade: 'class grade',
@@ -166,11 +170,11 @@ describe('/ajax/service/customer/student APIs', function() {
             dataType: 'json',
             data: {
                 id: userIdVal,
-                code: orgCodeVal,
+                code: studentCodeVal,
                 name: 'parent name mod',
                 genderId: 1,
                 idType: 1,
-                idCode: orgCodeVal + ' mod',
+                idCode: idCodeVal + ' mod',
                 birthday: new Date(1981, 12, 14),
                 schoolGrade: 'school grade mod',
                 classGrade: 'class grade mod',

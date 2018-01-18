@@ -6,6 +6,10 @@ describe('/ajax/sales/contract/ APIs', function() {
 
     var loginIdVal = crmLoginIdVal;
 
+    var dateNow = new Date()
+    var contractCodeVal = dateNow.getTime().toString();
+    var studentCodeVal = contractCodeVal;
+
     it('salt.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -83,7 +87,7 @@ describe('/ajax/sales/contract/ APIs', function() {
             url: buildUrl(host, salesContractApiPath, 'add.do'),
             dataType: 'json',
             data: {
-                code: orgCodeVal,
+                code: contractCodeVal,
                 type: '新招',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -97,7 +101,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 courseHours: 10,
                 courseTimes: 5,
                 stuName: 'student name',
-                stuCode: orgCodeVal,
+                stuCode: studentCodeVal,
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
@@ -221,7 +225,7 @@ describe('/ajax/sales/contract/ APIs', function() {
             dataType: 'json',
             data: {
                 id: contractIdVal,
-                code: orgCodeVal + '_mod',
+                code: contractCodeVal + '_mod',
                 type: '新招',
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
@@ -235,7 +239,7 @@ describe('/ajax/sales/contract/ APIs', function() {
                 courseHours: 10,
                 courseTimes: 5,
                 stuName: 'student name mod',
-                stuCode: orgCodeVal + '_mod',
+                stuCode: studentCodeVal + '_mod',
                 stuGenderId: 1,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',

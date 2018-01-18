@@ -6,6 +6,9 @@ describe('/ajax/org/ APIs', function() {
 
     var loginIdVal = sysLoginIdval;
 
+    var dateNow = new Date()
+    var orgCodeVal = dateNow.getTime().toString();
+
 	it('salt.do', function() {
 		var xhr = $.ajax({
 			async : false,
