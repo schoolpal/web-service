@@ -88,7 +88,7 @@ describe('/ajax/service/contract/ APIs', function() {
             dataType: 'json',
             data: {
                 code: contractCodeVal,
-                type: '新招',
+                typeId: 1,
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
                 oriPrice: 100000.79,
@@ -226,7 +226,7 @@ describe('/ajax/service/contract/ APIs', function() {
             data: {
                 id: userIdVal,
                 code: contractCodeVal + '_mod',
-                type: '新招',
+                typeId: 2,
                 startDate: new Date(2016, 6, 6),
                 endDate: new Date(2017, 7, 7),
                 oriPrice: 100000.79,

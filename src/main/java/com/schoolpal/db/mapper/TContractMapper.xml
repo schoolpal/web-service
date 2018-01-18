@@ -7,11 +7,13 @@
             c.*,
             cu.c_realname AS creator_name,
             eu.c_realname AS executive_name,
-            o.c_name      AS org_name
+            o.c_name      AS org_name,
+            t.name        AS type_name
         FROM t_contract AS c
             LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
             LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
             LEFT JOIN t_org AS o ON c.org_id = o.c_id
+            LEFT JOIN t_contract_type AS t ON c.type_id = t.id
         WHERE c.id = #{id,jdbcType=CHAR}
     </select>
     <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -19,11 +21,13 @@
             c.*,
             cu.c_realname AS creator_name,
             eu.c_realname AS executive_name,
-            o.c_name      AS org_name
+            o.c_name      AS org_name,
+            t.name        AS type_name
         FROM t_contract AS c
             LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
             LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
             LEFT JOIN t_org AS o ON c.org_id = o.c_id
+            LEFT JOIN t_contract_type AS t ON c.type_id = t.id
         WHERE c.executive_id = #{id,jdbcType=CHAR}
     </select>
     <select id="selectManyByStuId" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -31,11 +35,13 @@
             c.*,
             cu.c_realname AS creator_name,
             eu.c_realname AS executive_name,
-            o.c_name      AS org_name
+            o.c_name      AS org_name,
+            t.name        AS type_name
         FROM t_contract AS c
             LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
             LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
             LEFT JOIN t_org AS o ON c.org_id = o.c_id
+            LEFT JOIN t_contract_type AS t ON c.type_id = t.id
         WHERE c.stu_id = #{id,jdbcType=CHAR}
     </select>
     <delete id="deleteOneById" parameterType="java.lang.String">
@@ -48,8 +54,8 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="type != null">
-                type,
+            <if test="typeId != null">
+                type_id,
             </if>
             <if test="code != null">
                 code,
@@ -155,8 +161,8 @@
             <if test="id != null">
                 #{id,jdbcType=CHAR},
             </if>
-            <if test="type != null">
-                #{type,jdbcType=VARCHAR},
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
             </if>
             <if test="code != null">
                 #{code,jdbcType=VARCHAR},
@@ -262,8 +268,8 @@
     <update id="updateOne" parameterType="com.schoolpal.db.model.TContract">
         update t_contract
         <set>
-            <if test="type != null">
-                type = #{type,jdbcType=VARCHAR},
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=VARCHAR},
             </if>
             <if test="code != null">
                 code = #{code,jdbcType=VARCHAR},
@@ -371,7 +377,8 @@
 
     <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TContract">
         <id column="id" jdbcType="CHAR" property="id"/>
-        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="type_name" jdbcType="VARCHAR" property="typeName"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="start_date" jdbcType="DATE" property="startDate"/>
         <result column="end_date" jdbcType="DATE" property="endDate"/>
@@ -411,7 +418,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, type, code, start_date, end_date, ori_price, disc_price, final_price, paid,
+        id, type_id, code, start_date, end_date, ori_price, disc_price, final_price, paid,
         course_id, course_type, course_name, course_hours, course_times, stu_id, stu_code, stu_name, stu_gender,
         stu_id_type, stu_id_code, stu_birthday, stu_grade, stu_school_name, par_id, par_name,
         par_cellphone, par_wechat, par_email, par_address, relation, org_id, creator_id,
