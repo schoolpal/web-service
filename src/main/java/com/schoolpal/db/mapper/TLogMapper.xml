@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.schoolpal.db.inf.TLogMapper">
+
+  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLog">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="user_id" jdbcType="CHAR" property="userId" />
+    <result column="user_name" jdbcType="CHAR" property="userName" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="invocation" jdbcType="VARCHAR" property="invocation" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.schoolpal.db.model.TLogWithBLOBs">
+    <result column="args" jdbcType="LONGVARCHAR" property="args" />
+    <result column="return" jdbcType="LONGVARCHAR" property="return" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, datetime, level, message, user_id, user_name, ip, invocation
+  </sql>
+  <sql id="Blob_Column_List">
+    args, return
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_log
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_log
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insertOne" parameterType="com.schoolpal.db.model.TLogWithBLOBs">
+    insert into t_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      `datetime`,
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="message != null">
+        `message`,
+      </if>
+      <if test="userId != null">
+        `user_id`,
+      </if>
+      <if test="userName != null">
+        `user_name`,
+      </if>
+      <if test="ip != null">
+        `ip`,
+      </if>
+      <if test="invocation != null">
+        `invocation`,
+      </if>
+      <if test="args != null">
+        `args`,
+      </if>
+      <if test="return != null">
+        `return`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      f_next_id('t_log'),
+      now(),
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="invocation != null">
+        #{invocation,jdbcType=VARCHAR},
+      </if>
+      <if test="args != null">
+        #{args,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="return != null">
+        #{return,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.schoolpal.db.model.TLogWithBLOBs">
+    update t_log
+    <set>
+      <if test="datetime != null">
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=CHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="invocation != null">
+        invocation = #{invocation,jdbcType=VARCHAR},
+      </if>
+      <if test="args != null">
+        args = #{args,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="return != null">
+        return = #{return,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.schoolpal.db.model.TLogWithBLOBs">
+    update t_log
+    set datetime = #{datetime,jdbcType=TIMESTAMP},
+      level = #{level,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=CHAR},
+      user_name = #{userName,jdbcType=CHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      invocation = #{invocation,jdbcType=VARCHAR},
+      args = #{args,jdbcType=LONGVARCHAR},
+      return = #{return,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.schoolpal.db.model.TLog">
+    update t_log
+    set datetime = #{datetime,jdbcType=TIMESTAMP},
+      level = #{level,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=CHAR},
+      user_name = #{userName,jdbcType=CHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      invocation = #{invocation,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -13,7 +13,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Component
+//@Component
+@Deprecated
 public class ServiceLogRecord {
 
     private String clazzName;

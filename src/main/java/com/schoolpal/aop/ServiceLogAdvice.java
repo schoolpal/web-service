@@ -1,6 +1,7 @@
 package com.schoolpal.aop;
 
 import com.schoolpal.consts.LogLevel;
+import com.schoolpal.db.model.TLogWithBLOBs;
 import com.schoolpal.model.ServiceLogRecord;
 import com.schoolpal.service.LogService;
 import org.aspectj.lang.JoinPoint;
@@ -13,8 +14,8 @@ public class ServiceLogAdvice {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private ServiceLogRecord logRecord;
+//    @Autowired
+//    private ServiceLogRecord logRecord;
     @Autowired
     private LogService logService;
 
@@ -38,18 +39,20 @@ public class ServiceLogAdvice {
     public void afterReturning(JoinPoint joinPoint, Object retVal){
         logger.debug("###ServiceLogAdvice - afterReturning()");
 
-        logRecord.loadContextInfo(joinPoint);
-        logRecord.setReturnVal(retVal);
+//        logRecord.loadContextInfo(joinPoint);
+//        logRecord.setReturnVal(retVal);
 
-        logService.log(LogLevel.INFO, "", logRecord);
+//        logService.log(LogLevel.INFO, "", logRecord);
+        logService.log(LogLevel.INFO, "", TLogWithBLOBs.Produce(joinPoint, retVal));
     }
 
     public void afterThrowing(JoinPoint joinPoint, Throwable e){
         logger.debug("###ServiceLogAdvice - afterThrowing()");
 
-        logRecord.loadContextInfo(joinPoint);
-        logRecord.setReturnVal(e.getMessage());
-
-        logService.log(LogLevel.ERROR, "", logRecord);
+//        logRecord.loadContextInfo(joinPoint);
+//        logRecord.setReturnVal(e.getMessage());
+//
+//        logService.log(LogLevel.ERROR, "", logRecord);
+        logService.log(LogLevel.ERROR, "", TLogWithBLOBs.Produce(joinPoint, e));
     }
 }

@@ -9,12 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@Repository
+//@Repository
+@Deprecated
 public class LogDB {
 	
-	@Autowired
+//	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
+	@Deprecated
 	public void add(String level, String message, String userId, String userName, String invocation, String args, String returnVal, String ip) {
 		
 		//
