@@ -71,12 +71,20 @@ public class TLeadsParent {
         this.genderId = genderId;
         this.genderText = Gender.valueOf(genderId).getName();
     }
+    public void setParentGenderId(Integer genderId) {
+        this.genderId = genderId;
+        this.genderText = Gender.valueOf(genderId).getName();
+    }
 
     public String getGenderText() {
         return genderText;
     }
 
     public void setGenderText(String genderText) {
+        this.genderText = genderText;
+        this.genderId = Gender.nameOf(genderText.trim()).getValue();
+    }
+    public void setParentGenderText(String genderText) {
         this.genderText = genderText;
         this.genderId = Gender.nameOf(genderText.trim()).getValue();
     }
