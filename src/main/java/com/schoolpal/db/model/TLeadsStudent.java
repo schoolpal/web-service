@@ -70,6 +70,10 @@ public class TLeadsStudent {
         this.genderId = genderId;
         this.genderText = Gender.valueOf(genderId).getName();
     }
+    public void setStudentGenderId(Integer genderId) {
+        this.genderId = genderId;
+        this.genderText = Gender.valueOf(genderId).getName();
+    }
 
     public String getGenderText() {
 		return genderText;
@@ -79,6 +83,10 @@ public class TLeadsStudent {
 		this.genderText = genderText;
         this.genderId = Gender.nameOf(genderText.trim()).getValue();
 	}
+    public void setStudentGenderText(String genderText) {
+        this.genderText = genderText;
+        this.genderId = Gender.nameOf(genderText.trim()).getValue();
+    }
 
 	public Integer getIdType() {
         return idType;

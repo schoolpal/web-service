@@ -3,6 +3,7 @@ package com.schoolpal.db.model;
 import com.schoolpal.consts.Gender;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -70,8 +71,9 @@ public class TStudent {
     public Integer getGenderId() {
         return genderId;
     }
+
     public void setGenderId(Integer genderId) {
-        this.genderId = genderId == null ? null : genderId;
+        this.genderId = genderId;
         this.genderText = Gender.valueOf(genderId).getName();
     }
 
@@ -163,20 +165,20 @@ public class TStudent {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-    
-    public static TStudent ParseFromContract(TContract contract){
-    	TStudent stu = new TStudent();
-    	
-    	stu.setCode(contract.getStuCode());
-    	stu.setName(contract.getStuName());
-    	stu.setGenderId(contract.getStuGenderId());
-    	stu.setBirthday(contract.getStuBirthday());
-    	stu.setClassGrade(contract.getStuGrade());
-    	stu.setSchoolName(contract.getStuSchoolName());
-    	stu.setSchoolGrade(contract.getStuGrade());
-    	stu.setIdType(contract.getStuIdType());
-    	stu.setIdCode(contract.getStuIdCode());
-    	
-		return stu;
+
+    public static TStudent ParseFromContract(TContract contract) {
+        TStudent stu = new TStudent();
+
+        stu.setCode(contract.getStuCode());
+        stu.setName(contract.getStuName());
+        stu.setGenderId(contract.getStuGenderId());
+        stu.setBirthday(contract.getStuBirthday());
+        stu.setClassGrade(contract.getStuGrade());
+        stu.setSchoolName(contract.getStuSchoolName());
+        stu.setSchoolGrade(contract.getStuGrade());
+        stu.setIdType(contract.getStuIdType());
+        stu.setIdCode(contract.getStuIdCode());
+
+        return stu;
     }
 }

@@ -25,7 +25,10 @@ public enum Gender {
     }
     
     public static Gender valueOf(Integer value){
-        switch (value) {  
+
+        if(value == null) return NA;
+
+        switch (value) {
         case 0:
             return NA;  
         case 1:
@@ -38,6 +41,8 @@ public enum Gender {
     }
     
     public static Gender nameOf(String name){
+        if(name == null) return NA;
+
         switch (name) {  
         case "未知":
             return NA;  

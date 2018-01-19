@@ -102,7 +102,7 @@ describe('/ajax/service/contract/ APIs', function() {
                 courseTimes: 5,
                 stuName: 'student name',
                 stuCode: studentCodeVal,
-                stuGenderId: 1,
+                stuGenderId: null,
                 stuBirthday: new Date(2017, 7, 7),
                 stuGrade: 'grade',
                 stuSchool_name: 'school name',
