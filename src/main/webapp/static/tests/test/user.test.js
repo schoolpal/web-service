@@ -6,6 +6,7 @@ describe('/ajax/user/ APIs', function() {
 
     var loginIdVal = sysLoginIdval;
 
+    var dateNow = new Date()
 	var loginNameVal = 'testLoginName' + dateNow.getTime();
 	var phoneVal = '139' + dateNow.getTime();
 	
