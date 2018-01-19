@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import com.schoolpal.aop.ServiceLog;
 import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TOrgMapper;
@@ -7,6 +8,7 @@ import com.schoolpal.db.model.TOrg;
 import com.schoolpal.web.model.OrgForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -168,74 +170,32 @@ public class OrgService {
         return orgList.contains(id);
     }
 
-    public String addOrg(OrgForm form, String rootOrgId, String creatorId) {
-        String ret = null;
-        try {
-            String id = idxDao.selectNextId("t_org");
-            TOrg org = this.orgFormToTOrg(form);
-            org.setcId(id);
-            org.setcRootId(rootOrgId);
-            org.setcCreator(creatorId);
-            org.setcAvailable(true);
-            org.setcOrderNum(1);
-            org.setcCreateTime(new Date());
-            org.setcModifyTime(new Date());
-            if (orgDao.insertOne(org) > 0) {
-                ret = id;
-            }
-        } catch (Exception e) {
-            logServ.log("", LogLevel.ERROR, "OrgService.AddOrg()", "", e.getMessage());
-        }
-        return ret;
+    @ServiceLog
+    @Transactional
+    public String addOrg(TOrg org, String rootOrgId, String creatorId) {
+
+        String id = idxDao.selectNextId("t_org");
+
+        org.setcId(id);
+        org.setcRootId(rootOrgId);
+        org.setcCreator(creatorId);
+        org.setcAvailable(true);
+        org.setcOrderNum(1);
+        org.setcCreateTime(new Date());
+        org.setcModifyTime(new Date());
+        orgDao.insertOne(org);
+
+        return org.getcId();
     }
 
-    public boolean modOrgById(OrgForm form) {
-        boolean ret = false;
-        try {
-            TOrg org = this.orgFormToTOrg(form);
-            ret = orgDao.updateOneById(org) > 0;
-        } catch (Exception e) {
-            logServ.log("", LogLevel.ERROR, "OrgService.ModOrg()", "", e.getMessage());
-        }
-        return ret;
+    @ServiceLog
+    public void modOrgById(TOrg org) {
+        orgDao.updateOneById(org);
     }
 
-    public boolean delOrgById(String id) {
-        boolean ret = false;
-        try {
-            ret = orgDao.deleteOneById(id) > 0;
-        } catch (Exception e) {
-            logServ.log("", LogLevel.ERROR, "OrgService.DelOrgById()", "", e.getMessage());
-        }
-        return ret;
+    @ServiceLog
+    public void delOrgById(String id) {
+        orgDao.deleteOneById(id);
     }
 
-    public boolean delOrgByCode(String code) {
-        return false;
-    }
-
-    private TOrg orgFormToTOrg(OrgForm form) {
-        if (form == null) {
-            return null;
-        }
-
-        TOrg org = new TOrg();
-        org.setcId(form.getId());
-        org.setcCode(form.getCode());
-        org.setcName(form.getName());
-
-        org.setcState(form.getState());
-        org.setcCity(form.getCity());
-        org.setcCounty(form.getCounty());
-        org.setcStateCode(form.getStateCode());
-        org.setcCityCode(form.getCityCode());
-        org.setcCountyCode(form.getCountyCode());
-        org.setcAddress(form.getAddress());
-
-        org.setcParentId(form.getParentId());
-        org.setcOwner(form.getOwner());
-        org.setcOwnerPhone(form.getPhone());
-
-        return org;
-    }
 }

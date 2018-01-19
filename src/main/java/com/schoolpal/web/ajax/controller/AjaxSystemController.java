@@ -45,7 +45,7 @@ public class AjaxSystemController extends AjaxBaseController {
     @Autowired
     private FunctionService funcServ;
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequiresPermissions("7-1")
     @RequestMapping(value = "org/list.do", method = RequestMethod.POST)
     public Object listOrgs() {
@@ -77,9 +77,11 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(404, "No permission to add organization under parent organization");
         }
 
-        String id = orgServ.addOrg(form, parentOrg.getcRootId(), user.getcLoginName());
-        if (id == null) {
-            throw new AjaxException(500, "Failed to add organization");
+        String id;
+        try {
+            id = orgServ.addOrg(this.orgFormToTOrg(form), parentOrg.getcRootId(), user.getcLoginName());
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add organization", e);
         }
 
         return id;
@@ -113,7 +115,9 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(406, "No permission to move organization to the parent organization");
         }
 
-        if (!orgServ.modOrgById(form)) {
+        try{
+            orgServ.modOrgById(this.orgFormToTOrg(form));
+        }catch (Exception e){
             throw new AjaxException(500, "Failed to mod organization");
         }
 
@@ -135,14 +139,16 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(403, "No permission to delete this organization");
         }
 
-        if (!orgServ.delOrgById(id)) {
+        try{
+            orgServ.delOrgById(id);
+        }catch (Exception e){
             throw new AjaxException(500, "Failed to delete organization");
         }
 
         return true;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequiresPermissions("7-2")
     @RequestMapping(value = "role/list.do", method = RequestMethod.POST)
     public Object listRoles(@NotEmpty String id) throws AjaxException {
@@ -317,7 +323,7 @@ public class AjaxSystemController extends AjaxBaseController {
         return true;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequiresPermissions("7-4")
     @RequestMapping(value = "user/query.do", method = RequestMethod.POST)
     public Object queryUser(String id) throws AjaxException {
@@ -502,6 +508,27 @@ public class AjaxSystemController extends AjaxBaseController {
         user.setcQq(form.getIm());
         user.setcRealName(form.getRealName());
         return user;
+    }
+
+    public TOrg orgFormToTOrg(OrgForm form) {
+        TOrg org = new TOrg();
+        org.setcId(form.getId());
+        org.setcCode(form.getCode());
+        org.setcName(form.getName());
+
+        org.setcState(form.getState());
+        org.setcCity(form.getCity());
+        org.setcCounty(form.getCounty());
+        org.setcStateCode(form.getStateCode());
+        org.setcCityCode(form.getCityCode());
+        org.setcCountyCode(form.getCountyCode());
+        org.setcAddress(form.getAddress());
+
+        org.setcParentId(form.getParentId());
+        org.setcOwner(form.getOwner());
+        org.setcOwnerPhone(form.getPhone());
+
+        return org;
     }
 
     /* Not implement yet
