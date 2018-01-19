@@ -18,7 +18,7 @@
     where id = #{cellphone,jdbcType=CHAR}
   </select>
   <select id="selectManyByStudentId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select p.*, m.stu_id
+    select p.*, m.relation
     from t_parent as p
     right join t_par_stu as m on p.id = m.par_id
     where m.stu_id = #{id,jdbcType=CHAR}
@@ -186,6 +186,7 @@
     <result column="id_code" jdbcType="VARCHAR" property="idCode" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
     <result column="executive_id" jdbcType="CHAR" property="executiveId" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
     <result column="creator_id" jdbcType="CHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />

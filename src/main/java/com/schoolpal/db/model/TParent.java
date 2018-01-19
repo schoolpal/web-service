@@ -41,6 +41,8 @@ public class TParent {
 
     private Date lastUpdate;
 
+    private String relation;
+
     public String getId() {
         return id;
     }
@@ -160,6 +162,14 @@ public class TParent {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 
     public static TParent ParseFromContract(TContract contract){

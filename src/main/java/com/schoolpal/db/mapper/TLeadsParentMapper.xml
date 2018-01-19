@@ -183,6 +183,7 @@
     <result column="id_type" jdbcType="INTEGER" property="idType" />
     <result column="id_code" jdbcType="VARCHAR" property="idCode" />
     <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="relation" jdbcType="VARCHAR" property="relation" />
     <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate" />
