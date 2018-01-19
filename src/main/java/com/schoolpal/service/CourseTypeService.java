@@ -13,38 +13,24 @@ import java.util.List;
 @Service
 public class CourseTypeService {
 
-	@Autowired
-	private LogService logServ;
-	
-	@Autowired
-	private TIndexMapper idxDao; 
-	@Autowired
-	private TCourseTypeMapper courseTypeSessionDao;
+    @Autowired
+    private LogService logServ;
 
-	public TCourseType queryCourseTypeById(Integer id){
-		TCourseType ret = null;
-		try{
-			ret = courseTypeSessionDao.selectOneById(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
+    //	@Autowired
+//	private TIndexMapper idxDao;
+    @Autowired
+    private TCourseTypeMapper courseTypeSessionDao;
 
-	public List<TCourseType> queryCourseTypeList(){
-		List<TCourseType> ret = null;
-		try{
-			ret = courseTypeSessionDao.selectAll();
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
+    public TCourseType queryCourseTypeById(Integer id) {
+        return courseTypeSessionDao.selectOneById(id);
+    }
+
+    public List<TCourseType> queryCourseTypeList() {
+        return courseTypeSessionDao.selectAll();
+    }
 
 /*
-	public String addStudent(TStudent student){
+    public String addStudent(TStudent student){
 		String ret = null;
 		try{
 			String id = idxDao.selectNextId("t_student");

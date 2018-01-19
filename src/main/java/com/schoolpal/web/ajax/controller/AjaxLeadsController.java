@@ -113,11 +113,11 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @Transactional
     public Object convert(@NotEmpty String id, @NotEmpty String assigneeId) throws AjaxException {
 
-        if (!leadsServ.convertToOpportunityById(id)) {
+        try {
+            leadsServ.convertToOpportunityById(id);
+            leadsServ.assignToExecutiveById(id, assigneeId);
+        }catch (Exception e){
             throw new AjaxException(500, "Failed to convert leads");
-        }
-        if (!leadsServ.assignToExecutiveById(id, assigneeId)) {
-            throw new AjaxException(501, "Failed to assign leads");
         }
 
         return true;

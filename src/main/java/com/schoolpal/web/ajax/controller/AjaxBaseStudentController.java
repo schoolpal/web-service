@@ -60,8 +60,10 @@ public abstract class AjaxBaseStudentController extends AjaxBaseController{
 
         student.setCreatorId(user.getcId());
         student.setExecutiveId(user.getcId());
-        if (stuServ.addStudent(student) == null) {
-            throw new AjaxException(500, "Failed to add student");
+        try {
+            stuServ.addStudent(student);
+        }catch (Exception e){
+            throw new AjaxException(500, "Failed to add student", e);
         }
 
         return student.getId();
@@ -74,8 +76,10 @@ public abstract class AjaxBaseStudentController extends AjaxBaseController{
             throw new AjaxException(402, "Invalid student id");
         }
 
-        if (!stuServ.modStudent(student)) {
-            throw new AjaxException(500, "Failed to mod student");
+        try {
+            stuServ.modStudent(student);
+        }catch (Exception e){
+            throw new AjaxException(500, "Failed to mod student", e);
         }
 
         return true;
@@ -89,10 +93,12 @@ public abstract class AjaxBaseStudentController extends AjaxBaseController{
             throw new AjaxException(402, "Invalid student id");
         }
 
-        if (!stuServ.delStudentById(id)) {
-            throw new AjaxException(500, "Failed to del activity");
+        try{
+            relationServ.delRelationsByStuId(id);
+            stuServ.delStudentById(id);
+        }catch (Exception e){
+            throw new AjaxException(500, "Failed to del activity", e);
         }
-        relationServ.delRelationsByStuId(id);
 
         return true;
     }

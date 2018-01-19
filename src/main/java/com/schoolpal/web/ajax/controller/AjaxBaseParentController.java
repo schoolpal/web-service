@@ -16,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Validated
-public abstract class AjaxBaseParentController extends AjaxBaseController{
+public abstract class AjaxBaseParentController extends AjaxBaseController {
 
     @Autowired
     protected UserService userServ;
@@ -56,8 +56,10 @@ public abstract class AjaxBaseParentController extends AjaxBaseController{
 
         parent.setCreatorId(user.getcId());
         parent.setExecutiveId(user.getcId());
-        if (parServ.addParent(parent) == null) {
-            throw new AjaxException(500, "Failed to add parent");
+        try {
+            parServ.addParent(parent);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add parent", e);
         }
 
         return parent.getId();
@@ -70,8 +72,10 @@ public abstract class AjaxBaseParentController extends AjaxBaseController{
             throw new AjaxException(402, "Invalid contact id");
         }
 
-        if (!parServ.modParent(parent)) {
-            throw new AjaxException(500, "Failed to mod parent");
+        try {
+            parServ.modParent(parent);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod parent", e);
         }
 
         return true;
@@ -85,10 +89,12 @@ public abstract class AjaxBaseParentController extends AjaxBaseController{
             throw new AjaxException(412, "Invalid contact id");
         }
 
-        if (!parServ.delParentById(id)) {
+        try {
+            relationServ.delRelationsByParId(id);
+            parServ.delParentById(id);
+        } catch (Exception e) {
             throw new AjaxException(500, "Failed to del parent");
         }
-        relationServ.delRelationsByParId(id);
 
         return true;
     }

@@ -112,9 +112,7 @@ public class AjaxActivityController extends AjaxBaseController {
         if (act.getRootId() == null) {
             act.setParentId(act.getId());
             act.setRootId(act.getId());
-            if (!actServ.modActivity(act)) {
-                throw new AjaxException(501, "Failed to set parent/root id for activity");
-            }
+            actServ.modActivity(act);
         }
 
         return act.getId();
@@ -144,9 +142,7 @@ public class AjaxActivityController extends AjaxBaseController {
             act.setRootId(parent.getRootId());
         }
 
-        if (!actServ.modActivity(act)) {
-            throw new AjaxException(500, "Failed to mod activity");
-        }
+        actServ.modActivity(act);
 
         return true;
     }
@@ -156,9 +152,8 @@ public class AjaxActivityController extends AjaxBaseController {
     @RequestMapping(value = "del.do", method = RequestMethod.POST)
     public Object del(@NotEmpty String id) throws AjaxException {
 
-        if (!actServ.delActivityById(id)) {
-            throw new AjaxException(500, "Failed to del activity");
-        }
+        actServ.delActivityById(id);
+
         return true;
     }
 

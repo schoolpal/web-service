@@ -9,6 +9,7 @@ import com.schoolpal.service.UserService;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -42,8 +43,10 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     public Object add(TLeads leads, TLeadsStudent student, TLeadsParent parent) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
-        if (leadsServ.add(leads, student, parent, user.getcId()) == null) {
-            throw new AjaxException(500, "Failed to add leads");
+        try {
+            leadsServ.add(leads, student, parent, user.getcId());
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add leads", e);
         }
 
         return leads.getId();
@@ -52,8 +55,10 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     public Object mod(TLeads leads, TLeadsStudent student, TLeadsParent parent) throws AjaxException {
 
         leads.setTypeId(null);
-        if (!leadsServ.mod(leads, student, parent)) {
-            throw new AjaxException(500, "Failed to mod leads");
+        try {
+            leadsServ.mod(leads, student, parent);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod leads", e);
         }
 
         return true;
@@ -61,7 +66,9 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
 
     public Object del(@NotEmpty String id) throws AjaxException {
 
-        if (!leadsServ.delById(id)) {
+        try {
+            leadsServ.delById(id);
+        } catch (Exception e) {
             throw new AjaxException(500, "Failed to del leads");
         }
 
@@ -70,7 +77,9 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
 
     public Object assign(@NotEmpty String id, @NotEmpty String assigneeId) throws AjaxException {
 
-        if (!leadsServ.assignToExecutiveById(id, assigneeId)) {
+        try {
+            leadsServ.assignToExecutiveById(id, assigneeId);
+        } catch (Exception e) {
             throw new AjaxException(500, "Failed to assign leads");
         }
 

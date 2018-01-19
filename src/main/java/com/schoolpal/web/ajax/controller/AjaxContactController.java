@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/ajax/contact")
 @Validated
-public class AjaxContactController extends AjaxBaseController{
+public class AjaxContactController extends AjaxBaseController {
 
     @Autowired
     private UserService userServ;
@@ -123,8 +123,10 @@ public class AjaxContactController extends AjaxBaseController{
         TUser user = userServ.getCachedUser();
         contact.setExecutiveId(user.getcId());
 
-        if (contactServ.addContact(contact) == null) {
-            throw new AjaxException(500, "Failed to add activity");
+        try {
+            contactServ.addContact(contact);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add activity", e);
         }
 
         return contact.getId();
@@ -144,8 +146,10 @@ public class AjaxContactController extends AjaxBaseController{
             throw new AjaxException(401, "No permission to mod contact");
         }
 
-        if (!contactServ.modContact(contact)) {
-            throw new AjaxException(500, "Failed to mod activity");
+        try {
+            contactServ.modContact(contact);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod activity", e);
         }
 
         return true;
@@ -165,8 +169,10 @@ public class AjaxContactController extends AjaxBaseController{
             throw new AjaxException(401, "No permission to del contact");
         }
 
-        if (!contactServ.delContactById(id)) {
-            throw new AjaxException(500, "Failed to del contact");
+        try {
+            contactServ.delContactById(id);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to del contact", e);
         }
 
         return true;

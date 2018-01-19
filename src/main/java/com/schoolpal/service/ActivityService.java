@@ -7,6 +7,7 @@ import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.model.TActivity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class ActivityService {
     }
 
     @ServiceLog
+    @Transactional
     public String addActivity(TActivity act) {
         String ret = null;
 
@@ -92,31 +94,22 @@ public class ActivityService {
     }
 
     @ServiceLog
-    public boolean modActivity(TActivity act) {
-        boolean ret = false;
+    public void modActivity(TActivity act) {
 
         act.setLastUpdate(new Date());
-        ret = activityDao.updateOneById(act) > 0;
-
-        return ret;
+        activityDao.updateOneById(act);
     }
 
     @ServiceLog
-    public boolean delActivityById(String id) {
-        boolean ret = false;
+    public void delActivityById(String id) {
 
-        ret = activityDao.deleteOneById(id) > 0;
-
-        return ret;
+        activityDao.deleteOneById(id);
     }
 
     @ServiceLog
-    public boolean updateLeadsCountsById(String id) {
-        boolean ret = false;
+    public void updateLeadsCountsById(String id) {
 
-        ret = activityDao.updateLeadsCountsById(id) > 0;
-
-        return ret;
+        activityDao.updateLeadsCountsById(id);
     }
 
 }

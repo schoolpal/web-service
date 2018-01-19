@@ -5,7 +5,9 @@ import com.schoolpal.service.*;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
+
 import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -59,38 +61,36 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
         TUser user = userServ.getCachedUser();
 
-        TStudent stu = TStudent.ParseFromContract(contract);
-        stu.setCreatorId(user.getcId());
-        stu.setExecutiveId(user.getcId());
-        if (studentServ.addStudent(stu) == null) {
-            throw new AjaxException(501, "Failed to add student");
-        }
-
-        TParent par = TParent.ParseFromContract(contract);
-        par.setCreatorId(user.getcId());
-        par.setExecutiveId(user.getcId());
-        if (parentServ.addParent(par) == null) {
-            throw new AjaxException(502, "Failed to add parent");
-        }
-
-        if (!relationServ.addRelation(par.getId(), stu.getId(), contract.getRelation())) {
-            throw new AjaxException(503, "Failed to add relation");
-        }
-
-        contract.setStuId(stu.getId());
-        contract.setParId(par.getId());
-
         TCourseSession courseSession = courseSessionServ.queryCourseSessionById(contract.getCourseId());
-        if(courseSession == null){
+        if (courseSession == null) {
             throw new AjaxException(504, "Failed to find course session");
         }
-        contract.setCourseName(courseSession.getName());
-        contract.setCourseType(courseSession.getTypeName());
 
-        contract.setCreatorId(user.getcId());
-        contract.setExecutiveId(user.getcId());
-        if (contractServ.addContract(contract) == null) {
-            throw new AjaxException(500, "Failed to add contract");
+        try {
+            TStudent stu = TStudent.ParseFromContract(contract);
+            stu.setCreatorId(user.getcId());
+            stu.setExecutiveId(user.getcId());
+            studentServ.addStudent(stu);
+
+            TParent par = TParent.ParseFromContract(contract);
+            par.setCreatorId(user.getcId());
+            par.setExecutiveId(user.getcId());
+            parentServ.addParent(par);
+
+            relationServ.addRelation(par.getId(), stu.getId(), contract.getRelation());
+
+            contract.setStuId(stu.getId());
+            contract.setParId(par.getId());
+
+            contract.setCourseName(courseSession.getName());
+            contract.setCourseType(courseSession.getTypeName());
+
+            contract.setCreatorId(user.getcId());
+            contract.setExecutiveId(user.getcId());
+            contractServ.addContract(contract);
+
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add contract", e);
         }
 
         return contract.getId();
@@ -103,9 +103,12 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
             throw new AjaxException(401, "Invalid contact id");
         }
 
-        if (!contractServ.modContract(contract)) {
-            throw new AjaxException(500, "Failed to mod contract");
+        try {
+            contractServ.modContract(contract);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod contract", e);
         }
+
 
         return true;
     }
@@ -117,11 +120,13 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
             throw new AjaxException(402, "Invalid contract id");
         }
 
-        if (!contractServ.delContractById(id)) {
-            throw new AjaxException(500, "Failed to del activity");
+        try {
+            contractServ.delContractById(id);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to del contract", e);
         }
 
         return true;
     }
-    
+
 }
