@@ -40,18 +40,14 @@ public class ContactService {
     @ServiceLog
     @Transactional
     public String addContact(TContact contact) {
-        String ret = null;
 
         String id = idxDao.selectNextId("t_contact");
         contact.setId(id);
         if (contact.getDatetime() == null) {
             contact.setDatetime(new Date());
         }
-        if (contactDao.insertOne(contact) > 0) {
-            ret = contact.getId();
-        }
-
-        return ret;
+        contactDao.insertOne(contact);
+        return contact.getId();
     }
 
     @ServiceLog

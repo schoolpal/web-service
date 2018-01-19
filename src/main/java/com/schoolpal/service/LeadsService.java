@@ -54,7 +54,6 @@ public class LeadsService {
     @ServiceLog
     @Transactional
     public String addLeads(TLeads leads) {
-        String ret = null;
 
         String id = idxDao.selectNextId("t_leads");
         leads.setId(id);
@@ -66,9 +65,7 @@ public class LeadsService {
         leads.setLastUpdate(new Date());
 
         leadsDao.insertOne(leads);
-        ret = leads.getId();
-
-        return ret;
+        return leads.getId();
     }
 
     @ServiceLog
@@ -98,7 +95,6 @@ public class LeadsService {
     @ServiceLog
     @Transactional
     public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, String creatorId) throws Exception {
-        String ret = null;
 
         student.setCreatorId(creatorId);
         if (this.addStudent(student) == null) {
@@ -117,9 +113,7 @@ public class LeadsService {
         if (this.addLeads(leads) == null) {
             throw new Exception("Failed to add leads");
         }
-        ret = leads.getId();
-
-        return ret;
+        return leads.getId();
     }
 
     @ServiceLog
@@ -180,7 +174,6 @@ public class LeadsService {
     @ServiceLog
     @Transactional
     public String addParent(TLeadsParent parent) {
-        String ret = null;
 
         String id = idxDao.selectNextId("t_leads_parent");
         parent.setId(id);
@@ -189,9 +182,7 @@ public class LeadsService {
         parent.setLastUpdate(new Date());
 
         parentDao.insertOne(parent);
-        ret = parent.getId();
-
-        return ret;
+        return parent.getId();
     }
 
     @ServiceLog
@@ -213,7 +204,6 @@ public class LeadsService {
     @ServiceLog
     @Transactional
     public String addStudent(TLeadsStudent student) {
-        String ret = null;
 
         String id = idxDao.selectNextId("t_leads_student");
         student.setId(id);
@@ -223,7 +213,7 @@ public class LeadsService {
 
         studentDao.insertOne(student);
 
-        return ret;
+        return student.getId();
     }
 
     @ServiceLog

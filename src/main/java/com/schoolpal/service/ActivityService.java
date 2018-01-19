@@ -68,7 +68,6 @@ public class ActivityService {
     @ServiceLog
     @Transactional
     public String addActivity(TActivity act) {
-        String ret = null;
 
         String id = idxDao.selectNextId("t_activity");
         act.setId(id);
@@ -86,11 +85,8 @@ public class ActivityService {
         act.setCreateTime(new Date());
         act.setLastUpdate(new Date());
 
-        if (activityDao.insertOne(act) > 0) {
-            ret = act.getId();
-        }
-
-        return ret;
+        activityDao.insertOne(act);
+        return act.getId();
     }
 
     @ServiceLog

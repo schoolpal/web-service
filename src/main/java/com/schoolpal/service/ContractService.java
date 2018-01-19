@@ -38,16 +38,12 @@ public class ContractService {
     @ServiceLog
     @Transactional
     public String addContract(TContract contract) {
-        String ret = null;
 
         String id = idxDao.selectNextId("t_contract");
         contract.setId(id);
         contract.setCreateTime(new Date());
-        if (contractDao.insertOne(contract) > 0) {
-            ret = contract.getId();
-        }
-
-        return ret;
+        contractDao.insertOne(contract);
+        return contract.getId();
     }
 
     @ServiceLog

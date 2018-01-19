@@ -11,7 +11,9 @@ import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+
 import javax.validation.constraints.NotEmpty;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -79,9 +81,6 @@ public class AjaxActivityController extends AjaxBaseController {
     public Object query(@NotEmpty String id) throws AjaxException {
 
         TActivity act = actServ.queryActivityById(id);
-        if (act == null) {
-            throw new AjaxException(500, "Failed to query activity");
-        }
 
         return act;
     }
@@ -105,14 +104,15 @@ public class AjaxActivityController extends AjaxBaseController {
         TUser user = userServ.getCachedUser();
         act.setCreatorId(user.getcId());
 
-        if (actServ.addActivity(act) == null) {
-            throw new AjaxException(500, "Failed to add activity");
-        }
-
-        if (act.getRootId() == null) {
-            act.setParentId(act.getId());
-            act.setRootId(act.getId());
-            actServ.modActivity(act);
+        try {
+            actServ.addActivity(act);
+            if (act.getRootId() == null) {
+                act.setParentId(act.getId());
+                act.setRootId(act.getId());
+                actServ.modActivity(act);
+            }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add activity", e);
         }
 
         return act.getId();
@@ -139,7 +139,11 @@ public class AjaxActivityController extends AjaxBaseController {
                 throw new AjaxException(409, "Invalid parent: root activity not match");
             }
 
-            act.setRootId(parent.getRootId());
+            try {
+                act.setRootId(parent.getRootId());
+            } catch (Exception e) {
+                throw new AjaxException(500, "Failed to mod activity", e);
+            }
         }
 
         actServ.modActivity(act);
@@ -152,7 +156,11 @@ public class AjaxActivityController extends AjaxBaseController {
     @RequestMapping(value = "del.do", method = RequestMethod.POST)
     public Object del(@NotEmpty String id) throws AjaxException {
 
-        actServ.delActivityById(id);
+        try {
+            actServ.delActivityById(id);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to del activity", e);
+        }
 
         return true;
     }
