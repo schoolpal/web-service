@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import com.schoolpal.aop.ServiceLog;
 import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.TParStuMapper;
 import com.schoolpal.db.model.TParStu;
@@ -10,61 +11,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class RelationService {
 
-	@Autowired
-	private LogService logServ;
-	
-	@Autowired
-	private TParStuMapper relationDao; 
+    @Autowired
+    private LogService logServ;
 
-	public boolean addRelation(String parId, String stuId, String relationDesc){
-		boolean ret = false;
-		try{
-			TParStu relation = new TParStu();
-			relation.setParId(parId);
-			relation.setStuId(stuId);
-			relation.setRelation(relationDesc);
-			ret = relationDao.insertOne(relation) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean delRelation(String parId, String stuId){
-		boolean ret = false;
-		try{
-			TParStuKey key = new TParStuKey();
-			key.setParId(parId);
-			key.setStuId(stuId);
-			ret = relationDao.deleteOneByPrimaryKey(key) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean delRelationsByParId(String parId){
-		boolean ret = false;
-		try{
-			ret = relationDao.deleteManyByParId(parId) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean delRelationsByStuId(String stuId){
-		boolean ret = false;
-		try{
-			ret = relationDao.deleteManyByStuId(stuId) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
+    @Autowired
+    private TParStuMapper relationDao;
+
+    @ServiceLog
+    public void addRelation(String parId, String stuId, String relationDesc) {
+        TParStu relation = new TParStu();
+        relation.setParId(parId);
+        relation.setStuId(stuId);
+        relation.setRelation(relationDesc);
+        relationDao.insertOne(relation);
+    }
+
+    @ServiceLog
+    public void delRelation(String parId, String stuId) {
+        TParStuKey key = new TParStuKey();
+        key.setParId(parId);
+        key.setStuId(stuId);
+        relationDao.deleteOneByPrimaryKey(key);
+    }
+
+    @ServiceLog
+    public void delRelationsByParId(String parId) {
+        relationDao.deleteManyByParId(parId);
+    }
+
+    @ServiceLog
+    public void delRelationsByStuId(String stuId) {
+        relationDao.deleteManyByStuId(stuId);
+    }
+
 }

@@ -1,16 +1,19 @@
 package com.schoolpal.service;
 
 import com.google.gson.Gson;
+import com.schoolpal.aop.ServiceLog;
 import com.schoolpal.consts.Const;
-import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
+import com.schoolpal.web.ajax.exception.AjaxException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -19,242 +22,212 @@ import java.util.List;
 @Service
 public class UserService {
 
-	@Autowired
-	private HttpServletRequest request;
-	@Autowired
-	private TIndexMapper idxDao;
-	@Autowired
-	private TUserMapper userDao;
-	@Autowired
-	private TUserRoleMapper userRoleDao;
-	@Autowired
-	private TOrgMapper orgDao;
-	@Autowired
-	private TRoleMapper roleDao;
-	@Autowired
-	private TRoleFunctionMapper roleFuncDao;
-	@Autowired
-	private LogService logServ;
-	private Gson gson = new Gson();
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private TIndexMapper idxDao;
+    @Autowired
+    private TUserMapper userDao;
+    @Autowired
+    private TUserRoleMapper userRoleDao;
+    @Autowired
+    private TOrgMapper orgDao;
+    @Autowired
+    private TRoleMapper roleDao;
+    @Autowired
+    private TRoleFunctionMapper roleFuncDao;
 
-	public boolean login(String username, String mixedPWD) {
-		if (username == null || username.isEmpty()) {
-			return false;
-		}
+    private static Gson gson = new Gson();
 
-		Subject currentUser = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(username, mixedPWD, false);
-		try {
-			currentUser.login(token);
+    @ServiceLog
+    public boolean login(String loginName, String mixedPWD) {
+        boolean ret = false;
 
-			this.userDao.updateLastVisitByLoginName(username, request.getRemoteAddr());
+        do {
+            if (StringUtils.isEmpty(loginName)) {
+                break;
+            }
 
-			logServ.log(username, LogLevel.TRACE, "UserService.login(String,String)", "", "Login-Success: " + username);
-		} catch (Exception ex) {
-			logServ.log(username, LogLevel.WARNING, "UserService.login(String,String)", ex.getMessage(),
-					"Username: " + username + ", MixedPWD: " + mixedPWD);
-			return false;
-		}
-		return true;
-	}
+            try {
+                Subject currentUser = SecurityUtils.getSubject();
+                UsernamePasswordToken token = new UsernamePasswordToken(loginName, mixedPWD, false);
+                currentUser.login(token);
 
-	public TUser cacheUser(String username) {
-		TUser user = this.queryUserByLoginName(username);
+                this.cacheUser(loginName);
+            } catch (Exception e) {
+                break;
+            }
 
-		String jsonUser = gson.toJson(user);
-		Subject currentUser = SecurityUtils.getSubject();
-		Session session = currentUser.getSession();
-		session.setAttribute(Const.SESSION_KEY_CURRENT_USER, jsonUser);
+            this.userDao.updateLastVisitByLoginName(loginName, request.getRemoteAddr());
 
-		logServ.log(username, LogLevel.TRACE, "UserService.cacheUserData(String)", "",
-				"SESSION_KEY_CURRENT_USER: " + jsonUser);
+            ret = true;
+        } while (false);
 
-		return user;
-	}
+        return ret;
+    }
 
-	public TUser getCachedUser() {
-		Subject currentUser = SecurityUtils.getSubject();
-		if (currentUser == null || currentUser.getPrincipal() == null) {
-			return null;
-		}
+    public void logout(){
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser != null && currentUser.getPrincipal() != null) {
+            String username = this.getCachedUser().getcLoginName();
+            currentUser.logout();
+            this.clearUserCache(username);
+        }
+    }
 
-		Session session = currentUser.getSession(true);
-		return gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
-	}
+    @ServiceLog
+    public TUser cacheUser(String username) {
 
-	public TUser getCachedUser(Subject currentUser) {
-		Session session = currentUser.getSession(true);
-		return gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
-	}
+        TUser user = this.queryUserByLoginName(username);
 
-	public void clearUserCache(String username) {
-		Subject currentUser = SecurityUtils.getSubject();
-		Session session = currentUser.getSession();
-		session.removeAttribute(Const.SESSION_KEY_CURRENT_USER);
+        String jsonUser = gson.toJson(user);
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        session.setAttribute(Const.SESSION_KEY_CURRENT_USER, jsonUser);
 
-		logServ.log(username, LogLevel.TRACE, "UserService.clearUserCache(String)", "", "");
-	}
+        return user;
+    }
 
-	public TUser queryUserById(String id) {
-		TUser user = userDao.selectOneById(id);
+    public TUser getCachedUser() {
 
-		// Get orgs
-		TOrg org = orgDao.selectOneById(user.getcOrgId());
-		user.setOrg(org);
+        Subject currentUser = SecurityUtils.getSubject();
+        if (currentUser == null || currentUser.getPrincipal() == null) {
+            return null;
+        }
 
-		// Get roles
-		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
-		for (TRole role : roles) {
-			List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
-			role.setFunctions(funcs);
-		}
-		user.setRoles(roles);
+        Session session = currentUser.getSession(true);
+        return gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
+    }
 
-		return user;
-	}
+    public TUser getCachedUser(Subject currentUser) {
+        Session session = currentUser.getSession(true);
+        return gson.fromJson((String) session.getAttribute(Const.SESSION_KEY_CURRENT_USER), TUser.class);
+    }
 
-	public boolean checkLoginNameExists(String loginname) {
-		return userDao.ifExistsByName(loginname);
-	}
+    public void clearUserCache(String username) {
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        session.removeAttribute(Const.SESSION_KEY_CURRENT_USER);
+    }
 
-	public String queryLoginPassByName(String loginname) {
-		return userDao.selectPasswordByLoginName(loginname);
-	}
+    public TUser queryUserById(String id) {
+        TUser user = userDao.selectOneById(id);
 
-	public boolean changeLoginPassById(String id, String oriPass, String newPass) {
-		return userDao.updateLoginPassById(id, oriPass, newPass) > 0;
-	}
+        TOrg org = orgDao.selectOneById(user.getcOrgId());
+        user.setOrg(org);
 
-	private TUser queryUserByLoginName(String username) {
-		TUser user = userDao.selectOneByLoginName(username);
+        List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+        for (TRole role : roles) {
+            List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
+            role.setFunctions(funcs);
+        }
+        user.setRoles(roles);
 
-		// Get orgs
-		TOrg org = orgDao.selectOneById(user.getcOrgId());
-		user.setOrg(org);
+        return user;
+    }
 
-		// Get roles
-		List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
-		for (TRole role : roles) {
-			List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
-			role.setFunctions(funcs);
-		}
-		user.setRoles(roles);
+    public boolean checkLoginNameExists(String loginName) {
+        return userDao.ifExistsByName(loginName);
+    }
 
-		return user;
-	}
+    public String queryLoginPassByName(String loginName) {
+        return userDao.selectPasswordByLoginName(loginName);
+    }
 
-	public List<TUser> queryUsersByOrgId(String id) {
-		List<TUser> users = userDao.selectManyByOrgId(id);
+    public void changeLoginPassById(String id, String oriPass, String newPass) {
+        userDao.updateLoginPassById(id, oriPass, newPass);
+    }
 
-		for (TUser user : users) {
-			// Get roles
-			List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
-			// for(TRole role : roles){
-			// List<TFunction> funcs =
-			// roleFuncDao.selectAllFuncsByRoleId(role.getcId());
-			// role.setFunctions(funcs);
-			// }
-			user.setRoles(roles);
-		}
-		return users;
-	}
+    private TUser queryUserByLoginName(String loginName) {
+        TUser user = userDao.selectOneByLoginName(loginName);
 
-	public String addUser(TUser user, String creatorId) {
-		String ret = null;
-		try {
-			String id = idxDao.selectNextId("t_user");
-			user.setcId(id);
-			user.setcCreator(creatorId);
-			user.setcAvailable(true);
-			user.setcCreateTime(new Date());
-			if (userDao.insertOne(user) > 0) {
-				ret = id;
-			}
-		} catch (Exception e) {
-			logServ.log("", LogLevel.ERROR, "UserService.addUser()", "", e.getMessage());
-		}
-		return ret;
-	}
+        TOrg org = orgDao.selectOneById(user.getcOrgId());
+        user.setOrg(org);
 
-	public boolean modUserById(TUser user) {
-		boolean ret = false;
-		try {
-			ret = userDao.updateOneById(user) > 0;
-		} catch (Exception e) {
-			logServ.log("", LogLevel.ERROR, "UserService.modUserById()", "", e.getMessage());
-		}
-		return ret;
-	}
+        List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+        for (TRole role : roles) {
+            List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
+            role.setFunctions(funcs);
+        }
+        user.setRoles(roles);
 
-	public boolean delUserById(String id) {
-		boolean ret = false;
-		try {
-			ret = userDao.deleteOneById(id) > 0;
-		} catch (Exception e) {
-			logServ.log("", LogLevel.ERROR, "UserService.delUserById()", "", e.getMessage());
-		}
-		return ret;
-	}
+        return user;
+    }
 
-	public boolean enableUserById(String id) {
-		boolean ret = false;
-		try {
-			ret = userDao.updateAvaiabilityById(id, true) > 0;
-		} catch (Exception e) {
-			logServ.log("", LogLevel.ERROR, "UserService.enableUserById()", "", e.getMessage());
-		}
-		return ret;
-	}
+    public List<TUser> queryUsersByOrgId(String id) {
+        List<TUser> users = userDao.selectManyByOrgId(id);
 
-	public boolean disableUserById(String id) {
-		boolean ret = false;
-		try {
-			ret = userDao.updateAvaiabilityById(id, false) > 0;
-		} catch (Exception e) {
-			logServ.log("", LogLevel.ERROR, "UserService.enableUserById()", "", e.getMessage());
-		}
-		return ret;
-	}
+        for (TUser user : users) {
+            List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+            user.setRoles(roles);
+        }
+        return users;
+    }
 
-	public boolean addUserRole(String userId, String roleId) {
-		boolean ret = true;
+    @ServiceLog
+    public String addUser(TUser user, String creatorId) {
 
-		TUserRole userRole = new TUserRole();
-		userRole.setcRoleId(roleId);
-		userRole.setcUserId(userId);
-		userRole.setcAvailable(true);
+        String id = idxDao.selectNextId("t_user");
+        user.setcId(id);
+        user.setcCreator(creatorId);
+        user.setcAvailable(true);
+        user.setcCreateTime(new Date());
+        userDao.insertOne(user);
 
-		try {
-			userRoleDao.insertOne(userRole);
-		} catch (Exception e) {
-			ret = false;
-		}
+        return user.getcId();
+    }
 
-		return ret;
-	}
+    @ServiceLog
+    public void modUserById(TUser user) {
+        userDao.updateOneById(user);
+    }
 
-	public boolean addUserRoles(String userId, String[] roleIds) {
-		boolean ret = true;
-		for (String roleId : roleIds) {
-			if (roleId.length() == 0) {
-				continue;
-			}
+    @ServiceLog
+    public void delUserById(String id) {
+        userDao.deleteOneById(id);
+    }
 
-			if (roleDao.ifExistsById(roleId) < 1) {
-				logServ.log("", LogLevel.ERROR, "RoleService.addRoleRootFuncs()", "", "Function id not exists");
-				continue;
-			}
+    @ServiceLog
+    public void enableUserById(String id) {
+        userDao.updateAvaiabilityById(id, true);
+    }
 
-			if (!this.addUserRole(userId, roleId)) {
-				ret = false;
-				break;
-			}
-		}
+    @ServiceLog
+    public void disableUserById(String id) {
+        userDao.updateAvaiabilityById(id, false);
+    }
 
-		return ret;
-	}
+    @ServiceLog
+    public void addUserRole(String userId, String roleId) {
 
-	public boolean delUserRolesByUserId(String userId) {
-		return userRoleDao.deleteManyByUserId(userId) > 0;
-	}
+        TUserRole userRole = new TUserRole();
+        userRole.setcRoleId(roleId);
+        userRole.setcUserId(userId);
+        userRole.setcAvailable(true);
+
+        userRoleDao.insertOne(userRole);
+    }
+
+    @ServiceLog
+    @Transactional
+    public void addUserRoles(String userId, String[] roleIds) {
+
+        for (String roleId : roleIds) {
+            if (StringUtils.isEmpty(roleId)) {
+                continue;
+            }
+
+            if (roleDao.ifExistsById(roleId) < 1) {
+                continue;
+            }
+
+            this.addUserRole(userId, roleId);
+        }
+
+    }
+
+    @ServiceLog
+    public void delUserRolesByUserId(String userId) {
+        userRoleDao.deleteManyByUserId(userId);
+    }
 }

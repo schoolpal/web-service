@@ -115,10 +115,10 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(406, "No permission to move organization to the parent organization");
         }
 
-        try{
+        try {
             orgServ.modOrgById(this.orgFormToTOrg(form));
-        }catch (Exception e){
-            throw new AjaxException(500, "Failed to mod organization");
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod organization", e);
         }
 
         return true;
@@ -139,10 +139,10 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(403, "No permission to delete this organization");
         }
 
-        try{
+        try {
             orgServ.delOrgById(id);
-        }catch (Exception e){
-            throw new AjaxException(500, "Failed to delete organization");
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to delete organization", e);
         }
 
         return true;
@@ -181,25 +181,25 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(403, "No permission to add role under the parent organization");
         }
 
-        String id = roleServ.addRole(form, user.getcLoginName());
-        if (id == null) {
-            throw new AjaxException(501, "Failed to add role");
-        }
+        String id;
+        try {
+            id = roleServ.addRole(this.roleFormToTRole(form), user.getcLoginName());
 
-        if (form.getStrFuncIds() != null) {
-            form.setStrFuncIds(form.getStrFuncIds()
-                    .replaceAll(" ", "")
-                    .replaceAll(",,", ",")
-                    .replaceAll(",$", "")
-                    .replaceAll("^,", ""));
-            if (!form.getStrFuncIds().isEmpty()) {
-                String[] funcIds = form.getStrFuncIds().split(",");
-                if (funcIds.length > 0) {
-                    if (!roleServ.addRoleRootFuncs(id, funcIds)) {
-                        throw new AjaxException(502, "Failed to add role functions");
+            if (form.getStrFuncIds() != null) {
+                form.setStrFuncIds(form.getStrFuncIds()
+                        .replaceAll(" ", "")
+                        .replaceAll(",,", ",")
+                        .replaceAll(",$", "")
+                        .replaceAll("^,", ""));
+                if (!form.getStrFuncIds().isEmpty()) {
+                    String[] funcIds = form.getStrFuncIds().split(",");
+                    if (funcIds.length > 0) {
+                        roleServ.addRoleRootFuncs(id, funcIds);
                     }
                 }
             }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add role functions", e);
         }
 
         return id;
@@ -222,25 +222,25 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(405, "No permission to move role to the organization");
         }
 
-        if (!roleServ.modRoleById(form)) {
-            throw new AjaxException(500, "Failed to mod role");
-        }
+        try {
+            roleServ.modRoleById(this.roleFormToTRole(form));
+            roleServ.delRootFuncsByRoleId(form.getId());
+            if (form.getStrFuncIds() != null) {
+                form.setStrFuncIds(form.getStrFuncIds()
+                        .replaceAll(" ", "")
+                        .replaceAll(",,", ",")
+                        .replaceAll(",$", "")
+                        .replaceAll("^,", ""));
 
-        roleServ.delRootFuncsByRoleId(form.getId());
-        if (form.getStrFuncIds() != null) {
-            form.setStrFuncIds(form.getStrFuncIds()
-                    .replaceAll(" ", "")
-                    .replaceAll(",,", ",")
-                    .replaceAll(",$", "")
-                    .replaceAll("^,", ""));
-            if (!form.getStrFuncIds().isEmpty()) {
-                String[] funcIds = form.getStrFuncIds().split(",");
-                if (funcIds.length > 0) {
-                    if (!roleServ.addRoleRootFuncs(form.getId(), funcIds)) {
-                        throw new AjaxException(502, "Failed to add role functions");
+                if (!form.getStrFuncIds().isEmpty()) {
+                    String[] funcIds = form.getStrFuncIds().split(",");
+                    if (funcIds.length > 0) {
+                        roleServ.addRoleRootFuncs(form.getId(), funcIds);
                     }
                 }
             }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod role", e);
         }
 
         return true;
@@ -262,10 +262,12 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(403, "No permission to delete the role under the organization");
         }
 
-        roleServ.delExcFuncsByRoleId(id);
-        roleServ.delRootFuncsByRoleId(id);
-        if (!roleServ.delRoleById(id)) {
-            throw new AjaxException(500, "Failed to delete the role");
+        try {
+            roleServ.delExcFuncsByRoleId(id);
+            roleServ.delRootFuncsByRoleId(id);
+            roleServ.delRoleById(id);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to delete the role", e);
         }
 
         return true;
@@ -282,6 +284,7 @@ public class AjaxSystemController extends AjaxBaseController {
                 .replaceAll(",,", ",")
                 .replaceAll(",$", "")
                 .replaceAll("^,", "");
+
         if (funcIds.isEmpty()) {
             throw new AjaxException(402, "Func ids cannot be empty");
         }
@@ -298,26 +301,28 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(404, "No permission to mod role");
         }
 
-        // Get all available function ids for current role
-        List<String> allFuncIdList = new ArrayList<String>();
-        for (String rootFuncId : role.getRootFuncIds()) {
-            allFuncIdList.addAll(funcServ.queryFuncIdListByRootId(rootFuncId));
-        }
+        try {
+            // Get all available function ids for current role
+            List<String> allFuncIdList = new ArrayList<String>();
+            for (String rootFuncId : role.getRootFuncIds()) {
+                allFuncIdList.addAll(funcServ.queryFuncIdListByRootId(rootFuncId));
+            }
 
-        // Collect submitted functions ids
-        HashSet<String> funcIdList = new HashSet<String>();
-        if (!funcIds.isEmpty()) {
-            funcIdList.addAll(Arrays.asList(funcIds.split(",")));
-        }
+            // Collect submitted functions ids
+            HashSet<String> funcIdList = new HashSet<String>();
+            if (!funcIds.isEmpty()) {
+                funcIdList.addAll(Arrays.asList(funcIds.split(",")));
+            }
 
-        // Work out exclude-function id and insert it
-        roleServ.delExcFuncsByRoleId(id);
-        for (String funcId : allFuncIdList) {
-            if (!funcIdList.contains(funcId)) {
-                if (!roleServ.addRoleExcFunc(id, funcId, user.getcLoginName())) {
-                    throw new AjaxException(500, "Failed to authorize to current role");
+            // Work out exclude-function id and insert it
+            roleServ.delExcFuncsByRoleId(id);
+            for (String funcId : allFuncIdList) {
+                if (!funcIdList.contains(funcId)) {
+                    roleServ.addRoleExcFunc(id, funcId, user.getcLoginName());
                 }
             }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to authorize to current role", e);
         }
 
         return true;
@@ -380,21 +385,20 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(405, "System role cannot coexist with other roles");
         }
 
-        TUser newUser = this.userFormToTUser(form);
-        newUser.setcOrgId(org.getcId());
-        newUser.setcOrgRootId(org.getcRootId());
+        String id;
+        try {
+            TUser newUser = this.userFormToTUser(form);
+            newUser.setcOrgId(org.getcId());
+            newUser.setcOrgRootId(org.getcRootId());
+            id = userServ.addUser(newUser, newUser.getcLoginName());
 
-        String id = userServ.addUser(newUser, newUser.getcLoginName());
-        if (id == null) {
-            throw new AjaxException(500, "Failed to add user");
-        }
-
-        for (String roleId : roleIds) {
-            if (roleServ.roleExists(roleId)) {
-                if (!userServ.addUserRole(id, roleId)) {
-                    throw new AjaxException(500, "Failed to add user-role relation");
+            for (String roleId : roleIds) {
+                if (roleServ.roleExists(roleId)) {
+                    userServ.addUserRole(id, roleId);
                 }
             }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to add user", e);
         }
 
         return id;
@@ -426,22 +430,21 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(406, "No permission to add user under the organization");
         }
 
-        TUser modUser = this.userFormToTUser(form);
-        modUser.setcOrgId(org.getcId());
-        modUser.setcOrgRootId(org.getcRootId());
-        modUser.setcLoginName(null);
+        try {
+            TUser modUser = this.userFormToTUser(form);
+            modUser.setcOrgId(org.getcId());
+            modUser.setcOrgRootId(org.getcRootId());
+            modUser.setcLoginName(null);
+            userServ.modUserById(modUser);
 
-        if (!userServ.modUserById(modUser)) {
-            throw new AjaxException(500, "Failed to mod user");
-        }
-
-        userServ.delUserRolesByUserId(modUser.getcId());
-        for (String roleId : roleIds) {
-            if (roleServ.roleExists(roleId)) {
-                if (!userServ.addUserRole(modUser.getcId(), roleId)) {
-                    throw new AjaxException(500, "Failed to add user-role relation");
+            userServ.delUserRolesByUserId(modUser.getcId());
+            for (String roleId : roleIds) {
+                if (roleServ.roleExists(roleId)) {
+                    userServ.addUserRole(modUser.getcId(), roleId);
                 }
             }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to mod user", e);
         }
 
         return true;
@@ -461,9 +464,11 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(406, "No permission to del user under parent organization");
         }
 
-        userServ.delUserRolesByUserId(id);
-        if (!userServ.delUserById(id)) {
-            throw new AjaxException(501, "Failed to delete user");
+        try {
+            userServ.delUserRolesByUserId(id);
+            userServ.delUserById(id);
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to delete user", e);
         }
 
         return true;
@@ -481,14 +486,14 @@ public class AjaxSystemController extends AjaxBaseController {
             throw new AjaxException(406, "No permission to del user under parent organization");
         }
 
-        if (enabled) {
-            if (!userServ.enableUserById(id)) {
-                throw new AjaxException(501, "Failed to enable user");
+        try {
+            if (enabled) {
+                userServ.enableUserById(id);
+            } else {
+                userServ.disableUserById(id);
             }
-        } else {
-            if (!userServ.disableUserById(id)) {
-                throw new AjaxException(502, "Failed to disable user");
-            }
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to enable/disable user");
         }
 
         return true;
@@ -530,6 +535,22 @@ public class AjaxSystemController extends AjaxBaseController {
 
         return org;
     }
+
+    public TRole roleFormToTRole(RoleForm form) {
+        if (form == null) {
+            return null;
+        }
+
+        TRole role = new TRole();
+        role.setcId(form.getId());
+        role.setcName(form.getName());
+        role.setcOrgId(form.getOrgId());
+        role.setcRankId(form.getRankId());
+        role.setcDesc(form.getDesc());
+
+        return role;
+    }
+
 
     /* Not implement yet
     @RequestMapping(value = "func/add.do", method = RequestMethod.POST)

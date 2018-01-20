@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import com.schoolpal.aop.ServiceLog;
 import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.TRank;
@@ -9,214 +10,153 @@ import com.schoolpal.db.model.TRoleFunctionExclude;
 import com.schoolpal.web.model.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 @Service
 public class RoleService {
 
-	@Autowired
-	private TIndexMapper idxDao;
-	@Autowired
-	private TRoleMapper roleDao;
-	@Autowired
-	private TRoleFunctionMapper roleFuncDao;
-	@Autowired
-	private TRoleFunctionExcludeMapper roleExcFuncDao;
-	@Autowired
-	private TFunctionMapper funcDao;
-	@Autowired
-	private TRankMapper rankDao;
+    @Autowired
+    private TIndexMapper idxDao;
+    @Autowired
+    private TRoleMapper roleDao;
+    @Autowired
+    private TRoleFunctionMapper roleFuncDao;
+    @Autowired
+    private TRoleFunctionExcludeMapper roleExcFuncDao;
+    @Autowired
+    private TFunctionMapper funcDao;
+    @Autowired
+    private TRankMapper rankDao;
 
-	@Autowired
-	private LogService logServ;
+    @Autowired
+    private LogService logServ;
 
-	public List<TRole> queryRoleListByOrgId(String id) {
-		List<TRole> roleList = roleDao.selectRolesByOrgId(id);
-		for (TRole role : roleList) {
-			role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(role.getcId()));
-		}
-		return roleList;
-	}
+    public List<TRole> queryRoleListByOrgId(String id) {
+        List<TRole> roleList = roleDao.selectRolesByOrgId(id);
+        for (TRole role : roleList) {
+            role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(role.getcId()));
+        }
+        return roleList;
+    }
 
-	public List<TRole> queryRoleListByOrgIdLite(String id) {
-		List<TRole> roleList = roleDao.selectRolesByOrgIdLite(id);
-		for (TRole role : roleList) {
-			role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(role.getcId()));
-		}
-		return roleList;
-	}
+    public List<TRole> queryRoleListByOrgIdLite(String id) {
+        List<TRole> roleList = roleDao.selectRolesByOrgIdLite(id);
+        for (TRole role : roleList) {
+            role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(role.getcId()));
+        }
+        return roleList;
+    }
 
-	public TRole queryRoleById(String id) {
-		TRole role = roleDao.selectOneById(id);
-		role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(id));
-		role.setFunctions(roleFuncDao.selectAllFuncsByRoleId(id));
-		return role;
-	}
+    public TRole queryRoleById(String id) {
+        TRole role = roleDao.selectOneById(id);
+        role.setRootFuncs(roleFuncDao.selectRootFuncsByRoleId(id));
+        role.setFunctions(roleFuncDao.selectAllFuncsByRoleId(id));
+        return role;
+    }
 
-	public boolean roleExists(String id){
-		return roleDao.ifExistsById(id) > 0;
-	}
-	
-	public boolean systemRoleCoexistWithOtherRoles(String[] ids) {
-		return roleDao.getCountByPrimaryIdsAndRankId(ids, 4) > 0;
-	}
+    public boolean roleExists(String id) {
+        return roleDao.ifExistsById(id) > 0;
+    }
 
-	public String addRole(RoleForm form, String creatorId) {
-		String ret = null;
+    public boolean systemRoleCoexistWithOtherRoles(String[] ids) {
+        return roleDao.getCountByPrimaryIdsAndRankId(ids, 4) > 0;
+    }
 
-		do {
-			TRole role = this.roleFormToTRole(form);
-			role.setcCreator(creatorId);
-			role.setcAvailable(true);
-			role.setcOrderNum(1);
+    @ServiceLog
+    @Transactional
+    public String addRole(TRole role, String creatorId) {
 
-			try {
-				String id = idxDao.selectNextId("t_role");
-				role.setcId(id);
-				if (roleDao.insertOne(role) <= 0) {
-					break;
-				}
-				ret = id;
+        role.setcCreator(creatorId);
+        role.setcAvailable(true);
+        role.setcOrderNum(1);
 
-			} catch (Exception e) {
-				logServ.log("", LogLevel.ERROR, "RoleService.addRole()", "", e.getMessage());
-			}
+        String id = idxDao.selectNextId("t_role");
+        role.setcId(id);
+        roleDao.insertOne(role);
 
-		} while (false);
+        return role.getcId();
+    }
 
-		return ret;
-	}
+    @ServiceLog
+    public void modRoleById(TRole role) {
+        role.setcAvailable(true);
+        role.setcOrderNum(1);
+        roleDao.updateOneById(role);
+    }
 
-	public boolean modRoleById(RoleForm form) {
-		boolean ret = false;
-		do {
-			TRole role = this.roleFormToTRole(form);
-			role.setcAvailable(true);
-			role.setcOrderNum(1);
+    @ServiceLog
+    public void delRoleById(String id) {
+        roleDao.deleteOneById(id);
+    }
 
-			try {
-				ret = roleDao.updateOneById(role) > 0;
-			} catch (Exception e) {
-				logServ.log("", LogLevel.ERROR, "RoleService.modRoleById()", "", e.getMessage());
-				ret = false;
-				break;
-			}
-		} while (false);
+    @ServiceLog
+    public void addRoleRootFunc(String roleId, String rootFuncId) {
 
-		return ret;
-	}
+        TRoleFunction roleFunc = new TRoleFunction();
+        roleFunc.setcRoleId(roleId);
+        roleFunc.setcFunctionRootId(rootFuncId);
+        roleFunc.setcOrderNum(1);
 
-	public boolean delRoleById(String id) {
-		boolean ret = false;
-		try {
-			ret = roleDao.deleteOneById(id) > 0;
-		} catch (Exception e) {
-			logServ.log("", LogLevel.ERROR, "RoleService.deleteRoleById()", "", e.getMessage());
-		}
-		return ret;
-	}
+        roleFuncDao.insertOne(roleFunc);
+    }
 
-	private TRole roleFormToTRole(RoleForm form) {
-		if (form == null) {
-			return null;
-		}
+    @ServiceLog
+    @Transactional
+    public void addRoleRootFuncs(String roleId, String[] rootFuncIds) {
+        for (String rootFuncId : rootFuncIds) {
+            if (StringUtils.isEmpty(rootFuncId.length())) {
+                continue;
+            }
 
-		TRole role = new TRole();
-		role.setcId(form.getId());
-		role.setcName(form.getName());
-		role.setcOrgId(form.getOrgId());
-		role.setcRankId(form.getRankId());
-		role.setcDesc(form.getDesc());
+            if (funcDao.ifExistsById(rootFuncId) < 1) {
+                continue;
+            }
 
-		return role;
-	}
+            this.addRoleRootFunc(roleId, rootFuncId);
+        }
+    }
 
-	public boolean addRoleRootFunc(String roleId, String rootFuncId) {
-		boolean ret = true;
+    @ServiceLog
+    public void delRootFuncsByRoleId(String roleId) {
+        roleFuncDao.deleteManyByRoleId(roleId);
+    }
 
-		TRoleFunction roleFunc = new TRoleFunction();
-		roleFunc.setcRoleId(roleId);
-		roleFunc.setcFunctionRootId(rootFuncId);
-		roleFunc.setcOrderNum(1);
+    @ServiceLog
+    public void addRoleExcFunc(String roleId, String funcId, String creatorId) {
 
-		try {
-			roleFuncDao.insertOne(roleFunc);
-		} catch (Exception e) {
-			ret = false;
-		}
+        TRoleFunctionExclude roleExcFunc = new TRoleFunctionExclude();
+        roleExcFunc.setcRoleId(roleId);
+        roleExcFunc.setcFunctionId(funcId);
+        roleExcFunc.setcCreator(creatorId);
 
-		return ret;
-	}
+        roleExcFuncDao.insertOne(roleExcFunc);
+    }
 
-	public boolean addRoleRootFuncs(String roleId, String[] rootFuncIds) {
-		boolean ret = true;
-		for (String rootFuncId : rootFuncIds) {
-			if (rootFuncId.length() == 0) {
-				continue;
-			}
+    @ServiceLog
+    @Transactional
+    public void addRoleExcFuncs(String roleId, String[] funcIds, String creatorId) {
+        for (String funcId : funcIds) {
+            if (StringUtils.isEmpty(funcId.length())) {
+                continue;
+            }
 
-			if (funcDao.ifExistsById(rootFuncId) < 1) {
-				logServ.log("", LogLevel.ERROR, "RoleService.addRoleRootFuncs()", "", "Function id not exists");
-				continue;
-			}
+            if (funcDao.ifExistsById(funcId) < 1) {
+                continue;
+            }
 
-			if(!this.addRoleRootFunc(roleId, rootFuncId)){
-				ret = false;
-				break;
-			}
-		}
+            this.addRoleExcFunc(roleId, funcId, creatorId);
+        }
+    }
 
-		return ret;
-	}
+    @ServiceLog
+    public void delExcFuncsByRoleId(String roleId) {
+        roleExcFuncDao.deleteManyByRoleId(roleId);
+    }
 
-	public boolean delRootFuncsByRoleId(String roleId) {
-		return roleFuncDao.deleteManyByRoleId(roleId) > 0;
-	}
-
-	public boolean addRoleExcFunc(String roleId, String funcId, String creatorId) {
-		boolean ret = true;
-
-		TRoleFunctionExclude roleExcFunc = new TRoleFunctionExclude();
-		roleExcFunc.setcRoleId(roleId);
-		roleExcFunc.setcFunctionId(funcId);
-		roleExcFunc.setcCreator(creatorId);
-
-		try {
-			roleExcFuncDao.insertOne(roleExcFunc);
-		} catch (Exception e) {
-			ret = false;
-		}
-
-		return ret;
-	}
-
-	public boolean addRoleExcFuncs(String roleId, String[] funcIds, String creatorId) {
-		boolean ret = true;
-		for (String funcId : funcIds) {
-			if (funcId.length() == 0) {
-				continue;
-			}
-
-			if (funcDao.ifExistsById(funcId) < 1) {
-				logServ.log("", LogLevel.ERROR, "RoleService.addRoleExcFuncs()", "", "Function id not exists");
-				continue;
-			}
-
-			if(!this.addRoleExcFunc(roleId, funcId, creatorId)){
-				ret = false;
-				break;
-			}
-		}
-
-		return ret;
-	}
-
-	public boolean delExcFuncsByRoleId(String roleId) {
-		return roleExcFuncDao.deleteManyByRoleId(roleId) > 0;
-	}
-
-	public List<TRank> queryRankList() {
-		return rankDao.selectAll();
-	}
+    public List<TRank> queryRankList() {
+        return rankDao.selectAll();
+    }
 }

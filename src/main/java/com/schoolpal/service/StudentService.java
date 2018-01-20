@@ -1,5 +1,6 @@
 package com.schoolpal.service;
 
+import com.schoolpal.aop.ServiceLog;
 import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.TIndexMapper;
 import com.schoolpal.db.inf.TStudentMapper;
@@ -13,86 +14,46 @@ import java.util.List;
 @Service
 public class StudentService {
 
-	@Autowired
-	private LogService logServ;
-	
-	@Autowired
-	private TIndexMapper idxDao; 
-	@Autowired
-	private TStudentMapper studentDao; 
+    @Autowired
+    private TIndexMapper idxDao;
+    @Autowired
+    private TStudentMapper studentDao;
 
-	public TStudent queryStudentById(String id){
-		TStudent ret = null;
-		try{			
-			ret = studentDao.selectOneById(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public TStudent queryStudentByCode(String code){
-		TStudent ret = null;
-		try{			
-			ret = studentDao.selectOneByCode(code);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public List<TStudent> queryStudentsByExecutiveId(String id){
-		List<TStudent> ret = null;
-		try{			
-			ret = studentDao.selectManyByExectiveId(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public String addStudent(TStudent student){
-		String ret = null;
-		try{
-			String id = idxDao.selectNextId("t_student");
-			student.setId(id);
-			student.setCreateTime(new Date());
-			student.setLastUpdate(new Date());
-			if (studentDao.insertOne(student) > 0){
-				ret = student.getId();
-			}
-			
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean modStudent(TStudent student){
-		boolean ret = false;
-		try{
-			student.setLastUpdate(new Date());
-			ret = studentDao.updateOne(student) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean delStudentById(String id){
-		boolean ret = false;
-		try{
-			ret = studentDao.deleteOneById(id) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
+    public TStudent queryStudentById(String id) {
+        TStudent ret = studentDao.selectOneById(id);
+        return ret;
+    }
+
+    public TStudent queryStudentByCode(String code) {
+        TStudent ret = studentDao.selectOneByCode(code);
+        return ret;
+    }
+
+    public List<TStudent> queryStudentsByExecutiveId(String id) {
+        List<TStudent> ret = studentDao.selectManyByExectiveId(id);
+        return ret;
+    }
+
+    @ServiceLog
+    public String addStudent(TStudent student) {
+
+        String id = idxDao.selectNextId("t_student");
+        student.setId(id);
+        student.setCreateTime(new Date());
+        student.setLastUpdate(new Date());
+        studentDao.insertOne(student);
+
+        return student.getId();
+    }
+
+    public void modStudent(TStudent student) {
+
+        student.setLastUpdate(new Date());
+        studentDao.updateOne(student);
+    }
+
+    public void delStudentById(String id) {
+        studentDao.deleteOneById(id);
+    }
+
 }

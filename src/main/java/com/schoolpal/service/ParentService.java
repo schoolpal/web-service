@@ -13,86 +13,47 @@ import java.util.List;
 @Service
 public class ParentService {
 
-	@Autowired
-	private LogService logServ;
-	
-	@Autowired
-	private TIndexMapper idxDao; 
-	@Autowired
-	private TParentMapper parentDao; 
+    @Autowired
+    private LogService logServ;
 
-	public TParent queryParentById(String id){
-		TParent ret = null;
-		try{			
-			ret = parentDao.selectOneById(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public List<TParent> queryParentsByExecutiveId(String id){
-		List<TParent> ret = null;
-		try{			
-			ret = parentDao.selectManyByExecutiveId(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
+    @Autowired
+    private TIndexMapper idxDao;
+    @Autowired
+    private TParentMapper parentDao;
 
-	public List<TParent> queryParentsByStudentId(String id){
-		List<TParent> ret = null;
-		try{
-			ret = parentDao.selectManyByStudentId(id);
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
+    public TParent queryParentById(String id) {
+        TParent ret = parentDao.selectOneById(id);
+        return ret;
+    }
 
-	public String addParent(TParent parent){
-		String ret = null;
-		try{
-			String id = idxDao.selectNextId("t_parent");
-			parent.setId(id);
-			parent.setCreateTime(new Date());
-			parent.setLastUpdate(new Date());
-			if (parentDao.insertOne(parent) > 0){
-				ret = parent.getId();
-			}
-			
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean modParent(TParent parent){
-		boolean ret = false;
-		try{
-			parent.setLastUpdate(new Date());
-			ret = parentDao.updateOne(parent) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
-	public boolean delParentById(String id){
-		boolean ret = false;
-		try{
-			ret = parentDao.deleteOneById(id) > 0;
-		}catch(Exception e){
-			StackTraceElement[] stacks = Thread.currentThread().getStackTrace();
-			logServ.log("", LogLevel.ERROR, stacks[2].getClassName() + "." + stacks[2].getMethodName(), "", e.getMessage());
-		}
-		return ret;
-	}
-	
+    public List<TParent> queryParentsByExecutiveId(String id) {
+        List<TParent> ret = parentDao.selectManyByExecutiveId(id);
+        return ret;
+    }
+
+    public List<TParent> queryParentsByStudentId(String id) {
+        List<TParent> ret = parentDao.selectManyByStudentId(id);
+        return ret;
+    }
+
+    public String addParent(TParent parent) {
+
+        String id = idxDao.selectNextId("t_parent");
+        parent.setId(id);
+        parent.setCreateTime(new Date());
+        parent.setLastUpdate(new Date());
+        parentDao.insertOne(parent);
+
+        return parent.getId();
+    }
+
+    public void modParent(TParent parent) {
+        parent.setLastUpdate(new Date());
+        parentDao.updateOne(parent);
+    }
+
+    public void delParentById(String id) {
+        parentDao.deleteOneById(id);
+    }
+
 }

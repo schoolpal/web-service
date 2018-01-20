@@ -29,14 +29,14 @@ import java.util.Random;
 @RestController
 @RequestMapping("/ajax/user")
 @Validated
-public class AjaxUserController extends AjaxBaseController{
+public class AjaxUserController extends AjaxBaseController {
 
     @Autowired
     private UserService userServ;
     @Autowired
     private OrgService orgServ;
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequestMapping(value = "salt.do", method = RequestMethod.POST, produces = "application/json")
     public Object salt() {
 
@@ -54,38 +54,16 @@ public class AjaxUserController extends AjaxBaseController{
     @AjaxControllerLog
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     public Object login(@Valid LoginForm login) throws AjaxException {
-
-        if (userServ.login(login.getLoginName(), login.getMixedPWD())) {
-            try {
-                userServ.cacheUser(login.getLoginName());
-            } catch (Exception ex) {
-                Subject currentUser = SecurityUtils.getSubject();
-                currentUser.logout();
-
-                throw new AjaxException(500, "Failed to login, unexpect error", ex);
-            }
-        } else {
-
+        if (!userServ.login(login.getLoginName(), login.getMixedPWD())) {
             throw new AjaxException(401, "Failed to login, wrong user/pass");
         }
-
         return null;
     }
 
     @AjaxControllerLog
     @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     public Object logout() throws AjaxException {
-
-        Subject currentUser = SecurityUtils.getSubject();
-        if (null != currentUser && null != currentUser.getPrincipal()) {
-            String username = userServ.getCachedUser().getcLoginName();
-
-            currentUser.logout();
-            userServ.clearUserCache(username);
-        } else {
-            throw new AjaxException(500, "Illegal access");
-        }
-
+        userServ.logout();
         return null;
     }
 
@@ -99,7 +77,13 @@ public class AjaxUserController extends AjaxBaseController{
         if (!form.getOriPass().equals(userServ.queryLoginPassByName(user.getcLoginName()))) {
             throw new AjaxException(405, "Wrong original password");
         }
-        result = userServ.changeLoginPassById(user.getcId(), form.getOriPass(), form.getNewPass());
+
+        try {
+            userServ.changeLoginPassById(user.getcId(), form.getOriPass(), form.getNewPass());
+            result = true;
+        } catch (Exception e) {
+            throw new AjaxException(500, "Failed to change password");
+        }
 
         return result;
     }
@@ -110,14 +94,14 @@ public class AjaxUserController extends AjaxBaseController{
         return null;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequestMapping(value = "profile.do", method = RequestMethod.POST)
     public Object profile() {
         TUser user = userServ.getCachedUser();
         return user;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequestMapping(value = "listOrgs.do", method = RequestMethod.POST)
     public Object listOrgs() {
         TUser user = userServ.getCachedUser();
@@ -126,7 +110,7 @@ public class AjaxUserController extends AjaxBaseController{
         return orgList;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequestMapping(value = "listRoles.do", method = RequestMethod.POST)
     public Object listRoles() {
         TUser user = userServ.getCachedUser();
@@ -135,7 +119,7 @@ public class AjaxUserController extends AjaxBaseController{
         return roleList;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequestMapping(value = "listFuncs.do", method = RequestMethod.POST)
     public Object listFuncs() {
 
@@ -148,7 +132,7 @@ public class AjaxUserController extends AjaxBaseController{
         return funcList;
     }
 
-//    @AjaxControllerLog
+    //    @AjaxControllerLog
     @RequestMapping(value = "listFuncsByRole.do", method = RequestMethod.POST)
     public Object listFuncsByRole(@NotEmpty String id) throws AjaxException {
 
