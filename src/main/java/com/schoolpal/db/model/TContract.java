@@ -37,7 +37,6 @@ public class TContract {
     @NotNull(groups = {AjaxControllerAdd.class})
     private BigDecimal paid;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String courseType;
 
     @NotEmpty(groups = {AjaxControllerAdd.class})

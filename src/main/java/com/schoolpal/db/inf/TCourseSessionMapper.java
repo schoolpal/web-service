@@ -11,6 +11,7 @@ public interface TCourseSessionMapper {
 
     int insertSelective(TCourseSession record);
 
+    int ifExistsById(String id);
     TCourseSession selectOneById(String id);
     List<TCourseSession> selectManyByTypeId(Integer typeId);
 

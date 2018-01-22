@@ -12,6 +12,9 @@ public class TLeads {
     @NotEmpty(groups = {AjaxControllerMod.class})
     private String id;
 
+    @NotEmpty(groups = {AjaxControllerAdd.class})
+    private String courseId;
+
     private String courseType;
 
     private String courseName;
@@ -81,6 +84,14 @@ public class TLeads {
     }
     public void setLeadsId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public String getCourseType() {

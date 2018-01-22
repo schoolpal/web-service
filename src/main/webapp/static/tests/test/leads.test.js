@@ -167,6 +167,22 @@ describe('/ajax/mkt/leads/ APIs', function() {
         expect(jsonData.data).to.not.empty;
     });
 
+    it('add.do - null values', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, leadsApiPath, 'add.do'),
+            dataType: 'json',
+            data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('add.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+    });
+
     it('add.do', function() {
         var xhr = $.ajax({
             async: false,
@@ -190,8 +206,7 @@ describe('/ajax/mkt/leads/ APIs', function() {
                 cellphone: 1,
                 wechat: 'wechat',
                 address: 'addr',
-                courseType: null,
-                courseName: null,
+                courseId: '16122700000002',
                 note: ''
             }
         });

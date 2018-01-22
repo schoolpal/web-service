@@ -32,6 +32,8 @@ public class LeadsService {
     private TLeadsStageMapper stageDao;
     @Autowired
     private TLeadsStatusMapper statusDao;
+    @Autowired
+    private TCourseSessionMapper courseSessionDao;
 
     public List<TLeads> queryLeadsListByOrgId(String orgId, Integer typeId) {
         List<TLeads> ret = leadsDao.selectManyByOrgAndTypeId(orgId, typeId);
@@ -96,6 +98,10 @@ public class LeadsService {
     @Transactional
     public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, String creatorId) throws Exception {
 
+        if(courseSessionDao.ifExistsById(leads.getCourseId()) < 1){
+            throw new Exception("Course not exists");
+        }
+
         student.setCreatorId(creatorId);
         if (this.addStudent(student) == null) {
             throw new Exception("Failed to add leads student");
@@ -123,6 +129,12 @@ public class LeadsService {
         TLeads target = this.queryLeadsById(leads.getId());
         if (target == null) {
             throw new Exception("Leads not exists");
+        }
+
+        if(!StringUtils.isEmpty(leads.getCourseId())){
+            if(courseSessionDao.ifExistsById(leads.getCourseId()) < 1){
+                throw new Exception("Course not exists");
+            }
         }
 
         student.setId(target.getStudentId());

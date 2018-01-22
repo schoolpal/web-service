@@ -8,11 +8,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="courseType != null">
-        course_type,
-      </if>
-      <if test="courseName != null">
-        course_name,
+      <if test="courseId != null">
+        course_id,
       </if>
       <if test="typeId != null">
         type_id,
@@ -58,11 +55,8 @@
       <if test="id != null">
         #{id,jdbcType=CHAR},
       </if>
-      <if test="courseType != null">
-        #{courseType,jdbcType=VARCHAR},
-      </if>
-      <if test="courseName != null">
-        #{courseName,jdbcType=VARCHAR},
+      <if test="courseId != null">
+        #{courseId,jdbcType=VARCHAR},
       </if>
       <if test="typeId != null">
         #{typeId,jdbcType=INTEGER},
@@ -108,11 +102,8 @@
   <update id="updateOne" parameterType="com.schoolpal.db.model.TLeads">
     update t_leads
     <set>
-      <if test="courseType != null">
-        course_type = #{courseType,jdbcType=VARCHAR},
-      </if>
-      <if test="courseName != null">
-        course_name = #{courseName,jdbcType=VARCHAR},
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=VARCHAR},
       </if>
       <if test="typeId != null">
         type_id = #{typeId,jdbcType=INTEGER},
@@ -176,9 +167,7 @@
     WHERE id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectOneById" parameterType="java.lang.String" resultMap="ExtendedResultMap">
-    SELECT l.id, l.course_type, l.course_name, l.type_id, l.source_id, l.student_id, l.parent_id, 
-        l.channel_id, l.stage_id, l.status_id, l.org_id, 
-        l.executive_id, l.creator_id, l.create_time, l.note, 
+    SELECT l.*,
         s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
         p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
         uc.c_realname AS creator_name,
@@ -187,7 +176,9 @@
         a.name AS channel_name,
         stage.name AS stage_name,
         status.name AS status_name,
-        o.c_name AS organization_name
+        o.c_name AS organization_name,
+        c.name AS course_name,
+        t.name AS course_type
     from t_leads AS l
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
@@ -198,12 +189,12 @@
     LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
     LEFT JOIN t_leads_status AS status ON status.id = l.status_id
     LEFT JOIN t_org AS o ON o.c_id = l.org_id
+    LEFT JOIN t_course_session AS c on c.id = l.course_id
+    LEFT jOIN t_course_type AS t on t.id = c.type_id
     where l.id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectManyByOrgAndTypeId" resultMap="ExtendedResultMap">
-    SELECT l.id, l.course_type, l.course_name, l.type_id, l.source_id, l.student_id, l.parent_id, 
-        l.channel_id, l.stage_id, l.status_id, l.org_id, 
-        l.executive_id, l.creator_id, l.create_time, l.note, 
+    SELECT l.*,
         s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
         p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
         uc.c_realname AS creator_name,
@@ -212,7 +203,9 @@
         a.name AS channel_name,
         stage.name AS stage_name,
         status.name AS status_name,
-        o.c_name AS organization_name
+        o.c_name AS organization_name,
+        c.name AS course_name,
+        t.name AS course_type
     FROM t_leads AS l
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
@@ -223,6 +216,8 @@
     LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
     LEFT JOIN t_leads_status AS status ON status.id = l.status_id
     LEFT JOIN t_org AS o ON o.c_id = l.org_id
+    LEFT JOIN t_course_session AS c on c.id = l.course_id
+    LEFT jOIN t_course_type AS t on t.id = c.type_id
     WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
   </select>
 
@@ -232,6 +227,7 @@
 
   <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">
     <id column="id" jdbcType="CHAR" property="id" />
+    <result column="course_id" jdbcType="VARCHAR" property="courseId" />
     <result column="course_type" jdbcType="VARCHAR" property="courseType" />
     <result column="course_name" jdbcType="VARCHAR" property="courseName" />
     <result column="type_id" jdbcType="INTEGER" property="typeId" />

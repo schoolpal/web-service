@@ -61,29 +61,20 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
         TUser user = userServ.getCachedUser();
 
-        TCourseSession courseSession = courseSessionServ.queryCourseSessionById(contract.getCourseId());
-        if (courseSession == null) {
-            throw new AjaxException(504, "Failed to find course session");
-        }
-
         try {
             TStudent stu = TStudent.ParseFromContract(contract);
             stu.setCreatorId(user.getcId());
             stu.setExecutiveId(user.getcId());
             studentServ.addStudent(stu);
+            contract.setStuId(stu.getId());
 
             TParent par = TParent.ParseFromContract(contract);
             par.setCreatorId(user.getcId());
             par.setExecutiveId(user.getcId());
             parentServ.addParent(par);
-
-            relationServ.addRelation(par.getId(), stu.getId(), contract.getRelation());
-
-            contract.setStuId(stu.getId());
             contract.setParId(par.getId());
 
-            contract.setCourseName(courseSession.getName());
-            contract.setCourseType(courseSession.getTypeName());
+            relationServ.addRelation(par.getId(), stu.getId(), contract.getRelation());
 
             contract.setCreatorId(user.getcId());
             contract.setExecutiveId(user.getcId());
@@ -100,7 +91,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
         TContract target = contractServ.queryContractById(contract.getId());
         if (target == null) {
-            throw new AjaxException(401, "Invalid contact id");
+            throw new AjaxException(401, "Contact not exists");
         }
 
         try {

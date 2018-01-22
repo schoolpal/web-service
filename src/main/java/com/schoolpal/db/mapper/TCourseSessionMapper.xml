@@ -16,6 +16,11 @@
   <sql id="Base_Column_List">
     id, product_id, name, type_name, hours, start_date, end_date, times, status
   </sql>
+  <select id="ifExistsById" parameterType="java.lang.String" resultType="Integer">
+    select count(*)
+    from t_course_session
+    where id = #{id,jdbcType=CHAR}
+  </select>
   <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
     select s.*, t.name as type_name
     from t_course_session as s

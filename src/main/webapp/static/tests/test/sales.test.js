@@ -181,6 +181,22 @@ describe('/ajax/sales/oppor/ APIs', function() {
             url: buildUrl(host, opporApiPath, 'add.do'),
             dataType: 'json',
             data: {
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('add.do', jsonData);
+        expect(jsonData.code).to.be.equal(400);
+    });
+
+    it('add.do', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, opporApiPath, 'add.do'),
+            dataType: 'json',
+            data: {
                 typeId: 2,
                 organizationId: orgIdVal,
                 sourceId: 1,
@@ -197,8 +213,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
                 cellphone: 1,
                 wechat: '',
                 address: '',
-                courseType: null,
-                courseName: null,
+                courseId: '16122700000002',
                 note: ''
             }
         });
