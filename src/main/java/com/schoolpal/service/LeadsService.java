@@ -180,9 +180,9 @@ public class LeadsService {
         }
 
         leads.setTypeId(2);
-        leads.setSourceId(11);
-        leads.setStageId(5);
-        leads.setStatusId(5);
+        leads.setSourceId(leads.getSourceId() + 10);
+        leads.setStageId(11);
+        leads.setStatusId(11);
         leadsDao.updateOne(leads);
     }
 
