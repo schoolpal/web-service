@@ -12,7 +12,6 @@ public class TLeads {
     @NotEmpty(groups = {AjaxControllerMod.class})
     private String id;
 
-    @NotEmpty(groups = {AjaxControllerAdd.class})
     private String courseId;
 
     private String courseType;

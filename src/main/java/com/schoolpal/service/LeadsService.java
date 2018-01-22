@@ -98,8 +98,10 @@ public class LeadsService {
     @Transactional
     public String add(TLeads leads, TLeadsStudent student, TLeadsParent parent, String creatorId) throws Exception {
 
-        if(courseSessionDao.ifExistsById(leads.getCourseId()) < 1){
-            throw new Exception("Course not exists");
+        if(!StringUtils.isEmpty(leads.getCourseId())) {
+            if (courseSessionDao.ifExistsById(leads.getCourseId()) < 1) {
+                throw new Exception("Course not exists");
+            }
         }
 
         student.setCreatorId(creatorId);
@@ -130,6 +132,7 @@ public class LeadsService {
         if (target == null) {
             throw new Exception("Leads not exists");
         }
+
 
         if(!StringUtils.isEmpty(leads.getCourseId())){
             if(courseSessionDao.ifExistsById(leads.getCourseId()) < 1){
