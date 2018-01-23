@@ -1,7 +1,6 @@
 package com.schoolpal.service;
 
 import com.schoolpal.aop.ServiceLog;
-import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.TParStuMapper;
 import com.schoolpal.db.model.TParStu;
 import com.schoolpal.db.model.TParStuKey;
@@ -24,6 +23,15 @@ public class RelationService {
         relation.setStuId(stuId);
         relation.setRelation(relationDesc);
         relationDao.insertOne(relation);
+    }
+
+    @ServiceLog
+    public void modRelation(String parId, String stuId, String relationDesc){
+        TParStu relation = new TParStu();
+        relation.setParId(parId);
+        relation.setStuId(stuId);
+        relation.setRelation(relationDesc);
+        relationDao.updateOneByPrimaryKey(relation);
     }
 
     @ServiceLog

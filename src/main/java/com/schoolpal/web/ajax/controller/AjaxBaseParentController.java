@@ -10,6 +10,7 @@ import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
@@ -50,7 +51,8 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
         return parents;
     }
 
-    public Object add(TParent parent) throws AjaxException {
+    @Transactional
+    public Object add(TParent parent, String studentId) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
 
@@ -58,6 +60,9 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
         parent.setExecutiveId(user.getcId());
         try {
             parServ.addParent(parent);
+            if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
+                relationServ.modRelation(parent.getId(), studentId, parent.getRelation());
+            }
         } catch (Exception e) {
             throw new AjaxException(500, "Failed to add parent", e);
         }
@@ -65,7 +70,8 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
         return parent.getId();
     }
 
-    public Object mod(TParent parent) throws AjaxException {
+    @Transactional
+    public Object mod(TParent parent, String studentId) throws AjaxException {
 
         TParent target = parServ.queryParentById(parent.getId());
         if (target == null) {
@@ -74,6 +80,9 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
 
         try {
             parServ.modParent(parent);
+            if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
+                relationServ.modRelation(parent.getId(), studentId, parent.getRelation());
+            }
         } catch (Exception e) {
             throw new AjaxException(500, "Failed to mod parent", e);
         }

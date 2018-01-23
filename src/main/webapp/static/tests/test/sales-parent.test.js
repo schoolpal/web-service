@@ -113,6 +113,7 @@ describe('/ajax/sales/customer/parent APIs', function() {
                 idType: 1,
                 idCode: idCodeVal,
                 birthday: new Date(1981, 12, 12),
+                relation: 'father/son'
             }
         });
 
@@ -196,6 +197,7 @@ describe('/ajax/sales/customer/parent APIs', function() {
                 idType: 2,
                 idCode: idCodeVal + ' mod',
                 birthday: new Date(1981, 12, 12),
+                relation: 'father/son - mod'
             }
         });
 
@@ -203,6 +205,25 @@ describe('/ajax/sales/customer/parent APIs', function() {
         var jsonData = xhr.responseJSON;
         resDump('mod.do', jsonData);
         expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.detail).to.be.equal('Ok');
+    });
+
+    it('query.do', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, salesParentApiPath, 'query.do'),
+            dataType: 'json',
+            data: {
+                id: userIdVal,
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        resDump('query.do', jsonData);
+        expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.data).to.not.empty;
         expect(jsonData.detail).to.be.equal('Ok');
     });
 

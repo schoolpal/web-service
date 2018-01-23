@@ -46,18 +46,18 @@ public class AjaxServiceParentController extends AjaxBaseParentController{
 	@RequiresPermissions("3-2-4")
 	@RequestMapping(value = "add.do", method = RequestMethod.POST)
 	@Override
-	public Object add(@Validated({AjaxControllerAdd.class}) TParent parent) throws AjaxException {
+	public Object add(@Validated({AjaxControllerAdd.class}) TParent parent, String studentId) throws AjaxException {
 
-		return super.add(parent);
+		return super.add(parent, studentId);
 	}
 
 	@AjaxControllerLog
 	@RequiresPermissions("3-2-5")
 	@RequestMapping(value = "mod.do", method = RequestMethod.POST)
 	@Override
-	public Object mod(@Validated({AjaxControllerMod.class}) TParent parent) throws AjaxException {
+	public Object mod(@Validated({AjaxControllerMod.class}) TParent parent, String studentId) throws AjaxException {
 
-		return super.mod(parent);
+		return super.mod(parent, studentId);
 	}
 
 	@AjaxControllerLog

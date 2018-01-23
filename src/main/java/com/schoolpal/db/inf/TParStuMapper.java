@@ -9,8 +9,7 @@ public interface TParStuMapper {
     int deleteManyByStuId(String id);
 
     int insertOne(TParStu record);
-
+    int updateOneByPrimaryKey(TParStu record);
 //    TParStu selectByPrimaryKey(TParStuKey key);
 
-//    int updateByPrimaryKey(TParStu record);
 }

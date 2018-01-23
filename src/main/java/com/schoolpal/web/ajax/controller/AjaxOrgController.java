@@ -43,16 +43,13 @@ public class AjaxOrgController extends AjaxBaseController{
         }
 
         List<TRole> roles = roleServ.queryRoleListByOrgIdLite(id);
-        if (roles == null) {
-            throw new AjaxException(500, "Cannot find organization");
-        }
 
         return roles;
     }
 
 //    @AjaxControllerLog
     @RequestMapping(value = "listUsers.do", method = RequestMethod.POST)
-    public Object listUsers(@NotEmpty String id) throws AjaxException {
+    public Object listUsersByOrgId(@NotEmpty String id) throws AjaxException {
         TUser user = userServ.getCachedUser();
 
         if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
@@ -60,9 +57,20 @@ public class AjaxOrgController extends AjaxBaseController{
         }
 
         List<TUser> users = userServ.queryUsersByOrgId(id);
-        if (users == null) {
-            throw new AjaxException(500, "Cannot find organization");
+
+        return users;
+    }
+
+    @RequestMapping(value = "listNonSystemUsers.do", method = RequestMethod.POST)
+    public Object listNonSystemUsersByOrgId(@NotEmpty String id) throws AjaxException {
+        TUser user = userServ.getCachedUser();
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(402, "No permission to query organization");
         }
+
+        List<TUser> users = userServ.queryUsersByOrgId(id);
+        users.stream().filter(u -> !u.hasSystemRankOnly());
 
         return users;
     }
@@ -79,10 +87,9 @@ public class AjaxOrgController extends AjaxBaseController{
         }
 
         TOrg org = orgServ.queryOrgById(id);
-        if (org == null) {
-            throw new AjaxException(500, "Cannot find organization");
+        if (org != null) {
+            org.setParentOrg(orgServ.queryOrgById(org.getcParentId()));
         }
-        org.setParentOrg(orgServ.queryOrgById(org.getcParentId()));
 
         return org;
     }
