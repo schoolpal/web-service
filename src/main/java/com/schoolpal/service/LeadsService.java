@@ -41,6 +41,12 @@ public class LeadsService {
         return ret;
     }
 
+    public List<TLeads> queryLeadsListByExecutived(String executiveId) {
+        List<TLeads> ret = leadsDao.selectManyByExecutiveId(executiveId);
+
+        return ret;
+    }
+
     public TLeads queryLeadsById(String id) {
         TLeads ret = leadsDao.selectOneById(id);
 

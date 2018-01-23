@@ -313,7 +313,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
             dataType: 'json',
             data: {
                 id: leadsIdVal,
-                assigneeId: '16122700000036'
+                assigneeId: '16122700000048'
             }
         });
 

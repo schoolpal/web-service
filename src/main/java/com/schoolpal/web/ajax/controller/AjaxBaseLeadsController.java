@@ -28,7 +28,21 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
 
     public Object list(@NotEmpty String orgId, @NotNull Integer typeId) {
 
-        List<TLeads> leadsList = leadsServ.queryLeadsListByOrgId(orgId, typeId);
+        List<TLeads> leadsList = null;
+
+        TUser user  = userServ.getCachedUser();
+        if(user.getHighestRank() < 3){
+            leadsList = leadsServ.queryLeadsListByOrgId(orgId, typeId);
+        }else{
+            leadsList = leadsServ.queryLeadsListByExecutived(user.getcId());
+        }
+
+        return leadsList;
+    }
+
+    public Object list(@NotEmpty String executiveId) {
+
+        List<TLeads> leadsList = leadsServ.queryLeadsListByExecutived(executiveId);
 
         return leadsList;
     }
@@ -76,6 +90,14 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     }
 
     public Object assign(@NotEmpty String id, @NotEmpty String assigneeId) throws AjaxException {
+
+        TUser user = userServ.queryUserById(assigneeId);
+        if(user == null){
+            throw new AjaxException(401, "User not exists");
+        }
+        if(user.hasSystemRankOnly()){
+            throw new AjaxException(402, "Cannot assign to system manager");
+        }
 
         try {
             leadsServ.assignToExecutiveById(id, assigneeId);

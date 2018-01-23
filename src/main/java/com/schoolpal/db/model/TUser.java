@@ -33,28 +33,28 @@ public class TUser {
 
     private String cLastVisitIp;
 
-	private TOrg org;
+    private TOrg org;
 
-	private List<TRole> roles;
-	
-	private Map<String, TRole> roleIndex = new HashMap<String, TRole>();
-	
-	public TRole getRoleById(String roleId){
-		return this.roleIndex.get(roleId);
-	}
-	
-	public List<String> getRoleIds() {
-		return new ArrayList<String>(this.roleIndex.keySet());
-	}
-	
-	public List<TFunction> getFuncs() {
-		List<TFunction> funcs = new ArrayList<TFunction>();
-		for (TRole role : roles) {
-			funcs.addAll(role.getFunctions());
-		}
-		return funcs;
-	}
-	
+    private List<TRole> roles;
+
+    private Map<String, TRole> roleIndex = new HashMap<String, TRole>();
+
+    public TRole getRoleById(String roleId) {
+        return this.roleIndex.get(roleId);
+    }
+
+    public List<String> getRoleIds() {
+        return new ArrayList<String>(this.roleIndex.keySet());
+    }
+
+    public List<TFunction> getFuncs() {
+        List<TFunction> funcs = new ArrayList<TFunction>();
+        for (TRole role : roles) {
+            funcs.addAll(role.getFunctions());
+        }
+        return funcs;
+    }
+
     public String getcId() {
         return cId;
     }
@@ -175,23 +175,56 @@ public class TUser {
         this.cLastVisitIp = cLastVisitIp == null ? null : cLastVisitIp.trim();
     }
 
-	public TOrg getOrg() {
-		return org;
-	}
+    public TOrg getOrg() {
+        return org;
+    }
 
-	public void setOrg(TOrg org) {
-		this.org = org;
-	}
+    public void setOrg(TOrg org) {
+        this.org = org;
+    }
 
-	public List<TRole> getRoles() {
-		return roles;
-	}
+    public List<TRole> getRoles() {
+        return roles;
+    }
 
-	public void setRoles(List<TRole> roles) {
-		this.roles = roles;
-		this.roleIndex.clear();
-		for (TRole r : roles){
-			this.roleIndex.put(r.getcId(), r);
-		}
-	}
+    public void setRoles(List<TRole> roles) {
+        this.roles = roles;
+        this.roleIndex.clear();
+        for (TRole r : roles) {
+            this.roleIndex.put(r.getcId(), r);
+        }
+    }
+
+    public int getLowestRank() {
+        int rank = 0;
+        if (this.roles != null) {
+            rank = this.roles.stream().max(Comparator.comparing(TRole::getcRankId)).get().getcRankId();
+        }
+        return rank;
+    }
+
+    public int getHighestRank() {
+        int rank = 0;
+        if (this.roles != null) {
+            rank = this.roles.stream().min(Comparator.comparing(TRole::getcRankId)).get().getcRankId();
+        }
+        return rank;
+    }
+
+    public boolean hasSystemRank() {
+        boolean ret = false;
+        if (this.roles != null) {
+            ret =  this.roles.stream().filter(r -> (r.getcRankId() == 4)).limit(1).count() > 0;
+        }
+        return ret;
+    }
+
+    public boolean hasSystemRankOnly() {
+        boolean ret = false;
+        if (this.roles != null && this.roles.size() == 1) {
+            ret = this.roles.get(0).getcRankId() == 4;
+        }
+        return ret;
+    }
+
 }

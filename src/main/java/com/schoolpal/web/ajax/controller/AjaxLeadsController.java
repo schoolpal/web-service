@@ -29,9 +29,9 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @AjaxControllerLog
     @RequiresPermissions("1-2")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
-    public Object list(@NotEmpty String orgId) throws AjaxException {
+    public Object list(@NotEmpty String orgId) {
 
-        return this.list(orgId, 1);
+        return super.list(orgId, 1);
     }
 
     @AjaxControllerLog

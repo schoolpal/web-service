@@ -112,16 +112,17 @@ public class UserService {
 
     public TUser queryUserById(String id) {
         TUser user = userDao.selectOneById(id);
+        if(user != null){
+            TOrg org = orgDao.selectOneById(user.getcOrgId());
+            user.setOrg(org);
 
-        TOrg org = orgDao.selectOneById(user.getcOrgId());
-        user.setOrg(org);
-
-        List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
-        for (TRole role : roles) {
-            List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
-            role.setFunctions(funcs);
+            List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+            for (TRole role : roles) {
+                List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
+                role.setFunctions(funcs);
+            }
+            user.setRoles(roles);
         }
-        user.setRoles(roles);
 
         return user;
     }

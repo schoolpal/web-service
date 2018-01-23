@@ -220,10 +220,33 @@
     LEFT jOIN t_course_type AS t on t.id = c.type_id
     WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
   </select>
-
-
-
-
+  <select id="selectManyByExecutiveId" resultMap="ExtendedResultMap">
+    SELECT l.*,
+    s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
+    p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
+    uc.c_realname AS creator_name,
+    ue.c_realname AS executive_name,
+    src.name AS source_name,
+    a.name AS channel_name,
+    stage.name AS stage_name,
+    status.name AS status_name,
+    o.c_name AS organization_name,
+    c.name AS course_name,
+    t.name AS course_type
+    FROM t_leads AS l
+    LEFT JOIN t_leads_student AS s ON s.id = l.student_id
+    LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
+    LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
+    LEFT JOIN t_user AS ue ON ue.c_id = l.executive_id
+    LEFT JOIN t_leads_source AS src ON src.id = l.source_id
+    LEFT JOIN t_activity AS a ON a.id = l.channel_id
+    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
+    LEFT JOIN t_leads_status AS status ON status.id = l.status_id
+    LEFT JOIN t_org AS o ON o.c_id = l.org_id
+    LEFT JOIN t_course_session AS c on c.id = l.course_id
+    LEFT jOIN t_course_type AS t on t.id = c.type_id
+    WHERE l.executiveId = #{executiveId,jdbcType=INTEGER}
+  </select>
 
   <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">
     <id column="id" jdbcType="CHAR" property="id" />

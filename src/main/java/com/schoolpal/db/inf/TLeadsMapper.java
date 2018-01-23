@@ -16,5 +16,6 @@ public interface TLeadsMapper {
     TLeads selectOneById(String id);
     TLeads selectStudentAndParentById(String id);
     List<TLeads> selectManyByOrgAndTypeId(@Param("orgId")String orgId, @Param("typeId")Integer typeId);
+    List<TLeads> selectManyByExecutiveId(@Param("executiveId")String executiveId);
 
 }
