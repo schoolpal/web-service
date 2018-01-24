@@ -48,7 +48,7 @@ public class AjaxControllerLogAdvice {
         logRecord.loadContextInfo(joinPoint);
         logRecord.setResponse(null);
 
-        logger.error(e.getMessage());
+        logger.error(e.getMessage(), e);
         logger.info(gson.toJson(logRecord));
     }
 }

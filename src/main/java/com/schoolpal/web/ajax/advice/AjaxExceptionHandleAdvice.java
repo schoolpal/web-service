@@ -56,6 +56,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleException(Exception e){
         logger.debug("###MyControllerAdvice - handleException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
@@ -65,6 +66,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e){
         logger.debug("###MyControllerAdvice - handleHttpMediaTypeNotSupportedException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
@@ -73,6 +75,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleUnauthorizedException(NativeWebRequest request, UnauthorizedException e) {
         logger.debug("###MyControllerAdvice - handleUnauthorizedException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
@@ -81,6 +84,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleAjaxException(AjaxException e){
         logger.debug("###MyControllerAdvice - handleException()");
         AjaxResponse response = new AjaxResponse(e.getCode(), e.getMessage());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
@@ -93,6 +97,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleBindException(BindException e){
         logger.debug("###MyControllerAdvice - handleBindException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getBindingResult().getAllErrors());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
@@ -102,6 +107,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         logger.debug("###MyControllerAdvice - handleMethodArgumentNotValidException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getBindingResult().getAllErrors());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
@@ -111,6 +117,7 @@ public class AjaxExceptionHandleAdvice {
     public Object handleConstraintViolationException(ConstraintViolationException e){
         logger.debug("###MyControllerAdvice - handleMethodArgumentNotValidException()");
         AjaxResponse response = new AjaxResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage());
+        logger.error(e.getMessage(), e);
         return response;
     }
 
