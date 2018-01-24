@@ -1,9 +1,11 @@
 package com.schoolpal.web.ajax.controller;
 
 import com.schoolpal.db.model.TParent;
+import com.schoolpal.db.model.TStudent;
 import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.ParentService;
 import com.schoolpal.service.RelationService;
+import com.schoolpal.service.StudentService;
 import com.schoolpal.service.UserService;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
@@ -23,6 +25,8 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
     protected UserService userServ;
     @Autowired
     protected ParentService parServ;
+    @Autowired
+    protected StudentService stuServ;
     @Autowired
     protected RelationService relationServ;
 
@@ -54,14 +58,20 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
     @Transactional
     public Object add(TParent parent, String studentId) throws AjaxException {
 
-        TUser user = userServ.getCachedUser();
+        if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
+            TStudent student = stuServ.queryStudentById(studentId);
+            if (student == null) {
+                throw new AjaxException(401, "Student not exists");
+            }
+        }
 
-        parent.setCreatorId(user.getcId());
-        parent.setExecutiveId(user.getcId());
+        TUser user = userServ.getCachedUser();
         try {
+            parent.setCreatorId(user.getcId());
+            parent.setExecutiveId(user.getcId());
             parServ.addParent(parent);
             if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
-                relationServ.modRelation(parent.getId(), studentId, parent.getRelation());
+                relationServ.addRelation(parent.getId(), studentId, parent.getRelation());
             }
         } catch (Exception e) {
             throw new AjaxException(500, "Failed to add parent", e);
@@ -75,7 +85,13 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
 
         TParent target = parServ.queryParentById(parent.getId());
         if (target == null) {
-            throw new AjaxException(402, "Invalid contact id");
+            throw new AjaxException(402, "Parent not found");
+        }
+        if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
+            TStudent student = stuServ.queryStudentById(studentId);
+            if (student == null) {
+                throw new AjaxException(401, "Student not exists");
+            }
         }
 
         try {
@@ -99,8 +115,8 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
         }
 
         try {
-            relationServ.delRelationsByParId(id);
             parServ.delParentById(id);
+            relationServ.delRelationsByParId(id);
         } catch (Exception e) {
             throw new AjaxException(500, "Failed to del parent");
         }

@@ -113,7 +113,8 @@ describe('/ajax/sales/customer/parent APIs', function() {
                 idType: 1,
                 idCode: idCodeVal,
                 birthday: new Date(1981, 12, 12),
-                relation: 'father/son'
+                relation: 'father/son',
+                studentId: '16122700000072',
             }
         });
 
@@ -197,7 +198,8 @@ describe('/ajax/sales/customer/parent APIs', function() {
                 idType: 2,
                 idCode: idCodeVal + ' mod',
                 birthday: new Date(1981, 12, 12),
-                relation: 'father/son - mod'
+                relation: 'father/son - mod',
+                studentId: '16122700000072',
             }
         });
 

@@ -3,21 +3,22 @@
 <mapper namespace="com.schoolpal.db.inf.TParentMapper">
 
   <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select *
-    from t_parent
-    where id = #{id,jdbcType=CHAR}
+    select *, m.relation
+    from t_parent as p
+    LEFT JOIN t_par_stu as m on p.id = m.par_id
+    where p.id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select p.*, m.relation
     from t_parent as p
     LEFT JOIN t_par_stu as m on p.id = m.par_id
-    where executive_id = #{id,jdbcType=CHAR}
+    where p.executive_id = #{id,jdbcType=CHAR}
   </select>
   <select id="selectManyByCellphone" parameterType="java.lang.String" resultMap="BaseResultMap">
     select p.*, m.relation
     from t_parent as p
     LEFT JOIN t_par_stu as m on p.id = m.par_id
-    where id = #{cellphone,jdbcType=CHAR}
+    where p.id = #{cellphone,jdbcType=CHAR}
   </select>
   <select id="selectManyByStudentId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select p.*, m.stu_id, m.relation

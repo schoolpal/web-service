@@ -18,6 +18,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ajax/org")
@@ -70,7 +71,7 @@ public class AjaxOrgController extends AjaxBaseController{
         }
 
         List<TUser> users = userServ.queryUsersByOrgId(id);
-        users.stream().filter(u -> !u.hasSystemRankOnly());
+        users = users.stream().filter(u -> !u.hasSystemRankOnly()).collect(Collectors.toList());
 
         return users;
     }
