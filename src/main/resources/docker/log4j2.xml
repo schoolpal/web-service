@@ -21,6 +21,7 @@
     </appenders>
 
     <Loggers>
+        <Logger name="com.schoolpal.db.inf" level="DEBUG"/>
         <Root level="INFO">
             <AppenderRef ref="CONSOLE_OUT"/>
             <AppenderRef ref="ROLLING_FILE"/>
