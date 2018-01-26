@@ -39,6 +39,14 @@ public class TUser {
 
     private Map<String, TRole> roleIndex = new HashMap<String, TRole>();
 
+    private boolean marketingPermission;
+    private boolean salesPermission;
+    private boolean servicePermission;
+    private boolean financePermission;
+    private boolean administrationPermission;
+    private boolean techingPermission;
+    private boolean systemPermission;
+
     public TRole getRoleById(String roleId) {
         return this.roleIndex.get(roleId);
     }
@@ -193,6 +201,106 @@ public class TUser {
         for (TRole r : roles) {
             this.roleIndex.put(r.getcId(), r);
         }
+
+        this.refreshPermissionFlags();
+    }
+
+    protected void refreshPermissionFlags(){
+
+        this.marketingPermission = false;
+        this.salesPermission = false;
+        this.servicePermission = false;
+        this.financePermission = false;
+        this.administrationPermission = false;
+        this.techingPermission = false;
+        this.systemPermission = false;
+
+        this.roles.forEach(r -> {
+            r.getAllFuncIds().forEach(f -> {
+                switch (f){
+                    case "1":
+                        this.marketingPermission = true;
+                        break;
+                    case "2":
+                        this.salesPermission = true;
+                        break;
+                    case "3":
+                        this.servicePermission = true;
+                        break;
+                    case "4":
+                        this.financePermission = true;
+                        break;
+                    case "5":
+                        this.administrationPermission = true;
+                        break;
+                    case "6":
+                        this.techingPermission = true;
+                        break;
+                    case "7":
+                        this.systemPermission = true;
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
+
+    }
+
+    public boolean hasMarketingPermission() {
+        return marketingPermission;
+    }
+
+    public void setMarketingPermission(boolean marketingPermission) {
+        this.marketingPermission = marketingPermission;
+    }
+
+    public boolean hasSalesPermission() {
+        return salesPermission;
+    }
+
+    public void setSalesPermission(boolean salesPermission) {
+        this.salesPermission = salesPermission;
+    }
+
+    public boolean hasServicePermission() {
+        return servicePermission;
+    }
+
+    public void setServicePermission(boolean servicePermission) {
+        this.servicePermission = servicePermission;
+    }
+
+    public boolean hasFinancePermission() {
+        return financePermission;
+    }
+
+    public void setFinancePermission(boolean financePermission) {
+        this.financePermission = financePermission;
+    }
+
+    public boolean hasAdministrationPermission() {
+        return administrationPermission;
+    }
+
+    public void setAdministrationPermission(boolean administrationPermission) {
+        this.administrationPermission = administrationPermission;
+    }
+
+    public boolean hasTechingPermission() {
+        return techingPermission;
+    }
+
+    public void setTechingPermission(boolean techingPermission) {
+        this.techingPermission = techingPermission;
+    }
+
+    public boolean hasSystemPermission() {
+        return systemPermission;
+    }
+
+    public void setSystemPermission(boolean systemPermission) {
+        this.systemPermission = systemPermission;
     }
 
     public int getLowestRank() {
@@ -227,4 +335,14 @@ public class TUser {
         return ret;
     }
 
+//    public boolean hasPermissionById(String funcId) {
+//        boolean ret = false;
+//        if (this.roles != null) {
+//            ret =  this.roles.stream().filter(r -> (
+//                        r.getAllFuncIds().stream().filter(f -> f == funcId).limit(1).count() > 0
+//                    )).limit(1).count() > 0;
+//        }
+//        return ret;
+//    }
+//
 }

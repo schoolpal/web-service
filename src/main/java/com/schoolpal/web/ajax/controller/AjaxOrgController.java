@@ -76,6 +76,48 @@ public class AjaxOrgController extends AjaxBaseController{
         return users;
     }
 
+    @RequestMapping(value = "listMarketingUsers.do", method = RequestMethod.POST)
+    public Object listMarketingUsersByOrgId(@NotEmpty String id) throws AjaxException {
+        TUser user = userServ.getCachedUser();
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
+
+        List<TUser> users = userServ.queryUsersByOrgId(id);
+        users = users.stream().filter(u -> !u.hasMarketingPermission()).collect(Collectors.toList());
+
+        return users;
+    }
+
+    @RequestMapping(value = "listSalesUsers.do", method = RequestMethod.POST)
+    public Object listSalesUsersByOrgId(@NotEmpty String id) throws AjaxException {
+        TUser user = userServ.getCachedUser();
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
+
+        List<TUser> users = userServ.queryUsersByOrgId(id);
+        users = users.stream().filter(u -> !u.hasSalesPermission()).collect(Collectors.toList());
+
+        return users;
+    }
+
+    @RequestMapping(value = "listServiceUsers.do", method = RequestMethod.POST)
+    public Object listServiceUsersByOrgId(@NotEmpty String id) throws AjaxException {
+        TUser user = userServ.getCachedUser();
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
+
+        List<TUser> users = userServ.queryUsersByOrgId(id);
+        users = users.stream().filter(u -> !u.hasServicePermission()).collect(Collectors.toList());
+
+        return users;
+    }
+
     @AjaxControllerLog
     @RequestMapping(value = "query.do", method = RequestMethod.POST)
     public Object query(@NotEmpty String id) throws AjaxException {
