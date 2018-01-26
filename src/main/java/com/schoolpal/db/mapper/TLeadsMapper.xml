@@ -245,7 +245,7 @@
     LEFT JOIN t_org AS o ON o.c_id = l.org_id
     LEFT JOIN t_course_session AS c on c.id = l.course_id
     LEFT jOIN t_course_type AS t on t.id = c.type_id
-    WHERE l.executiveId = #{executiveId,jdbcType=INTEGER}
+    WHERE l.executive_id = #{executiveId,jdbcType=INTEGER}
   </select>
 
   <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">
