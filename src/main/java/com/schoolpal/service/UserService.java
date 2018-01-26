@@ -160,6 +160,11 @@ public class UserService {
 
         for (TUser user : users) {
             List<TRole> roles = roleDao.selectRolesByUserId(user.getcId());
+
+            for (TRole role : roles) {
+                List<TFunction> funcs = roleFuncDao.selectAllFuncsByRoleId(role.getcId());
+                role.setFunctions(funcs);
+            }
             user.setRoles(roles);
         }
         return users;
