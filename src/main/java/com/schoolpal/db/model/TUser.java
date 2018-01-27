@@ -39,12 +39,15 @@ public class TUser {
 
     private Map<String, TRole> roleIndex = new HashMap<String, TRole>();
 
+    private Integer highestRank;
+    private Integer lowestRank;
+
     private boolean marketingPermission;
     private boolean salesPermission;
     private boolean servicePermission;
     private boolean financePermission;
     private boolean administrationPermission;
-    private boolean techingPermission;
+    private boolean teachingPermission;
     private boolean systemPermission;
 
     public TRole getRoleById(String roleId) {
@@ -203,6 +206,7 @@ public class TUser {
         }
 
         this.refreshPermissionFlags();
+        this.refreshRankValues();
     }
 
     protected void refreshPermissionFlags(){
@@ -212,7 +216,7 @@ public class TUser {
         this.servicePermission = false;
         this.financePermission = false;
         this.administrationPermission = false;
-        this.techingPermission = false;
+        this.teachingPermission = false;
         this.systemPermission = false;
 
         this.roles.forEach(r -> {
@@ -234,7 +238,7 @@ public class TUser {
                         this.administrationPermission = true;
                         break;
                     case "6":
-                        this.techingPermission = true;
+                        this.teachingPermission = true;
                         break;
                     case "7":
                         this.systemPermission = true;
@@ -243,6 +247,19 @@ public class TUser {
                         break;
                 }
             });
+        });
+
+    }
+
+    protected void refreshRankValues(){
+
+        this.highestRank = 0;
+        this.lowestRank = 0;
+
+        this.roles.forEach(r -> {
+            this.highestRank = this.highestRank <=0 ?
+                    r.getcRankId() : Math.min(this.highestRank, r.getcRankId());
+            this.lowestRank = Math.max(this.lowestRank, r.getcRankId());
         });
 
     }
@@ -267,74 +284,29 @@ public class TUser {
         return servicePermission;
     }
 
-    public void setServicePermission(boolean servicePermission) {
-        this.servicePermission = servicePermission;
-    }
-
     public boolean hasFinancePermission() {
         return financePermission;
-    }
-
-    public void setFinancePermission(boolean financePermission) {
-        this.financePermission = financePermission;
     }
 
     public boolean hasAdministrationPermission() {
         return administrationPermission;
     }
 
-    public void setAdministrationPermission(boolean administrationPermission) {
-        this.administrationPermission = administrationPermission;
-    }
-
     public boolean hasTechingPermission() {
-        return techingPermission;
-    }
-
-    public void setTechingPermission(boolean techingPermission) {
-        this.techingPermission = techingPermission;
+        return teachingPermission;
     }
 
     public boolean hasSystemPermission() {
         return systemPermission;
     }
 
-    public void setSystemPermission(boolean systemPermission) {
-        this.systemPermission = systemPermission;
+    public Integer getHighestRank() {
+        return highestRank;
     }
 
-    public int getLowestRank() {
-        int rank = 0;
-        if (this.roles != null) {
-            rank = this.roles.stream().max(Comparator.comparing(TRole::getcRankId)).get().getcRankId();
-        }
-        return rank;
+    public Integer getLowestRank() {
+        return lowestRank;
     }
-
-    public int getHighestRank() {
-        int rank = 0;
-        if (this.roles != null) {
-            rank = this.roles.stream().min(Comparator.comparing(TRole::getcRankId)).get().getcRankId();
-        }
-        return rank;
-    }
-
-    public boolean hasSystemRank() {
-        boolean ret = false;
-        if (this.roles != null) {
-            ret =  this.roles.stream().filter(r -> (r.getcRankId() == 4)).limit(1).count() > 0;
-        }
-        return ret;
-    }
-
-    public boolean hasSystemRankOnly() {
-        boolean ret = false;
-        if (this.roles != null && this.roles.size() == 1) {
-            ret = this.roles.get(0).getcRankId() == 4;
-        }
-        return ret;
-    }
-
 //    public boolean hasPermissionById(String funcId) {
 //        boolean ret = false;
 //        if (this.roles != null) {

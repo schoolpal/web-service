@@ -95,7 +95,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         if(user == null){
             throw new AjaxException(401, "User not exists");
         }
-        if(user.hasSystemRankOnly()){
+        if(user.hasSystemPermission()){
             throw new AjaxException(402, "Cannot assign to system manager");
         }
 

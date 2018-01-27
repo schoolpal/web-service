@@ -71,7 +71,7 @@ public class AjaxOrgController extends AjaxBaseController{
         }
 
         List<TUser> users = userServ.queryUsersByOrgId(id);
-        users = users.stream().filter(u -> !u.hasSystemRankOnly()).collect(Collectors.toList());
+        users = users.stream().filter(u -> !u.hasSystemPermission()).collect(Collectors.toList());
 
         return users;
     }
