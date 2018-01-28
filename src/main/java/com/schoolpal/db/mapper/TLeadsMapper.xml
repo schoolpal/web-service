@@ -45,7 +45,7 @@
             AND l.executive_id in (
                 SELECT u.c_id
                 FROM t_user AS u
-                LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_role_id
+                LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_user_id
                 LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
                 GROUP BY u.c_id
                 HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
