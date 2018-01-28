@@ -51,6 +51,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
 
         List<String> subOrgList = orgServ.queryOrgIdListByRootId(orgId);
         if(subOrgList != null){
+            subOrgList.remove(orgId);
             subOrgList.forEach(o -> {
                 ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, orgId));
             });
