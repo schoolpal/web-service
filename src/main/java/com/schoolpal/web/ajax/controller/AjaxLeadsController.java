@@ -4,6 +4,7 @@ import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
 import com.schoolpal.db.model.TLeadsStudent;
+import com.schoolpal.db.model.TUser;
 import com.schoolpal.service.ActivityService;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/ajax/mkt/leads")
@@ -29,16 +32,15 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @AjaxControllerLog
     @RequiresPermissions("1-2")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
-    public Object list(@NotEmpty String orgId) {
-
-        return super.list(orgId, 1);
+    public Object list(String orgId) throws AjaxException {
+        return super.list(1, orgId);
     }
 
     @AjaxControllerLog
     @RequiresPermissions("1-2")
     @RequestMapping(value = "query.do", method = RequestMethod.POST)
     @Override
-    public Object query(String id) {
+    public Object query(String id) throws AjaxException {
 
         return super.query(id);
     }

@@ -1,7 +1,6 @@
 package com.schoolpal.service;
 
 import com.schoolpal.aop.ServiceLog;
-import com.schoolpal.consts.LogLevel;
 import com.schoolpal.db.inf.*;
 import com.schoolpal.db.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +34,32 @@ public class LeadsService {
     @Autowired
     private TCourseSessionMapper courseSessionDao;
 
-    public List<TLeads> queryLeadsListByOrgId(String orgId, Integer typeId) {
-        List<TLeads> ret = leadsDao.selectManyByOrgAndTypeId(orgId, typeId);
+    public List<TLeads> queryLeadsListByOrgId(Integer typeId, String orgId) {
+        List<TLeads> ret = leadsDao.selectManyByTypeIdAndOrgId(typeId, orgId);
 
         return ret;
     }
 
-    public List<TLeads> queryLeadsListByExecutived(String executiveId) {
-        List<TLeads> ret = leadsDao.selectManyByExecutiveId(executiveId);
+    public List<TLeads> queryLeadsListByOrgIdForRank2(Integer typeId, String orgId) {
+        List<TLeads> ret = leadsDao.selectManyByTypeIdAndOrgIdAndRankId(typeId, orgId, 3);
+
+        return ret;
+    }
+
+    public List<TLeads> queryLeadsListByExecutived(Integer typeId, String executiveId) {
+        List<TLeads> ret = leadsDao.selectManyByTypeIdAndExecutiveId(typeId, executiveId);
 
         return ret;
     }
 
     public TLeads queryLeadsById(String id) {
         TLeads ret = leadsDao.selectOneById(id);
+
+        return ret;
+    }
+
+    public TLeads queryLeadsByIdForRank2(String id) {
+        TLeads ret = leadsDao.selectOneByIdAndRankId(id, 3);
 
         return ret;
     }

@@ -14,8 +14,10 @@ public interface TLeadsMapper {
     int deleteOneById(String id);
 
     TLeads selectOneById(String id);
+    TLeads selectOneByIdAndRankId(@Param("id") String id, @Param("rankId")Integer rankId);
     TLeads selectStudentAndParentById(String id);
-    List<TLeads> selectManyByOrgAndTypeId(@Param("orgId")String orgId, @Param("typeId")Integer typeId);
-    List<TLeads> selectManyByExecutiveId(@Param("executiveId")String executiveId);
+    List<TLeads> selectManyByTypeIdAndOrgId(@Param("typeId")Integer typeId, @Param("orgId")String orgId);
+    List<TLeads> selectManyByTypeIdAndOrgIdAndRankId(@Param("typeId")Integer typeId, @Param("orgId")String orgId, @Param("rankId")Integer rankId);
+    List<TLeads> selectManyByTypeIdAndExecutiveId(@Param("typeId")Integer typeId, @Param("executiveId")String executiveId);
 
 }

@@ -24,17 +24,15 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @AjaxControllerLog
     @RequiresPermissions("2-1")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
-    @Override
-    public Object list(String orgId, Integer typeId) {
-
-        return super.list(orgId, typeId);
+    public Object list(String orgId) throws AjaxException {
+        return super.list(2, orgId);
     }
 
     @AjaxControllerLog
     @RequiresPermissions("2-1")
     @RequestMapping(value = "query.do", method = RequestMethod.POST)
     @Override
-    public Object query(String id) {
+    public Object query(String id) throws AjaxException {
 
         return super.query(id);
     }

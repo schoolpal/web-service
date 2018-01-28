@@ -2,225 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TLeadsMapper">
 
-  <insert id="insertOne" parameterType="com.schoolpal.db.model.TLeads">
-    insert into t_leads
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="courseId != null">
-        course_id,
-      </if>
-      <if test="typeId != null">
-        type_id,
-      </if>
-      <if test="studentId != null">
-        student_id,
-      </if>
-      <if test="parentId != null">
-        parent_id,
-      </if>
-      <if test="sourceId != null">
-        source_id,
-      </if>
-      <if test="channelId != null">
-        channel_id,
-      </if>
-      <if test="stageId != null">
-        stage_id,
-      </if>
-      <if test="statusId != null">
-        status_id,
-      </if>
-      <if test="organizationId != null">
-        org_id,
-      </if>
-      <if test="executiveId != null">
-        executive_id,
-      </if>
-      <if test="creatorId != null">
-        creator_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdate != null">
-        last_update,
-      </if>
-      <if test="note != null">
-        note,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=CHAR},
-      </if>
-      <if test="courseId != null">
-        #{courseId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="studentId != null">
-        #{studentId,jdbcType=INTEGER},
-      </if>
-      <if test="parentId != null">
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="sourceId != null">
-        #{sourceId,jdbcType=INTEGER},
-      </if>
-      <if test="channelId != null">
-        #{channelId,jdbcType=INTEGER},
-      </if>
-      <if test="stageId != null">
-        #{stageId,jdbcType=INTEGER},
-      </if>
-      <if test="statusId != null">
-        #{statusId,jdbcType=INTEGER},
-      </if>
-      <if test="organizationId != null">
-        #{organizationId,jdbcType=CHAR},
-      </if>
-      <if test="executiveId != null">
-        #{executiveId,jdbcType=CHAR},
-      </if>
-      <if test="creatorId != null">
-        #{creatorId,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdate != null">
-        #{lastUpdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="note != null">
-        #{note,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateOne" parameterType="com.schoolpal.db.model.TLeads">
-    update t_leads
-    <set>
-      <if test="courseId != null">
-        course_id = #{courseId,jdbcType=VARCHAR},
-      </if>
-      <if test="typeId != null">
-        type_id = #{typeId,jdbcType=INTEGER},
-      </if>
-      <if test="studentId != null">
-        student_id = #{studentId,jdbcType=INTEGER},
-      </if>
-      <if test="parentId != null">
-        parent_id = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="sourceId != null">
-        source_id = #{sourceId,jdbcType=INTEGER},
-      </if>
-      <if test="channelId != null">
-        channel_id = #{channelId,jdbcType=CHAR},
-      </if>
-      <if test="stageId != null">
-        stage_id = #{stageId,jdbcType=INTEGER},
-      </if>
-      <if test="statusId != null">
-        status_id = #{statusId,jdbcType=INTEGER},
-      </if>
-      <if test="organizationId != null">
-        org_id = #{organizationId,jdbcType=CHAR},
-      </if>
-      <if test="executiveId != null">
-        executive_id = #{executiveId,jdbcType=CHAR},
-      </if>
-      <if test="creatorId != null">
-        creator_id = #{creatorId,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdate != null">
-        last_update = #{lastUpdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="note != null">
-        note = #{note,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=CHAR}
-  </update>
-  <update id="updateExecutiveById">
-    update t_leads
-    set executive_id = #{userId,jdbcType=CHAR}
-    where id = #{id,jdbcType=CHAR}
-  </update>
-  <update id="updateTypeById">
-    update t_leads
-    set type_id = #{typeId,jdbcType=INTEGER}
-    where id = #{id,jdbcType=CHAR}
-  </update>
-  <delete id="deleteOneById" parameterType="java.lang.String">
-    delete from t_leads
-    where id = #{id,jdbcType=CHAR}
-  </delete>
-  <select id="selectStudentAndParentById" parameterType="java.lang.String" resultMap="StudentAndParentResultMap">
+    <select id="selectStudentAndParentById" parameterType="java.lang.String" resultMap="StudentAndParentResultMap">
     SELECT id,student_id,parent_id
     FROM t_leads
     WHERE id = #{id,jdbcType=CHAR}
   </select>
-  <select id="selectOneById" parameterType="java.lang.String" resultMap="ExtendedResultMap">
-    SELECT l.*,
-        s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
-        p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
-        uc.c_realname AS creator_name,
-        ue.c_realname AS executive_name,
-        src.name AS source_name,
-        a.name AS channel_name,
-        stage.name AS stage_name,
-        status.name AS status_name,
-        o.c_name AS organization_name,
-        c.name AS course_name,
-        t.name AS course_type
-    from t_leads AS l
-    LEFT JOIN t_leads_student AS s ON s.id = l.student_id
-    LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
-    LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
-    LEFT JOIN t_user AS ue ON ue.c_id = l.executive_id
-    LEFT JOIN t_leads_source AS src ON src.id = l.source_id
-    LEFT JOIN t_activity AS a ON a.id = l.channel_id
-    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
-    LEFT JOIN t_leads_status AS status ON status.id = l.status_id
-    LEFT JOIN t_org AS o ON o.c_id = l.org_id
-    LEFT JOIN t_course_session AS c on c.id = l.course_id
-    LEFT jOIN t_course_type AS t on t.id = c.type_id
-    where l.id = #{id,jdbcType=CHAR}
-  </select>
-  <select id="selectManyByOrgAndTypeId" resultMap="ExtendedResultMap">
-    SELECT l.*,
-        s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
-        p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
-        uc.c_realname AS creator_name,
-        ue.c_realname AS executive_name,
-        src.name AS source_name,
-        a.name AS channel_name,
-        stage.name AS stage_name,
-        status.name AS status_name,
-        o.c_name AS organization_name,
-        c.name AS course_name,
-        t.name AS course_type
-    FROM t_leads AS l
-    LEFT JOIN t_leads_student AS s ON s.id = l.student_id
-    LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
-    LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
-    LEFT JOIN t_user AS ue ON ue.c_id = l.executive_id
-    LEFT JOIN t_leads_source AS src ON src.id = l.source_id
-    LEFT JOIN t_activity AS a ON a.id = l.channel_id
-    LEFT JOIN t_leads_stage AS stage ON stage.id = l.stage_id
-    LEFT JOIN t_leads_status AS status ON status.id = l.status_id
-    LEFT JOIN t_org AS o ON o.c_id = l.org_id
-    LEFT JOIN t_course_session AS c on c.id = l.course_id
-    LEFT jOIN t_course_type AS t on t.id = c.type_id
-    WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
-  </select>
-  <select id="selectManyByExecutiveId" resultMap="ExtendedResultMap">
+
+    <sql id="baseSelectStatement">
     SELECT l.*,
     s.name AS student_name, s.gender_id, s.birthday, s.class_grade, s.school_name,
     p.name AS parent_name, p.cellphone, p.wechat, p.address, p.relation,
@@ -233,7 +21,7 @@
     o.c_name AS organization_name,
     c.name AS course_name,
     t.name AS course_type
-    FROM t_leads AS l
+    from t_leads AS l
     LEFT JOIN t_leads_student AS s ON s.id = l.student_id
     LEFT JOIN t_leads_parent AS p ON p.id = l.parent_id
     LEFT JOIN t_user AS uc ON uc.c_id = l.creator_id
@@ -245,85 +33,269 @@
     LEFT JOIN t_org AS o ON o.c_id = l.org_id
     LEFT JOIN t_course_session AS c on c.id = l.course_id
     LEFT jOIN t_course_type AS t on t.id = c.type_id
-    WHERE l.executive_id = #{executiveId,jdbcType=INTEGER}
-  </select>
-
-  <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="course_id" jdbcType="VARCHAR" property="courseId" />
-    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
-    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
-    <result column="type_id" jdbcType="INTEGER" property="typeId" />
-    <result column="student_id" jdbcType="CHAR" property="studentId" />
-    <result column="parent_id" jdbcType="CHAR" property="parentId" />
-    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
-    <result column="source_name" jdbcType="VARCHAR" property="sourceName" />
-    <result column="channel_id" jdbcType="CHAR" property="channelId" />
-    <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
-    <result column="stage_id" jdbcType="INTEGER" property="stageId" />
-    <result column="stage_name" jdbcType="VARCHAR" property="stageName" />
-    <result column="status_id" jdbcType="INTEGER" property="statusId" />
-    <result column="status_name" jdbcType="VARCHAR" property="statusName" />
-    <result column="org_id" jdbcType="CHAR" property="organizationId" />
-    <result column="organization_name" jdbcType="VARCHAR" property="organizationName" />
-    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
-    <result column="executive_name" jdbcType="VARCHAR" property="executiveName" />
-    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
-    <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
-    <association property="student" javaType="com.schoolpal.db.model.TLeadsStudent">
-        <id column="student_id" jdbcType="CHAR" property="id" />
-        <result column="student_name" jdbcType="VARCHAR" property="name" />
-        <result column="gender_id" jdbcType="VARCHAR" property="genderId" />
-        <result column="birthday" jdbcType="DATE" property="birthday" />
-        <result column="class_grade" jdbcType="VARCHAR" property="classGrade" />
-        <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
-    </association>
-    <association property="parent" javaType="com.schoolpal.db.model.TLeadsParent">
-        <id column="parent_id" jdbcType="CHAR" property="id" />
-        <result column="parent_name" jdbcType="VARCHAR" property="name" />
-        <result column="cellphone" jdbcType="VARCHAR" property="cellphone" />
-        <result column="wechat" jdbcType="VARCHAR" property="wechat" />
-        <result column="address" jdbcType="VARCHAR" property="address" />
-        <result column="relation" jdbcType="VARCHAR" property="relation" />
-    </association>
-  </resultMap>
-  <resultMap id="StudentAndParentResultMap" type="com.schoolpal.db.model.TLeads">
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="student_id" jdbcType="CHAR" property="studentId" />
-    <result column="parent_id" jdbcType="CHAR" property="parentId" />
-  </resultMap>
-
-
-
-
-
-
-
-  <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="course_type" jdbcType="VARCHAR" property="courseType" />
-    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="source" jdbcType="INTEGER" property="source" />
-    <result column="channel" jdbcType="CHAR" property="channel" />
-    <result column="stage" jdbcType="INTEGER" property="stage" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="org_id" jdbcType="CHAR" property="organizationId" />
-    <result column="executive_id" jdbcType="CHAR" property="executiveId" />
-    <result column="creator_id" jdbcType="CHAR" property="creatorId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="note" jdbcType="VARCHAR" property="note" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, course_type, course_name, type, source, channel, stage, status, org_id, 
-    executive_id, creator_id, create_time, note
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_leads
+
+    <select id="selectOneById" parameterType="java.lang.String" resultMap="ExtendedResultMap">
+        <include refid="baseSelectStatement"/>
+        where l.id = #{id,jdbcType=CHAR}
+    </select>
+    <select id="selectOneByIdAndRankId" parameterType="java.lang.String" resultMap="ExtendedResultMap">
+        <include refid="baseSelectStatement"/>
+        where l.id = #{id,jdbcType=CHAR}
+            AND l.executive_id in (
+                SELECT u.c_id
+                FROM t_user AS u
+                LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_role_id
+                LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
+                GROUP BY u.c_id
+                HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
+            )
+    </select>
+    <select id="selectManyByTypeIdAndOrgId" resultMap="ExtendedResultMap">
+        <include refid="baseSelectStatement"/>
+        WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
+    </select>
+    <select id="selectManyByTypeIdAndOrgIdAndRankId" resultMap="ExtendedResultMap">
+        <include refid="baseSelectStatement"/>
+        WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
+          AND l.executive_id in (
+            SELECT u.c_id
+            FROM t_user AS u
+            LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_role_id
+            LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
+            GROUP BY u.c_id
+            HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
+          )
+    </select>
+    <select id="selectManyByTypeIdAndExecutiveId" resultMap="ExtendedResultMap">
+        <include refid="baseSelectStatement"/>
+        WHERE l.executive_id = #{executiveId,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertOne" parameterType="com.schoolpal.db.model.TLeads">
+        insert into t_leads
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="courseId != null">
+                course_id,
+            </if>
+            <if test="typeId != null">
+                type_id,
+            </if>
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="sourceId != null">
+                source_id,
+            </if>
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="stageId != null">
+                stage_id,
+            </if>
+            <if test="statusId != null">
+                status_id,
+            </if>
+            <if test="organizationId != null">
+                org_id,
+            </if>
+            <if test="executiveId != null">
+                executive_id,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdate != null">
+                last_update,
+            </if>
+            <if test="note != null">
+                note,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="courseId != null">
+                #{courseId,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="studentId != null">
+                #{studentId,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="sourceId != null">
+                #{sourceId,jdbcType=INTEGER},
+            </if>
+            <if test="channelId != null">
+                #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="stageId != null">
+                #{stageId,jdbcType=INTEGER},
+            </if>
+            <if test="statusId != null">
+                #{statusId,jdbcType=INTEGER},
+            </if>
+            <if test="organizationId != null">
+                #{organizationId,jdbcType=CHAR},
+            </if>
+            <if test="executiveId != null">
+                #{executiveId,jdbcType=CHAR},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdate != null">
+                #{lastUpdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="note != null">
+                #{note,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateOne" parameterType="com.schoolpal.db.model.TLeads">
+        update t_leads
+        <set>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                type_id = #{typeId,jdbcType=INTEGER},
+            </if>
+            <if test="studentId != null">
+                student_id = #{studentId,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId,jdbcType=INTEGER},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=CHAR},
+            </if>
+            <if test="stageId != null">
+                stage_id = #{stageId,jdbcType=INTEGER},
+            </if>
+            <if test="statusId != null">
+                status_id = #{statusId,jdbcType=INTEGER},
+            </if>
+            <if test="organizationId != null">
+                org_id = #{organizationId,jdbcType=CHAR},
+            </if>
+            <if test="executiveId != null">
+                executive_id = #{executiveId,jdbcType=CHAR},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdate != null">
+                last_update = #{lastUpdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="note != null">
+                note = #{note,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <update id="updateExecutiveById">
+    update t_leads
+    set executive_id = #{userId,jdbcType=CHAR}
     where id = #{id,jdbcType=CHAR}
-  </select>
+  </update>
+    <update id="updateTypeById">
+    update t_leads
+    set type_id = #{typeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+    <delete id="deleteOneById" parameterType="java.lang.String">
+    delete from t_leads
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+
+
+    <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="course_id" jdbcType="VARCHAR" property="courseId"/>
+        <result column="course_type" jdbcType="VARCHAR" property="courseType"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="student_id" jdbcType="CHAR" property="studentId"/>
+        <result column="parent_id" jdbcType="CHAR" property="parentId"/>
+        <result column="source_id" jdbcType="INTEGER" property="sourceId"/>
+        <result column="source_name" jdbcType="VARCHAR" property="sourceName"/>
+        <result column="channel_id" jdbcType="CHAR" property="channelId"/>
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName"/>
+        <result column="stage_id" jdbcType="INTEGER" property="stageId"/>
+        <result column="stage_name" jdbcType="VARCHAR" property="stageName"/>
+        <result column="status_id" jdbcType="INTEGER" property="statusId"/>
+        <result column="status_name" jdbcType="VARCHAR" property="statusName"/>
+        <result column="org_id" jdbcType="CHAR" property="organizationId"/>
+        <result column="organization_name" jdbcType="VARCHAR" property="organizationName"/>
+        <result column="executive_id" jdbcType="CHAR" property="executiveId"/>
+        <result column="executive_name" jdbcType="VARCHAR" property="executiveName"/>
+        <result column="creator_id" jdbcType="CHAR" property="creatorId"/>
+        <result column="creator_name" jdbcType="VARCHAR" property="creatorName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update" jdbcType="TIMESTAMP" property="lastUpdate"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+        <association property="student" javaType="com.schoolpal.db.model.TLeadsStudent">
+            <id column="student_id" jdbcType="CHAR" property="id"/>
+            <result column="student_name" jdbcType="VARCHAR" property="name"/>
+            <result column="gender_id" jdbcType="VARCHAR" property="genderId"/>
+            <result column="birthday" jdbcType="DATE" property="birthday"/>
+            <result column="class_grade" jdbcType="VARCHAR" property="classGrade"/>
+            <result column="school_name" jdbcType="VARCHAR" property="schoolName"/>
+        </association>
+        <association property="parent" javaType="com.schoolpal.db.model.TLeadsParent">
+            <id column="parent_id" jdbcType="CHAR" property="id"/>
+            <result column="parent_name" jdbcType="VARCHAR" property="name"/>
+            <result column="cellphone" jdbcType="VARCHAR" property="cellphone"/>
+            <result column="wechat" jdbcType="VARCHAR" property="wechat"/>
+            <result column="address" jdbcType="VARCHAR" property="address"/>
+            <result column="relation" jdbcType="VARCHAR" property="relation"/>
+        </association>
+    </resultMap>
+    <resultMap id="StudentAndParentResultMap" type="com.schoolpal.db.model.TLeads">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="student_id" jdbcType="CHAR" property="studentId"/>
+        <result column="parent_id" jdbcType="CHAR" property="parentId"/>
+    </resultMap>
+
+
+    <resultMap id="BaseResultMap" type="com.schoolpal.db.model.TLeads">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="course_type" jdbcType="VARCHAR" property="courseType"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="source" jdbcType="INTEGER" property="source"/>
+        <result column="channel" jdbcType="CHAR" property="channel"/>
+        <result column="stage" jdbcType="INTEGER" property="stage"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="org_id" jdbcType="CHAR" property="organizationId"/>
+        <result column="executive_id" jdbcType="CHAR" property="executiveId"/>
+        <result column="creator_id" jdbcType="CHAR" property="creatorId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="note" jdbcType="VARCHAR" property="note"/>
+    </resultMap>
+
 </mapper>
