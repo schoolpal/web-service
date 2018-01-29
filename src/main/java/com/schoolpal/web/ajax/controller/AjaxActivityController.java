@@ -10,6 +10,7 @@ import com.schoolpal.service.UserService;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 import javax.validation.constraints.NotEmpty;
@@ -48,7 +49,7 @@ public class AjaxActivityController extends AjaxBaseController {
     }
 
     @AjaxControllerLog
-    @RequiresPermissions("1")
+    @RequiresPermissions(value = {"1", "2", "3"}, logical = Logical.OR)
     @RequestMapping(value = "listTree.do", method = RequestMethod.POST)
     public Object listTree(@NotEmpty String orgId) {
 
