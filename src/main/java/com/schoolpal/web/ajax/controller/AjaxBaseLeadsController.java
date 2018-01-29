@@ -39,22 +39,25 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         }
 
         List<TLeads> ret = new ArrayList<>();
-        if(user.getHighestRank() == 1){
-            ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, orgId));
-        }else if(user.getHighestRank() == 3){
-            ret.addAll(leadsServ.queryLeadsListByExecutived(typeId, user.getcId()));
-        }else if(user.getHighestRank() == 2){
-            ret.addAll(leadsServ.queryLeadsListByExecutived(typeId, user.getcId()));
-            ret.addAll(leadsServ.queryLeadsListByOrgIdForRank2(typeId, orgId));
-        }else {
-            throw new AjaxException(402, "Unexpected user rank");
-        }
 
-        List<String> subOrgList = orgServ.queryOrgIdListByRootId(orgId);
-        if(subOrgList != null){
-            subOrgList.remove(orgId);
-            subOrgList.forEach(o -> {
-                ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, o));
+        List<String> orgList = orgServ.queryOrgIdListByRootId(orgId);
+        if(orgList != null){
+            orgList.forEach(o -> {
+                if(o.equals(user.getcOrgId())) {
+                    if (user.getHighestRank() == 1) {
+                        ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, orgId));
+                    } else if (user.getHighestRank() == 3) {
+                        ret.addAll(leadsServ.queryLeadsListByExecutived(typeId, user.getcId()));
+                    } else if (user.getHighestRank() == 2) {
+                        ret.addAll(leadsServ.queryLeadsListByExecutived(typeId, user.getcId()));
+                        ret.addAll(leadsServ.queryLeadsListByOrgIdForRank2(typeId, orgId));
+                    } else {
+                        //Unexpected user rank, no leads should be returned
+                        return;
+                    }
+                }else {
+                    ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, o));
+                }
             });
         }
 
