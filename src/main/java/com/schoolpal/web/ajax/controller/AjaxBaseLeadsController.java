@@ -34,8 +34,8 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     public Object list(@NotNull Integer typeId, @NotEmpty String orgId) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
-        if (!orgServ.isOrgBelongToTargetOrg(orgId, user.getcOrgId())) {
-            throw new AjaxException(401, "No permission to query organization");
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), orgId)) {
+            throw new AjaxException(402, "No permission to query organization");
         }
 
         List<TLeads> ret = new ArrayList<>();
@@ -46,14 +46,14 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         }else if(user.getHighestRank() == 2){
             ret.addAll(leadsServ.queryLeadsListByOrgIdForRank2(typeId, orgId));
         }else {
-            throw new AjaxException(401, "Unexpected user rank");
+            throw new AjaxException(402, "Unexpected user rank");
         }
 
         List<String> subOrgList = orgServ.queryOrgIdListByRootId(orgId);
         if(subOrgList != null){
             subOrgList.remove(orgId);
             subOrgList.forEach(o -> {
-                ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, orgId));
+                ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, o));
             });
         }
 
@@ -65,8 +65,8 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     public Object listByOrgId(@NotNull Integer typeId, @NotEmpty String orgId) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
-        if (!orgServ.isOrgBelongToTargetOrg(orgId, user.getcOrgId())) {
-            throw new AjaxException(401, "No permission to query organization");
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), orgId)) {
+            throw new AjaxException(402, "No permission to query organization");
         }
 
         List<TLeads> leadsList = leadsServ.queryLeadsListByOrgId(typeId, orgId);
@@ -84,26 +84,26 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
     public Object query(@NotEmpty String id) throws AjaxException {
 
         TLeads leads = leadsServ.queryLeadsById(id);
-
+/*
         TUser user = userServ.getCachedUser();
         if (!orgServ.isOrgBelongToTargetOrg(leads.getOrganizationId(), user.getcOrgId())) {
-            throw new AjaxException(401, "No permission to query organization");
+            throw new AjaxException(402, "No permission to query organization");
         }
 
         if(user.getHighestRank() == 1){
             //No limit for rank 1
         }else if(user.getHighestRank() == 3){
             if(leads.getExecutiveId() != user.getcId()){
-                throw new AjaxException(402, "No permission");
+                throw new AjaxException(402, "No permission to query leads");
             }
         }else if(user.getHighestRank() == 2){
             if(leadsServ.queryLeadsByIdForRank2(id) == null){
-                throw new AjaxException(403, "No permission");
+                throw new AjaxException(403, "No permission to query leads");
             }
         }else {
             throw new AjaxException(404, "Unexpected user rank");
         }
-
+*/
         return leads;
     }
 
