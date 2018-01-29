@@ -69,7 +69,7 @@
     </select>
     <select id="selectManyByTypeIdAndExecutiveId" resultMap="ExtendedResultMap">
         <include refid="baseSelectStatement"/>
-        WHERE l.executive_id = #{executiveId,jdbcType=INTEGER}
+        WHERE l.executive_id = #{executiveId,jdbcType=INTEGER} AND l.type_id = #{typeId,jdbcType=INTEGER}
     </select>
 
     <insert id="insertOne" parameterType="com.schoolpal.db.model.TLeads">
