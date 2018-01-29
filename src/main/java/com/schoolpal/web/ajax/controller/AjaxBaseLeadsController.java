@@ -44,6 +44,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         }else if(user.getHighestRank() == 3){
             ret.addAll(leadsServ.queryLeadsListByExecutived(typeId, user.getcId()));
         }else if(user.getHighestRank() == 2){
+            ret.addAll(leadsServ.queryLeadsListByExecutived(typeId, user.getcId()));
             ret.addAll(leadsServ.queryLeadsListByOrgIdForRank2(typeId, orgId));
         }else {
             throw new AjaxException(402, "Unexpected user rank");
