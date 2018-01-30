@@ -40,7 +40,7 @@ public class AjaxOrgController extends AjaxBaseController{
 
         List<String> orgList = orgServ.queryOrgIdListByRootId(user.getcOrgId());
         if (!orgList.contains(id)) {
-            throw new AjaxException(401, "No permission to query organization");
+            throw new AjaxException(402, "No permission to query organization");
         }
 
         List<TRole> roles = roleServ.queryRoleListByOrgIdLite(id);

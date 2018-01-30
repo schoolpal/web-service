@@ -139,7 +139,7 @@ public class AjaxUserController extends AjaxBaseController {
         TUser user = userServ.getCachedUser();
 
         if (!user.getRoleIds().contains(id)) {
-            throw new AjaxException(401, "User don't have this role");
+            throw new AjaxException(402, "User don't have this role");
         }
 
         List<TFunction> funcList = user.getRoleById(id).getFunctions();

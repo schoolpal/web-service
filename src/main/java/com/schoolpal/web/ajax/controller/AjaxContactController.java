@@ -38,7 +38,7 @@ public class AjaxContactController extends AjaxBaseController {
 
         String permId = this.getQueryPermIdByLeadsId(leadsId);
         if (!AuthorizationHelper.CheckPermissionById(permId)) {
-            throw new AjaxException(401, "No permission to list contacts");
+            throw new AjaxException(402, "No permission to list contacts");
         }
 
         List<TContact> acts = contactServ.queryContactsByLeadsId(leadsId);
@@ -57,7 +57,7 @@ public class AjaxContactController extends AjaxBaseController {
 
         String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
         if (!AuthorizationHelper.CheckPermissionById(permId)) {
-            throw new AjaxException(401, "No permission to query contact");
+            throw new AjaxException(403, "No permission to query contact");
         }
 
         return contact;
@@ -117,7 +117,7 @@ public class AjaxContactController extends AjaxBaseController {
 
         String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
         if (!AuthorizationHelper.CheckPermissionById(permId)) {
-            throw new AjaxException(401, "No permission to add contact");
+            throw new AjaxException(402, "No permission to add contact");
         }
 
         TUser user = userServ.getCachedUser();
@@ -143,7 +143,7 @@ public class AjaxContactController extends AjaxBaseController {
 
         String permId = this.getModPermIdByLeadsId(target.getLeadsId());
         if (!AuthorizationHelper.CheckPermissionById(permId)) {
-            throw new AjaxException(401, "No permission to mod contact");
+            throw new AjaxException(403, "No permission to mod contact");
         }
 
         try {
@@ -166,7 +166,7 @@ public class AjaxContactController extends AjaxBaseController {
 
         String permId = this.getModPermIdByLeadsId(contact.getLeadsId());
         if (!AuthorizationHelper.CheckPermissionById(permId)) {
-            throw new AjaxException(401, "No permission to del contact");
+            throw new AjaxException(403, "No permission to del contact");
         }
 
         try {

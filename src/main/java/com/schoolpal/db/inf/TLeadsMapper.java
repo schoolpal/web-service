@@ -9,7 +9,7 @@ public interface TLeadsMapper {
 
     int insertOne(TLeads record);
     int updateOne(TLeads record);
-    int updateExecutiveById(@Param("id")String id, @Param("userId")String userId);
+    int updateExecutiveIdAndOrgIdById(@Param("id")String id, @Param("userId")String userId, @Param("orgId")String orgId);
     int updateTypeById(@Param("id")String id, @Param("typeId")Integer typeId);
     int deleteOneById(String id);
 

@@ -61,7 +61,7 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
         if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
             TStudent student = stuServ.queryStudentById(studentId);
             if (student == null) {
-                throw new AjaxException(401, "Student not exists");
+                throw new AjaxException(402, "Student not exists");
             }
         }
 
@@ -90,7 +90,7 @@ public abstract class AjaxBaseParentController extends AjaxBaseController {
         if (!StringUtils.isEmpty(parent.getRelation()) && !StringUtils.isEmpty(studentId)) {
             TStudent student = stuServ.queryStudentById(studentId);
             if (student == null) {
-                throw new AjaxException(401, "Student not exists");
+                throw new AjaxException(403, "Student not exists");
             }
         }
 

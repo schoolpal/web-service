@@ -91,7 +91,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
         TContract target = contractServ.queryContractById(contract.getId());
         if (target == null) {
-            throw new AjaxException(401, "Contact not exists");
+            throw new AjaxException(402, "Contact not exists");
         }
 
         try {

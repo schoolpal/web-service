@@ -42,7 +42,7 @@ public class AjaxRoleController extends AjaxBaseController{
             throw new AjaxException(400, "Cannot find role");
         }
         if (!orgList.contains(role.getcOrgId())) {
-            throw new AjaxException(401, "No permission to query role under parent organization");
+            throw new AjaxException(402, "No permission to query role under parent organization");
         }
 
         return role;

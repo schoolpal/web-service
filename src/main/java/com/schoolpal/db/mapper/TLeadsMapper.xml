@@ -42,14 +42,14 @@
     <select id="selectOneByIdAndRankId" parameterType="java.lang.String" resultMap="ExtendedResultMap">
         <include refid="baseSelectStatement"/>
         where l.id = #{id,jdbcType=CHAR}
-            AND l.executive_id in (
-                SELECT u.c_id
-                FROM t_user AS u
-                LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_user_id
-                LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
-                GROUP BY u.c_id
-                HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
-            )
+        AND l.executive_id in (
+        SELECT u.c_id
+        FROM t_user AS u
+        LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_user_id
+        LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
+        GROUP BY u.c_id
+        HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
+        )
     </select>
     <select id="selectManyByTypeIdAndOrgId" resultMap="ExtendedResultMap">
         <include refid="baseSelectStatement"/>
@@ -58,14 +58,14 @@
     <select id="selectManyByTypeIdAndOrgIdAndRankId" resultMap="ExtendedResultMap">
         <include refid="baseSelectStatement"/>
         WHERE l.org_id = #{orgId,jdbcType=CHAR} AND l.type_id = #{typeId,jdbcType=INTEGER}
-          AND l.executive_id in (
-            SELECT u.c_id
-            FROM t_user AS u
-            LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_user_id
-            LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
-            GROUP BY u.c_id
-            HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
-          )
+        AND l.executive_id in (
+        SELECT u.c_id
+        FROM t_user AS u
+        LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_user_id
+        LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
+        GROUP BY u.c_id
+        HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
+        )
     </select>
     <select id="selectManyByTypeIdAndExecutiveId" resultMap="ExtendedResultMap">
         <include refid="baseSelectStatement"/>
@@ -217,20 +217,20 @@
         </set>
         where id = #{id,jdbcType=CHAR}
     </update>
-    <update id="updateExecutiveById">
+    <update id="updateExecutiveIdAndOrgIdById">
     update t_leads
-    set executive_id = #{userId,jdbcType=CHAR}
+    set executive_id = #{userId,jdbcType=CHAR}, org_id = #{orgId,jdbcType=CHAR}
     where id = #{id,jdbcType=CHAR}
-  </update>
+    </update>
     <update id="updateTypeById">
     update t_leads
     set type_id = #{typeId,jdbcType=INTEGER}
     where id = #{id,jdbcType=CHAR}
-  </update>
+    </update>
     <delete id="deleteOneById" parameterType="java.lang.String">
     delete from t_leads
     where id = #{id,jdbcType=CHAR}
-  </delete>
+    </delete>
 
 
     <resultMap id="ExtendedResultMap" type="com.schoolpal.db.model.TLeads">

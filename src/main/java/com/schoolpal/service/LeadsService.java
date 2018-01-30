@@ -184,8 +184,8 @@ public class LeadsService {
     }
 
     @ServiceLog
-    public void assignToExecutiveById(String id, String userId) {
-        leadsDao.updateExecutiveById(id, userId);
+    public void assignToExecutiveById(String id, String userId, String orgId) {
+        leadsDao.updateExecutiveIdAndOrgIdById(id, userId, orgId);
     }
 
     @ServiceLog

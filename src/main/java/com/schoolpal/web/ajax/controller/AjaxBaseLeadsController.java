@@ -150,14 +150,14 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
 
         TUser user = userServ.queryUserById(assigneeId);
         if (user == null) {
-            throw new AjaxException(401, "User not exists");
+            throw new AjaxException(402, "User not exists");
         }
         if (user.hasSystemPermission()){
-            throw new AjaxException(402, "Cannot assign to system manager");
+            throw new AjaxException(403, "Cannot assign to system manager");
         }
 
         try {
-            leadsServ.assignToExecutiveById(id, assigneeId);
+            leadsServ.assignToExecutiveById(id, user.getcId(), user.getcOrgId());
         } catch (Exception e) {
             throw new AjaxException(500, "Failed to assign leads");
         }

@@ -115,9 +115,17 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @Transactional
     public Object convert(@NotEmpty String id, @NotEmpty String assigneeId) throws AjaxException {
 
+        TUser user = userServ.queryUserById(assigneeId);
+        if (user == null) {
+            throw new AjaxException(402, "User not exists");
+        }
+        if (user.hasSystemPermission()){
+            throw new AjaxException(403, "Cannot assign to system manager");
+        }
+
         try {
             leadsServ.convertToOpportunityById(id);
-            leadsServ.assignToExecutiveById(id, assigneeId);
+            leadsServ.assignToExecutiveById(id, user.getcId(), user.getcOrgId());
         }catch (Exception e){
             throw new AjaxException(500, "Failed to convert leads");
         }
