@@ -273,7 +273,7 @@ describe('/ajax/sales/oppor/ APIs', function() {
         var xhr = $.ajax({
             async: false,
             method: 'POST',
-            url: buildUrl(host, leadsApiPath, 'listAssignableUsers.do'),
+            url: buildUrl(host, opporApiPath, 'listAssignableUsers.do'),
             dataType: 'json',
             data: {
                 orgId: orgIdVal
