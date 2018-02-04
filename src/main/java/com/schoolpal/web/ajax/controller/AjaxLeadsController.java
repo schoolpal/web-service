@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ajax/mkt/leads")
@@ -34,6 +35,43 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
     public Object list(String orgId) throws AjaxException {
         return super.list(1, orgId);
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("1-2")
+    @RequestMapping(value = "listAssignableUsers.do", method = RequestMethod.POST)
+    public Object listAssignableUsers(@NotEmpty String orgId) throws AjaxException {
+        TUser user = userServ.getCachedUser();
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), orgId)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
+
+        List<TUser> users = new ArrayList<>();
+        switch (user.getHighestRank()){
+            case 1:
+                //Get all users with full privilege
+                users = userServ.queryUsersByOrgId(orgId);
+                if(user != null){
+                    users = users.stream().filter(u -> (u.hasMarketingPermission())).collect(Collectors.toList());
+                }
+                break;
+            case 2:
+                //Get only rank 3
+                users = userServ.queryUsersByOrgId(orgId);
+                if(user != null){
+                    users = users.stream().filter(u -> (u.hasMarketingPermission() && u.getHighestRank() == 3)).collect(Collectors.toList());
+                }
+                break;
+            case 3:
+                //Get only user self
+                users.add(user);
+                break;
+            default:
+                break;
+        }
+
+        return users;
     }
 
     @AjaxControllerLog

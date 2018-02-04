@@ -4,6 +4,7 @@ import com.schoolpal.aop.AjaxControllerLog;
 import com.schoolpal.db.model.TLeads;
 import com.schoolpal.db.model.TLeadsParent;
 import com.schoolpal.db.model.TLeadsStudent;
+import com.schoolpal.db.model.TUser;
 import com.schoolpal.validation.group.AjaxControllerAdd;
 import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/ajax/sales/oppor")
@@ -26,6 +30,43 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
     public Object list(String orgId) throws AjaxException {
         return super.list(2, orgId);
+    }
+
+    @AjaxControllerLog
+    @RequiresPermissions("2-1")
+    @RequestMapping(value = "listAssignableUsers.do", method = RequestMethod.POST)
+    public Object listAssignableUsers(@NotEmpty String id) throws AjaxException {
+        TUser user = userServ.getCachedUser();
+
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
+
+        List<TUser> users = new ArrayList<>();
+        switch (user.getHighestRank()){
+            case 1:
+                //Get all users with full privilege
+                users = userServ.queryUsersByOrgId(id);
+                if(user != null){
+                    users = users.stream().filter(u -> (u.hasSalesPermission())).collect(Collectors.toList());
+                }
+                break;
+            case 2:
+                //Get only rank 3
+                users = userServ.queryUsersByOrgId(id);
+                if(user != null){
+                    users = users.stream().filter(u -> (u.hasSalesPermission() && u.getHighestRank() == 3)).collect(Collectors.toList());
+                }
+                break;
+            case 3:
+                //Get only user self
+                users.add(user);
+                break;
+            default:
+                break;
+        }
+
+        return users;
     }
 
     @AjaxControllerLog

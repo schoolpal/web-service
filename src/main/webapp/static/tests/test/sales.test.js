@@ -269,6 +269,23 @@ describe('/ajax/sales/oppor/ APIs', function() {
         expect(jsonData.detail).to.be.equal('Ok');
     });
 
+    it('listAssignableUsers.do', function() {
+        var xhr = $.ajax({
+            async: false,
+            method: 'POST',
+            url: buildUrl(host, leadsApiPath, 'listAssignableUsers.do'),
+            dataType: 'json',
+            data: {
+                orgId: orgIdVal
+            }
+        });
+
+        expect(xhr.status).to.be.equal(200);
+        var jsonData = xhr.responseJSON;
+        expect(jsonData.code).to.be.equal(200);
+        expect(jsonData.data).to.not.empty;
+    });
+
     it('mod.do', function() {
         var xhr = $.ajax({
             async: false,
