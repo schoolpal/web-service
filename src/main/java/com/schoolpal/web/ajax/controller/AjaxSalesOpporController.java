@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,10 +34,10 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
     @AjaxControllerLog
     @RequiresPermissions("2-1")
     @RequestMapping(value = "listAssignableUsers.do", method = RequestMethod.POST)
-    public Object listAssignableUsers(@NotEmpty String id) throws AjaxException {
+    public Object listAssignableUsers(@NotEmpty String orgId) throws AjaxException {
         TUser user = userServ.getCachedUser();
 
-        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), id)) {
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), orgId)) {
             throw new AjaxException(402, "No permission to query organization");
         }
 
@@ -46,14 +45,14 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
         switch (user.getHighestRank()){
             case 1:
                 //Get all users with full privilege
-                users = userServ.queryUsersByOrgId(id);
+                users = userServ.queryUsersByOrgId(orgId);
                 if(user != null){
                     users = users.stream().filter(u -> (u.hasSalesPermission())).collect(Collectors.toList());
                 }
                 break;
             case 2:
                 //Get only rank 3
-                users = userServ.queryUsersByOrgId(id);
+                users = userServ.queryUsersByOrgId(orgId);
                 if(user != null){
                     users = users.stream().filter(u -> (u.hasSalesPermission() && u.getHighestRank() == 3)).collect(Collectors.toList());
                 }
