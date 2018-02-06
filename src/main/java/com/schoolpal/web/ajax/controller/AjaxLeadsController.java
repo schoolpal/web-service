@@ -50,21 +50,13 @@ public class AjaxLeadsController extends AjaxBaseLeadsController {
         List<TUser> users = new ArrayList<>();
         switch (user.getHighestRank()){
             case 1:
-                //Get all users with full privilege
-                users = userServ.queryUsersByOrgId(orgId);
-                if(user != null){
-                    users = users.stream().filter(u -> (u.hasMarketingPermission())).collect(Collectors.toList());
-                }
+                users = super.listAssignableUsersByOrgId(orgId, u -> (u.hasMarketingPermission()));
                 break;
             case 2:
-                //Get only rank 3
-                users = userServ.queryUsersByOrgId(orgId);
-                if(user != null){
-                    users = users.stream().filter(u -> (u.hasMarketingPermission() && u.getHighestRank() == 3)).collect(Collectors.toList());
-                }
+                users = super.listAssignableUsersByOrgId(orgId,
+                        u -> (u.getcId().equals(user.getcId()) || (u.hasMarketingPermission() && u.getHighestRank() == 3)));
                 break;
             case 3:
-                //Get only user self
                 users.add(user);
                 break;
             default:

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,21 +45,13 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
         List<TUser> users = new ArrayList<>();
         switch (user.getHighestRank()){
             case 1:
-                //Get all users with full privilege
-                users = userServ.queryUsersByOrgId(orgId);
-                if(user != null){
-                    users = users.stream().filter(u -> (u.hasSalesPermission())).collect(Collectors.toList());
-                }
+                users = super.listAssignableUsersByOrgId(orgId, u -> (u.hasSalesPermission()));
                 break;
             case 2:
-                //Get only rank 3
-                users = userServ.queryUsersByOrgId(orgId);
-                if(user != null){
-                    users = users.stream().filter(u -> (u.hasSalesPermission() && u.getHighestRank() == 3)).collect(Collectors.toList());
-                }
+                users = super.listAssignableUsersByOrgId(orgId,
+                        u -> (u.getcId().equals(user.getcId()) || (u.hasSalesPermission() && u.getHighestRank() == 3)));
                 break;
             case 3:
-                //Get only user self
                 users.add(user);
                 break;
             default:

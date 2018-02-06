@@ -20,6 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Validated
 public abstract class AjaxBaseLeadsController extends AjaxBaseController {
@@ -41,9 +43,9 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         List<TLeads> ret = new ArrayList<>();
 
         List<String> orgList = orgServ.queryOrgIdListByRootId(orgId);
-        if(orgList != null){
+        if (orgList != null) {
             orgList.forEach(o -> {
-                if(o.equals(user.getcOrgId())) {
+                if (o.equals(user.getcOrgId())) {
                     if (user.getHighestRank() == 1) {
                         ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, orgId));
                     } else if (user.getHighestRank() == 3) {
@@ -55,7 +57,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
                         //Unexpected user rank, no leads should be returned
                         return;
                     }
-                }else {
+                } else {
                     ret.addAll(leadsServ.queryLeadsListByOrgId(typeId, o));
                 }
             });
@@ -83,6 +85,16 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         List<TLeads> leadsList = leadsServ.queryLeadsListByExecutived(typeId, executiveId);
 
         return leadsList;
+    }
+
+    public List<TUser> listAssignableUsersByOrgId(@NotEmpty String orgId, Predicate<TUser> userFilter) throws AjaxException {
+
+        List<TUser> users = userServ.queryUsersByOrgId(orgId);
+        if (users != null) {
+            users = users.stream().filter(userFilter).sorted(Comparator.comparing(TUser::getcId)).collect(Collectors.toList());
+        }
+
+        return users;
     }
 
     public Object query(@NotEmpty String id) throws AjaxException {
@@ -152,7 +164,7 @@ public abstract class AjaxBaseLeadsController extends AjaxBaseController {
         if (user == null) {
             throw new AjaxException(402, "User not exists");
         }
-        if (user.hasSystemPermission()){
+        if (user.hasSystemPermission()) {
             throw new AjaxException(403, "Cannot assign to system manager");
         }
 
