@@ -43,19 +43,23 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
         }
 
         List<TUser> users = new ArrayList<>();
-        switch (user.getHighestRank()){
-            case 1:
-                users = super.listAssignableUsersByOrgId(orgId, u -> (u.hasSalesPermission()));
-                break;
-            case 2:
-                users = super.listAssignableUsersByOrgId(orgId,
-                        u -> (u.getcId().equals(user.getcId()) || (u.hasSalesPermission() && u.getHighestRank() == 3)));
-                break;
-            case 3:
-                users.add(user);
-                break;
-            default:
-                break;
+        if (orgId.equals(orgId)) {
+            switch (user.getHighestRank()) {
+                case 1:
+                    users = super.listAssignableUsersByOrgId(orgId, u -> (u.hasSalesPermission()));
+                    break;
+                case 2:
+                    users = super.listAssignableUsersByOrgId(orgId,
+                            u -> (u.getcId().equals(user.getcId()) || (u.hasSalesPermission() && u.getHighestRank() == 3)));
+                    break;
+                case 3:
+                    users.add(user);
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            users = super.listAssignableUsersByOrgId(orgId, u -> (u.hasSalesPermission() && u.getHighestRank() <= 2));
         }
 
         return users;
