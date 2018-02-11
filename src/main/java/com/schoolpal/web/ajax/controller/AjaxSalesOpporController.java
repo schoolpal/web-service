@@ -43,7 +43,7 @@ public class AjaxSalesOpporController extends AjaxBaseLeadsController {
         }
 
         List<TUser> users = new ArrayList<>();
-        if (orgId.equals(orgId)) {
+        if(orgId.equals(user.getcOrgId())) {
             switch (user.getHighestRank()) {
                 case 1:
                     users = super.listAssignableUsersByOrgId(orgId, u -> (u.hasSalesPermission()));
