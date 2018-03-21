@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
             throw new AjaxException(402, "No permission to query organization");
         }
 
-        List<TContract> ret = contractServ.queryContractListByExecutiveId(user.getcId());
+        List<TContract> ret = new ArrayList<>();
 
         List<String> orgList = orgServ.queryOrgIdListByRootId(orgId);
         if (orgList != null) {
@@ -89,7 +90,7 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
             throw new AjaxException(402, "No permission to query organization");
         }
 
-        List<TContract> ret = contractServ.queryContractListByExecutiveId(user.getcId());
+        List<TContract> ret = new ArrayList<>();
 
         List<String> orgList = orgServ.queryOrgIdListByRootId(orgId);
         if (orgList != null) {
