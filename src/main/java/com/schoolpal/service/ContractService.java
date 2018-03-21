@@ -33,11 +33,23 @@ public class ContractService {
         return contractDao.selectOneById(id);
     }
 
-    public List<TContract> queryContractsByExecutiveId(String id) {
+    public List<TContract> queryContractListByOrgId(String orgId) {
+        List<TContract> ret = contractDao.selectManyByOrgId(orgId);
+
+        return ret;
+    }
+
+    public List<TContract> queryContractListByOrgIdForRank2(String orgId) {
+        List<TContract> ret = contractDao.selectManyByOrgIdAndRankId(orgId, 3);
+
+        return ret;
+    }
+
+    public List<TContract> queryContractListByExecutiveId(String id) {
         return contractDao.selectManyByExecutiveId(id);
     }
 
-    public List<TContract> queryContractsByStudentId(String id) {
+    public List<TContract> queryContractListByStudentId(String id) {
         return contractDao.selectManyByStuId(id);
     }
 

@@ -2,8 +2,6 @@ package com.schoolpal.web.ajax.controller;
 
 import com.schoolpal.db.model.*;
 import com.schoolpal.service.*;
-import com.schoolpal.validation.group.AjaxControllerAdd;
-import com.schoolpal.validation.group.AjaxControllerMod;
 import com.schoolpal.web.ajax.exception.AjaxException;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Validated
@@ -19,6 +18,8 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
     @Autowired
     protected UserService userServ;
+    @Autowired
+    protected OrgService orgServ;
     @Autowired
     protected ContractService contractServ;
     @Autowired
@@ -42,18 +43,63 @@ public abstract class AjaxBaseContractController extends AjaxBaseController {
 
     public Object queryListByStudentId(@NotEmpty String id) {
 
-        List<TContract> contracts = contractServ.queryContractsByStudentId(id);
+        List<TContract> contracts = contractServ.queryContractListByStudentId(id);
 
         return contracts;
     }
 
-    public Object list() {
+    public Object listDependsRank(String orgId) throws AjaxException {
 
         TUser user = userServ.getCachedUser();
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), orgId)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
 
-        List<TContract> contracts = contractServ.queryContractsByExecutiveId(user.getcId());
+        List<TContract> ret = contractServ.queryContractListByExecutiveId(user.getcId());
 
-        return contracts;
+        List<String> orgList = orgServ.queryOrgIdListByRootId(orgId);
+        if (orgList != null) {
+            orgList.forEach(o -> {
+                if (o.equals(user.getcOrgId())) {
+                    if (user.getHighestRank() == 1) {
+                        ret.addAll(contractServ.queryContractListByOrgId(orgId));
+                    } else if (user.getHighestRank() == 3) {
+                        ret.addAll(contractServ.queryContractListByExecutiveId(user.getcId()));
+                    } else if (user.getHighestRank() == 2) {
+                        ret.addAll(contractServ.queryContractListByExecutiveId(user.getcId()));
+                        ret.addAll(contractServ.queryContractListByOrgIdForRank2(orgId));
+                    } else {
+                        //Unexpected user rank, no contract should be returned
+                        return;
+                    }
+                } else {
+                    ret.addAll(contractServ.queryContractListByOrgId(o));
+                }
+            });
+        }
+
+        ret.sort(Comparator.comparing(TContract::getId).reversed());
+        return ret;
+    }
+
+    public Object listAll(String orgId) throws AjaxException {
+
+        TUser user = userServ.getCachedUser();
+        if (!orgServ.isOrgBelongToTargetOrg(user.getcOrgId(), orgId)) {
+            throw new AjaxException(402, "No permission to query organization");
+        }
+
+        List<TContract> ret = contractServ.queryContractListByExecutiveId(user.getcId());
+
+        List<String> orgList = orgServ.queryOrgIdListByRootId(orgId);
+        if (orgList != null) {
+            orgList.forEach(o -> {
+                    ret.addAll(contractServ.queryContractListByOrgId(o));
+            });
+        }
+
+        ret.sort(Comparator.comparing(TContract::getId).reversed());
+        return ret;
     }
 
     @Transactional

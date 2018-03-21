@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.schoolpal.db.inf.TContractMapper">
 
-    <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <sql id="baseSelectStatement">
         SELECT
             c.*,
             cu.c_realname AS creator_name,
@@ -14,36 +14,39 @@
             LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
             LEFT JOIN t_org AS o ON c.org_id = o.c_id
             LEFT JOIN t_contract_type AS t ON c.type_id = t.id
+    </sql>
+
+    <select id="selectOneById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <include refid="baseSelectStatement"/>
         WHERE c.id = #{id,jdbcType=CHAR}
     </select>
+
+    <select id="selectManyByOrgId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <include refid="baseSelectStatement"/>
+        WHERE c.org_id = #{orgId,jdbcType=CHAR}
+    </select>
+    <select id="selectManyByOrgIdAndRankId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <include refid="baseSelectStatement"/>
+        WHERE c.org_id = #{orgId,jdbcType=CHAR}
+        AND c.executive_id in (
+            SELECT u.c_id
+            FROM t_user AS u
+            LEFT JOIN t_user_role AS ur ON u.c_id = ur.c_user_id
+            LEFT JOIN t_role AS r ON ur.c_role_id = r.c_id
+            GROUP BY u.c_id
+            HAVING MIN(r.c_rank_id) = #{rankId,jdbcType=INTEGER}
+        )
+    </select>
+
     <select id="selectManyByExecutiveId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT
-            c.*,
-            cu.c_realname AS creator_name,
-            eu.c_realname AS executive_name,
-            o.c_name      AS org_name,
-            t.name        AS type_name
-        FROM t_contract AS c
-            LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
-            LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
-            LEFT JOIN t_org AS o ON c.org_id = o.c_id
-            LEFT JOIN t_contract_type AS t ON c.type_id = t.id
+        <include refid="baseSelectStatement"/>
         WHERE c.executive_id = #{id,jdbcType=CHAR}
     </select>
     <select id="selectManyByStuId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        SELECT
-            c.*,
-            cu.c_realname AS creator_name,
-            eu.c_realname AS executive_name,
-            o.c_name      AS org_name,
-            t.name        AS type_name
-        FROM t_contract AS c
-            LEFT JOIN t_user AS cu ON c.creator_id = cu.c_id
-            LEFT JOIN t_user AS eu ON c.executive_id = eu.c_id
-            LEFT JOIN t_org AS o ON c.org_id = o.c_id
-            LEFT JOIN t_contract_type AS t ON c.type_id = t.id
+        <include refid="baseSelectStatement"/>
         WHERE c.stu_id = #{id,jdbcType=CHAR}
     </select>
+
     <delete id="deleteOneById" parameterType="java.lang.String">
         DELETE FROM t_contract
         WHERE id = #{id,jdbcType=CHAR}

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotEmpty;
+
 @RestController
 @RequestMapping("/ajax/service/contract")
 public class AjaxServiceContractController extends AjaxBaseContractController {
@@ -36,10 +38,9 @@ public class AjaxServiceContractController extends AjaxBaseContractController {
     @AjaxControllerLog
     @RequiresPermissions("3-1")
     @RequestMapping(value = "list.do", method = RequestMethod.POST)
-    @Override
-    public Object list() {
+    public Object list(@NotEmpty String orgId) throws AjaxException {
 
-        return super.list();
+        return super.listAll(orgId);
     }
 
     @AjaxControllerLog
